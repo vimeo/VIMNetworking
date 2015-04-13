@@ -177,7 +177,7 @@ NSString * const VIMAccountManagerErrorDomain = @"VIMAccountManagerErrorDomain";
     VIMAccount *account = [[VIMAccountStore sharedInstance] accountWithID:kECAccountID_Vimeo];
     NSAssert(account, @"No account found.");
     
-    if([account isAuthenticated])
+    if([account isAuthenticated]) // TODO: Is this logic correct? [AH]
     {
         [account deleteCredential];
         [[VIMAccountStore sharedInstance] saveAccount:account];
@@ -218,7 +218,7 @@ NSString * const VIMAccountManagerErrorDomain = @"VIMAccountManagerErrorDomain";
     VIMAccount *account = [[VIMAccountStore sharedInstance] accountWithID:kECAccountID_Vimeo];
     NSAssert(account, @"No account found.");
 
-    if([account isAuthenticated])
+    if ([account isAuthenticated]) // TODO: Is this logic correct? [AH]
     {
         [account deleteCredential];
         [[VIMAccountStore sharedInstance] saveAccount:account];
@@ -257,7 +257,7 @@ NSString * const VIMAccountManagerErrorDomain = @"VIMAccountManagerErrorDomain";
     VIMAccount *account = [[VIMAccountStore sharedInstance] accountWithID:kECAccountID_Vimeo];
     NSAssert(account, @"No account found.");
 
-    if ([account isAuthenticated] && [account.credential isUserCredential])
+    if ([account isAuthenticated] && [account.credential isUserCredential]) // TODO: Is this logic correct? [AH]
     {
         [[VIMAccountStore sharedInstance] saveAccount:account];
         
@@ -295,7 +295,9 @@ NSString * const VIMAccountManagerErrorDomain = @"VIMAccountManagerErrorDomain";
 - (NSOperation *)loginWithFacebookToken:(NSString *)fbtoken completionBlock:(void (^)(BOOL, NSError *))completionBlock
 {
     VIMAccount *account = [[VIMAccountStore sharedInstance] accountWithID:kECAccountID_Vimeo];
-    if([account isAuthenticated])
+    NSAssert(account, @"No account found.");
+
+    if ([account isAuthenticated] && [account.credential isUserCredential]) // TODO: Is this logic correct? [AH]
     {
         [[VIMAccountStore sharedInstance] saveAccount:account];
         
