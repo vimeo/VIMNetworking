@@ -28,7 +28,7 @@
 
 #import <UIKit/UIKit.h>
 
-#define LOCAL_NOTIFICATIONS_ENABLED 1
+#define LOCAL_NOTIFICATIONS_ENABLED 0
 
 @implementation VIMTaskQueueDebugger
 
@@ -43,8 +43,7 @@
 {
     NSLog(@"%@", message);
 
-#if LOCAL_NOTIFICATIONS_ENABLED
-    
+#if LOCAL_NOTIFICATIONS_ENABLED && (defined(DEBUG) || defined(ADHOC))
 #ifndef UPLOAD_EXTENSION
     
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -58,7 +57,6 @@
     });
 
 #endif
-    
 #endif
     
 }

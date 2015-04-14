@@ -26,6 +26,8 @@
 
 #import <Foundation/Foundation.h>
 
+extern NSString *const VIMTaskQueueTaskFailedNotification;
+
 @class VIMTask;
 
 @interface VIMTaskQueue : NSObject
