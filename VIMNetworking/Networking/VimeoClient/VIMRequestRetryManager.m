@@ -235,7 +235,7 @@ static NSString *DescriptorKey = @"descriptor";
                 welf.descriptorDictionary = [NSMutableDictionary dictionary];
             }
             
-            NSLog(@"LOADED %lu DESCRIPTORS", (unsigned long)[welf.descriptorDictionary count]);
+//            NSLog(@"LOADED %lu DESCRIPTORS", (unsigned long)[welf.descriptorDictionary count]);
             
             if (completionBlock)
             {
@@ -252,7 +252,7 @@ static NSString *DescriptorKey = @"descriptor";
     __weak typeof(self) welf = self;
     dispatch_async(_queue, ^{
         
-        NSLog(@"SAVED %lu DESCRIPTORS", (unsigned long)[welf.descriptorDictionary count]);
+//        NSLog(@"SAVED %lu DESCRIPTORS", (unsigned long)[welf.descriptorDictionary count]);
 
         [[[VIMSession sharedSession] userCache] setObject:welf.descriptorDictionary forKey:welf.name];
         
