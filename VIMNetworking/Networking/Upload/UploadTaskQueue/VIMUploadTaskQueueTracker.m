@@ -115,6 +115,34 @@ static void *UploadStateContext = &UploadStateContext;
                                                       userInfo:userInfo];
 }
 
+- (VIMVideoAsset *)assetForIdentifier:(NSString *)identifier
+{
+    NSParameterAssert(identifier);
+    
+    if ([self.currentVideoAsset.identifier isEqualToString:identifier])
+    {
+        return self.currentVideoAsset;
+    }
+    
+    for (VIMVideoAsset *asset in self.videoAssets)
+    {
+        if ([asset.identifier isEqualToString:identifier])
+        {
+            return asset;
+        }
+    }
+    
+    for (VIMVideoAsset *asset in self.failedAssets)
+    {
+        if ([asset.identifier isEqualToString:identifier])
+        {
+            return asset;
+        }
+    }
+    
+    return nil;
+}
+
 #pragma mark - Accessors
 
 - (void)setCurrentVideoAsset:(VIMVideoAsset *)currentVideoAsset
