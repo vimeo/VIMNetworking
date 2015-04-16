@@ -298,7 +298,6 @@ static NSString *CurrentTaskKey = @"current_task";
 
 - (void)save
 {
-    
     NSDictionary *dictionary = @{TasksKey : [self.tasks copy]};
     NSMutableDictionary *archiveDictionary = [NSMutableDictionary dictionaryWithDictionary:dictionary];
     
@@ -306,6 +305,8 @@ static NSString *CurrentTaskKey = @"current_task";
     {
         archiveDictionary[CurrentTaskKey] = self.currentTask;
     }
+    
+    NSLog(@"SAVING: %@", dictionary);
     
     __weak typeof(self) welf = self;
     dispatch_async(_archivalQueue, ^{
