@@ -117,7 +117,10 @@ static void *UploadStateContext = &UploadStateContext;
 
 - (VIMVideoAsset *)assetForIdentifier:(NSString *)identifier
 {
-    NSParameterAssert(identifier);
+    if (!identifier)
+    {
+        return nil;
+    }
     
     if ([self.currentVideoAsset.identifier isEqualToString:identifier])
     {
