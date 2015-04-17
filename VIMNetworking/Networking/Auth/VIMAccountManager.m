@@ -177,7 +177,7 @@ NSString * const VIMAccountManagerErrorDomain = @"VIMAccountManagerErrorDomain";
     VIMAccount *account = [[VIMAccountStore sharedInstance] accountWithID:kECAccountID_Vimeo];
     NSAssert(account, @"No account found.");
     
-    if([account isAuthenticated]) // TODO: Is this logic correct? [AH]
+    if ([account isAuthenticated]) // TODO: Is this logic correct? [AH]
     {
         [account deleteCredential];
         [[VIMAccountStore sharedInstance] saveAccount:account];
@@ -200,16 +200,11 @@ NSString * const VIMAccountManagerErrorDomain = @"VIMAccountManagerErrorDomain";
         
         [[VIMAccountStore sharedInstance] saveAccount:account];
         
-        if(error)
+        if (completionBlock)
         {
-            if(completionBlock)
-                completionBlock(error);
+            completionBlock(error);
         }
-        else
-        {
-            if(completionBlock)
-                completionBlock(nil);
-        }
+
     }];
 }
 
@@ -239,6 +234,41 @@ NSString * const VIMAccountManagerErrorDomain = @"VIMAccountManagerErrorDomain";
         
         [[VIMAccountStore sharedInstance] saveAccount:account];
         
+        if (completionBlock)
+        {
+            completionBlock(error);
+        }
+
+    }];
+}
+
+- (NSOperation *)loginWithEmail:(NSString *)email password:(NSString *)password completionBlock:(VIMAccountManagerErrorCompletionBlock)completionBlock
+{
+    VIMAccount *account = [[VIMAccountStore sharedInstance] accountWithID:kECAccountID_Vimeo];
+    NSAssert(account, @"No account found.");
+
+    if ([account isAuthenticated] && [account.credential isUserCredential]) // TODO: Is this logic correct? [AH]
+    {
+        [[VIMAccountStore sharedInstance] saveAccount:account];
+        
+        if (completionBlock)
+        {
+            completionBlock(nil);
+        }
+        
+        return nil;
+    }
+
+    NSString *scope = [VIMSession sharedSession].configuration.scope;
+    NSString *accessTokenURL = [VIMAccountManager accessTokenURL];
+    NSString *clientKey = [VIMSession sharedSession].configuration.clientKey;
+    NSString *clientSecret = [VIMSession sharedSession].configuration.clientSecret;
+
+    VIMOAuthAuthenticator *authenticator = [[VIMOAuthAuthenticator alloc] initWithURL:accessTokenURL clientID:clientKey clientSecret:clientSecret];
+    return [authenticator authenticateAccount:account email:email password:password scope:scope completionBlock:^(id responseObject, NSError *error) {
+        
+        [[VIMAccountStore sharedInstance] saveAccount:account];
+        
         if(error)
         {
             if(completionBlock)
@@ -252,46 +282,6 @@ NSString * const VIMAccountManagerErrorDomain = @"VIMAccountManagerErrorDomain";
     }];
 }
 
-- (NSOperation *)loginWithEmail:(NSString *)email password:(NSString *)password completionBlock:(VIMAccountManagerErrorCompletionBlock)completionBlock
-{
-    VIMAccount *account = [[VIMAccountStore sharedInstance] accountWithID:kECAccountID_Vimeo];
-    NSAssert(account, @"No account found.");
-
-    if ([account isAuthenticated] && [account.credential isUserCredential]) // TODO: Is this logic correct? [AH]
-    {
-        [[VIMAccountStore sharedInstance] saveAccount:account];
-        
-        if(completionBlock)
-            completionBlock(nil);
-        
-        return nil;
-    }
-    else
-    {
-        NSString *scope = [VIMSession sharedSession].configuration.scope;
-        NSString *accessTokenURL = [VIMAccountManager accessTokenURL];
-        NSString *clientKey = [VIMSession sharedSession].configuration.clientKey;
-        NSString *clientSecret = [VIMSession sharedSession].configuration.clientSecret;
-
-        VIMOAuthAuthenticator *authenticator = [[VIMOAuthAuthenticator alloc] initWithURL:accessTokenURL clientID:clientKey clientSecret:clientSecret];
-        return [authenticator authenticateAccount:account email:email password:password scope:scope completionBlock:^(id responseObject, NSError *error) {
-            
-            [[VIMAccountStore sharedInstance] saveAccount:account];
-            
-            if(error)
-            {
-                if(completionBlock)
-                    completionBlock(error);
-            }
-            else
-            {
-                if(completionBlock)
-                    completionBlock(nil);
-            }
-        }];
-    }
-}
-
 - (NSOperation *)loginWithFacebookToken:(NSString *)fbtoken completionBlock:(void (^)(BOOL, NSError *))completionBlock
 {
     VIMAccount *account = [[VIMAccountStore sharedInstance] accountWithID:kECAccountID_Vimeo];
@@ -301,21 +291,24 @@ NSString * const VIMAccountManagerErrorDomain = @"VIMAccountManagerErrorDomain";
     {
         [[VIMAccountStore sharedInstance] saveAccount:account];
         
-        if(completionBlock)
+        if (completionBlock)
+        {
             completionBlock(YES, nil);
+        }
         
         return nil;
     }
-    else
-    {
-        return [self makeFacebookAuthenticationRequestWithAccount:account facebookToken:fbtoken completionBlock:^(id responseObject, NSError *error) {
-            
-            [[VIMAccountStore sharedInstance] saveAccount:account];
-            
-            if(completionBlock)
-                completionBlock(error == nil, error);
-        }];
-    }
+
+    return [self makeFacebookAuthenticationRequestWithAccount:account facebookToken:fbtoken completionBlock:^(id responseObject, NSError *error) {
+        
+        [[VIMAccountStore sharedInstance] saveAccount:account];
+        
+        if (completionBlock)
+        {
+            completionBlock(error == nil, error);
+        }
+
+    }];
 }
 
 - (void)logoutAccount:(VIMAccount *)account
