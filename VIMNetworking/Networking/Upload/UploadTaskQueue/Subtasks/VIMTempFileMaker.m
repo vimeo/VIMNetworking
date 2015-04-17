@@ -29,6 +29,7 @@
 #import <Photos/Photos.h>
 #import <AVFoundation/AVFoundation.h>
 #import <MobileCoreServices/MobileCoreServices.h>
+#import "AVAsset+Filesize.h"
 
 static const NSString *VIMTempFileMakerErrorDomain = @"VIMTempFileMakerErrorDomain";
 
@@ -147,6 +148,20 @@ static const NSString *VIMTempFileMakerErrorDomain = @"VIMTempFileMakerErrorDoma
     exportSession.outputURL = [NSURL fileURLWithPath:path];
     exportSession.shouldOptimizeForNetworkUse = YES;
     
+    uint64_t availableDiskSpace = [VIMTempFileMaker availableDiskSpace];
+    uint64_t filesize = [asset calculateFilesize];
+    if (filesize > availableDiskSpace && availableDiskSpace != -1)
+    {
+        NSError *error = [NSError errorWithDomain:(NSString *)VIMTempFileMakerErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"Not enough free disk space to export video to temp directory."}];
+        
+        if (completionBlock)
+        {
+            completionBlock(nil, error);
+        }
+        
+        return;
+    }
+
     __weak typeof(self) welf = self;
     [exportSession exportAsynchronouslyWithCompletionHandler:^{
         
@@ -187,6 +202,20 @@ static const NSString *VIMTempFileMakerErrorDomain = @"VIMTempFileMakerErrorDoma
 
 + (void)copyURLAsset:(AVURLAsset *)URLAsset withCompletionBlock:(TempFileCompletionBlock)completionBlock
 {
+    uint64_t availableDiskSpace = [VIMTempFileMaker availableDiskSpace];
+    uint64_t filesize = [URLAsset calculateFilesize];
+    if (filesize > availableDiskSpace && availableDiskSpace != -1)
+    {
+        NSError *error = [NSError errorWithDomain:(NSString *)VIMTempFileMakerErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"Not enough free disk space to copy video to temp directory."}];
+
+        if (completionBlock)
+        {
+            completionBlock(nil, error);
+        }
+        
+        return;
+    }
+    
     NSString *extension = [URLAsset.URL pathExtension];
     NSURL *destinationURL = [NSURL fileURLWithPath:[self uniqueAppGroupPathWithExtension:extension]];
     
@@ -259,6 +288,34 @@ static const NSString *VIMTempFileMakerErrorDomain = @"VIMTempFileMakerErrorDoma
     }
     
     return groupPath;
+}
+
++ (uint64_t)availableDiskSpace
+{
+    uint64_t totalDiskSpace = 0;
+    uint64_t availableDiskSpace = 0;
+    
+    NSError *error = nil;
+    NSDictionary *dictionary = [[NSFileManager defaultManager] attributesOfFileSystemForPath:[VIMTempFileMaker appGroupExportsDirectory] error: &error];
+    
+    if (dictionary)
+    {
+        NSNumber *totalDiskSpaceInBytes = [dictionary objectForKey:NSFileSystemSize];
+        NSNumber *availableDiskSpaceInBytes = [dictionary objectForKey:NSFileSystemFreeSize];
+        
+        totalDiskSpace = [totalDiskSpaceInBytes unsignedLongLongValue];
+        availableDiskSpace = [availableDiskSpaceInBytes unsignedLongLongValue];
+        
+//        NSLog(@"Memory Capacity of %llu MB with %llu MB Free memory available.", ((totalDiskSpace/1024ll)/1024ll), ((availableDiskSpace/1024ll)/1024ll));
+    }
+    else
+    {
+        NSLog(@"Error Obtaining System Memory Info: %@", error.localizedDescription);
+        
+        return -1;
+    }
+    
+    return availableDiskSpace;
 }
 
 @end
