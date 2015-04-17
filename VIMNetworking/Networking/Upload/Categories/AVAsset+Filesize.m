@@ -24,8 +24,8 @@
     {
         AVURLAsset *asset = (AVURLAsset *)self;
         
-        [asset.URL getResourceValue:&size forKey:NSURLFileSizeKey error:&error];
-        if (error)
+        BOOL success = [asset.URL getResourceValue:&size forKey:NSURLFileSizeKey error:&error];
+        if (!success)
         {
             NSLog(@"Error calculating AVURLAsset filesize: %@", error);
         }
