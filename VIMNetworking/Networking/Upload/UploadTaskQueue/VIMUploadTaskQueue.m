@@ -101,7 +101,7 @@ NSString *const VIMUploadTaskQueue_NameKey = @"VIMUploadTaskQueue_NameKey";
         }
         else if (videoAsset.URLAsset)
         {
-            task = [[VIMUploadTask alloc] initWithURLAsset:videoAsset.URLAsset];
+            task = [[VIMUploadTask alloc] initWithURLAsset:videoAsset.URLAsset canUploadFromSource:videoAsset.canUploadFromSource];
         }
         
         [self configureTaskBlocks:task forAsset:videoAsset];

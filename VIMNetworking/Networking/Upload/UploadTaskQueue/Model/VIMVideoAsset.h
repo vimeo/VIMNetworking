@@ -41,6 +41,7 @@ typedef void(^ImageCompletionBlock)(UIImage *image, NSError *error);
 
 @property (nonatomic, strong, readonly) PHAsset *phAsset;
 @property (nonatomic, strong, readonly) AVURLAsset *URLAsset;
+@property (nonatomic, assign, readonly) BOOL canUploadFromSource;
 
 @property (nonatomic, strong) VIMVideoMetadata *metadata;
 
@@ -51,7 +52,7 @@ typedef void(^ImageCompletionBlock)(UIImage *image, NSError *error);
 @property (nonatomic, strong) NSError *error;
 
 - (instancetype)initWithPHAsset:(PHAsset *)phAsset;
-- (instancetype)initWithURLAsset:(AVURLAsset *)URLAsset;
+- (instancetype)initWithURLAsset:(AVURLAsset *)URLAsset canUploadFromSource:(BOOL)canUploadFromSource;
 
 - (void)requestAVAssetWithCompletionBlock:(void (^)(AVAsset *asset, NSError *error))completionBlock;
 

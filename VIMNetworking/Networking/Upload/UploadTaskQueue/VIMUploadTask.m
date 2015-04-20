@@ -38,6 +38,7 @@ static void *UploadProgressContext = &UploadProgressContext;
 
 @property (nonatomic, strong, readwrite) PHAsset *phAsset;
 @property (nonatomic, strong, readwrite) AVURLAsset *URLAsset;
+@property (nonatomic, assign) BOOL canUploadFromSource;
 
 @property (nonatomic, assign, readwrite) VIMUploadState uploadState;
 
@@ -82,7 +83,7 @@ static void *UploadProgressContext = &UploadProgressContext;
     return self;
 }
 
-- (instancetype)initWithURLAsset:(AVURLAsset *)URLAsset
+- (instancetype)initWithURLAsset:(AVURLAsset *)URLAsset canUploadFromSource:(BOOL)canUploadFromSource
 {
     NSParameterAssert(URLAsset);
     
@@ -90,6 +91,8 @@ static void *UploadProgressContext = &UploadProgressContext;
     if (self)
     {
         _URLAsset = URLAsset;
+        _canUploadFromSource = canUploadFromSource;
+        
         self.identifier = [URLAsset.URL absoluteString];
     }
     
@@ -143,7 +146,7 @@ static void *UploadProgressContext = &UploadProgressContext;
     }
     else
     {
-        task = [[VIMCreateTicketTask alloc] initWithURLAsset:self.URLAsset];
+        task = [[VIMCreateTicketTask alloc] initWithURLAsset:self.URLAsset canUploadFromSource:self.canUploadFromSource];
     }
     
     task.sessionManager = self.sessionManager;
@@ -467,7 +470,8 @@ static void *UploadProgressContext = &UploadProgressContext;
         self.activationURI = [coder decodeObjectForKey:NSStringFromSelector(@selector(activationURI))];
         self.videoURI = [coder decodeObjectForKey:NSStringFromSelector(@selector(videoURI))];
         self.uploadState = [coder decodeIntegerForKey:NSStringFromSelector(@selector(uploadState))];
-        
+        self.canUploadFromSource = [coder decodeBoolForKey:NSStringFromSelector(@selector(canUploadFromSource))];
+
         NSString *assetLocalIdentifier = [coder decodeObjectForKey:@"assetLocalIdentifier"];
         if (assetLocalIdentifier)
         {
@@ -498,7 +502,8 @@ static void *UploadProgressContext = &UploadProgressContext;
     [coder encodeObject:self.activationURI forKey:NSStringFromSelector(@selector(activationURI))];
     [coder encodeObject:self.videoURI forKey:NSStringFromSelector(@selector(videoURI))];
     [coder encodeInteger:self.uploadState forKey:NSStringFromSelector(@selector(uploadState))];
-    
+    [coder encodeBool:self.canUploadFromSource forKey:NSStringFromSelector(@selector(canUploadFromSource))];
+
     if (self.phAsset)
     {
         [coder encodeObject:self.phAsset.localIdentifier forKey:@"assetLocalIdentifier"];
