@@ -223,9 +223,9 @@ NSString * const kVimeoClientErrorDomain = @"VimeoClientErrorDomain";
     CFTimeInterval startTime = CACurrentMediaTime();
     NSLog(@"server start (%@)", descriptor.urlPath);
     
-    VIMRequestOperation *operation = (VIMRequestOperation *)[self HTTPRequestOperationWithRequest:urlRequest success:^(AFHTTPRequestOperation* HTTPoperation, id JSON){
+    VIMRequestOperation *operation = [self VIMRequestOperationWithRequest:urlRequest success:^(AFHTTPRequestOperation *HTTPOperation, id JSON) {
         
-        VIMRequestOperation *operation = (VIMRequestOperation *)HTTPoperation;
+        VIMRequestOperation *operation = (VIMRequestOperation *)HTTPOperation;
         
         if([operation isCancelled])
             return;
@@ -251,12 +251,12 @@ NSString * const kVimeoClientErrorDomain = @"VimeoClientErrorDomain";
             }];
         });
         
-    } failure:^(AFHTTPRequestOperation* HTTPoperation, NSError *error) {
+    } failure:^(AFHTTPRequestOperation *HTTPOperation, NSError *error) {
         
         CFTimeInterval endTime = CACurrentMediaTime();
         NSLog(@"server failure %g sec (%@)", endTime - startTime, descriptor.urlPath);
 
-        VIMRequestOperation *operation = (VIMRequestOperation *)HTTPoperation;
+        VIMRequestOperation *operation = (VIMRequestOperation *)HTTPOperation;
         if([operation isCancelled])
             return;
         
@@ -326,6 +326,22 @@ NSString * const kVimeoClientErrorDomain = @"VimeoClientErrorDomain";
     operation.completionQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     
     [self.operationQueue addOperation:operation]; // This used to be added to the sharedManager's queue, why? [AH]
+    
+    return operation;
+}
+
+- (VIMRequestOperation *)VIMRequestOperationWithRequest:(NSURLRequest *)request success:(void (^)(AFHTTPRequestOperation *, id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure
+{
+    VIMRequestOperation *operation = [[VIMRequestOperation alloc] initWithRequest:request];
+    
+    operation.responseSerializer = self.responseSerializer;
+    operation.shouldUseCredentialStorage = self.shouldUseCredentialStorage;
+    operation.credential = self.credential;
+    operation.securityPolicy = self.securityPolicy;
+    
+    [operation setCompletionBlockWithSuccess:success failure:failure];
+    operation.completionQueue = self.completionQueue;
+    operation.completionGroup = self.completionGroup;
     
     return operation;
 }
