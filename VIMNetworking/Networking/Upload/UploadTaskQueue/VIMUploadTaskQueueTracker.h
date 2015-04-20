@@ -53,6 +53,4 @@ extern NSString *const VIMUploadTaskQueueTracker_FailedAssetsKey;
 // This method must be called when a user "ignores" a failed asset [AH]
 - (void)ignoreFailedAsset:(VIMVideoAsset *)videoAsset;
 
-- (VIMVideoAsset *)assetForIdentifier:(NSString *)identifier;
-
 @end

@@ -28,8 +28,6 @@
 #import "VIMTask.h"
 #import "VIMTaskQueueDebugger.h"
 
-NSString *const VIMTaskQueueTaskFailedNotification = @"VIMTaskQueueTaskFailedNotification";
-
 static NSString *TasksKey = @"tasks";
 static NSString *CurrentTaskKey = @"current_task";
 
@@ -401,15 +399,15 @@ static NSString *CurrentTaskKey = @"current_task";
     
     // TODO: should this be a dispatch_sync to the _tasksQueue? In the event that a user adds tasks at the moment a task is completing. [AH]
     
-    self.currentTask = nil;
-    
-    [self save];
-    
-    [self updateTaskCount];
-    
-    [self logTaskStatus:task];
-    
-    [self startNextTask];
+        self.currentTask = nil;
+        
+        [self save];
+        
+        [self updateTaskCount];
+        
+        [self logTaskStatus:task];
+        
+        [self startNextTask];
 }
 
 - (void)logTaskStatus:(VIMTask *)task
@@ -427,8 +425,6 @@ static NSString *CurrentTaskKey = @"current_task";
         else
         {
             [VIMTaskQueueDebugger postLocalNotificationWithContext:self.name message:[NSString stringWithFormat:@"%@ failed %@", task.name, task.error]];
-            
-            [[NSNotificationCenter defaultCenter] postNotificationName:VIMTaskQueueTaskFailedNotification object:task];
         }
     }
 }
