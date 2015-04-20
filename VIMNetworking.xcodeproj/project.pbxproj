@@ -52,6 +52,7 @@
 		509174671AE5456A00215AE0 /* UIProgressView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 509174521AE5456A00215AE0 /* UIProgressView+AFNetworking.m */; };
 		509174681AE5456A00215AE0 /* UIRefreshControl+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 509174541AE5456A00215AE0 /* UIRefreshControl+AFNetworking.m */; };
 		509174691AE5456A00215AE0 /* UIWebView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 509174561AE5456A00215AE0 /* UIWebView+AFNetworking.m */; };
+		509173C11AE023EA00215AE0 /* AVAsset+Filesize.m in Sources */ = {isa = PBXBuildFile; fileRef = 509173C01AE023EA00215AE0 /* AVAsset+Filesize.m */; };
 		50E0EE231ACEF5F7006BB5EB /* VIMUploadTaskQueueTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E0EE221ACEF5F7006BB5EB /* VIMUploadTaskQueueTracker.m */; };
 		50E0EE661AD5BC15006BB5EB /* VIMVideoAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E0EE631AD5BC15006BB5EB /* VIMVideoAsset.m */; };
 		50E0EE671AD5BC15006BB5EB /* VIMVideoMetadata.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E0EE651AD5BC15006BB5EB /* VIMVideoMetadata.m */; };
@@ -216,6 +217,8 @@
 		509174541AE5456A00215AE0 /* UIRefreshControl+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIRefreshControl+AFNetworking.m"; sourceTree = "<group>"; };
 		509174551AE5456A00215AE0 /* UIWebView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWebView+AFNetworking.h"; sourceTree = "<group>"; };
 		509174561AE5456A00215AE0 /* UIWebView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+AFNetworking.m"; sourceTree = "<group>"; };
+		509173BF1AE023EA00215AE0 /* AVAsset+Filesize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AVAsset+Filesize.h"; sourceTree = "<group>"; };
+		509173C01AE023EA00215AE0 /* AVAsset+Filesize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AVAsset+Filesize.m"; sourceTree = "<group>"; };
 		50C02F2D1A7C1328006B730D /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		50C02F2F1A7C1334006B730D /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		50E0EE211ACEF5F7006BB5EB /* VIMUploadTaskQueueTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMUploadTaskQueueTracker.h; sourceTree = "<group>"; };
@@ -530,6 +533,8 @@
 				50F8F1561AB37F0F0066CB6D /* AFHTTPSessionManager+Extensions.m */,
 				50F8F1571AB37F0F0066CB6D /* NSURLSessionConfiguration+Extensions.h */,
 				50F8F1581AB37F0F0066CB6D /* NSURLSessionConfiguration+Extensions.m */,
+				509173BF1AE023EA00215AE0 /* AVAsset+Filesize.h */,
+				509173C01AE023EA00215AE0 /* AVAsset+Filesize.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -853,6 +858,7 @@
 				50E0EE8C1AD5C687006BB5EB /* VIMAddMetadataTask.m in Sources */,
 				509174651AE5456A00215AE0 /* UIButton+AFNetworking.m in Sources */,
 				AFCC3CBE1ACE2AC400D24B3B /* VIMObjectMapper.m in Sources */,
+				509173C11AE023EA00215AE0 /* AVAsset+Filesize.m in Sources */,
 				AB633B4718F365AB00971630 /* VIMServerResponse.m in Sources */,
 				50FF8B4D1A1BCCFD008BA7DC /* VIMRequestRetryManager.m in Sources */,
 				5017670619CCDB8700D8DC68 /* VIMServerResponseMapper.m in Sources */,
