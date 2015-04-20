@@ -34,6 +34,7 @@
 
 @property (nonatomic, strong, readwrite) PHAsset *phAsset;
 @property (nonatomic, strong, readwrite) AVURLAsset *URLAsset;
+@property (nonatomic, assign, readwrite) BOOL canUploadFromSource;
 
 @end
 
@@ -51,13 +52,14 @@
     return self;
 }
 
-- (instancetype)initWithURLAsset:(AVURLAsset *)URLAsset
+- (instancetype)initWithURLAsset:(AVURLAsset *)URLAsset canUploadFromSource:(BOOL)canUploadFromSource
 {
     self = [super init];
     if (self)
     {
         _URLAsset = URLAsset;
         _identifier = [URLAsset.URL absoluteString];
+        _canUploadFromSource = canUploadFromSource;
     }
     
     return self;
@@ -65,7 +67,7 @@
 
 - (void)requestAVAssetWithCompletionBlock:(void (^)(AVAsset *asset, NSError *error))completionBlock
 {
-    if(self.URLAsset)
+    if (self.URLAsset)
     {
         if (completionBlock)
         {
@@ -73,7 +75,7 @@
         }
     }
 #if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_7_1
-    else if(self.phAsset)
+    else if (self.phAsset)
     {
         PHVideoRequestOptions *options = [PHVideoRequestOptions new];
         options.deliveryMode = PHVideoRequestOptionsDeliveryModeHighQualityFormat;
@@ -201,6 +203,7 @@
         self.uploadState = [coder decodeIntegerForKey:NSStringFromSelector(@selector(uploadState))];
         self.videoURI = [coder decodeObjectForKey:NSStringFromSelector(@selector(videoURI))];
         self.error = [coder decodeObjectForKey:NSStringFromSelector(@selector(error))];
+        self.canUploadFromSource = [coder decodeBoolForKey:NSStringFromSelector(@selector(canUploadFromSource))];
         
         NSString *assetLocalIdentifier = [coder decodeObjectForKey:@"assetLocalIdentifier"];
         if (assetLocalIdentifier)
@@ -229,6 +232,7 @@
     [coder encodeInteger:self.uploadState forKey:NSStringFromSelector(@selector(uploadState))];
     [coder encodeObject:self.videoURI forKey:NSStringFromSelector(@selector(videoURI))];
     [coder encodeObject:self.error forKey:NSStringFromSelector(@selector(error))];
+    [coder encodeBool:self.canUploadFromSource forKey:NSStringFromSelector(@selector(canUploadFromSource))];
     
     if (self.phAsset)
     {
