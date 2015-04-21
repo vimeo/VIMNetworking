@@ -101,6 +101,20 @@
     }
 }
 
+- (NSTimeInterval)duration
+{
+    if (self.phAsset)
+    {
+        return self.phAsset.duration;
+    }
+    else if (self.URLAsset)
+    {
+        return CMTimeGetSeconds(self.URLAsset.duration);
+    }
+    
+    return 0.0f;
+}
+
 - (int32_t)fileSizeWithCompletionBlock:(FileSizeCompletionBlock)completionBlock
 {
     if (self.phAsset)
