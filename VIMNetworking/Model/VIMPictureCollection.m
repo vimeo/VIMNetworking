@@ -43,7 +43,7 @@
     
     for (VIMPicture *picture in self.pictures)
     {
-        if (picture.width.floatValue >= width && abs(picture.width.floatValue - width) < abs(selectedPicture.width.floatValue - width))
+        if (picture.width.floatValue >= width && fabs(picture.width.floatValue - width) < fabs(selectedPicture.width.floatValue - width))
         {
             selectedPicture = picture;
         }
@@ -66,7 +66,7 @@
     
     for( VIMPicture *picture in self.pictures)
     {
-        if (picture.height.floatValue >= height && abs(picture.height.floatValue - height) < abs(selectedPicture.height.floatValue - height))
+        if (picture.height.floatValue >= height && fabs(picture.height.floatValue - height) < fabs(selectedPicture.height.floatValue - height))
         {
             selectedPicture = picture;
         }
