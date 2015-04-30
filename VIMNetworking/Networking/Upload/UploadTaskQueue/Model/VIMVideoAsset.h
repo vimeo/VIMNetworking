@@ -56,6 +56,8 @@ typedef void(^ImageCompletionBlock)(UIImage *image, NSError *error);
 
 - (void)requestAVAssetWithCompletionBlock:(void (^)(AVAsset *asset, NSError *error))completionBlock;
 
+- (NSTimeInterval)duration;
+
 - (int32_t)fileSizeWithCompletionBlock:(FileSizeCompletionBlock)completionBlock;
 - (int32_t)imageWithSize:(CGSize)size completionBlock:(ImageCompletionBlock)completionBlock;
 
