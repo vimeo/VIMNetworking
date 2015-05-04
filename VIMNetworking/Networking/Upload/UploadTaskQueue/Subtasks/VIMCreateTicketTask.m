@@ -35,6 +35,7 @@ static const NSString *VIMCreateRecordTaskErrorDomain = @"VIMCreateRecordTaskErr
 
 @property (nonatomic, strong, readwrite) PHAsset *phAsset;
 @property (nonatomic, strong, readwrite) AVURLAsset *URLAsset;
+@property (nonatomic, assign) BOOL canUploadFromSource;
 
 @property (nonatomic, strong) NSDictionary *responseDictionary;
 
@@ -60,7 +61,7 @@ static const NSString *VIMCreateRecordTaskErrorDomain = @"VIMCreateRecordTaskErr
     return self;
 }
 
-- (instancetype)initWithURLAsset:(AVURLAsset *)URLAsset
+- (instancetype)initWithURLAsset:(AVURLAsset *)URLAsset canUploadFromSource:(BOOL)canUploadFromSource
 {
     NSParameterAssert(URLAsset);
     
@@ -68,6 +69,8 @@ static const NSString *VIMCreateRecordTaskErrorDomain = @"VIMCreateRecordTaskErr
     if (self)
     {
         _URLAsset = URLAsset;
+        _canUploadFromSource = canUploadFromSource;
+        
         self.identifier = [URLAsset.URL absoluteString];
     }
     
@@ -289,7 +292,17 @@ static const NSString *VIMCreateRecordTaskErrorDomain = @"VIMCreateRecordTaskErr
 {
     if (self.URLAsset)
     {
-        [VIMTempFileMaker tempFileFromURLAsset:self.URLAsset completionBlock:completionBlock];
+        if (self.canUploadFromSource)
+        {
+            if (completionBlock)
+            {
+                completionBlock([self.URLAsset.URL absoluteString], nil);
+            }
+        }
+        else
+        {
+            [VIMTempFileMaker tempFileFromURLAsset:self.URLAsset completionBlock:completionBlock];
+        }
     }
     else
     {
@@ -309,6 +322,7 @@ static const NSString *VIMCreateRecordTaskErrorDomain = @"VIMCreateRecordTaskErr
         self.uploadURI = [coder decodeObjectForKey:NSStringFromSelector(@selector(uploadURI))];
         self.activationURI = [coder decodeObjectForKey:NSStringFromSelector(@selector(activationURI))];
         self.responseDictionary = [coder decodeObjectForKey:NSStringFromSelector(@selector(responseDictionary))];
+        self.canUploadFromSource = [coder decodeBoolForKey:NSStringFromSelector(@selector(canUploadFromSource))];
         
         NSString *assetLocalIdentifier = [coder decodeObjectForKey:@"assetLocalIdentifier"];
         if (assetLocalIdentifier)
@@ -338,7 +352,8 @@ static const NSString *VIMCreateRecordTaskErrorDomain = @"VIMCreateRecordTaskErr
     [coder encodeObject:self.uploadURI forKey:NSStringFromSelector(@selector(uploadURI))];
     [coder encodeObject:self.activationURI forKey:NSStringFromSelector(@selector(activationURI))];
     [coder encodeObject:self.responseDictionary forKey:NSStringFromSelector(@selector(responseDictionary))];
-    
+    [coder encodeBool:self.canUploadFromSource forKey:NSStringFromSelector(@selector(canUploadFromSource))];
+
     if (self.phAsset)
     {
         [coder encodeObject:self.phAsset.localIdentifier forKey:@"assetLocalIdentifier"];

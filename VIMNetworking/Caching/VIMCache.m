@@ -90,23 +90,6 @@
 - (void)dealloc
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-    
-#ifdef __IPHONE_OS_VERSION_MIN_REQUIRED
-	
-#if	__IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_6_0
-    dispatch_release(_diskQueue);
-    dispatch_release(_memQueue);
-#endif
-	
-#elif TARGET_OS_MAC
-    
-#if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_8
-    dispatch_release(_diskQueue);
-    dispatch_release(_memQueue);
-#endif
-	
-#endif
-	
 }
 
 #pragma mark - Public API

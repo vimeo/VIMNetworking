@@ -95,6 +95,8 @@ NSString *VimeoBaseURLString = @"https://api.vimeo.com/";
 {
     if (![configuration isValid])
     {
+        NSAssert(NO, @"Cannot proceed with an invalid session configuration");
+        
         if (completionBlock)
         {
             completionBlock(NO);
@@ -165,11 +167,9 @@ NSString *VimeoBaseURLString = @"https://api.vimeo.com/";
 
 - (void)logOut
 {
-    [[VIMAPIClient sharedClient] logoutWithCompletionBlock:^(VIMServerResponse *response, NSError *error) {
-       
-        [[VIMAccountManager sharedInstance] logoutAccount:self.account];
+    [[VIMAPIClient sharedClient] logoutWithCompletionBlock:nil];
 
-    }];
+    [[VIMAccountManager sharedInstance] logoutAccount:self.account];
 }
 
 #pragma mark - Configuration

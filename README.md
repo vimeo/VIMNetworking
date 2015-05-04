@@ -2,6 +2,8 @@
 
 `VIMNetworking` is an Objective-C library that enables interaction with the [Vimeo API](https://developers.vimeo.com).  It handles authentication, request submission and cancellation, and video upload. Advanced features include caching and powerful model object parsing. 
 
+The upload system supports background session uploads from apps and extensions. Its core component is a serial task queue that can execute composite tasks (tasks with subtasks). For example, a composite task might include 3 steps: (1) a video file upload step, (2) a `POST` request to set file metadata (title, description, privacy), and (3) a `POST` request to share the video with friends. The upload system allows users to upload videos to Vimeo, but can be repurposed to manage background upload (or download) from any source. See detailed documentation below for more information. 
+
 ## Sample Project
 
 Check out the sample project [here](https://github.com/vimeo/Pegasus).
@@ -422,6 +424,10 @@ When your UI is loaded or refreshed, associate your newly create VIMVideoAsset o
 NSArray *videoAssets = self.datasource.items; // For example
 [[VIMUploadTaskQueue sharedAppQueue] associateVideoAssetsWithUploads:videoAssets];
 ```
+
+###Repurposing the Upload System
+
+The upload system can be repurposed to manage background uploads (or downloads) from any source. The simplest way to do this is to subclass `VIMNetworkTask` and `VIMNetworkTaskQueue`, using `VIMUploadTask` and `VIMUploadTaskQueue` for inspiration. 
 
 ## License
 

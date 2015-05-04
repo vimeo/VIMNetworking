@@ -106,9 +106,7 @@
             return [NSString stringWithFormat:@"Bearer %@", self.vimeoSession.account.credential.accessToken];
         }
     }
-    
-    NSLog(@"MAKING BASIC AUTH REQUEST");
-    
+        
     NSString *authString = [NSString stringWithFormat:@"%@:%@", self.vimeoSession.configuration.clientKey, self.vimeoSession.configuration.clientSecret];
     
     NSData *plainData = [authString dataUsingEncoding:NSUTF8StringEncoding];

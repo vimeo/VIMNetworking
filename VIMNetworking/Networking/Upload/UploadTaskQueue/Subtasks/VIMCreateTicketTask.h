@@ -39,6 +39,6 @@
 @property (nonatomic, strong, readonly) AVURLAsset *URLAsset;
 
 - (instancetype)initWithPHAsset:(PHAsset *)phAsset;
-- (instancetype)initWithURLAsset:(AVURLAsset *)URLAsset;
+- (instancetype)initWithURLAsset:(AVURLAsset *)URLAsset canUploadFromSource:(BOOL)canUploadFromSource;
 
 @end
