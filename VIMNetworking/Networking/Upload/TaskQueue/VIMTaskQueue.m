@@ -365,6 +365,8 @@ static NSString *CurrentTaskKey = @"current_task";
             NSArray *tasks = dictionary[TasksKey];
             [self.tasks addObjectsFromArray:tasks];
             
+            [self updateTaskCount];
+            
             NSString *message = [NSString stringWithFormat:@"LOAD %lu", (unsigned long)[tasks count]];
             [VIMTaskQueueDebugger postLocalNotificationWithContext:self.name message:message];
         }
