@@ -32,6 +32,8 @@ git clone --recursive https://github.com/vimeo/VIMNetworking.git
 
 1. Configure linker settings.  Navigate to Build Settings again.  Under “Other Linker Flags”, add ‘-ObjC’.
 
+1. Add the `vimeo-api-root.cer` certificate file to your Xcode project. This can be found in `VIMNetworking/Networking/Certificate/vimeo-api-root.cer`. This is necessary to enable certificate pinning. 
+
 ## Initialization
 
 On app launch, configure `VIMSession` with your client key, secret, and scope strings.
