@@ -43,6 +43,7 @@ static const NSString *VIMMetadataTaskErrorDomain = @"VIMMetadataTaskErrorDomain
 
 - (instancetype)initWithVideoURI:(NSString *)videoURI metadata:(VIMVideoMetadata *)videoMetadata
 {
+    NSAssert(videoURI != nil, @"videoURI must not be nil");
     self = [super init];
     if (self)
     {
@@ -94,6 +95,24 @@ static const NSString *VIMMetadataTaskErrorDomain = @"VIMMetadataTaskErrorDomain
         parameters[@"privacy"] = @{@"view" : self.videoMetadata.videoPrivacy};
     }
     
+    if ([[parameters allKeys] count] == 0) // There isn't any metadata to set...
+    {
+        self.success = YES;
+        
+        [self taskDidComplete];
+        
+        return;
+    }
+    
+    if ([self.videoURI length] == 0)
+    {
+        self.error = [NSError errorWithDomain:(NSString *)VIMMetadataTaskErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"Unable to add metadata to videoAsset, videoURI is nil."}];
+        
+        [self taskDidComplete];
+        
+        return;
+    }
+
     NSURL *fullURL = [NSURL URLWithString:self.videoURI relativeToURL:self.sessionManager.baseURL];
     
     NSError *error = nil;
