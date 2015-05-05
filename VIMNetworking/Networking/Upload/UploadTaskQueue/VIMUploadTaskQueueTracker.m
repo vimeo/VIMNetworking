@@ -299,7 +299,8 @@ static void *UploadStateContext = &UploadStateContext;
 
         [self.videoAssets removeObjectAtIndex:index];
         
-        NSDictionary *userInfo = @{VIMUploadTaskQueueTracker_AssetIndicesKey : @[@(index)]};
+        NSDictionary *userInfo = @{VIMUploadTaskQueueTracker_AssetIndicesKey : @[@(index)],
+                                   VIMUploadTaskQueueTracker_AssetsKey : @[object]};
         [[NSNotificationCenter defaultCenter] postNotificationName:VIMUploadTaskQueueTracker_DidRemoveQueuedAssetsNotification
                                                             object:self.videoAssets
                                                           userInfo:userInfo];
