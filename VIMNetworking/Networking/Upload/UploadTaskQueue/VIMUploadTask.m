@@ -272,8 +272,12 @@ static void *UploadProgressContext = &UploadProgressContext;
     else
     {
         self.error = task.error;
-        self.uploadState = VIMUploadState_Failed;
-   
+
+        if (task.error.code != NSURLErrorCancelled)
+        {
+            self.uploadState = VIMUploadState_Failed;
+        }
+
         [self progress:task];
 
         [self taskDidComplete];
@@ -300,7 +304,11 @@ static void *UploadProgressContext = &UploadProgressContext;
     else
     {
         self.error = task.error;
-        self.uploadState = VIMUploadState_Failed;
+        
+        if (task.error.code != NSURLErrorCancelled)
+        {
+            self.uploadState = VIMUploadState_Failed;
+        }
    
         [self progress:task];
 
@@ -339,8 +347,12 @@ static void *UploadProgressContext = &UploadProgressContext;
     else
     {
         self.error = task.error;
-        self.uploadState = VIMUploadState_Failed;
-    
+
+        if (task.error.code != NSURLErrorCancelled)
+        {
+            self.uploadState = VIMUploadState_Failed;
+        }
+
         [self progress:task];
         
         [self taskDidComplete];
@@ -356,7 +368,11 @@ static void *UploadProgressContext = &UploadProgressContext;
     else
     {
         self.error = task.error;
-        self.uploadState = VIMUploadState_Failed;
+
+        if (task.error.code != NSURLErrorCancelled)
+        {
+            self.uploadState = VIMUploadState_Failed;
+        }
     }
     
     [self progress:task];
@@ -374,13 +390,17 @@ static void *UploadProgressContext = &UploadProgressContext;
 
 - (void)taskDidComplete
 {
-    if (self.state != TaskStateCancelled)
+    if (self.state == TaskStateCancelled)
+    {
+        self.uploadState = VIMUploadState_None;
+    }
+    else
     {
         self.state = TaskStateFinished;
-        self.currentTask = nil;
-//        self.uploadState = VIMUploadState_None;
     }
-    
+
+    self.currentTask = nil;
+
     if (self.uploadCompletionBlock)
     {
         self.uploadCompletionBlock(self.videoURI, self.error);

@@ -186,6 +186,15 @@
     return 0; // TODO: we need to return something that allows calling contexts to cancel the request [AH]
 }
 
+- (BOOL)isUploading
+{
+    return self.uploadState != VIMUploadState_None;
+}
+
+//VIMUploadState_None,
+//VIMUploadState_Succeeded,
+//VIMUploadState_Failed
+
 #pragma mark - Utilities
 
 - (CGFloat)fileSizeForAsset:(AVAsset *)asset
