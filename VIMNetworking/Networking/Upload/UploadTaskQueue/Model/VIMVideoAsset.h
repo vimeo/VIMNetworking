@@ -61,4 +61,6 @@ typedef void(^ImageCompletionBlock)(UIImage *image, NSError *error);
 - (int32_t)fileSizeWithCompletionBlock:(FileSizeCompletionBlock)completionBlock;
 - (int32_t)imageWithSize:(CGSize)size completionBlock:(ImageCompletionBlock)completionBlock;
 
+- (BOOL)isUploading;
+
 @end
