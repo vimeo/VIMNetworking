@@ -188,12 +188,13 @@
 
 - (BOOL)isUploading
 {
-    return self.uploadState != VIMUploadState_None;
+    return (self.uploadState != VIMUploadState_None && ![self didFinishUploading]);
 }
 
-//VIMUploadState_None,
-//VIMUploadState_Succeeded,
-//VIMUploadState_Failed
+- (BOOL)didFinishUploading
+{
+    return (self.uploadState == VIMUploadState_Failed || self.uploadState == VIMUploadState_Succeeded);
+}
 
 #pragma mark - Utilities
 
