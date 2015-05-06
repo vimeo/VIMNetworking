@@ -206,6 +206,7 @@ static void *UploadStateContext = &UploadStateContext;
         for (VIMVideoAsset *videoAsset in object)
         {
             [self addObserversForVideoAsset:videoAsset];
+            [self uploadState:videoAsset.uploadState didChangeForVideoAsset:videoAsset];
         }
     
         [[NSNotificationCenter defaultCenter] postNotificationName:VIMUploadTaskQueueTracker_DidRefreshQueuedAssetsNotification
