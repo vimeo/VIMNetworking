@@ -100,7 +100,7 @@ static void *UploadStateContext = &UploadStateContext;
 
 - (void)ignoreFailedAsset:(VIMVideoAsset *)videoAsset
 {
-    NSInteger index = [self.failedAssets indexOfObject:videoAsset];
+    NSInteger index = [self indexOfFailedAsset:videoAsset];
     NSAssert(index != NSNotFound, @"Invalid index");
     
     if (index == NSNotFound)
@@ -145,6 +145,22 @@ static void *UploadStateContext = &UploadStateContext;
     }
     
     return nil;
+}
+
+#pragma mark - Private API
+
+- (NSInteger)indexOfFailedAsset:(VIMVideoAsset *)videoAsset
+{
+    for (NSInteger i = 0; i < [self.failedAssets count]; i++)
+    {
+        VIMVideoAsset *failedAsset = self.failedAssets[i];
+        if ([failedAsset.identifier isEqualToString:videoAsset.identifier])
+        {
+            return i;
+        }
+    }
+    
+    return NSNotFound;
 }
 
 #pragma mark - Accessors
@@ -240,7 +256,7 @@ static void *UploadStateContext = &UploadStateContext;
             index++;
             
             // If this is a failed asset being retried, remove it from the failed list [AH]
-            failedIndex = [self.failedAssets indexOfObject:videoAsset];
+            failedIndex = [self indexOfFailedAsset:videoAsset];
             if (failedIndex != NSNotFound)
             {
                 [self.failedAssets removeObjectAtIndex:failedIndex];
