@@ -28,7 +28,7 @@
 
 #import <UIKit/UIKit.h>
 
-#define LOCAL_NOTIFICATIONS_ENABLED 0
+#define LOCAL_NOTIFICATIONS_ENABLED 1
 
 @implementation VIMTaskQueueDebugger
 
