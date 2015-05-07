@@ -207,10 +207,26 @@
         AVURLAsset *URLAsset = (AVURLAsset *)asset;
         NSNumber *size;
         [URLAsset.URL getResourceValue:&size forKey:NSURLFileSizeKey error:nil];
-        rawSize = [size floatValue] / (1024.0 * 1024.0);
+        
+        if (size)
+        {
+            rawSize = [size floatValue] / (1024.0 * 1024.0);
+        }
+        else
+        {
+            float estimatedSize = 0.0;
+            
+            NSArray *tracks = [asset tracks];
+            for (AVAssetTrack * track in tracks)
+            {
+                float rate = [track estimatedDataRate] / 8.0f; // convert bits per second to bytes per second
+                float seconds = CMTimeGetSeconds([track timeRange].duration);
+                estimatedSize += seconds * rate;
+            }
+            
+            rawSize = estimatedSize / (1024.0 * 1024.0);
+        }
     }
-
-//    unsigned long long fileSize = [[[[NSFileManager defaultManager] attributesOfItemAtPath:[self.url path] error:NULL] objectForKey:NSFileSize] unsignedLongLongValue];
 
     return rawSize;
 }
