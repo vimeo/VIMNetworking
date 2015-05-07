@@ -42,6 +42,7 @@ extern NSString *const VIMUploadTaskQueueTracker_NewIndexKey;
 extern NSString *const VIMUploadTaskQueueTracker_QueuedAssetsKey;
 extern NSString *const VIMUploadTaskQueueTracker_FailedAssetsKey;
 extern NSString *const VIMUploadTaskQueueTracker_AssetsKey;
+extern NSString *const VIMUploadTaskQueueTracker_SessionIdentifierKey;
 
 @interface VIMUploadTaskQueueTracker : NSObject
 
@@ -49,7 +50,7 @@ extern NSString *const VIMUploadTaskQueueTracker_AssetsKey;
 @property (nonatomic, strong, readonly) NSMutableArray *videoAssets;
 @property (nonatomic, strong, readonly) NSMutableArray *failedAssets;
 
-- (instancetype)initWithName:(NSString *)name;
+- (instancetype)initWithSessionIdentifier:(NSString *)sessionIdentifier;
 
 // This method must be called when a user "ignores" a failed asset [AH]
 - (void)ignoreFailedAsset:(VIMVideoAsset *)videoAsset;

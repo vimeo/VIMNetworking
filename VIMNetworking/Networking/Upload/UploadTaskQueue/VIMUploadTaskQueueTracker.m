@@ -46,12 +46,13 @@ NSString *const VIMUploadTaskQueueTracker_NewIndexKey = @"VIMUploadTaskQueueTrac
 NSString *const VIMUploadTaskQueueTracker_QueuedAssetsKey = @"VIMUploadTaskQueueTracker_QueuedAssetsKey";
 NSString *const VIMUploadTaskQueueTracker_FailedAssetsKey = @"VIMUploadTaskQueueTracker_FailedAssetsKey";
 NSString *const VIMUploadTaskQueueTracker_AssetsKey = @"VIMUploadTaskQueueTracker_AssetsKey";
+NSString *const VIMUploadTaskQueueTracker_SessionIdentifierKey = @"VIMUploadTaskQueueTracker_SessionIdentifierKey";
 
 static void *UploadStateContext = &UploadStateContext;
 
 @interface VIMUploadTaskQueueTracker ()
 
-@property (nonatomic, strong) NSString *name;
+@property (nonatomic, strong) NSString *sessionIdentifier;
 
 @property (nonatomic, strong, readwrite) VIMVideoAsset *currentVideoAsset;
 @property (nonatomic, strong, readwrite) NSMutableArray *videoAssets;
@@ -76,14 +77,14 @@ static void *UploadStateContext = &UploadStateContext;
     return nil;
 }
 
-- (instancetype)initWithName:(NSString *)name
+- (instancetype)initWithSessionIdentifier:(NSString *)sessionIdentifier
 {
-    NSParameterAssert(name);
+    NSParameterAssert(sessionIdentifier);
     
     self = [super init];
     if (self)
     {
-        _name = name;
+        _sessionIdentifier = sessionIdentifier;
         
         _videoAssets = [NSMutableArray array];
         _failedAssets = [NSMutableArray array];
@@ -220,7 +221,7 @@ static void *UploadStateContext = &UploadStateContext;
     
     NSDictionary *userInfo = [notification userInfo];
     NSString *name = userInfo[VIMUploadTaskQueue_NameKey];
-    if (![name isEqualToString:self.name])
+    if (![name isEqualToString:self.sessionIdentifier])
     {
         return;
     }
@@ -258,7 +259,7 @@ static void *UploadStateContext = &UploadStateContext;
 
     NSDictionary *userInfo = [notification userInfo];
     NSString *name = userInfo[VIMUploadTaskQueue_NameKey];
-    if (![name isEqualToString:self.name])
+    if (![name isEqualToString:self.sessionIdentifier])
     {
         return;
     }
@@ -295,7 +296,8 @@ static void *UploadStateContext = &UploadStateContext;
                                            VIMUploadTaskQueueTracker_NewIndexKey : @([self.videoAssets count] - 1),
                                            VIMUploadTaskQueueTracker_QueuedAssetsKey : self.videoAssets,
                                            VIMUploadTaskQueueTracker_FailedAssetsKey : self.failedAssets,
-                                           VIMUploadTaskQueueTracker_AssetsKey : object};
+                                           VIMUploadTaskQueueTracker_AssetsKey : object,
+                                           VIMUploadTaskQueueTracker_SessionIdentifierKey : self.sessionIdentifier};
                 [[NSNotificationCenter defaultCenter] postNotificationName:VIMUploadTaskQueueTracker_FailedAssetDidRetryNotification
                                                                     object:nil
                                                                   userInfo:userInfo];
@@ -305,7 +307,8 @@ static void *UploadStateContext = &UploadStateContext;
         }
 
         NSDictionary *userInfo = @{VIMUploadTaskQueueTracker_AssetIndicesKey : indices,
-                                   VIMUploadTaskQueueTracker_AssetsKey : object};
+                                   VIMUploadTaskQueueTracker_AssetsKey : object,
+                                   VIMUploadTaskQueueTracker_SessionIdentifierKey : self.sessionIdentifier};
         [[NSNotificationCenter defaultCenter] postNotificationName:VIMUploadTaskQueueTracker_DidAddQueuedAssetsNotification
                                                             object:self.videoAssets
                                                           userInfo:userInfo];        
@@ -318,7 +321,7 @@ static void *UploadStateContext = &UploadStateContext;
 {
     NSDictionary *userInfo = [notification userInfo];
     NSString *name = userInfo[VIMUploadTaskQueue_NameKey];
-    if (![name isEqualToString:self.name])
+    if (![name isEqualToString:self.sessionIdentifier])
     {
         return;
     }
@@ -346,7 +349,8 @@ static void *UploadStateContext = &UploadStateContext;
         [self.videoAssets removeObjectAtIndex:index];
         
         NSDictionary *userInfo = @{VIMUploadTaskQueueTracker_AssetIndicesKey : @[@(index)],
-                                   VIMUploadTaskQueueTracker_AssetsKey : @[object]};
+                                   VIMUploadTaskQueueTracker_AssetsKey : @[object],
+                                   VIMUploadTaskQueueTracker_SessionIdentifierKey : self.sessionIdentifier};
         [[NSNotificationCenter defaultCenter] postNotificationName:VIMUploadTaskQueueTracker_DidRemoveQueuedAssetsNotification
                                                             object:self.videoAssets
                                                           userInfo:userInfo];
@@ -359,7 +363,7 @@ static void *UploadStateContext = &UploadStateContext;
 {
     NSDictionary *userInfo = [notification userInfo];
     NSString *name = userInfo[VIMUploadTaskQueue_NameKey];
-    if (![name isEqualToString:self.name])
+    if (![name isEqualToString:self.sessionIdentifier])
     {
         return;
     }
@@ -480,7 +484,8 @@ static void *UploadStateContext = &UploadStateContext;
             [self.videoAssets removeObjectAtIndex:index];
             
             NSDictionary *userInfo = @{VIMUploadTaskQueueTracker_AssetIndicesKey : @[@(index)],
-                                       VIMUploadTaskQueueTracker_AssetsKey : @[videoAsset]};
+                                       VIMUploadTaskQueueTracker_AssetsKey : @[videoAsset],
+                                       VIMUploadTaskQueueTracker_SessionIdentifierKey : self.sessionIdentifier};
             [[NSNotificationCenter defaultCenter] postNotificationName:VIMUploadTaskQueueTracker_DidRemoveQueuedAssetsNotification
                                                                 object:self.videoAssets
                                                               userInfo:userInfo];
@@ -508,7 +513,8 @@ static void *UploadStateContext = &UploadStateContext;
                                            VIMUploadTaskQueueTracker_NewIndexKey : @([self.failedAssets count] - 1),
                                            VIMUploadTaskQueueTracker_QueuedAssetsKey : self.videoAssets,
                                            VIMUploadTaskQueueTracker_FailedAssetsKey : self.failedAssets,
-                                           VIMUploadTaskQueueTracker_AssetsKey : @[videoAsset]};
+                                           VIMUploadTaskQueueTracker_AssetsKey : @[videoAsset],
+                                           VIMUploadTaskQueueTracker_SessionIdentifierKey : self.sessionIdentifier};
                 [[NSNotificationCenter defaultCenter] postNotificationName:VIMUploadTaskQueueTracker_QueuedAssetDidFailNotification
                                                                     object:nil
                                                                   userInfo:userInfo];
