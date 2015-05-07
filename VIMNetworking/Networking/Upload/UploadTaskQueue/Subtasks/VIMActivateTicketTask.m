@@ -57,6 +57,8 @@ static const NSString *VIMActivateRecordTaskErrorDomain = @"VIMActivateRecordTas
 
 - (void)resume
 {
+    NSAssert(self.state != TaskStateFinished, @"Cannot start a finished task");
+
     if ((self.state == TaskStateExecuting || self.state == TaskStateSuspended) && [self.sessionManager taskExistsForIdentifier:self.backgroundTaskIdentifier])
     {
         [VIMTaskQueueDebugger postLocalNotificationWithContext:self.sessionManager.session.configuration.identifier message:[NSString stringWithFormat:@"%@ restarted", self.name]];
