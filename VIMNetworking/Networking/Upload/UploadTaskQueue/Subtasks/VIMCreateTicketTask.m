@@ -234,20 +234,26 @@ static const NSString *VIMCreateRecordTaskErrorDomain = @"VIMCreateRecordTaskErr
         return;
     }
     
+    if (task.error)
+    {
+        self.error = task.error;
+        
+        [self taskDidComplete];
+        
+        return;
+    }
+
     NSString *uploadURI = [self.responseDictionary objectForKey:@"upload_link_secure"];
     NSString *activationURI = [self.responseDictionary objectForKey:@"complete_uri"];
     if (uploadURI == nil || activationURI == nil)
     {
         self.error = [NSError errorWithDomain:(NSString *)VIMCreateRecordTaskErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"Reponse did not include upload_link_secure or complete_uri."}];
-    }
 
-    if (self.error)
-    {
         [self taskDidComplete];
-
+        
         return;
     }
-    
+
     [VIMTaskQueueDebugger postLocalNotificationWithContext:self.sessionManager.session.configuration.identifier message:@"COPY started"];
 
     [self tempFileWithCompletionBlock:^(NSString *path, NSError *error) {
