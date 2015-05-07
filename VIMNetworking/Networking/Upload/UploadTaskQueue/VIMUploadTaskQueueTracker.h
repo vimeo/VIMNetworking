@@ -42,6 +42,7 @@ extern NSString *const VIMUploadTaskQueueTracker_NewIndexKey;
 extern NSString *const VIMUploadTaskQueueTracker_QueuedAssetsKey;
 extern NSString *const VIMUploadTaskQueueTracker_FailedAssetsKey;
 extern NSString *const VIMUploadTaskQueueTracker_AssetsKey;
+extern NSString *const VIMUploadTaskQueueTracker_SessionIdentifierKey;
 
 @interface VIMUploadTaskQueueTracker : NSObject
 
