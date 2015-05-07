@@ -170,6 +170,8 @@ static void *UploadStateContext = &UploadStateContext;
 {
     if (_currentVideoAsset != currentVideoAsset)
     {
+        [self removeObserversForVideoAsset:_currentVideoAsset];
+
         _currentVideoAsset = currentVideoAsset;
         
         [[NSNotificationCenter defaultCenter] postNotificationName:VIMUploadTaskQueueTracker_CurrentVideoAssetDidChangeNotification
@@ -226,6 +228,11 @@ static void *UploadStateContext = &UploadStateContext;
     NSArray *object = (NSArray *)[notification object];
     if (object && [object isKindOfClass:[NSArray class]])
     {
+        for (VIMVideoAsset *videoAsset in self.videoAssets)
+        {
+            [self removeObserversForVideoAsset:videoAsset];
+        }
+
         [self.videoAssets removeAllObjects];
         [self.videoAssets addObjectsFromArray:object];
         
@@ -379,6 +386,7 @@ static void *UploadStateContext = &UploadStateContext;
         {
             [self removeObserversForVideoAsset:videoAsset];
         }
+        
         [self.videoAssets removeAllObjects];
         self.currentVideoAsset = nil;
 
@@ -458,7 +466,6 @@ static void *UploadStateContext = &UploadStateContext;
         }
         case VIMUploadState_Succeeded:
         {
-            [self removeObserversForVideoAsset:videoAsset];
             self.currentVideoAsset = nil;
             [self.successfulAssetIdentifiers addObject:videoAsset.identifier];
 
@@ -484,7 +491,6 @@ static void *UploadStateContext = &UploadStateContext;
         {
             if (videoAsset.error.code != NSURLErrorCancelled) // Cancellation is handled above via notification [AH]
             {
-                [self removeObserversForVideoAsset:videoAsset];
                 [self.failedAssets addObject:videoAsset];
                 self.currentVideoAsset = nil;
 
