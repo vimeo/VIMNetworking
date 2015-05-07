@@ -29,6 +29,7 @@
 #import "VIMTaskQueueDebugger.h"
 
 NSString *const VIMTaskQueueTaskFailedNotification = @"VIMTaskQueueTaskFailedNotification";
+NSString *const VIMTaskQueueTaskSucceededNotification = @"VIMTaskQueueTaskSucceededNotification";
 
 static NSString *TasksKey = @"tasks";
 static NSString *CurrentTaskKey = @"current_task";
@@ -412,6 +413,15 @@ static NSString *CurrentTaskKey = @"current_task";
     
     [self logTaskStatus:task];
     
+    if ([task didSucceed])
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:VIMTaskQueueTaskSucceededNotification object:task];
+    }
+    else if (task.error.code != NSURLErrorCancelled)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:VIMTaskQueueTaskFailedNotification object:task];
+    }
+    
     [self startNextTask];
 }
 
@@ -430,8 +440,6 @@ static NSString *CurrentTaskKey = @"current_task";
         else
         {
             [VIMTaskQueueDebugger postLocalNotificationWithContext:self.name message:[NSString stringWithFormat:@"%@ failed %@", task.name, task.error]];
-            
-            [[NSNotificationCenter defaultCenter] postNotificationName:VIMTaskQueueTaskFailedNotification object:task];
         }
     }
 }
