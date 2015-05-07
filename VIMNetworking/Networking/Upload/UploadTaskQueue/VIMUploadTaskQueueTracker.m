@@ -28,6 +28,7 @@
 #import "VIMUploadTaskQueue.h"
 #import "VIMVideoAsset.h"
 #import "VIMCache.h"
+#import "VIMSession.h"
 
 NSString *const VIMUploadTaskQueueTracker_CurrentVideoAssetDidChangeNotification = @"VIMUploadTaskQueueTracker_CurrentVideoAssetDidChangeNotification";
 NSString *const VIMUploadTaskQueueTracker_DidRefreshQueuedAssetsNotification = @"VIMUploadTaskQueueTracker_DidRefreshQueuedAssetsNotification";
@@ -197,6 +198,10 @@ static void *UploadStateContext = &UploadStateContext;
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(didCancelAllAssets:)
                                                  name:VIMUploadTaskQueue_DidCancelAllAssetsNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(authenticatedUserDidChange:)
+                                                 name:VIMSession_AuthenticatedUserDidChangeNotification object:nil];
 }
 
 - (void)removeObservers
@@ -206,6 +211,11 @@ static void *UploadStateContext = &UploadStateContext;
 
 - (void)didAssociateAssetsWithTasks:(NSNotification *)notification
 {
+    if ([VIMSession sharedSession].authenticatedUser == nil)
+    {
+        return;
+    }
+    
     NSDictionary *userInfo = [notification userInfo];
     NSString *name = userInfo[VIMUploadTaskQueue_NameKey];
     if (![name isEqualToString:self.name])
@@ -234,6 +244,11 @@ static void *UploadStateContext = &UploadStateContext;
 
 - (void)didAddAssets:(NSNotification *)notification
 {
+    if ([VIMSession sharedSession].authenticatedUser == nil)
+    {
+        return;
+    }
+
     NSDictionary *userInfo = [notification userInfo];
     NSString *name = userInfo[VIMUploadTaskQueue_NameKey];
     if (![name isEqualToString:self.name])
@@ -347,6 +362,27 @@ static void *UploadStateContext = &UploadStateContext;
                                                         object:self.videoAssets];
     
     [self save];
+}
+
+- (void)authenticatedUserDidChange:(NSNotification *)notification
+{
+    if ([VIMSession sharedSession].authenticatedUser == nil) // User logged out
+    {
+        for (VIMVideoAsset *videoAsset in self.videoAssets)
+        {
+            [self removeObserversForVideoAsset:videoAsset];
+        }
+        [self.videoAssets removeAllObjects];
+        self.currentVideoAsset = nil;
+
+        [self.successfulAssetIdentifiers removeAllObjects];
+        [self.failedAssets removeAllObjects];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:VIMUploadTaskQueueTracker_DidRefreshQueuedAssetsNotification
+                                                            object:self.videoAssets];
+
+        [self save];
+    }
 }
 
 #pragma mark - KVO
