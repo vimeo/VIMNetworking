@@ -323,11 +323,18 @@ static void *UploadStateContext = &UploadStateContext;
         {
             self.currentVideoAsset = nil;
         }
-        
-        NSInteger index = [self.videoAssets indexOfObject:object];
-        NSAssert(index != NSNotFound, @"Invalid index");
-    
+
         [self removeObserversForVideoAsset:object];
+
+        NSInteger index = [self.videoAssets indexOfObject:object];
+//        NSAssert(index != NSNotFound, @"Invalid index");
+
+        if (index == NSNotFound)
+        {
+            [self save];
+
+            return;
+        }
 
         [self.videoAssets removeObjectAtIndex:index];
         
@@ -451,13 +458,19 @@ static void *UploadStateContext = &UploadStateContext;
         }
         case VIMUploadState_Succeeded:
         {
-            NSInteger index = [self.videoAssets indexOfObject:videoAsset];
-            NSAssert(index != NSNotFound, @"Invalid index");
-            
-            [self.videoAssets removeObjectAtIndex:index];
             [self removeObserversForVideoAsset:videoAsset];
-            [self.successfulAssetIdentifiers addObject:videoAsset.identifier];
             self.currentVideoAsset = nil;
+            [self.successfulAssetIdentifiers addObject:videoAsset.identifier];
+
+            NSInteger index = [self.videoAssets indexOfObject:videoAsset];
+//            NSAssert(index != NSNotFound, @"Invalid index");
+            
+            if (index == NSNotFound)
+            {
+                break;
+            }
+
+            [self.videoAssets removeObjectAtIndex:index];
             
             NSDictionary *userInfo = @{VIMUploadTaskQueueTracker_AssetIndicesKey : @[@(index)],
                                        VIMUploadTaskQueueTracker_AssetsKey : @[videoAsset]};
@@ -471,13 +484,19 @@ static void *UploadStateContext = &UploadStateContext;
         {
             if (videoAsset.error.code != NSURLErrorCancelled) // Cancellation is handled above via notification [AH]
             {
-                NSInteger index = [self.videoAssets indexOfObject:videoAsset];
-                NSAssert(index != NSNotFound, @"Invalid index");
-    
-                [self.videoAssets removeObjectAtIndex:index];
                 [self removeObserversForVideoAsset:videoAsset];
                 [self.failedAssets addObject:videoAsset];
                 self.currentVideoAsset = nil;
+
+                NSInteger index = [self.videoAssets indexOfObject:videoAsset];
+//                NSAssert(index != NSNotFound, @"Invalid index");
+    
+                if (index == NSNotFound)
+                {
+                    break;
+                }
+
+                [self.videoAssets removeObjectAtIndex:index];
 
                 NSDictionary *userInfo = @{VIMUploadTaskQueueTracker_OriginalIndexKey : @(index),
                                            VIMUploadTaskQueueTracker_NewIndexKey : @([self.failedAssets count] - 1),
