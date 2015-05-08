@@ -28,15 +28,15 @@
 
 #import <UIKit/UIKit.h>
 
-#define LOCAL_NOTIFICATIONS_ENABLED 0
+#define LOCAL_NOTIFICATIONS_ENABLED 1
 
 @implementation VIMTaskQueueDebugger
 
 + (void)postLocalNotificationWithContext:(NSString *)context message:(NSString *)message
 {
-    NSString *modMessage = [NSString stringWithFormat:@"%@--%@", [VIMTaskQueueDebugger debugContext:context], message];
+//    NSString *modMessage = [NSString stringWithFormat:@"%@--%@", [VIMTaskQueueDebugger debugContext:context], message];
     
-    [VIMTaskQueueDebugger postLocalNotificationWithMessage:modMessage];
+//    [VIMTaskQueueDebugger postLocalNotificationWithMessage:modMessage];
 }
 
 + (void)postLocalNotificationWithMessage:(NSString *)message
