@@ -223,7 +223,6 @@
 		50C02F2F1A7C1334006B730D /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		50E0EE211ACEF5F7006BB5EB /* VIMUploadTaskQueueTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMUploadTaskQueueTracker.h; sourceTree = "<group>"; };
 		50E0EE221ACEF5F7006BB5EB /* VIMUploadTaskQueueTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMUploadTaskQueueTracker.m; sourceTree = "<group>"; };
-		50E0EE431AD58EC6006BB5EB /* vimeo-api.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = "vimeo-api.cer"; sourceTree = "<group>"; };
 		50E0EE611AD5BC15006BB5EB /* VIMUploadState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMUploadState.h; sourceTree = "<group>"; };
 		50E0EE621AD5BC15006BB5EB /* VIMVideoAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMVideoAsset.h; sourceTree = "<group>"; };
 		50E0EE631AD5BC15006BB5EB /* VIMVideoAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMVideoAsset.m; sourceTree = "<group>"; };
@@ -404,7 +403,6 @@
 		501383AF1A1E743C00B63A38 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
-				50E0EE421AD58EC6006BB5EB /* Certificate */,
 				5018BAC41AAA342400087BC1 /* VIMAPIClient+Private.h */,
 				50F8F0F91AB2249F0066CB6D /* VIMAccountManager+Private.h */,
 			);
@@ -469,14 +467,6 @@
 				5091753C1AE5604600215AE0 /* UIWebView+AFNetworking.m */,
 			);
 			path = "UIKit+AFNetworking";
-			sourceTree = "<group>";
-		};
-		50E0EE421AD58EC6006BB5EB /* Certificate */ = {
-			isa = PBXGroup;
-			children = (
-				50E0EE431AD58EC6006BB5EB /* vimeo-api.cer */,
-			);
-			path = Certificate;
 			sourceTree = "<group>";
 		};
 		50E0EE601AD5BC15006BB5EB /* Model */ = {
