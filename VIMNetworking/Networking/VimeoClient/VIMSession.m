@@ -170,6 +170,11 @@ NSString *VimeoBaseURLString = @"https://api.vimeo.com/";
     [[VIMAPIClient sharedClient] logoutWithCompletionBlock:nil];
 
     [[VIMAccountManager sharedInstance] logoutAccount:self.account];
+    
+    [[VIMCache sharedCache] removeAllObjects];
+    [[self userCache] removeAllObjects];
+    [[self appGroupUserCache] removeAllObjects];
+    [[self appGroupSharedCache] removeAllObjects];
 }
 
 #pragma mark - Configuration
@@ -504,31 +509,6 @@ NSString *VimeoBaseURLString = @"https://api.vimeo.com/";
     //return [groupPath stringByAppendingPathComponent:@"tmp"];
     
     return [groupURL path];
-}
-
-- (NSString *)appGroupExportsDirectory
-{
-    NSString *uploadsDirectoryName = @"uploads";
-    
-    NSURL *groupURL = [[NSFileManager new] containerURLForSecurityApplicationGroupIdentifier:self.configuration.sharedContainerID];
-    if (groupURL == nil)
-    {
-        NSLog(@"VIMVimeoSession: Couldn't find shared group URL.");
-        
-        return [NSTemporaryDirectory() stringByAppendingPathComponent:uploadsDirectoryName];
-    }
-    
-    NSString *groupPath = [[groupURL path] stringByAppendingPathComponent:uploadsDirectoryName];
-    
-    NSError *error = nil;
-    if (![[NSFileManager defaultManager] createDirectoryAtPath:groupPath withIntermediateDirectories:YES attributes:nil error:&error])
-    {
-        NSLog(@"VIMVimeoSession: Unable to create export directory: %@", error);
-        
-        return [NSTemporaryDirectory() stringByAppendingPathComponent:uploadsDirectoryName];
-    }
-
-    return groupPath;
 }
 
 - (VIMCache *)appGroupSharedCache
