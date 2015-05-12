@@ -170,6 +170,11 @@ NSString *VimeoBaseURLString = @"https://api.vimeo.com/";
     [[VIMAPIClient sharedClient] logoutWithCompletionBlock:nil];
 
     [[VIMAccountManager sharedInstance] logoutAccount:self.account];
+    
+    [[VIMCache sharedCache] removeAllObjects];
+    [[self userCache] removeAllObjects];
+    [[self appGroupUserCache] removeAllObjects];
+    [[self appGroupSharedCache] removeAllObjects];
 }
 
 #pragma mark - Configuration

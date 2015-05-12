@@ -533,9 +533,9 @@ static void *UploadStateContext = &UploadStateContext;
 - (void)load
 {
     id successObject = [[NSUserDefaults standardUserDefaults] objectForKey:VIMUploadTaskQueueTracker_SuccessfulAssetIdentifiersCacheKey];
-    if (successObject && [successObject isKindOfClass:[NSSet class]])
+    if (successObject && [successObject isKindOfClass:[NSArray class]])
     {
-        self.successfulAssetIdentifiers = [NSMutableSet setWithSet:successObject];
+        self.successfulAssetIdentifiers = [NSMutableSet setWithArray:successObject];
     }
 
     id failureObject = [[NSUserDefaults standardUserDefaults] objectForKey:VIMUploadTaskQueueTracker_FailedAssetsCacheKey];
@@ -547,11 +547,26 @@ static void *UploadStateContext = &UploadStateContext;
 
 - (void)save
 {
-    [[NSUserDefaults standardUserDefaults] setObject:self.successfulAssetIdentifiers
-                                              forKey:VIMUploadTaskQueueTracker_SuccessfulAssetIdentifiersCacheKey];
+    if (self.successfulAssetIdentifiers)
+    {
+        NSArray *array = [self.successfulAssetIdentifiers allObjects];
+        [[NSUserDefaults standardUserDefaults] setObject:array
+                                                  forKey:VIMUploadTaskQueueTracker_SuccessfulAssetIdentifiersCacheKey];
+    }
+    else
+    {
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:VIMUploadTaskQueueTracker_SuccessfulAssetIdentifiersCacheKey];
+    }
 
-    [[NSUserDefaults standardUserDefaults] setObject:self.failedAssets
-                                              forKey:VIMUploadTaskQueueTracker_FailedAssetsCacheKey];
+    if (self.failedAssets)
+    {
+        [[NSUserDefaults standardUserDefaults] setObject:self.failedAssets
+                                                  forKey:VIMUploadTaskQueueTracker_FailedAssetsCacheKey];
+    }
+    else
+    {
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:VIMUploadTaskQueueTracker_FailedAssetsCacheKey];
+    }
 
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
