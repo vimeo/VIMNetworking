@@ -532,13 +532,13 @@ static void *UploadStateContext = &UploadStateContext;
 
 - (void)load
 {
-    id successObject = [[VIMCache sharedCache] objectForKey:VIMUploadTaskQueueTracker_SuccessfulAssetIdentifiersCacheKey];
+    id successObject = [[NSUserDefaults standardUserDefaults] objectForKey:VIMUploadTaskQueueTracker_SuccessfulAssetIdentifiersCacheKey];
     if (successObject && [successObject isKindOfClass:[NSSet class]])
     {
         self.successfulAssetIdentifiers = [NSMutableSet setWithSet:successObject];
     }
 
-    id failureObject = [[VIMCache sharedCache] objectForKey:VIMUploadTaskQueueTracker_FailedAssetsCacheKey];
+    id failureObject = [[NSUserDefaults standardUserDefaults] objectForKey:VIMUploadTaskQueueTracker_FailedAssetsCacheKey];
     if (failureObject && [failureObject isKindOfClass:[NSArray class]])
     {
         self.failedAssets = [NSMutableArray arrayWithArray:failureObject];
@@ -547,8 +547,13 @@ static void *UploadStateContext = &UploadStateContext;
 
 - (void)save
 {
-    [[VIMCache sharedCache] setObject:self.successfulAssetIdentifiers forKey:VIMUploadTaskQueueTracker_SuccessfulAssetIdentifiersCacheKey];
-    [[VIMCache sharedCache] setObject:self.failedAssets forKey:VIMUploadTaskQueueTracker_FailedAssetsCacheKey];
+    [[NSUserDefaults standardUserDefaults] setObject:self.successfulAssetIdentifiers
+                                              forKey:VIMUploadTaskQueueTracker_SuccessfulAssetIdentifiersCacheKey];
+
+    [[NSUserDefaults standardUserDefaults] setObject:self.failedAssets
+                                              forKey:VIMUploadTaskQueueTracker_FailedAssetsCacheKey];
+
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 @end
