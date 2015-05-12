@@ -57,9 +57,6 @@ extern NSString *const VIMSession_AuthenticatedUserDidChangeNotification; // Sen
 - (VIMCache *)userCache; // Get local cache for current user. Returns shared cache if no current user.
 - (VIMCache *)appGroupSharedCache;
 
-- (NSString *)appGroupTmpPath;
-- (NSString *)appGroupExportsDirectory;
-
 - (NSString *)backgroundSessionIdentifierApp;
 - (NSString *)backgroundSessionIdentifierExtension;
 - (NSString *)sharedContainerID;
