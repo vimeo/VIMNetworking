@@ -146,10 +146,6 @@ NSString * const VIMAccountStore_ChangedAccountKey = @"VIMAccountStore_ChangedAc
 {
     NSArray *accountsToSave = [NSArray arrayWithArray:self.accounts];
 
-    // No longer using cache for account data [AH]
-//    VIMCache *cache = [[VIMSession sharedSession] appGroupSharedCache];
-//    [cache setObject:accountsToSave forKey:(NSString *)kVIMAccountStore_SaveKey];
-    
     NSMutableData *data = [NSMutableData new];
     NSKeyedArchiver *keyedArchiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
     [keyedArchiver encodeObject:accountsToSave];
