@@ -59,6 +59,7 @@
 @property (nonatomic, strong) VIMPrivacy *privacy;
 @property (nonatomic, strong) VIMVideoLog *log;
 @property (nonatomic, strong) NSNumber *numPlays;
+@property (nonatomic, strong) NSArray *categories;
 
 - (VIMConnection *)connectionWithName:(NSString *)connectionName;
 - (VIMInteraction *)interactionWithName:(NSString *)name;
