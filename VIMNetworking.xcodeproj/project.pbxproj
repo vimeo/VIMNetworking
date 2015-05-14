@@ -69,6 +69,7 @@
 		50E0EE901AD5C687006BB5EB /* VIMUploadTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E0EE8A1AD5C687006BB5EB /* VIMUploadTask.m */; };
 		50E6673219DB5DCE000173DD /* VIMChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E6673119DB5DCE000173DD /* VIMChannel.m */; };
 		50EB14D1192BCB61002B908C /* VIMAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 50EB14D0192BCB61002B908C /* VIMAPIClient.m */; };
+		50F1D5941B052483007121B8 /* PHAsset+Filesize.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F1D5931B052483007121B8 /* PHAsset+Filesize.m */; };
 		50F8F1791AB37F0F0066CB6D /* AFHTTPSessionManager+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F8F1561AB37F0F0066CB6D /* AFHTTPSessionManager+Extensions.m */; };
 		50F8F17A1AB37F0F0066CB6D /* NSURLSessionConfiguration+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F8F1581AB37F0F0066CB6D /* NSURLSessionConfiguration+Extensions.m */; };
 		50F8F1E01AB380CD0066CB6D /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F8F1DF1AB380CD0066CB6D /* NSString+MD5.m */; };
@@ -254,6 +255,8 @@
 		50E6673119DB5DCE000173DD /* VIMChannel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMChannel.m; sourceTree = "<group>"; };
 		50EB14CF192BCB61002B908C /* VIMAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = VIMAPIClient.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		50EB14D0192BCB61002B908C /* VIMAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = VIMAPIClient.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		50F1D5921B052483007121B8 /* PHAsset+Filesize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PHAsset+Filesize.h"; sourceTree = "<group>"; };
+		50F1D5931B052483007121B8 /* PHAsset+Filesize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PHAsset+Filesize.m"; sourceTree = "<group>"; };
 		50F8F0F91AB2249F0066CB6D /* VIMAccountManager+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "VIMAccountManager+Private.h"; sourceTree = "<group>"; };
 		50F8F1551AB37F0F0066CB6D /* AFHTTPSessionManager+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AFHTTPSessionManager+Extensions.h"; sourceTree = "<group>"; };
 		50F8F1561AB37F0F0066CB6D /* AFHTTPSessionManager+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AFHTTPSessionManager+Extensions.m"; sourceTree = "<group>"; };
@@ -533,6 +536,8 @@
 				50F8F1581AB37F0F0066CB6D /* NSURLSessionConfiguration+Extensions.m */,
 				509173BF1AE023EA00215AE0 /* AVAsset+Filesize.h */,
 				509173C01AE023EA00215AE0 /* AVAsset+Filesize.m */,
+				50F1D5921B052483007121B8 /* PHAsset+Filesize.h */,
+				50F1D5931B052483007121B8 /* PHAsset+Filesize.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -855,6 +860,7 @@
 				50E0EE7D1AD5C5D1006BB5EB /* VIMUploadSessionManager.m in Sources */,
 				501766FC19CC890600D8DC68 /* VIMSession.m in Sources */,
 				50E6673219DB5DCE000173DD /* VIMChannel.m in Sources */,
+				50F1D5941B052483007121B8 /* PHAsset+Filesize.m in Sources */,
 				50E0EE731AD5BC3A006BB5EB /* VIMTaskQueueDebugger.m in Sources */,
 				509175631AE5604600215AE0 /* UIAlertView+AFNetworking.m in Sources */,
 				509175641AE5604600215AE0 /* UIButton+AFNetworking.m in Sources */,

@@ -25,6 +25,8 @@
 //
 
 #import "VIMVideoAsset.h"
+#import "AVAsset+Filesize.h"
+#import "PHAsset+Filesize.h"
 
 #import <AVFoundation/AVFoundation.h>
 
@@ -119,21 +121,19 @@
 {
     if (self.phAsset)
     {
-        return [[PHImageManager defaultManager] requestAVAssetForVideo:self.phAsset options:nil resultHandler:^(AVAsset *asset, AVAudioMix *audioMix, NSDictionary *info) {
-            
-            CGFloat rawSize = [self fileSizeForAsset:asset];
-            
+        return [self.phAsset calculateFilesizeWithCompletionBlock:^(CGFloat fileSize, NSError *error) {
+
             if (completionBlock)
             {
-                NSError *error = info[PHImageErrorKey];
-                completionBlock(rawSize, error);
+                CGFloat size = fileSize / (1024.0 * 1024.0);
+                completionBlock(size, error);
             }
-            
+
         }];
     }
     else if (self.URLAsset)
     {
-        CGFloat rawSize = [self fileSizeForAsset:self.URLAsset];
+        CGFloat rawSize = [self.URLAsset calculateFilesizeInMB];
         if (completionBlock)
         {
             completionBlock(rawSize, nil);
@@ -194,41 +194,6 @@
 - (BOOL)didFinishUploading
 {
     return (self.uploadState == VIMUploadState_Failed || self.uploadState == VIMUploadState_Succeeded);
-}
-
-#pragma mark - Utilities
-
-- (CGFloat)fileSizeForAsset:(AVAsset *)asset
-{
-    CGFloat rawSize = 0;
-    
-    if ([asset isKindOfClass:[AVURLAsset class]])
-    {
-        AVURLAsset *URLAsset = (AVURLAsset *)asset;
-        NSNumber *size;
-        [URLAsset.URL getResourceValue:&size forKey:NSURLFileSizeKey error:nil];
-        
-        if (size)
-        {
-            rawSize = [size floatValue] / (1024.0 * 1024.0);
-        }
-        else
-        {
-            float estimatedSize = 0.0;
-            
-            NSArray *tracks = [asset tracks];
-            for (AVAssetTrack * track in tracks)
-            {
-                float rate = [track estimatedDataRate] / 8.0f; // convert bits per second to bytes per second
-                float seconds = CMTimeGetSeconds([track timeRange].duration);
-                estimatedSize += seconds * rate;
-            }
-            
-            rawSize = estimatedSize / (1024.0 * 1024.0);
-        }
-    }
-
-    return rawSize;
 }
 
 #pragma mark - NSCoding

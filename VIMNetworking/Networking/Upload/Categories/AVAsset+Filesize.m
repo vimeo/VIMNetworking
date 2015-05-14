@@ -13,25 +13,45 @@
 
 @implementation AVAsset (Filesize)
 
-- (uint64_t)calculateFilesize
+- (CGFloat)calculateFilesizeInMB
 {
-    uint64_t rawSize = 0;
+    CGFloat rawSize = [self calculateFilesize];
     
-    NSNumber *size = nil;
-    NSError *error = nil;
+    return rawSize / (1024.0 * 1024.0);
+}
+
+- (CGFloat)calculateFilesize
+{
+    CGFloat rawSize = 0;
     
     if ([self isKindOfClass:[AVURLAsset class]])
     {
         AVURLAsset *asset = (AVURLAsset *)self;
         
+        NSNumber *size = nil;
+        NSError *error = nil;
+
         BOOL success = [asset.URL getResourceValue:&size forKey:NSURLFileSizeKey error:&error];
-        if (!success)
+        
+        if (success)
         {
-            NSLog(@"Error calculating AVURLAsset filesize: %@", error);
+            rawSize = [size floatValue];
         }
         else
         {
-            rawSize = [size unsignedLongLongValue];
+            NSLog(@"Error calculating filesize of AVAsset: %@", error);
+            
+            float estimatedSize = 0.0;
+            
+            NSArray *tracks = [asset tracks];
+            for (AVAssetTrack * track in tracks)
+            {
+                float rate = [track estimatedDataRate] / 8.0f; // convert bits per second to bytes per second
+                float seconds = CMTimeGetSeconds([track timeRange].duration);
+                estimatedSize += seconds * rate;
+            }
+            
+            rawSize = estimatedSize;
         }
     }
     else if ([self isKindOfClass:[AVComposition class]])

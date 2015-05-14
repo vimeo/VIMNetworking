@@ -26,6 +26,8 @@
 
 #import "VIMCreateTicketTask.h"
 #import "VIMTempFileMaker.h"
+#include "AVAsset+Filesize.h"
+#import "PHAsset+Filesize.h"
 
 static const NSString *RecordCreationPath = @"/me/videos";
 static const NSString *VIMCreateRecordTaskName = @"CREATE";
@@ -112,8 +114,20 @@ static const NSString *VIMCreateRecordTaskErrorDomain = @"VIMCreateRecordTaskErr
 
     NSURL *fullURL = [NSURL URLWithString:(NSString *)RecordCreationPath relativeToURL:self.sessionManager.baseURL];
     
+    uint64_t filesize = 0;
+    
+    if (self.URLAsset)
+    {
+        filesize = [self.URLAsset calculateFilesize];
+    }
+    else if (self.phAsset)
+    {
+        filesize = [self.phAsset calculateFilesize];
+    }
+    
+    NSDictionary *parameters = @{@"type" : @"streaming", @"size" : @(filesize)};    
+    
     NSError *error = nil;
-    NSDictionary *parameters = @{@"type" : @"streaming"};
     NSMutableURLRequest *request = [self.sessionManager.requestSerializer requestWithMethod:@"POST" URLString:[fullURL absoluteString] parameters:parameters error:&error];
     NSAssert(error == nil, @"Unable to construct request");
     
@@ -314,7 +328,6 @@ static const NSString *VIMCreateRecordTaskErrorDomain = @"VIMCreateRecordTaskErr
     {
         [VIMTempFileMaker tempFileFromPHAsset:self.phAsset completionBlock:completionBlock];
     }
-
 }
 
 #pragma mark - NSCoding
