@@ -26,6 +26,8 @@
 
 #import <Foundation/Foundation.h>
 
+// TODO: morph this into a proper VIMError class [AH] 5/15/15
+
 extern NSString * const VimeoErrorCodeHeaderKey;
 extern NSString * const VimeoErrorCodeKey;
 extern NSString * const VimeoErrorDomainKey;
@@ -33,6 +35,12 @@ extern NSString * const VimeoErrorDomainKey;
 extern NSString * const BaseErrorKey;
 extern NSString * const AFNetworkingErrorDomain; // TODO: Why is this necessary? [AH] 5/15/15
 extern NSString * const kVimeoServerErrorDomain;
+
+typedef NS_ENUM(NSInteger, VIMErrorCode)
+{
+    VIMErrorCodeUploadStorageQuotaExceeded = 4101,
+    VIMErrorCodeUploadDailyQuotaExceeded = 4102
+};
 
 @interface NSError (BaseError)
 
