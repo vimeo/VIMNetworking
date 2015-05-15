@@ -28,10 +28,11 @@
 #import "VIMTempFileMaker.h"
 #include "AVAsset+Filesize.h"
 #import "PHAsset+Filesize.h"
+#import "NSError+BaseError.h"
 
 static const NSString *RecordCreationPath = @"/me/videos";
 static const NSString *VIMCreateRecordTaskName = @"CREATE";
-static const NSString *VIMCreateRecordTaskErrorDomain = @"VIMCreateRecordTaskErrorDomain";
+static NSString *const VIMCreateRecordTaskErrorDomain = @"VIMCreateRecordTaskErrorDomain";
 
 @interface VIMCreateTicketTask ()
 
@@ -250,7 +251,18 @@ static const NSString *VIMCreateRecordTaskErrorDomain = @"VIMCreateRecordTaskErr
     
     if (task.error)
     {
-        self.error = task.error;
+        NSHTTPURLResponse *response = (NSHTTPURLResponse *)task.response;
+        NSDictionary *headers = response.allHeaderFields;
+        NSString *errorCode = headers[VimeoErrorCodeHeaderKey];
+        
+        if (errorCode && [errorCode length] && [errorCode integerValue] > 0)
+        {
+            self.error = [NSError vimeoErrorFromError:task.error withVimeoDomain:VIMCreateRecordTaskErrorDomain vimeoErrorCode:[errorCode integerValue]];
+        }
+        else
+        {
+            self.error = task.error;
+        }
         
         [self taskDidComplete];
         

@@ -74,8 +74,6 @@
 		50F8F17A1AB37F0F0066CB6D /* NSURLSessionConfiguration+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F8F1581AB37F0F0066CB6D /* NSURLSessionConfiguration+Extensions.m */; };
 		50F8F1E01AB380CD0066CB6D /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F8F1DF1AB380CD0066CB6D /* NSString+MD5.m */; };
 		50FF8B4D1A1BCCFD008BA7DC /* VIMRequestRetryManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FF8B4C1A1BCCFD008BA7DC /* VIMRequestRetryManager.m */; };
-		685AB7311976BC8E00A61CCA /* VIMErrorDomain.m in Sources */ = {isa = PBXBuildFile; fileRef = 685AB7301976BC8E00A61CCA /* VIMErrorDomain.m */; };
-		685AB7341976C05900A61CCA /* VIMUploadErrorDomain.m in Sources */ = {isa = PBXBuildFile; fileRef = 685AB7331976C05900A61CCA /* VIMUploadErrorDomain.m */; };
 		687B155919B903770068D14F /* VIMPictureCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 687B155819B903770068D14F /* VIMPictureCollection.m */; };
 		68ED33511974457000EDD22F /* NSError+BaseError.m in Sources */ = {isa = PBXBuildFile; fileRef = 68ED33501974457000EDD22F /* NSError+BaseError.m */; };
 		AB633AB618F364ED00971630 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB633AB518F364ED00971630 /* Foundation.framework */; };
@@ -266,10 +264,6 @@
 		50F8F1DF1AB380CD0066CB6D /* NSString+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5.m"; sourceTree = "<group>"; };
 		50FF8B4B1A1BCCFD008BA7DC /* VIMRequestRetryManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMRequestRetryManager.h; sourceTree = "<group>"; };
 		50FF8B4C1A1BCCFD008BA7DC /* VIMRequestRetryManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMRequestRetryManager.m; sourceTree = "<group>"; };
-		685AB72F1976BC8E00A61CCA /* VIMErrorDomain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMErrorDomain.h; sourceTree = "<group>"; };
-		685AB7301976BC8E00A61CCA /* VIMErrorDomain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMErrorDomain.m; sourceTree = "<group>"; };
-		685AB7321976C05900A61CCA /* VIMUploadErrorDomain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMUploadErrorDomain.h; sourceTree = "<group>"; };
-		685AB7331976C05900A61CCA /* VIMUploadErrorDomain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMUploadErrorDomain.m; sourceTree = "<group>"; };
 		687B155719B903770068D14F /* VIMPictureCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMPictureCollection.h; sourceTree = "<group>"; };
 		687B155819B903770068D14F /* VIMPictureCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMPictureCollection.m; sourceTree = "<group>"; };
 		68ED334F1974457000EDD22F /* NSError+BaseError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = "NSError+BaseError.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -554,10 +548,6 @@
 		6859F6E9196D8C9400305093 /* Errors */ = {
 			isa = PBXGroup;
 			children = (
-				685AB72F1976BC8E00A61CCA /* VIMErrorDomain.h */,
-				685AB7301976BC8E00A61CCA /* VIMErrorDomain.m */,
-				685AB7321976C05900A61CCA /* VIMUploadErrorDomain.h */,
-				685AB7331976C05900A61CCA /* VIMUploadErrorDomain.m */,
 				68ED334F1974457000EDD22F /* NSError+BaseError.h */,
 				68ED33501974457000EDD22F /* NSError+BaseError.m */,
 			);
@@ -910,7 +900,6 @@
 				501766F919CC6D7700D8DC68 /* VIMResponseSerializer.m in Sources */,
 				50E0EE8D1AD5C687006BB5EB /* VIMCreateTicketTask.m in Sources */,
 				509175431AE5604600215AE0 /* AFURLRequestSerialization.m in Sources */,
-				685AB7341976C05900A61CCA /* VIMUploadErrorDomain.m in Sources */,
 				501383A01A1E568F00B63A38 /* VIMAccountStore.m in Sources */,
 				AB633B4918F365AB00971630 /* VIMRequestOperationManager.m in Sources */,
 				687B155919B903770068D14F /* VIMPictureCollection.m in Sources */,
@@ -928,7 +917,6 @@
 				501383D31A1E74A200B63A38 /* VIMFeaturesConfiguration.m in Sources */,
 				011BC2AD1A0972F3002D9737 /* VIMTag.m in Sources */,
 				50E0EE231ACEF5F7006BB5EB /* VIMUploadTaskQueueTracker.m in Sources */,
-				685AB7311976BC8E00A61CCA /* VIMErrorDomain.m in Sources */,
 				68ED33511974457000EDD22F /* NSError+BaseError.m in Sources */,
 				1BBDB29B194F48A3004D5515 /* VIMConnection.m in Sources */,
 				501383CF1A1E74A200B63A38 /* VIMAppConfiguration.m in Sources */,

@@ -26,16 +26,18 @@
 
 #import <Foundation/Foundation.h>
 
+extern NSString * const VimeoErrorCodeHeaderKey;
+extern NSString * const VimeoErrorCodeKey;
+extern NSString * const VimeoErrorDomainKey;
+
 extern NSString * const BaseErrorKey;
-extern NSString * const AFNetworkingErrorDomain;
+extern NSString * const AFNetworkingErrorDomain; // TODO: Why is this necessary? [AH] 5/15/15
 extern NSString * const kVimeoServerErrorDomain;
 
 @interface NSError (BaseError)
 
-+ (NSError *)errorWithDomain:(NSString *)domain code:(NSInteger)code message:(NSString *)message;
-
-+ (NSError *)errorWithDomain:(NSString *)domain code:(NSInteger)code baseError:(NSError *)baseError;
-
 + (NSError *)errorFromServerError:(NSError *)error withNewDomain:(NSString *)domain;
+
++ (NSError *)vimeoErrorFromError:(NSError *)error withVimeoDomain:(NSString *)vimeoDomain vimeoErrorCode:(NSInteger)vimeoErrorCode;
 
 @end
