@@ -75,11 +75,13 @@
     {
         self.requestSerializer = [VIMRequestSerializer serializerWithSession:[VIMSession sharedSession]];
         self.responseSerializer = [VIMResponseSerializer serializerWithReadingOptions:NSJSONReadingAllowFragments];
-        
+
+#ifndef DEBUG
         self.securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeCertificate];
         self.securityPolicy.allowInvalidCertificates = NO;
         self.securityPolicy.validatesCertificateChain = NO;
         self.securityPolicy.validatesDomainName = YES;
+#endif
     }
 
     return self;
