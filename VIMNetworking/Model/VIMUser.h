@@ -61,4 +61,6 @@ typedef NS_ENUM(NSInteger, VIMUserAccountType)
 - (BOOL)hasCopyrightMatch;
 - (BOOL)isFollowing;
 
+- (NSString *)accountTypeAnalyticsIdentifier;
+
 @end
