@@ -26,33 +26,37 @@
 
 #import "NSError+BaseError.h"
 
+NSString * const VimeoErrorCodeHeaderKey = @"Vimeo-Error-Code";
+NSString * const VimeoErrorCodeKey = @"VimeoErrorCode";
+NSString * const VimeoErrorDomainKey = @"VimeoErrorDomain";
+
 NSString *const BaseErrorKey = @"BaseError";
 NSString *const AFNetworkingErrorDomain = @"AFNetworkingErrorDomain";
 NSString * const kVimeoServerErrorDomain = @"VimeoServerErrorDomain";
 
 @implementation NSError (BaseError)
 
-+ (NSError *)errorWithDomain:(NSString *)domain code:(NSInteger)code message:(NSString *)message
-{
-    NSDictionary *userInfo = nil;
-    if (message)
-    {
-        userInfo = @{ NSLocalizedDescriptionKey: message };
-    }
-    
-    return [NSError errorWithDomain:domain code:code userInfo:userInfo];
-}
-
-+ (NSError *)errorWithDomain:(NSString *)domain code:(NSInteger)code baseError:(NSError *)baseError
-{
-    NSDictionary *userInfo = nil;
-    if (baseError)
-    {
-        userInfo = @{ BaseErrorKey: baseError };
-    }
-    
-    return [NSError errorWithDomain:domain code:code userInfo:userInfo];
-}
+//+ (NSError *)errorWithDomain:(NSString *)domain code:(NSInteger)code message:(NSString *)message
+//{
+//    NSDictionary *userInfo = nil;
+//    if (message)
+//    {
+//        userInfo = @{ NSLocalizedDescriptionKey: message };
+//    }
+//    
+//    return [NSError errorWithDomain:domain code:code userInfo:userInfo];
+//}
+//
+//+ (NSError *)errorWithDomain:(NSString *)domain code:(NSInteger)code baseError:(NSError *)baseError
+//{
+//    NSDictionary *userInfo = nil;
+//    if (baseError)
+//    {
+//        userInfo = @{ BaseErrorKey: baseError };
+//    }
+//    
+//    return [NSError errorWithDomain:domain code:code userInfo:userInfo];
+//}
 
 + (NSError *)errorFromServerError:(NSError *)error withNewDomain:(NSString *)newDomain
 {
@@ -81,6 +85,16 @@ NSString * const kVimeoServerErrorDomain = @"VimeoServerErrorDomain";
     }
     
     return nil;
+}
+
++ (NSError *)vimeoErrorFromError:(NSError *)error withVimeoDomain:(NSString *)vimeoDomain vimeoErrorCode:(NSInteger)vimeoErrorCode
+{
+    NSMutableDictionary *mutableUserInfo = [NSMutableDictionary dictionaryWithDictionary:error.userInfo];
+    
+    mutableUserInfo[VimeoErrorCodeKey] = @(vimeoErrorCode);
+    mutableUserInfo[VimeoErrorDomainKey] = vimeoDomain;
+    
+    return [NSError errorWithDomain:error.domain code:error.code userInfo:mutableUserInfo];
 }
 
 @end

@@ -273,14 +273,14 @@ static void *UploadProgressContext = &UploadProgressContext;
     {
         self.error = task.error;
 
+        [self progress:task];
+        
+        [self taskDidComplete];
+
         if (task.error.code != NSURLErrorCancelled)
         {
             self.uploadState = VIMUploadState_Failed;
         }
-
-        [self progress:task];
-
-        [self taskDidComplete];
     }
 }
 
@@ -305,14 +305,14 @@ static void *UploadProgressContext = &UploadProgressContext;
     {
         self.error = task.error;
         
+        [self progress:task];
+        
+        [self taskDidComplete];
+
         if (task.error.code != NSURLErrorCancelled)
         {
             self.uploadState = VIMUploadState_Failed;
         }
-   
-        [self progress:task];
-
-        [self taskDidComplete];
     }
 }
 
@@ -337,25 +337,25 @@ static void *UploadProgressContext = &UploadProgressContext;
         }
         else
         {
-            self.uploadState = VIMUploadState_Succeeded;
-
             [self progress:task];
-
+            
             [self taskDidComplete];
+
+            self.uploadState = VIMUploadState_Succeeded;
         }
     }
     else
     {
         self.error = task.error;
 
+        [self progress:task];
+        
+        [self taskDidComplete];
+
         if (task.error.code != NSURLErrorCancelled)
         {
             self.uploadState = VIMUploadState_Failed;
         }
-
-        [self progress:task];
-        
-        [self taskDidComplete];
     }
 }
 
@@ -363,21 +363,25 @@ static void *UploadProgressContext = &UploadProgressContext;
 {
     if ([task didSucceed])
     {
+        [self progress:task];
+        
+        [self taskDidComplete];
+
         self.uploadState = VIMUploadState_Succeeded;
     }
     else
     {
         self.error = task.error;
 
+        [self progress:task];
+        
+        [self taskDidComplete];
+
         if (task.error.code != NSURLErrorCancelled)
         {
             self.uploadState = VIMUploadState_Failed;
         }
-    }
-    
-    [self progress:task];
-    
-    [self taskDidComplete];
+    }    
 }
 
 - (void)progress:(VIMTask *)subtask
