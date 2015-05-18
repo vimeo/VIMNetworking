@@ -176,6 +176,26 @@
     return (interaction && interaction.added.boolValue);
 }
 
+- (NSString *)accountTypeAnalyticsIdentifier
+{
+    switch (self.accountType)
+    {
+        default:
+        case VIMUserAccountTypeBasic:
+            return @"basic";
+            break;
+        case VIMUserAccountTypePlus:
+            return @"plus";
+            break;
+        case VIMUserAccountTypePro:
+            return @"pro";
+            break;
+        case VIMUserAccountTypeStaff:
+            return @"staff";
+            break;
+    }
+}
+
 #pragma mark - Model Versioning
 
 // This is only called for unarchived model objects [AH]
