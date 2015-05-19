@@ -577,11 +577,31 @@ static void *UploadStateContext = &UploadStateContext;
     {
         self.successfulAssetIdentifiers = [NSMutableSet setWithArray:successObject];
     }
+    else
+    {
+        successObject = [[VIMCache sharedCache] objectForKey:VIMUploadTaskQueueTracker_SuccessfulAssetIdentifiersCacheKey];
+        if (successObject && [successObject isKindOfClass:[NSSet class]])
+        {
+            self.successfulAssetIdentifiers = [NSMutableSet setWithSet:successObject];
+            
+            [[VIMCache sharedCache] removeObjectForKey:VIMUploadTaskQueueTracker_SuccessfulAssetIdentifiersCacheKey];
+        }
+    }
 
     id failureObject = [VIMUploadTaskQueueTracker unarchiveObjectForKey:VIMUploadTaskQueueTracker_FailedAssetsCacheKey];
     if (failureObject && [failureObject isKindOfClass:[NSArray class]])
     {
         self.failedAssets = [NSMutableArray arrayWithArray:failureObject];
+    }
+    else
+    {
+        id failureObject = [[VIMCache sharedCache] objectForKey:VIMUploadTaskQueueTracker_FailedAssetsCacheKey];
+        if (failureObject && [failureObject isKindOfClass:[NSArray class]])
+        {
+            self.failedAssets = [NSMutableArray arrayWithArray:failureObject];
+
+            [[VIMCache sharedCache] removeObjectForKey:VIMUploadTaskQueueTracker_FailedAssetsCacheKey];
+        }
     }
 }
 
