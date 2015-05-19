@@ -572,13 +572,13 @@ static void *UploadStateContext = &UploadStateContext;
 
 - (void)load
 {
-    id successObject = [[NSUserDefaults standardUserDefaults] objectForKey:VIMUploadTaskQueueTracker_SuccessfulAssetIdentifiersCacheKey];
+    id successObject = [VIMUploadTaskQueueTracker unarchiveObjectForKey:VIMUploadTaskQueueTracker_SuccessfulAssetIdentifiersCacheKey];
     if (successObject && [successObject isKindOfClass:[NSArray class]])
     {
         self.successfulAssetIdentifiers = [NSMutableSet setWithArray:successObject];
     }
 
-    id failureObject = [[NSUserDefaults standardUserDefaults] objectForKey:VIMUploadTaskQueueTracker_FailedAssetsCacheKey];
+    id failureObject = [VIMUploadTaskQueueTracker unarchiveObjectForKey:VIMUploadTaskQueueTracker_FailedAssetsCacheKey];
     if (failureObject && [failureObject isKindOfClass:[NSArray class]])
     {
         self.failedAssets = [NSMutableArray arrayWithArray:failureObject];
@@ -587,28 +587,87 @@ static void *UploadStateContext = &UploadStateContext;
 
 - (void)save
 {
-    if (self.successfulAssetIdentifiers)
-    {
-        NSArray *array = [self.successfulAssetIdentifiers allObjects];
-        [[NSUserDefaults standardUserDefaults] setObject:array
-                                                  forKey:VIMUploadTaskQueueTracker_SuccessfulAssetIdentifiersCacheKey];
-    }
-    else
-    {
-        [[NSUserDefaults standardUserDefaults] removeObjectForKey:VIMUploadTaskQueueTracker_SuccessfulAssetIdentifiersCacheKey];
-    }
+    NSArray *array = [self.successfulAssetIdentifiers allObjects];
+    [VIMUploadTaskQueueTracker archiveObject:array forKey:VIMUploadTaskQueueTracker_SuccessfulAssetIdentifiersCacheKey];
 
-    if (self.failedAssets)
-    {
-        [[NSUserDefaults standardUserDefaults] setObject:self.failedAssets
-                                                  forKey:VIMUploadTaskQueueTracker_FailedAssetsCacheKey];
-    }
-    else
-    {
-        [[NSUserDefaults standardUserDefaults] removeObjectForKey:VIMUploadTaskQueueTracker_FailedAssetsCacheKey];
-    }
+    [VIMUploadTaskQueueTracker archiveObject:self.failedAssets forKey:VIMUploadTaskQueueTracker_FailedAssetsCacheKey];
+}
 
-    [[NSUserDefaults standardUserDefaults] synchronize];
++ (id)unarchiveObjectForKey:(NSString *)key
+{
+    NSAssert(key != nil, @"key cannot be nil");
+    if (key == nil)
+    {
+        return nil;
+    }
+    
+    __block id object = nil;
+    
+    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:key];
+    if (data)
+    {
+        NSKeyedUnarchiver *keyedUnarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
+        
+        @try
+        {
+            object = [keyedUnarchiver decodeObject];
+        }
+        @catch (NSException *exception)
+        {
+            NSLog(@"UserDefaultsController: An exception occured while unarchiving: %@", exception);
+            
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:key];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }
+        
+        [keyedUnarchiver finishDecoding];
+    }
+    
+    return object;
+}
+
++ (void)archiveObject:(id)object forKey:(NSString *)key
+{
+    NSAssert(key != nil, @"key cannot be nil");
+    if (key == nil)
+    {
+        return;
+    }
+    
+    dispatch_async([VIMUploadTaskQueueTracker archiveQueue], ^{
+        
+        if (object)
+        {
+            NSMutableData *data = [NSMutableData new];
+            NSKeyedArchiver *keyedArchiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
+            
+            [keyedArchiver encodeObject:object];
+            [keyedArchiver finishEncoding];
+            
+            [[NSUserDefaults standardUserDefaults] setObject:data forKey:key];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }
+        else
+        {
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:key];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }
+        
+    });
+}
+
++ (dispatch_queue_t)archiveQueue
+{
+    static dispatch_queue_t archiveQueue;
+    static dispatch_once_t onceToken;
+    
+    dispatch_once(&onceToken, ^{
+        
+        archiveQueue = dispatch_queue_create("com.vimeo.uploadTaskQueueTracker.archiveQueue", DISPATCH_QUEUE_SERIAL);
+    
+    });
+    
+    return archiveQueue;
 }
 
 @end
