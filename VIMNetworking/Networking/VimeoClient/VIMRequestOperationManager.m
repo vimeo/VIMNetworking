@@ -78,9 +78,9 @@ NSString * const kVimeoClientErrorDomain = @"VimeoClientErrorDomain";
 		_responseQueue = dispatch_queue_create("com.vimeo.VIMVimeoClient.responseQueue", DISPATCH_QUEUE_SERIAL);
         
         self.requestSerializer = [VIMRequestSerializer serializerWithSession:[VIMSession sharedSession]];
-        self.responseSerializer = [VIMResponseSerializer serializer];        
-
-#ifndef DEBUG
+        self.responseSerializer = [VIMResponseSerializer serializer];
+        
+#if (DEBUG || ADHOC)
         self.securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeCertificate];
         self.securityPolicy.allowInvalidCertificates = NO;
         self.securityPolicy.validatesCertificateChain = NO;

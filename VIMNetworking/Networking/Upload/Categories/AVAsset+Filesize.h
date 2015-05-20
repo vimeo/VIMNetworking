@@ -11,6 +11,8 @@
 
 @interface AVAsset (Filesize)
 
-- (uint64_t)calculateFilesize;
+- (CGFloat)calculateFilesizeInMB;
+
+- (CGFloat)calculateFilesize;
 
 @end

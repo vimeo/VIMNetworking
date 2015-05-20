@@ -112,10 +112,14 @@ static void *UploadStateContext = &UploadStateContext;
     
     [self.failedAssets removeObjectAtIndex:index];
     
-    NSDictionary *userInfo = @{VIMUploadTaskQueueTracker_AssetIndicesKey : @[@(index)]};
-    [[NSNotificationCenter defaultCenter] postNotificationName:VIMUploadTaskQueueTracker_DidRemoveFailedAssetsNotification
-                                                        object:self.failedAssets
-                                                      userInfo:userInfo];
+    dispatch_async(dispatch_get_main_queue(), ^{
+
+        NSDictionary *userInfo = @{VIMUploadTaskQueueTracker_AssetIndicesKey : @[@(index)]};
+        [[NSNotificationCenter defaultCenter] postNotificationName:VIMUploadTaskQueueTracker_DidRemoveFailedAssetsNotification
+                                                            object:self.failedAssets
+                                                          userInfo:userInfo];
+
+    });
 }
 
 - (VIMVideoAsset *)assetForIdentifier:(NSString *)identifier
@@ -175,8 +179,12 @@ static void *UploadStateContext = &UploadStateContext;
 
         _currentVideoAsset = currentVideoAsset;
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:VIMUploadTaskQueueTracker_CurrentVideoAssetDidChangeNotification
-                                                            object:currentVideoAsset];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:VIMUploadTaskQueueTracker_CurrentVideoAssetDidChangeNotification
+                                                                object:currentVideoAsset];
+        
+        });
     }
 }
 
@@ -243,8 +251,12 @@ static void *UploadStateContext = &UploadStateContext;
             [self uploadState:videoAsset.uploadState didChangeForVideoAsset:videoAsset];
         }
     
-        [[NSNotificationCenter defaultCenter] postNotificationName:VIMUploadTaskQueueTracker_DidRefreshQueuedAssetsNotification
-                                                            object:nil];
+        dispatch_async(dispatch_get_main_queue(), ^{
+
+            [[NSNotificationCenter defaultCenter] postNotificationName:VIMUploadTaskQueueTracker_DidRefreshQueuedAssetsNotification
+                                                                object:nil];
+        
+        });
         
         [self save];
     }
@@ -292,27 +304,35 @@ static void *UploadStateContext = &UploadStateContext;
         {
             if (failedIndex != NSNotFound)
             {
-                NSDictionary *userInfo = @{VIMUploadTaskQueueTracker_OriginalIndexKey : @(failedIndex),
-                                           VIMUploadTaskQueueTracker_NewIndexKey : @([self.videoAssets count] - 1),
-                                           VIMUploadTaskQueueTracker_QueuedAssetsKey : self.videoAssets,
-                                           VIMUploadTaskQueueTracker_FailedAssetsKey : self.failedAssets,
-                                           VIMUploadTaskQueueTracker_AssetsKey : object,
-                                           VIMUploadTaskQueueTracker_SessionIdentifierKey : self.sessionIdentifier};
-                [[NSNotificationCenter defaultCenter] postNotificationName:VIMUploadTaskQueueTracker_FailedAssetDidRetryNotification
-                                                                    object:nil
-                                                                  userInfo:userInfo];
-            
+                dispatch_async(dispatch_get_main_queue(), ^{
+
+                    NSDictionary *userInfo = @{VIMUploadTaskQueueTracker_OriginalIndexKey : @(failedIndex),
+                                               VIMUploadTaskQueueTracker_NewIndexKey : @([self.videoAssets count] - 1),
+                                               VIMUploadTaskQueueTracker_QueuedAssetsKey : self.videoAssets,
+                                               VIMUploadTaskQueueTracker_FailedAssetsKey : self.failedAssets,
+                                               VIMUploadTaskQueueTracker_AssetsKey : object,
+                                               VIMUploadTaskQueueTracker_SessionIdentifierKey : self.sessionIdentifier};
+                    [[NSNotificationCenter defaultCenter] postNotificationName:VIMUploadTaskQueueTracker_FailedAssetDidRetryNotification
+                                                                        object:nil
+                                                                      userInfo:userInfo];
+
+                });
+                
                 return;
             }
         }
 
-        NSDictionary *userInfo = @{VIMUploadTaskQueueTracker_AssetIndicesKey : indices,
-                                   VIMUploadTaskQueueTracker_AssetsKey : object,
-                                   VIMUploadTaskQueueTracker_SessionIdentifierKey : self.sessionIdentifier};
-        [[NSNotificationCenter defaultCenter] postNotificationName:VIMUploadTaskQueueTracker_DidAddQueuedAssetsNotification
-                                                            object:self.videoAssets
-                                                          userInfo:userInfo];        
+        dispatch_async(dispatch_get_main_queue(), ^{
 
+            NSDictionary *userInfo = @{VIMUploadTaskQueueTracker_AssetIndicesKey : indices,
+                                       VIMUploadTaskQueueTracker_AssetsKey : object,
+                                       VIMUploadTaskQueueTracker_SessionIdentifierKey : self.sessionIdentifier};
+            [[NSNotificationCenter defaultCenter] postNotificationName:VIMUploadTaskQueueTracker_DidAddQueuedAssetsNotification
+                                                                object:self.videoAssets
+                                                              userInfo:userInfo];        
+
+        });
+        
         [self save];
     }
 }
@@ -348,12 +368,16 @@ static void *UploadStateContext = &UploadStateContext;
 
         [self.videoAssets removeObjectAtIndex:index];
         
-        NSDictionary *userInfo = @{VIMUploadTaskQueueTracker_AssetIndicesKey : @[@(index)],
-                                   VIMUploadTaskQueueTracker_AssetsKey : @[object],
-                                   VIMUploadTaskQueueTracker_SessionIdentifierKey : self.sessionIdentifier};
-        [[NSNotificationCenter defaultCenter] postNotificationName:VIMUploadTaskQueueTracker_DidRemoveQueuedAssetsNotification
-                                                            object:self.videoAssets
-                                                          userInfo:userInfo];
+        dispatch_async(dispatch_get_main_queue(), ^{
+
+            NSDictionary *userInfo = @{VIMUploadTaskQueueTracker_AssetIndicesKey : @[@(index)],
+                                       VIMUploadTaskQueueTracker_AssetsKey : @[object],
+                                       VIMUploadTaskQueueTracker_SessionIdentifierKey : self.sessionIdentifier};
+            [[NSNotificationCenter defaultCenter] postNotificationName:VIMUploadTaskQueueTracker_DidRemoveQueuedAssetsNotification
+                                                                object:self.videoAssets
+                                                              userInfo:userInfo];
+
+        });
         
         [self save];
     }
@@ -376,8 +400,12 @@ static void *UploadStateContext = &UploadStateContext;
     [self.videoAssets removeAllObjects];
     self.currentVideoAsset = nil;
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:VIMUploadTaskQueueTracker_DidRefreshQueuedAssetsNotification
-                                                        object:self.videoAssets];
+    dispatch_async(dispatch_get_main_queue(), ^{
+
+        [[NSNotificationCenter defaultCenter] postNotificationName:VIMUploadTaskQueueTracker_DidRefreshQueuedAssetsNotification
+                                                            object:self.videoAssets];
+
+    });
     
     [self save];
 }
@@ -397,9 +425,13 @@ static void *UploadStateContext = &UploadStateContext;
         [self.successfulAssetIdentifiers removeAllObjects];
         [self.failedAssets removeAllObjects];
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:VIMUploadTaskQueueTracker_DidRefreshQueuedAssetsNotification
-                                                            object:self.videoAssets];
+        dispatch_async(dispatch_get_main_queue(), ^{
 
+            [[NSNotificationCenter defaultCenter] postNotificationName:VIMUploadTaskQueueTracker_DidRefreshQueuedAssetsNotification
+                                                                object:self.videoAssets];
+
+        });
+        
         [self save];
     }
 }
@@ -483,13 +515,17 @@ static void *UploadStateContext = &UploadStateContext;
 
             [self.videoAssets removeObjectAtIndex:index];
             
-            NSDictionary *userInfo = @{VIMUploadTaskQueueTracker_AssetIndicesKey : @[@(index)],
-                                       VIMUploadTaskQueueTracker_AssetsKey : @[videoAsset],
-                                       VIMUploadTaskQueueTracker_SessionIdentifierKey : self.sessionIdentifier};
-            [[NSNotificationCenter defaultCenter] postNotificationName:VIMUploadTaskQueueTracker_DidRemoveQueuedAssetsNotification
-                                                                object:self.videoAssets
-                                                              userInfo:userInfo];
+            dispatch_async(dispatch_get_main_queue(), ^{
 
+                NSDictionary *userInfo = @{VIMUploadTaskQueueTracker_AssetIndicesKey : @[@(index)],
+                                           VIMUploadTaskQueueTracker_AssetsKey : @[videoAsset],
+                                           VIMUploadTaskQueueTracker_SessionIdentifierKey : self.sessionIdentifier};
+                [[NSNotificationCenter defaultCenter] postNotificationName:VIMUploadTaskQueueTracker_DidRemoveQueuedAssetsNotification
+                                                                    object:self.videoAssets
+                                                                  userInfo:userInfo];
+
+            });
+            
             break;
         }
         case VIMUploadState_Failed:
@@ -509,15 +545,19 @@ static void *UploadStateContext = &UploadStateContext;
 
                 [self.videoAssets removeObjectAtIndex:index];
 
-                NSDictionary *userInfo = @{VIMUploadTaskQueueTracker_OriginalIndexKey : @(index),
-                                           VIMUploadTaskQueueTracker_NewIndexKey : @([self.failedAssets count] - 1),
-                                           VIMUploadTaskQueueTracker_QueuedAssetsKey : self.videoAssets,
-                                           VIMUploadTaskQueueTracker_FailedAssetsKey : self.failedAssets,
-                                           VIMUploadTaskQueueTracker_AssetsKey : @[videoAsset],
-                                           VIMUploadTaskQueueTracker_SessionIdentifierKey : self.sessionIdentifier};
-                [[NSNotificationCenter defaultCenter] postNotificationName:VIMUploadTaskQueueTracker_QueuedAssetDidFailNotification
-                                                                    object:nil
-                                                                  userInfo:userInfo];
+                dispatch_async(dispatch_get_main_queue(), ^{
+
+                    NSDictionary *userInfo = @{VIMUploadTaskQueueTracker_OriginalIndexKey : @(index),
+                                               VIMUploadTaskQueueTracker_NewIndexKey : @([self.failedAssets count] - 1),
+                                               VIMUploadTaskQueueTracker_QueuedAssetsKey : self.videoAssets,
+                                               VIMUploadTaskQueueTracker_FailedAssetsKey : self.failedAssets,
+                                               VIMUploadTaskQueueTracker_AssetsKey : @[videoAsset],
+                                               VIMUploadTaskQueueTracker_SessionIdentifierKey : self.sessionIdentifier};
+                    [[NSNotificationCenter defaultCenter] postNotificationName:VIMUploadTaskQueueTracker_QueuedAssetDidFailNotification
+                                                                        object:nil
+                                                                      userInfo:userInfo];
+                    
+                });
             }
             break;
         }
@@ -532,23 +572,122 @@ static void *UploadStateContext = &UploadStateContext;
 
 - (void)load
 {
-    id successObject = [[VIMCache sharedCache] objectForKey:VIMUploadTaskQueueTracker_SuccessfulAssetIdentifiersCacheKey];
-    if (successObject && [successObject isKindOfClass:[NSSet class]])
+    id successObject = [VIMUploadTaskQueueTracker unarchiveObjectForKey:VIMUploadTaskQueueTracker_SuccessfulAssetIdentifiersCacheKey];
+    if (successObject && [successObject isKindOfClass:[NSArray class]])
     {
-        self.successfulAssetIdentifiers = [NSMutableSet setWithSet:successObject];
+        self.successfulAssetIdentifiers = [NSMutableSet setWithArray:successObject];
+    }
+    else
+    {
+        successObject = [[VIMCache sharedCache] objectForKey:VIMUploadTaskQueueTracker_SuccessfulAssetIdentifiersCacheKey];
+        if (successObject && [successObject isKindOfClass:[NSSet class]])
+        {
+            self.successfulAssetIdentifiers = [NSMutableSet setWithSet:successObject];
+            
+            [[VIMCache sharedCache] removeObjectForKey:VIMUploadTaskQueueTracker_SuccessfulAssetIdentifiersCacheKey];
+        }
     }
 
-    id failureObject = [[VIMCache sharedCache] objectForKey:VIMUploadTaskQueueTracker_FailedAssetsCacheKey];
+    id failureObject = [VIMUploadTaskQueueTracker unarchiveObjectForKey:VIMUploadTaskQueueTracker_FailedAssetsCacheKey];
     if (failureObject && [failureObject isKindOfClass:[NSArray class]])
     {
         self.failedAssets = [NSMutableArray arrayWithArray:failureObject];
+    }
+    else
+    {
+        id failureObject = [[VIMCache sharedCache] objectForKey:VIMUploadTaskQueueTracker_FailedAssetsCacheKey];
+        if (failureObject && [failureObject isKindOfClass:[NSArray class]])
+        {
+            self.failedAssets = [NSMutableArray arrayWithArray:failureObject];
+
+            [[VIMCache sharedCache] removeObjectForKey:VIMUploadTaskQueueTracker_FailedAssetsCacheKey];
+        }
     }
 }
 
 - (void)save
 {
-    [[VIMCache sharedCache] setObject:self.successfulAssetIdentifiers forKey:VIMUploadTaskQueueTracker_SuccessfulAssetIdentifiersCacheKey];
-    [[VIMCache sharedCache] setObject:self.failedAssets forKey:VIMUploadTaskQueueTracker_FailedAssetsCacheKey];
+    NSArray *array = [self.successfulAssetIdentifiers allObjects];
+    [VIMUploadTaskQueueTracker archiveObject:array forKey:VIMUploadTaskQueueTracker_SuccessfulAssetIdentifiersCacheKey];
+
+    [VIMUploadTaskQueueTracker archiveObject:self.failedAssets forKey:VIMUploadTaskQueueTracker_FailedAssetsCacheKey];
+}
+
++ (id)unarchiveObjectForKey:(NSString *)key
+{
+    NSAssert(key != nil, @"key cannot be nil");
+    if (key == nil)
+    {
+        return nil;
+    }
+    
+    __block id object = nil;
+    
+    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:key];
+    if (data)
+    {
+        NSKeyedUnarchiver *keyedUnarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
+        
+        @try
+        {
+            object = [keyedUnarchiver decodeObject];
+        }
+        @catch (NSException *exception)
+        {
+            NSLog(@"UserDefaultsController: An exception occured while unarchiving: %@", exception);
+            
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:key];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }
+        
+        [keyedUnarchiver finishDecoding];
+    }
+    
+    return object;
+}
+
++ (void)archiveObject:(id)object forKey:(NSString *)key
+{
+    NSAssert(key != nil, @"key cannot be nil");
+    if (key == nil)
+    {
+        return;
+    }
+    
+    dispatch_async([VIMUploadTaskQueueTracker archiveQueue], ^{
+        
+        if (object)
+        {
+            NSMutableData *data = [NSMutableData new];
+            NSKeyedArchiver *keyedArchiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
+            
+            [keyedArchiver encodeObject:object];
+            [keyedArchiver finishEncoding];
+            
+            [[NSUserDefaults standardUserDefaults] setObject:data forKey:key];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }
+        else
+        {
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:key];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }
+        
+    });
+}
+
++ (dispatch_queue_t)archiveQueue
+{
+    static dispatch_queue_t archiveQueue;
+    static dispatch_once_t onceToken;
+    
+    dispatch_once(&onceToken, ^{
+        
+        archiveQueue = dispatch_queue_create("com.vimeo.uploadTaskQueueTracker.archiveQueue", DISPATCH_QUEUE_SERIAL);
+    
+    });
+    
+    return archiveQueue;
 }
 
 @end
