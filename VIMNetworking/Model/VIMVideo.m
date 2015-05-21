@@ -38,6 +38,7 @@
 #import "VIMObjectMapper.h"
 #import "VIMTag.h"
 #import "VIMVideoLog.h"
+#import "VIMCategory.h"
 
 @interface VIMVideo ()
 
@@ -81,6 +82,9 @@
     
     if ([key isEqualToString:@"tags"])
         return [VIMTag class];
+    
+    if ([key isEqualToString:@"categories"])
+        return [VIMCategory class];
     
 	return nil;
 }

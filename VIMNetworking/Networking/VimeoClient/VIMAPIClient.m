@@ -462,18 +462,6 @@ static NSString *VIMAPIClient_RetryManagerName = @"VIMAPIClient";
 
 #pragma mark Misc
 
-- (id<VIMRequestToken>)logErrorWithParameters:(NSDictionary *)parameters completionBlock:(VIMFetchCompletionBlock)completionBlock
-{
-    NSParameterAssert(parameters != nil);
-    
-    VIMRequestDescriptor *descriptor = [VIMRequestDescriptor new];
-    descriptor.urlPath = @"/errors?platform=ios";
-    descriptor.HTTPMethod = HTTPMethodPUT;
-    descriptor.parameters = parameters;
-    
-    return [self fetchWithRequestDescriptor:descriptor completionBlock:completionBlock];
-}
-
 - (id<VIMRequestToken>)startTwitterReverseOAuthWithCompletionBlock:(VIMFetchCompletionBlock)completionBlock
 {
     VIMRequestDescriptor *descriptor = [[VIMRequestDescriptor alloc] init];
