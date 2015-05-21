@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		011BC2AD1A0972F3002D9737 /* VIMTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 011BC2AC1A0972F3002D9737 /* VIMTag.m */; };
+		011E1B941B05314C0017FFD0 /* VIMCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 011E1B931B05314C0017FFD0 /* VIMCategory.m */; };
 		1B374A2519D1D3CA004B011B /* VIMInteraction.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B374A2419D1D3CA004B011B /* VIMInteraction.m */; };
 		1B5D7EEA19D4A01700CFCBF1 /* VIMComment.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B5D7EE919D4A01700CFCBF1 /* VIMComment.m */; };
 		1BB16D0E194216B1001B475C /* VIMSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BB16D0D194216B1001B475C /* VIMSessionManager.m */; };
@@ -126,6 +127,8 @@
 /* Begin PBXFileReference section */
 		011BC2AB1A0972F3002D9737 /* VIMTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMTag.h; sourceTree = "<group>"; };
 		011BC2AC1A0972F3002D9737 /* VIMTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMTag.m; sourceTree = "<group>"; };
+		011E1B921B05314C0017FFD0 /* VIMCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMCategory.h; sourceTree = "<group>"; };
+		011E1B931B05314C0017FFD0 /* VIMCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMCategory.m; sourceTree = "<group>"; };
 		1B374A2319D1D3CA004B011B /* VIMInteraction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMInteraction.h; sourceTree = "<group>"; };
 		1B374A2419D1D3CA004B011B /* VIMInteraction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMInteraction.m; sourceTree = "<group>"; };
 		1B5D7EE819D4A01700CFCBF1 /* VIMComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMComment.h; sourceTree = "<group>"; };
@@ -871,6 +874,7 @@
 				509175611AE5604600215AE0 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				1B5D7EEA19D4A01700CFCBF1 /* VIMComment.m in Sources */,
 				501383D51A1E74A200B63A38 /* VIMVideoLog.m in Sources */,
+				011E1B941B05314C0017FFD0 /* VIMCategory.m in Sources */,
 				50F8F1791AB37F0F0066CB6D /* AFHTTPSessionManager+Extensions.m in Sources */,
 				AFCC3CD81ACE305800D24B3B /* VIMTask.m in Sources */,
 				AB633B5818F365AB00971630 /* VIMPicture.m in Sources */,

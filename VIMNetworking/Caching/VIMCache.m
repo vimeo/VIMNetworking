@@ -101,7 +101,7 @@
         return;
     }
 	
-    NSUInteger cost = [self cacheCostForObject:object fromData:nil]; // TODO: is there not a thread safety issue here? Multiple concurrent hits? [AH]
+    NSUInteger cost = [self cacheCostForObject:object fromData:nil];
     [_memCache setObject:object forKey:key cost:cost];
     
     [self _storeDiskCacheObject:object forKey:key];

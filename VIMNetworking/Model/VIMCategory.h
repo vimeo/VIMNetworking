@@ -2,7 +2,7 @@
 //  VIMCategory.h
 //  VIMNetworking
 //
-//  Created by Hanssen, Alfie on 5/20/15.
+//  Created by Huebner, Rob on 5/14/15.
 //  Copyright (c) 2015 Vimeo. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
