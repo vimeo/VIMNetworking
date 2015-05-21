@@ -480,7 +480,7 @@ static void *UploadStateContext = &UploadStateContext;
 - (void)uploadState:(VIMUploadState)state didChangeForVideoAsset:(VIMVideoAsset *)videoAsset
 {
     NSParameterAssert(videoAsset);
-    
+        
     switch (state)
     {
         case VIMUploadState_None: // TODO: Is this ever called? Should we specifically not implement this case? [AH]

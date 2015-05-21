@@ -276,11 +276,6 @@ static void *UploadProgressContext = &UploadProgressContext;
         [self progress:task];
         
         [self taskDidComplete];
-
-        if (task.error.code != NSURLErrorCancelled)
-        {
-            self.uploadState = VIMUploadState_Failed;
-        }
     }
 }
 
@@ -308,11 +303,6 @@ static void *UploadProgressContext = &UploadProgressContext;
         [self progress:task];
         
         [self taskDidComplete];
-
-        if (task.error.code != NSURLErrorCancelled)
-        {
-            self.uploadState = VIMUploadState_Failed;
-        }
     }
 }
 
@@ -340,8 +330,6 @@ static void *UploadProgressContext = &UploadProgressContext;
             [self progress:task];
             
             [self taskDidComplete];
-
-            self.uploadState = VIMUploadState_Succeeded;
         }
     }
     else
@@ -351,37 +339,19 @@ static void *UploadProgressContext = &UploadProgressContext;
         [self progress:task];
         
         [self taskDidComplete];
-
-        if (task.error.code != NSURLErrorCancelled)
-        {
-            self.uploadState = VIMUploadState_Failed;
-        }
     }
 }
 
 - (void)metadataTaskDidComplete:(VIMAddMetadataTask *)task
 {
-    if ([task didSucceed])
-    {
-        [self progress:task];
-        
-        [self taskDidComplete];
-
-        self.uploadState = VIMUploadState_Succeeded;
-    }
-    else
+    if (![task didSucceed])
     {
         self.error = task.error;
+    }
 
-        [self progress:task];
-        
-        [self taskDidComplete];
-
-        if (task.error.code != NSURLErrorCancelled)
-        {
-            self.uploadState = VIMUploadState_Failed;
-        }
-    }    
+    [self progress:task];
+    
+    [self taskDidComplete];
 }
 
 - (void)progress:(VIMTask *)subtask
@@ -394,6 +364,11 @@ static void *UploadProgressContext = &UploadProgressContext;
 
 - (void)taskDidComplete
 {
+    if (self.uploadCompletionBlock)
+    {
+        self.uploadCompletionBlock(self.videoURI, self.error);
+    }
+
     if (self.state == TaskStateCancelled)
     {
         self.uploadState = VIMUploadState_None;
@@ -401,14 +376,25 @@ static void *UploadProgressContext = &UploadProgressContext;
     else
     {
         self.state = TaskStateFinished;
+
+        if ([self didSucceed])
+        {
+            self.uploadState = VIMUploadState_Succeeded;
+        }
+        else
+        {
+            if (self.error.code != NSURLErrorCancelled)
+            {
+                self.uploadState = VIMUploadState_Failed;
+            }
+            else
+            {
+                self.uploadState = VIMUploadState_None;
+            }
+        }
     }
 
     self.currentTask = nil;
-
-    if (self.uploadCompletionBlock)
-    {
-        self.uploadCompletionBlock(self.videoURI, self.error);
-    }
     
     if (self.delegate && [self.delegate respondsToSelector:@selector(taskDidComplete:)])
     {
