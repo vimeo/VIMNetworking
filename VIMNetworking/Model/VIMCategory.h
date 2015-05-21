@@ -26,11 +26,19 @@
 
 #import "VIMModelObject.h"
 
+@class VIMPictureCollection;
+@class VIMConnection;
+@class VIMInteraction;
+
 @interface VIMCategory : VIMModelObject
 
 @property (nonatomic, copy) NSString *uri;
 @property (nonatomic, copy) NSString *name;
+@property (nonatomic, copy) NSString *link;
+@property (nonatomic, assign) BOOL isTopLevel;
+@property (nonatomic, strong) VIMPictureCollection *pictureCollection;
 
-// TODO: we'll expand this category object soon, for now it's just for analytics [RH]
+- (VIMConnection *)connectionWithName:(NSString *)connectionName;
+- (VIMInteraction *)interactionWithName:(NSString *)name;
 
 @end
