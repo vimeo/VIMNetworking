@@ -27,6 +27,8 @@
 #import <Foundation/Foundation.h>
 
 #import "VIMRequestOperationManager.h"
+#import "VIMRequestDescriptor.h"
+#import "VIMServerResponse.h"
 
 typedef void (^VIMErrorCompletionBlock)(NSError *error);
 typedef void (^VIMBooleanCompletionBlock)(BOOL value, NSError *error);
