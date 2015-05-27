@@ -134,6 +134,8 @@
     {
         self.numPlays = ob;
     }
+    
+    [self setVideoStatus];
 }
 
 #pragma mark - Model Versioning
@@ -242,6 +244,19 @@
     }
 }
 
+- (void)setVideoStatus
+{
+    NSDictionary *statusDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
+                                      [NSNumber numberWithInt:VIMVideoProcessingStatusAvailable], @"available",
+                                      [NSNumber numberWithInt:VIMVideoProcessingStatusUploading], @"uploading",
+                                      [NSNumber numberWithInt:VIMVideoProcessingStatusTranscoding], @"transcoding",
+                                      [NSNumber numberWithInt:VIMVideoProcessingStatusUploadingError], @"uploading_error",
+                                      [NSNumber numberWithInt:VIMVideoProcessingStatusTranscodingError], @"transcoding_error",
+                                      nil];
+    
+    self.videoStatus = [[statusDictionary objectForKey:self.status] intValue];
+}
+
 # pragma mark - Helpers
 
 - (BOOL)canViewInfo
@@ -286,7 +301,17 @@
 
 - (BOOL)isAvailable
 {
-    return [self.status isEqualToString:@"available"];
+    return self.videoStatus == VIMVideoProcessingStatusAvailable;
+}
+
+- (BOOL)isTranscoding
+{
+    return self.videoStatus == VIMVideoProcessingStatusTranscoding;
+}
+
+- (BOOL)isUploading
+{
+    return self.videoStatus == VIMVideoProcessingStatusUploading;
 }
 
 @end
