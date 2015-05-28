@@ -35,6 +35,14 @@
 @class VIMAppeal;
 @class VIMVideoLog;
 
+typedef NS_ENUM(NSUInteger, VIMVideoProcessingStatus) {
+    VIMVideoProcessingStatusAvailable,
+    VIMVideoProcessingStatusUploading,
+    VIMVideoProcessingStatusTranscoding,
+    VIMVideoProcessingStatusUploadingError,
+    VIMVideoProcessingStatusTranscodingError
+};
+
 @interface VIMVideo : VIMModelObject
 
 @property (nonatomic, copy) NSArray *contentRating;
@@ -59,6 +67,9 @@
 @property (nonatomic, strong) VIMPrivacy *privacy;
 @property (nonatomic, strong) VIMVideoLog *log;
 @property (nonatomic, strong) NSNumber *numPlays;
+@property (nonatomic, strong) NSArray *categories;
+
+@property (nonatomic, assign) VIMVideoProcessingStatus videoStatus;
 
 - (VIMConnection *)connectionWithName:(NSString *)connectionName;
 - (VIMInteraction *)interactionWithName:(NSString *)name;
@@ -71,5 +82,7 @@
 - (BOOL)isVOD;
 - (BOOL)isPrivate;
 - (BOOL)isAvailable;
+- (BOOL)isTranscoding;
+- (BOOL)isUploading;
 
 @end

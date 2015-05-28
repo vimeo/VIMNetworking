@@ -1,9 +1,9 @@
 //
-//  VIMVimeoResponseSerializer.m
+//  VIMCategory.h
 //  VIMNetworking
 //
-//  Created by Hanssen, Alfie on 9/19/14.
-//  Copyright (c) 2014-2015 Vimeo (https://vimeo.com)
+//  Created by Huebner, Rob on 5/14/15.
+//  Copyright (c) 2015 Vimeo. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,22 +24,21 @@
 //  THE SOFTWARE.
 //
 
-#import "VIMResponseSerializer.h"
+#import "VIMModelObject.h"
 
-@implementation VIMResponseSerializer
+@class VIMPictureCollection;
+@class VIMConnection;
+@class VIMInteraction;
 
-+ (instancetype)serializer
-{
-    VIMResponseSerializer *serializer = [[self alloc] init];
-    serializer.readingOptions = 0;
-    [serializer setAcceptableContentTypes:[VIMResponseSerializer acceptableContentTypes]];
-    
-    return serializer;
-}
+@interface VIMCategory : VIMModelObject
 
-+ (NSSet *)acceptableContentTypes
-{
-    return [NSSet setWithObjects:@"application/json", @"text/json", @"text/html", @"text/javascript", @"application/vnd.vimeo.video+json", @"application/vnd.vimeo.cover+json", @"application/vnd.vimeo.service+json", @"application/vnd.vimeo.comment+json", @"application/vnd.vimeo.user+json", @"application/vnd.vimeo.activity+json", @"application/vnd.vimeo.uploadticket+json", @"application/vnd.vimeo.error+json", @"application/vnd.vimeo.trigger+json", @"application/vnd.vimeo.category+json", nil];
-}
+@property (nonatomic, copy) NSString *uri;
+@property (nonatomic, copy) NSString *name;
+@property (nonatomic, copy) NSString *link;
+@property (nonatomic, assign) BOOL isTopLevel;
+@property (nonatomic, strong) VIMPictureCollection *pictureCollection;
+
+- (VIMConnection *)connectionWithName:(NSString *)connectionName;
+- (VIMInteraction *)interactionWithName:(NSString *)name;
 
 @end

@@ -40,10 +40,6 @@
 
 - (id<VIMRequestToken>)resetPasswordWithEmail:(NSString *)email completionBlock:(VIMErrorCompletionBlock)completionBlock;
 
-#pragma mark - Utilities
-
-- (id<VIMRequestToken>)logErrorWithParameters:(NSDictionary *)parameters completionBlock:(VIMFetchCompletionBlock)completionBlock;
-
 #pragma mark - APNS
 
 #if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
