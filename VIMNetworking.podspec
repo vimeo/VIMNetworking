@@ -127,4 +127,8 @@ Pod::Spec.new do |s|
   # s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
   # s.dependency "AFNetworking", "~> 2.5.3"
 
+s.subspec 'Session' do |ss|
+    ss.source_files = 'VIMNetworking/VIMSession.{h,m}'
+  end
+  
 end
