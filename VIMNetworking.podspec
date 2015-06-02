@@ -128,4 +128,14 @@ Pod::Spec.new do |s|
   # s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
   # s.dependency "AFNetworking", "~> 2.5.3"
 
+s.subspec "AFNetworking" do |ss|
+    ss.dependency "AFNetworking", "~> 2.5.3"
+    ss.xcconfig = { "FRAMEWORK_SEARCH_PATHS" => "$(PODS_ROOT)/AFNetworking"}
+end
+
+s.subspec "VIMObjectMapper" do |ss|
+    ss.dependency "VIMObjectMapper", :git => 'https://github.com/vimeo/VIMObjectMapper.git', :branch => 'cocoapod'
+    ss.xcconfig = { "FRAMEWORK_SEARCH_PATHS" => "$(PODS_ROOT)/VIMObjectMapper"}
+end
+
 end

@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "49EF6613B9C9786406E2973F"
+               BlueprintIdentifier = "A927454B689E67C2C2B52DE4"
                BuildableName = "libPods-VIMNetworking-VIMObjectMapper.a"
                BlueprintName = "Pods-VIMNetworking-VIMObjectMapper"
                ReferencedContainer = "container:Pods.xcodeproj">
