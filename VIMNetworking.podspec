@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "VIMNetworking"
-  s.version      = "0.0.1"
+  s.version      = "5.4.2"
   s.summary      = "The Vimeo iOS SDK."
 
   s.description  = <<-DESC
