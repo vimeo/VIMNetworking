@@ -26,7 +26,7 @@
 
 #import "VIMReachability.h"
 
-#import <AFNetworking/AFNetworkReachabilityManager.h>
+#import "AFNetworkReachabilityManager.h"
 
 NSString * const VIMReachabilityStatusChangeOfflineNotification = @"VIMReachabilityStatusChangeOfflineNotification";
 NSString * const VIMReachabilityStatusChangeOnlineNotification = @"VIMReachabilityStatusChangeOnlineNotification";

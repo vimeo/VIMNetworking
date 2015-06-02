@@ -24,7 +24,7 @@
 //  THE SOFTWARE.
 //
 
-#import <AFNetworking/AFHTTPSessionManager.h>
+#import "AFHTTPSessionManager.h"
 
 @interface VIMSessionManager : AFHTTPSessionManager
 

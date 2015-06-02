@@ -24,7 +24,7 @@
 //  THE SOFTWARE.
 //
 
-#import <AFNetworking/AFNetworking.h>
+#import "AFNetworking.h"
 
 @class VIMRequestDescriptor;
 @class VIMServerResponse;
