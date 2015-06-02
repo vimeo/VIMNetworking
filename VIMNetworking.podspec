@@ -133,9 +133,4 @@ s.subspec "AFNetworking" do |ss|
     ss.xcconfig = { "FRAMEWORK_SEARCH_PATHS" => "$(PODS_ROOT)/AFNetworking"}
 end
 
-s.subspec "VIMObjectMapper" do |ss|
-    ss.dependency "VIMObjectMapper", :git => 'https://github.com/vimeo/VIMObjectMapper.git', :branch => 'cocoapod'
-    ss.xcconfig = { "FRAMEWORK_SEARCH_PATHS" => "$(PODS_ROOT)/VIMObjectMapper"}
-end
-
 end
