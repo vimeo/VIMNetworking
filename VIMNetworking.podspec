@@ -129,7 +129,7 @@ Pod::Spec.new do |s|
   # s.dependency "AFNetworking", "~> 2.5.3"
 
   s.subspec 'AFNetworking' do |ss|
-    ss.dependency	'AFNetworking', '~> 2.5.3'
+    ss.dependency	'AFNetworking', '~> 2.5.4'
   end
 
   s.subspec 'VIMObjectMapper' do |ss|
