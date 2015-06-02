@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>2D43DD5A-D057-4E53-B45B-8E282128D0AD</string>
+	<key>IDESourceControlProjectName</key>
+	<string>VIMNetworking</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>DC988842E10CB87453E068D180CA93EB1F07FC77</key>
+		<string>github.com:vimeo/VIMNetworking.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>VIMNetworking.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>DC988842E10CB87453E068D180CA93EB1F07FC77</key>
+		<string>..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>github.com:vimeo/VIMNetworking.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>DC988842E10CB87453E068D180CA93EB1F07FC77</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>DC988842E10CB87453E068D180CA93EB1F07FC77</string>
+			<key>IDESourceControlWCCName</key>
+			<string>VIMNetworking</string>
+		</dict>
+	</array>
+</dict>
+</plist>

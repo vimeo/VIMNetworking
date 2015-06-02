@@ -1,0 +1,1 @@
+../../../VIMObjectMapper/VIMObjectMapper/VIMMappable.h

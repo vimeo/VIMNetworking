@@ -1,8 +1,8 @@
 //
-//  VIMReachability.h
-//  VIMLibrary
+//  VIMMappable.h
+//  VIMNetworking
 //
-//  Created by Jason Hawkins on 3/25/13.
+//  Created by Kashif Mohammad on 3/25/13.
 //  Copyright (c) 2014-2015 Vimeo (https://vimeo.com)
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -26,16 +26,13 @@
 
 #import <Foundation/Foundation.h>
 
-extern NSString * const VIMReachabilityStatusChangeOfflineNotification;
-extern NSString * const VIMReachabilityStatusChangeOnlineNotification;
-extern NSString * const VIMReachabilityStatusChangeWasOfflineInfoKey;
+@protocol VIMMappable <NSObject>
 
-@interface VIMReachability : NSObject
+@optional
 
-+ (VIMReachability *)sharedInstance;
-
-@property (nonatomic, assign, readonly) BOOL isNetworkReachable;
-@property (nonatomic, assign, readonly) BOOL isOn3G;
-@property (nonatomic, assign, readonly) BOOL isOnWiFi;
+- (id)getObjectMapping;
+- (Class)getClassForCollectionKey:(NSString *)key;
+- (Class)getClassForObjectKey:(NSString *)key;
+- (void)didFinishMapping;
 
 @end

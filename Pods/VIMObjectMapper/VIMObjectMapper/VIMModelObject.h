@@ -1,8 +1,8 @@
 //
-//  VIMReachability.h
-//  VIMLibrary
+//  VIMModelObject.h
+//  VIMNetworking
 //
-//  Created by Jason Hawkins on 3/25/13.
+//  Created by Kashif Mohammad on 6/5/13.
 //  Copyright (c) 2014-2015 Vimeo (https://vimeo.com)
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,18 +24,21 @@
 //  THE SOFTWARE.
 //
 
-#import <Foundation/Foundation.h>
+#import "VIMMappable.h"
 
-extern NSString * const VIMReachabilityStatusChangeOfflineNotification;
-extern NSString * const VIMReachabilityStatusChangeOnlineNotification;
-extern NSString * const VIMReachabilityStatusChangeWasOfflineInfoKey;
+@interface VIMModelObject : NSObject <NSCopying, NSSecureCoding, VIMMappable>
 
-@interface VIMReachability : NSObject
+@property (nonatomic, assign) int sortOrder;
+@property (nonatomic, copy) NSString *objectID;
 
-+ (VIMReachability *)sharedInstance;
++ (NSUInteger)modelVersion;
++ (NSDateFormatter *)dateFormatter;
++ (NSSet *)propertyKeys;
 
-@property (nonatomic, assign, readonly) BOOL isNetworkReachable;
-@property (nonatomic, assign, readonly) BOOL isOn3G;
-@property (nonatomic, assign, readonly) BOOL isOnWiFi;
+- (instancetype)initWithKeyValueDictionary:(NSDictionary *)dictionary;
+
+- (NSDictionary *)keyValueDictionary;
+
+- (void)upgradeFromModelVersion:(NSUInteger)fromVersion toModelVersion:(NSUInteger)toVersion;
 
 @end

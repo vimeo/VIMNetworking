@@ -24,6 +24,8 @@
 //  THE SOFTWARE.
 //
 
+#import <Foundation/Foundation.h>
+
 @class VIMAccountCredential;
 
 extern const NSString *kVIMAccountType_Vimeo;
