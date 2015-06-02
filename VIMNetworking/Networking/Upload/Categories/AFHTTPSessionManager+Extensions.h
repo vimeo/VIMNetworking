@@ -25,7 +25,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "AFHTTPSessionManager.h"
+#import <AFNetworking/AFHTTPSessionManager.h>
 
 @interface AFHTTPSessionManager (Extensions)
 
