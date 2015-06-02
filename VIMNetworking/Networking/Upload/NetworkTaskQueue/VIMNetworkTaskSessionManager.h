@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Vimeo. All rights reserved.
 //
 
-#import "AFHTTPSessionManager.h"
+#import <AFNetworking/AFHTTPSessionManager.h>
 
 @class VIMNetworkTaskSessionManager;
 

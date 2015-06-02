@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "5FE8A3D3656777B2FF52FD6B"
+               BlueprintIdentifier = "D94BC29630F83DDD29D6F8FF"
                BuildableName = "libPods-VIMNetworking-AFNetworking.a"
                BlueprintName = "Pods-VIMNetworking-AFNetworking"
                ReferencedContainer = "container:Pods.xcodeproj">

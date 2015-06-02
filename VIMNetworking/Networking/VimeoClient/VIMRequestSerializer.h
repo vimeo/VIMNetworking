@@ -24,7 +24,7 @@
 //  THE SOFTWARE.
 //
 
-#import "AFURLRequestSerialization.h"
+#import <AFNetworking/AFURLRequestSerialization.h>
 
 @class VIMAccount;
 @class VIMSession;

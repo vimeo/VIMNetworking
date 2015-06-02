@@ -25,7 +25,7 @@
 //
 
 #import "VIMOAuthAuthenticator.h"
-#import "AFHTTPRequestOperationManager.h"
+#import <AFNetworking/AFHTTPRequestOperationManager.h>
 #import "VIMAccount.h"
 #import "VIMAccountCredential.h"
 #import "VIMRequestSerializer.h"
