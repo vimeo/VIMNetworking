@@ -90,7 +90,8 @@ static const NSString *VIMTempFileMakerErrorDomain = @"VIMTempFileMakerErrorDoma
             return;
         }
 
-        error = [NSError errorWithDomain:(NSString *)VIMTempFileMakerErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"Cannot upload unknown AVAsset type."}];
+        NSString *description = [NSString stringWithFormat:@"Cannot upload unknown AVAsset type (%@).", NSStringFromClass([asset class])];
+        error = [NSError errorWithDomain:(NSString *)VIMTempFileMakerErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : description}];
             
         if (completionBlock)
         {
