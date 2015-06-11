@@ -122,7 +122,8 @@ static const NSString *VIMTempFileMakerErrorDomain = @"VIMTempFileMakerErrorDoma
     {
         if (completionBlock)
         {
-            NSError *error = [NSError errorWithDomain:(NSString *)VIMTempFileMakerErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"Asset is not exportable."}];
+            NSString *description = [NSString stringWithFormat:@"Asset is not exportable. Class: %@ Asset: %@", NSStringFromClass([asset class]), asset];
+            NSError *error = [NSError errorWithDomain:(NSString *)VIMTempFileMakerErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : description}];
             completionBlock(nil, error);
         }
         
