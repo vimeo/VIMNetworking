@@ -34,6 +34,8 @@ NSString *const VIMTaskQueueTaskSucceededNotification = @"VIMTaskQueueTaskSuccee
 static NSString *TasksKey = @"tasks";
 static NSString *CurrentTaskKey = @"current_task";
 
+static void *TaskQueueSpecific = "TaskQueueSpecific";
+
 @interface VIMTaskQueue () <VIMTaskDelegate>
 {
     dispatch_queue_t _archivalQueue;
@@ -63,6 +65,8 @@ static NSString *CurrentTaskKey = @"current_task";
         
         _archivalQueue = dispatch_queue_create("com.vimeo.uploadQueue.archivalQueue", DISPATCH_QUEUE_SERIAL);
         _tasksQueue = dispatch_queue_create("com.vimeo.uploadQueue.taskQueue", DISPATCH_QUEUE_SERIAL);
+
+        dispatch_queue_set_specific(_tasksQueue, TaskQueueSpecific, (void *)TaskQueueSpecific, NULL);
 
         _tasks = [NSMutableArray array];
 
@@ -402,30 +406,40 @@ static NSString *CurrentTaskKey = @"current_task";
     // Determined at WWDC 2015 in concert with an Apple Foundation engineer that dispatch_sync is the appropriate mechanism to use here [AH]
     // The intent is for this to not adversely impact session delegate completionHandler call
     
-    dispatch_sync(_tasksQueue, ^{
-       
-        self.currentTask = nil;
-        
-        [self save];
-        
-        [self updateTaskCount];
-        
-        [self logTaskStatus:task];
-        
-        if ([task didSucceed])
-        {
-            [[NSNotificationCenter defaultCenter] postNotificationName:VIMTaskQueueTaskSucceededNotification object:task];
-        }
-        else if (task.error.code != NSURLErrorCancelled)
-        {
-            [[NSNotificationCenter defaultCenter] postNotificationName:VIMTaskQueueTaskFailedNotification object:task];
-        }
-        
-        [self startNextTask];
-
-    });
+    if (dispatch_get_specific(TaskQueueSpecific))
+    {
+        [self respondToTaskCompletion:task];
+    }
+    else
+    {
+        dispatch_sync(_tasksQueue, ^{
+            [self respondToTaskCompletion:task];
+        });
+    }
 }
 
+- (void)respondToTaskCompletion:(VIMTask *)task
+{
+    self.currentTask = nil;
+    
+    [self save];
+    
+    [self updateTaskCount];
+    
+    [self logTaskStatus:task];
+    
+    if ([task didSucceed])
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:VIMTaskQueueTaskSucceededNotification object:task];
+    }
+    else if (task.error.code != NSURLErrorCancelled)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:VIMTaskQueueTaskFailedNotification object:task];
+    }
+    
+    [self startNextTask];
+    
+}
 - (void)logTaskStatus:(VIMTask *)task
 {
     if ([task didSucceed])
