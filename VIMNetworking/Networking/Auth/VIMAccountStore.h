@@ -24,6 +24,8 @@
 //  THE SOFTWARE.
 //
 
+#import <Foundation/Foundation.h>
+
 @class VIMAccount;
 
 extern NSString * const VIMAccountStore_AccountsDidChangeNotification;

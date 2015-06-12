@@ -24,6 +24,8 @@
 //  THE SOFTWARE.
 //
 
+#import <Foundation/Foundation.h>
+
 extern NSString * const VIMReachabilityStatusChangeOfflineNotification;
 extern NSString * const VIMReachabilityStatusChangeOnlineNotification;
 extern NSString * const VIMReachabilityStatusChangeWasOfflineInfoKey;

@@ -6,6 +6,7 @@
 //
 
 #import <Security/Security.h>
+#import <Foundation/Foundation.h>
 
 @interface KeychainUtility : NSObject
 

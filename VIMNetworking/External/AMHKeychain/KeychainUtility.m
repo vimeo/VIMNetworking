@@ -77,7 +77,8 @@
     
     NSMutableDictionary *query = [self queryForService:service account:account];
     [query setValue:data forKey:(__bridge_transfer id)kSecValueData];
-    
+    [query setObject:(__bridge id)kSecAttrAccessibleAfterFirstUnlock forKey:(__bridge id)kSecAttrAccessible];
+
     OSStatus status = SecItemAdd((__bridge CFDictionaryRef)query, NULL);
     
     return (status == errSecSuccess);

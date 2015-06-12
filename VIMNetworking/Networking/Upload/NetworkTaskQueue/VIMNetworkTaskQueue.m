@@ -79,9 +79,7 @@ static const NSString *CellularEnabledKey = @"cellular_enabled";
 {
     if (self.isSuspendedByUser == NO)
     {
-        [super resume];
-        
-        [self notifyOfStateChange];
+        [self resume];
     }
 }
 
@@ -134,7 +132,7 @@ static const NSString *CellularEnabledKey = @"cellular_enabled";
     
     if ([[VIMReachability sharedInstance] isOn3G] && self.isCellularUploadEnabled == NO)
     {
-        return;
+        self.cellularUploadEnabled = YES;
     }
     
     [super resume];

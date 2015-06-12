@@ -273,7 +273,8 @@ static NSString *const VIMCreateRecordTaskErrorDomain = @"VIMCreateRecordTaskErr
     NSString *activationURI = [self.responseDictionary objectForKey:@"complete_uri"];
     if (uploadURI == nil || activationURI == nil)
     {
-        self.error = [NSError errorWithDomain:(NSString *)VIMCreateRecordTaskErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"Reponse did not include upload_link_secure or complete_uri."}];
+        NSString *description = [NSString stringWithFormat:@"Reponse did not include upload_link_secure or complete_uri. (%@)", [self.responseDictionary description]];
+        self.error = [NSError errorWithDomain:(NSString *)VIMCreateRecordTaskErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : description}];
 
         [self taskDidComplete];
         
