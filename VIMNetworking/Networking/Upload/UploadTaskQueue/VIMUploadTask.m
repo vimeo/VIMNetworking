@@ -475,13 +475,14 @@ static void *UploadProgressContext = &UploadProgressContext;
     if (self)
     {
         self.currentTask = [coder decodeObjectForKey:NSStringFromSelector(@selector(currentTask))];
-        self.uploadURI = [coder decodeObjectForKey:NSStringFromSelector(@selector(uploadURI))];
         self.localURI = [coder decodeObjectForKey:NSStringFromSelector(@selector(localURI))];
+        self.uploadURI = [coder decodeObjectForKey:NSStringFromSelector(@selector(uploadURI))];
         self.activationURI = [coder decodeObjectForKey:NSStringFromSelector(@selector(activationURI))];
         self.videoURI = [coder decodeObjectForKey:NSStringFromSelector(@selector(videoURI))];
         self.uploadState = [coder decodeIntegerForKey:NSStringFromSelector(@selector(uploadState))];
         self.canUploadFromSource = [coder decodeBoolForKey:NSStringFromSelector(@selector(canUploadFromSource))];
-
+        self.videoMetadata = [coder decodeObjectForKey:NSStringFromSelector(@selector(videoMetadata))];
+        
         NSString *assetLocalIdentifier = [coder decodeObjectForKey:@"assetLocalIdentifier"];
         if (assetLocalIdentifier)
         {
@@ -513,6 +514,7 @@ static void *UploadProgressContext = &UploadProgressContext;
     [coder encodeObject:self.videoURI forKey:NSStringFromSelector(@selector(videoURI))];
     [coder encodeInteger:self.uploadState forKey:NSStringFromSelector(@selector(uploadState))];
     [coder encodeBool:self.canUploadFromSource forKey:NSStringFromSelector(@selector(canUploadFromSource))];
+    [coder encodeObject:self.videoMetadata forKey:NSStringFromSelector(@selector(videoMetadata))];
 
     if (self.phAsset)
     {
