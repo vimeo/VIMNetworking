@@ -291,7 +291,8 @@ Enqueue an `AVURLAsset` for upload.
 ```Objective-C
 NSURL *URL = ...;
 AVURLAsset *URLAsset = [AVURLAsset assetWithURL:URL];
-VIMVideoAsset *videoAsset = [[VIMVideoAsset alloc] initWithURLAsset:URLAsset];
+BOOL canUploadFromSource = ...; // If the asset doesn't need to be copied to a tmp directory before upload, set this to YES
+VIMVideoAsset *videoAsset = [[VIMVideoAsset alloc] initWithURLAsset:URLAsset canUploadFromSource:canUploadFromSource];
 [[VIMUploadTaskQueue sharedExtensionQueue] uploadVideoAssets:@[videoAsset]];
 ```
 
