@@ -44,8 +44,6 @@
 NSString * const VIMSession_AuthenticatedUserDidChangeNotification = @"VIMSession_AuthenticatedUserDidChangeNotification";
 NSString * const VIMSession_DidFinishLoadingNotification = @"VIMSession_DidFinishLoadingNotification";
 
-NSString *VimeoBaseURLString = @"https://api.vimeo.com/";
-
 @interface VIMSession ()
 {
     VIMCache *_userCache;
@@ -54,8 +52,6 @@ NSString *VimeoBaseURLString = @"https://api.vimeo.com/";
 @property (nonatomic, strong, readwrite) VIMAccount *account;
 @property (nonatomic, strong, readwrite) VIMUser *authenticatedUser;
 @property (nonatomic, strong, readwrite) VIMSessionConfiguration *configuration;
-
-@property (nonatomic, strong) NSString *baseURLString;
 
 @end
 
@@ -76,17 +72,6 @@ NSString *VimeoBaseURLString = @"https://api.vimeo.com/";
     });
     
     return __sharedSession;
-}
-
-- (instancetype)init
-{
-    self = [super init];
-    if (self)
-    {
-        _baseURLString = VimeoBaseURLString;
-    }
-    
-    return self;
 }
 
 #pragma mark - Public API
@@ -162,7 +147,9 @@ NSString *VimeoBaseURLString = @"https://api.vimeo.com/";
 
 - (void)changeBaseURLString:(NSString *)baseURLString
 {
-    _baseURLString = baseURLString;
+    NSParameterAssert(baseURLString);
+    
+    self.configuration.baseURLString = baseURLString;
 }
 
 - (void)logOut
@@ -175,38 +162,6 @@ NSString *VimeoBaseURLString = @"https://api.vimeo.com/";
     [[self userCache] removeAllObjects];
     [[self appGroupUserCache] removeAllObjects];
     [[self appGroupSharedCache] removeAllObjects];
-}
-
-#pragma mark - Configuration
-
-- (NSString *)vimeoClientKey
-{
-    return self.configuration.clientKey;
-}
-
-- (NSString *)vimeoClientSecret
-{
-    return self.configuration.clientSecret;
-}
-
-- (NSString *)vimeoScope
-{
-    return self.configuration.scope;
-}
-
-- (NSString *)backgroundSessionIdentifierApp
-{
-    return self.configuration.backgroundSessionIdentifierApp;
-}
-
-- (NSString *)backgroundSessionIdentifierExtension
-{
-    return self.configuration.backgroundSessionIdentifierExtension;
-}
-
-- (NSString *)sharedContainerID
-{
-    return self.configuration.sharedContainerID;
 }
 
 #pragma mark - Observers

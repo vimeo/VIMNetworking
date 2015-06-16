@@ -35,6 +35,7 @@
     if (self)
     {
         _APIVersionString = @"3.2";
+        _baseURLString = @"https://api.vimeo.com/";
     }
     
     return self;
@@ -44,9 +45,9 @@
 
 - (BOOL)isValid
 {
-    NSParameterAssert(self.clientKey && self.clientSecret && self.scope);
+    NSParameterAssert(self.clientKey && self.clientSecret && self.scope && self.baseURLString && self.APIVersionString);
     
-    return self.clientKey && self.clientSecret && self.scope;
+    return self.clientKey && self.clientSecret && self.scope && self.baseURLString && self.APIVersionString;
 }
 
 @end
