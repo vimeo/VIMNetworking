@@ -8,7 +8,20 @@ The upload system supports background session uploads from apps and extensions. 
 
 Check out the sample project [here](https://github.com/vimeo/Pegasus).
 
-## Project Setup
+## Setup
+
+### Cocopods
+
+```Ruby
+# Add this to your podfile
+target 'MyTarget' do
+	pod 'VIMNetworking', '5.4.2'
+end
+```
+
+Note that VIMNetworking has dependencies on `AFNetworking` and `VIMObjectMapper`.
+
+###Git Submodules
 
 1. Clone the library repo into your Xcode project directory. In terminal:
 
@@ -278,7 +291,8 @@ Enqueue an `AVURLAsset` for upload.
 ```Objective-C
 NSURL *URL = ...;
 AVURLAsset *URLAsset = [AVURLAsset assetWithURL:URL];
-VIMVideoAsset *videoAsset = [[VIMVideoAsset alloc] initWithURLAsset:URLAsset];
+BOOL canUploadFromSource = ...; // If the asset doesn't need to be copied to a tmp directory before upload, set this to YES
+VIMVideoAsset *videoAsset = [[VIMVideoAsset alloc] initWithURLAsset:URLAsset canUploadFromSource:canUploadFromSource];
 [[VIMUploadTaskQueue sharedExtensionQueue] uploadVideoAssets:@[videoAsset]];
 ```
 
