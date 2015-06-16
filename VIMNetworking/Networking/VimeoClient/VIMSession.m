@@ -149,6 +149,11 @@ NSString * const VIMSession_DidFinishLoadingNotification = @"VIMSession_DidFinis
 {
     NSParameterAssert(baseURLString);
     
+    if (baseURLString == nil)
+    {
+        return;
+    }
+    
     self.configuration.baseURLString = baseURLString;
 }
 

@@ -39,7 +39,7 @@
     
     dispatch_once(&onceToken, ^{
         
-        NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration backgroundSessionConfigurationWithID:[[VIMSession sharedSession] backgroundSessionIdentifierApp] sharedContainerID:[[VIMSession sharedSession] sharedContainerID]];
+        NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration backgroundSessionConfigurationWithID:[VIMSession sharedSession].configuration.backgroundSessionIdentifierApp sharedContainerID:[VIMSession sharedSession].configuration.sharedContainerID];
         
         sharedAppInstance = [[self alloc] initWithSessionConfiguration:configuration];
 
@@ -55,7 +55,7 @@
     
     dispatch_once(&onceToken, ^{
         
-        NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration backgroundSessionConfigurationWithID:[[VIMSession sharedSession] backgroundSessionIdentifierExtension] sharedContainerID:[[VIMSession sharedSession] sharedContainerID]];
+        NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration backgroundSessionConfigurationWithID:[VIMSession sharedSession].configuration.backgroundSessionIdentifierExtension sharedContainerID:[VIMSession sharedSession].configuration.sharedContainerID];
         
         sharedExtensionInstance = [[self alloc] initWithSessionConfiguration:configuration];
         
@@ -68,7 +68,7 @@
 
 - (instancetype)initWithSessionConfiguration:(NSURLSessionConfiguration *)configuration
 {
-    NSURL *url = [NSURL URLWithString:[[VIMSession sharedSession] baseURLString]];
+    NSURL *url = [NSURL URLWithString:[VIMSession sharedSession].configuration.baseURLString];
     self = [super initWithBaseURL:url sessionConfiguration:configuration];
     if (self)
 

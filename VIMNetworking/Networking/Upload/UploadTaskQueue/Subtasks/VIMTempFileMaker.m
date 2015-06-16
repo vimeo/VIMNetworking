@@ -260,7 +260,7 @@ static const NSString *VIMTempFileMakerErrorDomain = @"VIMTempFileMakerErrorDoma
 {
     NSURL *groupURL = nil;
     
-    NSString *sharedContainerID = [[VIMSession sharedSession] sharedContainerID]; // TODO: eliminate VIMSession dependency [AH]
+    NSString *sharedContainerID = [VIMSession sharedSession].configuration.sharedContainerID; // TODO: eliminate VIMSession dependency [AH]
     if (sharedContainerID)
     {
         groupURL = [[NSFileManager new] containerURLForSecurityApplicationGroupIdentifier:sharedContainerID];
