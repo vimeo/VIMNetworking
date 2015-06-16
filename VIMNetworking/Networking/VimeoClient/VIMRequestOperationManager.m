@@ -80,7 +80,7 @@ NSString * const kVimeoClientErrorDomain = @"VimeoClientErrorDomain";
         self.requestSerializer = [VIMRequestSerializer serializerWithSession:[VIMSession sharedSession]];
         self.responseSerializer = [VIMResponseSerializer serializer];
         
-#if (ADHOC || RELEASE)
+#if (defined(ADHOC) || defined(RELEASE))
         self.securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeCertificate];
         self.securityPolicy.allowInvalidCertificates = NO;
         self.securityPolicy.validatesCertificateChain = NO;
