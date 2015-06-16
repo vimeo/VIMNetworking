@@ -10,6 +10,6 @@
 
 @interface VIMVideoPreference : VIMModelObject
 
-@property (nonatomic, assign) NSString *privacy;
+@property (nonatomic, copy) NSString *privacy;
 
 @end
