@@ -144,7 +144,6 @@
 		50E5086E1B1E327D00DF1F7A /* VIMAccountStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMAccountStore.m; sourceTree = "<group>"; };
 		50E5086F1B1E327D00DF1F7A /* VIMOAuthAuthenticator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMOAuthAuthenticator.h; sourceTree = "<group>"; };
 		50E508701B1E327D00DF1F7A /* VIMOAuthAuthenticator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMOAuthAuthenticator.m; sourceTree = "<group>"; };
-		50E508721B1E327D00DF1F7A /* digicert-root.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = "digicert-root.cer"; sourceTree = "<group>"; };
 		50E508741B1E327D00DF1F7A /* NSError+BaseError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+BaseError.h"; sourceTree = "<group>"; };
 		50E508751B1E327D00DF1F7A /* NSError+BaseError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+BaseError.m"; sourceTree = "<group>"; };
 		50E508771B1E327D00DF1F7A /* VIMReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMReachability.h; sourceTree = "<group>"; };
@@ -236,6 +235,7 @@
 		50E508D91B1E327E00DF1F7A /* VIMAccountManager+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "VIMAccountManager+Private.h"; sourceTree = "<group>"; };
 		50E508DA1B1E327E00DF1F7A /* VIMAPIClient+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "VIMAPIClient+Private.h"; sourceTree = "<group>"; };
 		50E5091B1B1E329E00DF1F7A /* VIMNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMNetworking.h; sourceTree = "<group>"; };
+		50FD87AF1B3082350064EC16 /* digicert-sha2.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = "digicert-sha2.cer"; sourceTree = "<group>"; };
 		87F4839252229F85024E18ED /* Pods-VIMNetworking.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VIMNetworking.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VIMNetworking/Pods-VIMNetworking.debug.xcconfig"; sourceTree = "<group>"; };
 		9248A53C565F6AEB7FAE4A8D /* Pods-VIMNetworking.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VIMNetworking.release.xcconfig"; path = "Pods/Target Support Files/Pods-VIMNetworking/Pods-VIMNetworking.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -411,7 +411,7 @@
 		50E508711B1E327D00DF1F7A /* Certificate */ = {
 			isa = PBXGroup;
 			children = (
-				50E508721B1E327D00DF1F7A /* digicert-root.cer */,
+				50FD87AF1B3082350064EC16 /* digicert-sha2.cer */,
 			);
 			path = Certificate;
 			sourceTree = "<group>";
