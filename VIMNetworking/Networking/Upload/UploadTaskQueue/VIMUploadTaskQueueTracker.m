@@ -610,7 +610,7 @@ static void *UploadStateContext = &UploadStateContext;
     NSArray *array = [self.successfulAssetIdentifiers allObjects];
     [VIMUploadTaskQueueTracker archiveObject:array forKey:VIMUploadTaskQueueTracker_SuccessfulAssetIdentifiersCacheKey];
 
-    [VIMUploadTaskQueueTracker archiveObject:self.failedAssets forKey:VIMUploadTaskQueueTracker_FailedAssetsCacheKey];
+    [VIMUploadTaskQueueTracker archiveObject:[self.failedAssets copy] forKey:VIMUploadTaskQueueTracker_FailedAssetsCacheKey];
 }
 
 + (id)unarchiveObjectForKey:(NSString *)key
