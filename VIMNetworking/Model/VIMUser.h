@@ -31,6 +31,7 @@
 @class VIMConnection;
 @class VIMInteraction;
 @class VIMPictureCollection;
+@class VIMPreference;
 
 typedef NS_ENUM(NSInteger, VIMUserAccountType)
 {
@@ -54,6 +55,7 @@ typedef NS_ENUM(NSInteger, VIMUserAccountType)
 @property (nonatomic, copy) NSString *uri;
 @property (nonatomic, strong) NSArray *websites;
 @property (nonatomic, strong) NSDictionary *uploadQuota;
+@property (nonatomic, strong) VIMPreference *preferences;
 
 - (VIMConnection *)connectionWithName:(NSString *)connectionName;
 - (VIMInteraction *)interactionWithName:(NSString *)name;
