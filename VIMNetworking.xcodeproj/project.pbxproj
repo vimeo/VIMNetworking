@@ -72,6 +72,8 @@
 		50E509181B1E327E00DF1F7A /* VIMFeaturesConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E508D31B1E327E00DF1F7A /* VIMFeaturesConfiguration.m */; };
 		50E509191B1E327E00DF1F7A /* VIMTrigger.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E508D51B1E327E00DF1F7A /* VIMTrigger.m */; };
 		50E5091A1B1E327E00DF1F7A /* VIMVideoLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E508D71B1E327E00DF1F7A /* VIMVideoLog.m */; };
+		50FD87BC1B3097650064EC16 /* VIMPreference.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FD87BB1B3097650064EC16 /* VIMPreference.m */; };
+		50FD87BF1B3097E80064EC16 /* VIMVideoPreference.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FD87BE1B3097E80064EC16 /* VIMVideoPreference.m */; };
 		DC16850E4F6C78F94A55B118 /* libPods-VIMNetworking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C67472B87D151EA8CA452D3 /* libPods-VIMNetworking.a */; };
 /* End PBXBuildFile section */
 
@@ -236,6 +238,10 @@
 		50E508DA1B1E327E00DF1F7A /* VIMAPIClient+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "VIMAPIClient+Private.h"; sourceTree = "<group>"; };
 		50E5091B1B1E329E00DF1F7A /* VIMNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMNetworking.h; sourceTree = "<group>"; };
 		50FD87AF1B3082350064EC16 /* digicert-sha2.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = "digicert-sha2.cer"; sourceTree = "<group>"; };
+		50FD87BA1B3097650064EC16 /* VIMPreference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMPreference.h; sourceTree = "<group>"; };
+		50FD87BB1B3097650064EC16 /* VIMPreference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMPreference.m; sourceTree = "<group>"; };
+		50FD87BD1B3097E80064EC16 /* VIMVideoPreference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMVideoPreference.h; sourceTree = "<group>"; };
+		50FD87BE1B3097E80064EC16 /* VIMVideoPreference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMVideoPreference.m; sourceTree = "<group>"; };
 		87F4839252229F85024E18ED /* Pods-VIMNetworking.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VIMNetworking.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VIMNetworking/Pods-VIMNetworking.debug.xcconfig"; sourceTree = "<group>"; };
 		9248A53C565F6AEB7FAE4A8D /* Pods-VIMNetworking.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VIMNetworking.release.xcconfig"; path = "Pods/Target Support Files/Pods-VIMNetworking/Pods-VIMNetworking.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -374,6 +380,10 @@
 				50E508621B1E327D00DF1F7A /* VIMVideo.m */,
 				50E508631B1E327D00DF1F7A /* VIMVideoFile.h */,
 				50E508641B1E327D00DF1F7A /* VIMVideoFile.m */,
+				50FD87BA1B3097650064EC16 /* VIMPreference.h */,
+				50FD87BB1B3097650064EC16 /* VIMPreference.m */,
+				50FD87BD1B3097E80064EC16 /* VIMVideoPreference.h */,
+				50FD87BE1B3097E80064EC16 /* VIMVideoPreference.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -764,6 +774,7 @@
 				50E508E51B1E327E00DF1F7A /* VIMPictureCollection.m in Sources */,
 				50E508DC1B1E327E00DF1F7A /* KeychainUtility.m in Sources */,
 				50E508DB1B1E327E00DF1F7A /* VIMCache.m in Sources */,
+				50FD87BC1B3097650064EC16 /* VIMPreference.m in Sources */,
 				50E508E11B1E327E00DF1F7A /* VIMConnection.m in Sources */,
 				50E509121B1E327E00DF1F7A /* VIMSessionManager.m in Sources */,
 				50E508E71B1E327E00DF1F7A /* VIMTag.m in Sources */,
@@ -805,6 +816,7 @@
 				50E509151B1E327E00DF1F7A /* VIMAppConfiguration.m in Sources */,
 				50E508F71B1E327E00DF1F7A /* VIMNetworkTaskQueue.m in Sources */,
 				50E508EE1B1E327E00DF1F7A /* VIMAccountStore.m in Sources */,
+				50FD87BF1B3097E80064EC16 /* VIMVideoPreference.m in Sources */,
 				50E509011B1E327E00DF1F7A /* VIMUploadFileTask.m in Sources */,
 				50E508E41B1E327E00DF1F7A /* VIMPicture.m in Sources */,
 				50E508FD1B1E327E00DF1F7A /* VIMActivateTicketTask.m in Sources */,

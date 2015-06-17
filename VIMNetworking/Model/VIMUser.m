@@ -32,6 +32,7 @@
 #import "VIMObjectMapper.h"
 #import "NSString+MD5.h"
 #import "VIMSession.h"
+#import "VIMPreference.h"
 
 @interface VIMUser ()
 
@@ -67,9 +68,16 @@
 
 - (Class)getClassForObjectKey:(NSString *)key
 {
-    if( [key isEqualToString:@"pictures"] )
+    if ([key isEqualToString:@"pictures"])
+    {
         return [VIMPictureCollection class];
-    
+    }
+
+    if ([key isEqualToString:@"preferences"])
+    {
+        return [VIMPreference class];
+    }
+
     return nil;
 }
 
