@@ -63,7 +63,7 @@ NSString * const kVimeoClientErrorDomain = @"VimeoClientErrorDomain";
     static VIMRequestOperationManager *_sharedClient = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        NSURL *URL = [NSURL URLWithString:[[VIMSession sharedSession] baseURLString]];
+        NSURL *URL = [NSURL URLWithString:[VIMSession sharedSession].configuration.baseURLString];
         _sharedClient = [[VIMRequestOperationManager alloc] initWithBaseURL:URL];
     });
     

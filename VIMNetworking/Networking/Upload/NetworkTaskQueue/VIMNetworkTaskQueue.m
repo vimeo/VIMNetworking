@@ -87,7 +87,7 @@ static const NSString *CellularEnabledKey = @"cellular_enabled";
 
 - (NSUserDefaults *)taskQueueDefaults
 {
-    NSString *sharedContainerID = [[VIMSession sharedSession] sharedContainerID];
+    NSString *sharedContainerID = [VIMSession sharedSession].configuration.sharedContainerID;
     
     if (sharedContainerID)
     {

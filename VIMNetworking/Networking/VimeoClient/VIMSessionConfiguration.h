@@ -31,6 +31,7 @@
 @property (nonatomic, copy) NSString *clientKey;
 @property (nonatomic, copy) NSString *clientSecret;
 @property (nonatomic, copy) NSString *scope;
+@property (nonatomic, copy) NSString *baseURLString;
 
 @property (nonatomic, copy) NSString *backgroundSessionIdentifierApp;
 @property (nonatomic, copy) NSString *backgroundSessionIdentifierExtension;

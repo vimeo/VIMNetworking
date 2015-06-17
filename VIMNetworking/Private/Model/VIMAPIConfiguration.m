@@ -26,16 +26,13 @@
 
 #import "VIMAPIConfiguration.h"
 
-#import "VIMSession.h"
-
 @implementation VIMAPIConfiguration
 
 - (void)didFinishMapping
 {
-    if (self.host == nil || ![self.host isKindOfClass:[NSString class]])
-    {
-        self.host = VimeoBaseURLString;
-    }
+    NSParameterAssert(self.host);
+    
+    NSAssert([self.host isKindOfClass:[NSString class]], @"VIMAPIConfiguration host delivered as nil or incorrect type.");
 }
 
 @end

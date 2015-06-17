@@ -32,13 +32,12 @@
 @class VIMUser;
 @class VIMAccount;
 
-extern NSString *VimeoBaseURLString;
-
 extern NSString *const VIMSession_DidFinishLoadingNotification;
 extern NSString *const VIMSession_AuthenticatedUserDidChangeNotification; // Sent whenever authenticated user changes
 
 @interface VIMSession : NSObject
 
+// TODO: authenticatedUser should be a property on account [AH]
 @property (nonatomic, strong, readonly) VIMAccount *account;
 @property (nonatomic, strong, readonly) VIMUser *authenticatedUser;
 @property (nonatomic, strong, readonly) VIMSessionConfiguration *configuration;
@@ -53,12 +52,7 @@ extern NSString *const VIMSession_AuthenticatedUserDidChangeNotification; // Sen
 
 - (void)logOut;
 
-- (NSString *)baseURLString;
 - (VIMCache *)userCache; // Get local cache for current user. Returns shared cache if no current user.
 - (VIMCache *)appGroupSharedCache;
-
-- (NSString *)backgroundSessionIdentifierApp;
-- (NSString *)backgroundSessionIdentifierExtension;
-- (NSString *)sharedContainerID;
 
 @end

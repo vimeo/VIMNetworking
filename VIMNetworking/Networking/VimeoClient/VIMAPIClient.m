@@ -109,7 +109,7 @@ static NSString *VIMAPIClient_RetryManagerName = @"VIMAPIClient";
                                  @"scope":clientScope,
                                  @"state":state};
     
-    NSString *authenticationURLString = @"https://api.vimeo.com/oauth/authorize";
+    NSString *authenticationURLString = [sessionConfiguration.baseURLString stringByAppendingString:@"oauth/authorize"];
     
     NSError *error;
     NSMutableURLRequest *urlRequest = [self.operationManager.requestSerializer requestWithMethod:@"GET" URLString:authenticationURLString parameters:parameters error:&error];

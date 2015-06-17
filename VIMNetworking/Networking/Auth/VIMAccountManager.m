@@ -403,35 +403,35 @@ NSString * const VIMAccountManagerErrorDomain = @"VIMAccountManagerErrorDomain";
 
 + (NSString *)clientCredentialsURL
 {
-    NSURL *baseURL = [NSURL URLWithString:[[VIMSession sharedSession] baseURLString]];
+    NSURL *baseURL = [NSURL URLWithString:[VIMSession sharedSession].configuration.baseURLString];
     
     return [[baseURL URLByAppendingPathComponent:kVimeoClientCredentialsPath]  absoluteString];
 }
 
 + (NSString *)codeGrantURL
 {
-    NSURL *baseURL = [NSURL URLWithString:[[VIMSession sharedSession] baseURLString]];
+    NSURL *baseURL = [NSURL URLWithString:[VIMSession sharedSession].configuration.baseURLString];
     
     return [[baseURL URLByAppendingPathComponent:kVimeoCodeGrantPath]  absoluteString];
 }
 
 + (NSString *)accessTokenURL
 {
-    NSURL *baseURL = [NSURL URLWithString:[[VIMSession sharedSession] baseURLString]];
+    NSURL *baseURL = [NSURL URLWithString:[VIMSession sharedSession].configuration.baseURLString];
     
     return [[baseURL URLByAppendingPathComponent:kVimeoAccessTokenPath]  absoluteString];
 }
 
 + (NSString *)usersURL
 {
-    NSURL *baseURL = [NSURL URLWithString:[[VIMSession sharedSession] baseURLString]];
+    NSURL *baseURL = [NSURL URLWithString:[VIMSession sharedSession].configuration.baseURLString];
     
     return [[baseURL URLByAppendingPathComponent:kVimeoUsersPath]  absoluteString];
 }
 
 + (NSString *)facebookTokenURL
 {
-    NSURL *baseURL = [NSURL URLWithString:[[VIMSession sharedSession] baseURLString]];
+    NSURL *baseURL = [NSURL URLWithString:[VIMSession sharedSession].configuration.baseURLString];
     
     return [[baseURL URLByAppendingPathComponent:kVimeoFacebookTokenPath]  absoluteString];
 }

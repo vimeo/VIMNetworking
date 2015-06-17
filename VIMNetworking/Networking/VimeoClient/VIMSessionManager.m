@@ -38,7 +38,7 @@
 
 - (instancetype)initWithDefaultSession
 {
-    NSURL *baseURL = [NSURL URLWithString:[[VIMSession sharedSession] baseURLString]];
+    NSURL *baseURL = [NSURL URLWithString:[VIMSession sharedSession].configuration.baseURLString];
     
     return [self initWithBaseURL:baseURL sessionConfiguration:nil];
 }
@@ -57,7 +57,7 @@
 
 - (instancetype)initWithSessionConfiguration:(NSURLSessionConfiguration *)configuration
 {
-    NSURL *baseURL = [NSURL URLWithString:[[VIMSession sharedSession] baseURLString]];
+    NSURL *baseURL = [NSURL URLWithString:[VIMSession sharedSession].configuration.baseURLString];
     
     return [self initWithBaseURL:baseURL sessionConfiguration:configuration];
 }
