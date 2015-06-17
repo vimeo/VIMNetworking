@@ -59,14 +59,26 @@ On app launch, configure `VIMSession` with your client key, secret, and scope st
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions 
 {
+    // You must provide a service, but group is optional (necessary if sharing an account with an app extension)
+    [KeychainUtility configureWithService:KeychainService accessGroup:KeychainAccessGroup];
+
     VIMSessionConfiguration *config = [[VIMSessionConfiguration alloc] init];
+    
+    // Required
     config.clientKey = @"your_client_key";
     config.clientSecret = @"your_client_secret";
     config.scope = @"private public create edit delete interact";
     
+    // Optional
+    config.backgroundSessionIdentifierApp = BackgroundSessionIdentifierApp;
+    config.backgroundSessionIdentifierExtension = BackgroundSessionIdentifierExtension;
+    config.sharedContainerID = SharedContainerID;
+    
     [[VIMSession sharedSession] setupWithConfiguration:config completionBlock:^(BOOL success) {
     	
     	NSLog(@"VIMSession setup success? %d", success);
+    	
+    	// Check if there is an authenticated account here...
     
     }];
     
