@@ -73,7 +73,7 @@
     if (self)
 
     {
-        self.requestSerializer = [VIMRequestSerializer serializerWithSession:[VIMSession sharedSession]];
+        self.requestSerializer = [[VIMRequestSerializer alloc] initWithAPIVersionString:[VIMSession sharedSession].configuration.APIVersionString];
         self.responseSerializer = [VIMResponseSerializer serializerWithReadingOptions:NSJSONReadingAllowFragments];
 
 #if (defined(ADHOC) || defined(RELEASE))

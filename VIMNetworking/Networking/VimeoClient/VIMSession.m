@@ -1,9 +1,9 @@
 //
-//  VIMVimeoSession.m
+//  VIMSession.m
 //  VIMNetworking
 //
-//  Created by Hanssen, Alfie on 9/19/14.
-//  Copyright (c) 2014-2015 Vimeo (https://vimeo.com)
+//  Created by Alfred Hanssen on 6/19/15.
+//  Copyright (c) 2015 Vimeo. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,127 +25,345 @@
 //
 
 #import "VIMSession.h"
-
-#import "VIMAPIClient.h"
-#import "VIMAPIClient+Private.h"
-#import "VIMRequestOperationManager.h"
 #import "VIMAccountStore.h"
-#import "VIMCache.h"
+#import "VIMRequestOperationManager.h"
+#import "VIMRequestSerializer.h"
+#import "VIMResponseSerializer.h"
+#import "VIMAuthenticator+Private.h"
 #import "VIMReachability.h"
-#import "VIMUser.h"
-#import "VIMAccount.h"
-#import "VIMRequestDescriptor.h"
-#import "VIMServerResponseMapper.h"
-#import "VIMRequestOperation.h"
-#import "VIMServerResponse.h"
-#import "VIMAccountManager.h"
-#import "VIMAccountCredential.h"
+#import "VIMCache.h"
 
-NSString * const VIMSession_AuthenticatedUserDidChangeNotification = @"VIMSession_AuthenticatedUserDidChangeNotification";
-NSString * const VIMSession_DidFinishLoadingNotification = @"VIMSession_DidFinishLoadingNotification";
+static NSString *const ClientCredentialsAccountKey = @"ClientCredentialsAccountKey";
+static NSString *const UserAccountKey = @"UserAccountKey";
 
-@interface VIMSession ()
-{
-    VIMCache *_userCache;
-}
+NSString *const VIMSession_AuthenticatedAccountDidChangeNotification = @"VIMSession_AuthenticatedAccountDidChangeNotification";
+NSString *const VIMSession_AuthenticatedUserDidRefreshNotification = @"VIMSession_AuthenticatedUserDidRefreshNotification";
+
+@interface VIMSession () <VIMRequestOperationManagerDelegate>
 
 @property (nonatomic, strong, readwrite) VIMAccount *account;
-@property (nonatomic, strong, readwrite) VIMUser *authenticatedUser;
-@property (nonatomic, strong, readwrite) VIMSessionConfiguration *configuration;
+@property (nonatomic, strong, readwrite) VIMAuthenticator *authenticator;
+@property (nonatomic, strong, readwrite) VIMClient *client;
+
+@property (nonatomic, weak) id<VIMRequestToken> currentUserRefreshRequest;
 
 @end
 
 @implementation VIMSession
 
+static VIMSession *_sharedSession;
+
 - (void)dealloc
 {
-    [self removeObservers];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 + (instancetype)sharedSession
 {
-    static VIMSession *__sharedSession;
+    return _sharedSession;
+}
+
++ (void)setupWithConfiguration:(VIMSessionConfiguration *)configuration
+{
     static dispatch_once_t onceToken;
-    
+
     dispatch_once(&onceToken, ^{
-        __sharedSession = [[self alloc] init];
+        _sharedSession = [[self alloc] initWithConfiguration:configuration];
     });
+}
+
+- (instancetype)initWithConfiguration:(VIMSessionConfiguration *)configuration
+{    
+    NSAssert([configuration isValid], @"Attempt to initialize session with an invalid configuration");
     
-    return __sharedSession;
+    self = [super init];
+    if (self)
+    {
+        _configuration = configuration;
+        _account = [self loadAccountIfPossible];
+        _authenticator = [self buildAuthenticator];
+        _client = [self buildClient];
+        
+        [VIMReachability sharedInstance];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
+    }
+    
+    return self;
+}
+
+#pragma mark - Notifications
+
+- (void)applicationDidEnterForeground:(NSNotification *)notification
+{
+    self.account = [self loadAccountIfPossible]; // Reload account in the event that an auth event occurred in the an app extension
+    self.client.cache = [self buildCache];
+
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:VIMSession_AuthenticatedAccountDidChangeNotification object:nil];
+    });
+
+    typeof(self) weakSelf = self;
+    self.currentUserRefreshRequest = [self refreshAuthenticatedUserWithCompletionBlock:^(NSError *error) {
+        
+        weakSelf.currentUserRefreshRequest = nil;
+        
+        // TODO: check for invalid token error [AH]
+        
+    }];
+}
+
+#pragma mark - VIMRequestOperationManager Delegate
+
+- (NSString *)authorizationHeaderValue:(VIMRequestOperationManager *)operationManager
+{
+    if (operationManager == self.authenticator)
+    {
+        return [self basicAuthorizationHeaderValue];
+    }
+    
+    NSString *value = [self bearerAuthorizationHeaderValue];
+    if (value == nil)
+    {
+        value = [self basicAuthorizationHeaderValue];
+    }
+    
+    return value;
+}
+
+#pragma mark - Private API
+
+- (VIMAccount *)loadAccountIfPossible
+{
+    VIMAccount *account = [VIMAccountStore loadAccountForKey:UserAccountKey];
+    
+    if (account == nil)
+    {
+        account = [VIMAccountStore loadAccountForKey:ClientCredentialsAccountKey];
+    }
+    
+    // Migrate legacy account
+    if (account == nil)
+    {
+        account = [VIMAccountStore loadLegacyAccount];
+        if (account)
+        {
+            NSString *key = [account isAuthenticatedWithUser] ? UserAccountKey : ClientCredentialsAccountKey;
+            [VIMAccountStore saveAccount:account forKey:key];
+        }
+    }
+
+    return account;
+}
+
+- (VIMAuthenticator *)buildAuthenticator
+{
+    NSURL *baseURL = [NSURL URLWithString:self.configuration.baseURLString];
+    
+    VIMAuthenticator *authenticator = [[VIMAuthenticator alloc] initWithBaseURL:baseURL
+                                                                      clientKey:self.configuration.clientKey
+                                                                   clientSecret:self.configuration.clientSecret
+                                                                          scope:self.configuration.scope];
+    authenticator.requestSerializer = [[VIMRequestSerializer alloc] initWithAPIVersionString:self.configuration.APIVersionString];
+    authenticator.delegate = self;
+    
+    return authenticator;
+}
+
+- (VIMClient *)buildClient
+{
+    NSURL *baseURL = [NSURL URLWithString:self.configuration.baseURLString];
+
+    VIMClient *client = [[VIMClient alloc] initWithBaseURL:baseURL];
+    client.requestSerializer = [[VIMRequestSerializer alloc] initWithAPIVersionString:self.configuration.APIVersionString];
+    client.delegate = self;
+    client.cache = [self buildCache];
+   
+    return client;
+}
+
+- (VIMCache *)buildCache
+{
+    VIMCache *cache = [VIMCache sharedCache];
+    
+    if ([self.account isAuthenticatedWithUser])
+    {
+        NSString *name = [NSString stringWithFormat:@"user_%@", self.account.user.objectID];
+        cache = [[VIMCache alloc] initWithName:name];
+    }
+    
+    return cache;
+}
+
+- (NSString *)basicAuthorizationHeaderValue
+{
+    NSString *authString = [NSString stringWithFormat:@"%@:%@", self.configuration.clientKey, self.configuration.clientSecret];
+    NSData *plainData = [authString dataUsingEncoding:NSUTF8StringEncoding];
+    NSString *base64String = [plainData base64EncodedStringWithOptions:0];
+    
+    return [NSString stringWithFormat:@"Basic %@", base64String];
+}
+
+- (NSString *)bearerAuthorizationHeaderValue
+{
+    if (self.account.accessToken && [[self.account.tokenType lowercaseString] isEqualToString:@"bearer"])
+    {
+        return [NSString stringWithFormat:@"Bearer %@", self.account.accessToken];
+    }
+
+    return nil;
+}
+
+- (void)authenticationCompleteWithAccount:(VIMAccount *)account error:(NSError *)error key:(NSString *)key completionBlock:(VIMErrorCompletionBlock)completionBlock
+{
+    NSParameterAssert(key);
+    NSAssert((account || error) && !(account && error), @"account and error are mutually exclusive");
+    NSParameterAssert(completionBlock);
+    
+    if (error)
+    {
+        if (completionBlock)
+        {
+            completionBlock(error);
+        }
+        
+        return;
+    }
+    
+    if (!key)
+    {
+        if (completionBlock)
+        {
+            NSError *error = [NSError errorWithDomain:kVimeoAuthenticatorErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"VIMAccountStore key cannot be nil"}];
+            completionBlock(error);
+        }
+
+        return;
+    }
+    
+    [VIMAccountStore saveAccount:account forKey:key];
+
+    self.account = account;
+    self.client.cache = [self buildCache];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:VIMSession_AuthenticatedAccountDidChangeNotification object:nil];
+    });
 }
 
 #pragma mark - Public API
 
-- (void)setupWithConfiguration:(VIMSessionConfiguration *)configuration completionBlock:(void(^)(BOOL success))completionBlock
+#pragma mark Authentication
+
+- (id<VIMRequestToken>)authenticateWithClientCredentialsGrant:(VIMErrorCompletionBlock)completionBlock
 {
-    if (![configuration isValid])
+    NSAssert([self.account isAuthenticatedWithClientCredentials] == NO, @"Attempt to authenticate with client credentials grant when already authenticated with client credentials grant");
+    
+    if ([self.account isAuthenticatedWithClientCredentials])
     {
-        NSAssert(NO, @"Cannot proceed with an invalid session configuration");
-        
         if (completionBlock)
         {
-            completionBlock(NO);
+            completionBlock(nil);
         }
         
-        return;
+        return nil;
     }
     
-    _configuration = configuration;
-    
-    [VIMReachability sharedInstance];
-    [VIMCache sharedCache];
-    [VIMAccountStore sharedInstance];
-    [VIMAPIClient sharedClient];
-    [VIMRequestOperationManager sharedManager];
-    
-    [self addObservers];
-    
-    // create user cache
-    [self userCache];
-    
-    [self setupNewAccount:nil withCompletionBlock:^{
-
-        [[NSNotificationCenter defaultCenter] postNotificationName:VIMSession_DidFinishLoadingNotification object:self];
-
-        if (completionBlock)
-        {
-            completionBlock(YES);
-        }
+    typeof(self) weakSelf = self;
+    return [self.authenticator authenticateWithClientCredentialsGrant:^(VIMAccount *account, NSError *error) {
+        
+        [weakSelf authenticationCompleteWithAccount:account error:error key:ClientCredentialsAccountKey completionBlock:completionBlock];
 
     }];
 }
 
-- (void)refreshUserFromRemoteWithCompletionBlock:(void (^)(NSError *error))completionBlock
+- (id<VIMRequestToken>)authenticateWithCodeGrantResponseURL:(NSURL *)responseURL completionBlock:(VIMErrorCompletionBlock)completionBlock
 {
-    if (self.account == nil || ![self.account isAuthenticated] || ![self.account.credential isUserCredential])
-    {
-        NSError *error = [NSError errorWithDomain:kVimeoClientErrorDomain code:1 userInfo:[NSDictionary dictionaryWithObject:@"Unable to refresh user, no account or account is not authenticated." forKey:NSLocalizedDescriptionKey]];
+    NSAssert([self.account isAuthenticatedWithUser] == NO, @"Attempt to authenticate as user when already authenticated as user");
 
-        if (completionBlock)
-        {
-            completionBlock(error);
-        }
+    typeof(self) weakSelf = self;
+    return [self.authenticator authenticateWithCodeGrantResponseURL:responseURL completionBlock:^(VIMAccount *account, NSError *error) {
         
-        return;
-    }
-    
-    VIMRequestDescriptor *descriptor = [[VIMRequestDescriptor alloc] init];
-    descriptor.cachePolicy = VIMCachePolicy_NetworkOnly;
-    descriptor.urlPath = @"/me";
-    descriptor.modelClass = [VIMUser class];
-    descriptor.modelKeyPath = @"";
-    
-    [self refreshAuthenticatedUserWithRequestDescriptor:descriptor handler:self completionBlock:^(VIMServerResponse *response, NSError *error) {
-        
-        if (completionBlock)
-        {
-            completionBlock(error);
-        }
-        
+        [weakSelf authenticationCompleteWithAccount:account error:error key:UserAccountKey completionBlock:completionBlock];
+
     }];
 }
 
-- (void)changeBaseURLString:(NSString *)baseURLString
+- (id<VIMRequestToken>)loginWithEmail:(NSString *)email password:(NSString *)password completionBlock:(VIMErrorCompletionBlock)completionBlock
+{
+    NSAssert([self.account isAuthenticatedWithUser] == NO, @"Attempt to authenticate as user when already authenticated as user");
+
+    typeof(self) weakSelf = self;
+    return [self.authenticator loginWithEmail:email password:password completionBlock:^(VIMAccount *account, NSError *error) {
+        
+        [weakSelf authenticationCompleteWithAccount:account error:error key:UserAccountKey completionBlock:completionBlock];
+
+    }];
+}
+
+- (id<VIMRequestToken>)joinWithName:(NSString *)name email:(NSString *)email password:(NSString *)password completionBlock:(VIMErrorCompletionBlock)completionBlock
+{
+    NSAssert([self.account isAuthenticatedWithUser] == NO, @"Attempt to authenticate as user when already authenticated as user");
+
+    typeof(self) weakSelf = self;
+    return [self.authenticator joinWithName:name email:email password:password completionBlock:^(VIMAccount *account, NSError *error) {
+        
+        [weakSelf authenticationCompleteWithAccount:account error:error key:UserAccountKey completionBlock:completionBlock];
+
+    }];
+}
+
+- (id<VIMRequestToken>)loginWithFacebookToken:(NSString *)facebookToken completionBlock:(VIMErrorCompletionBlock)completionBlock
+{
+    NSAssert([self.account isAuthenticatedWithUser] == NO, @"Attempt to authenticate as user when already authenticated as user");
+
+    typeof(self) weakSelf = self;
+    return [self.authenticator loginWithFacebookToken:facebookToken completionBlock:^(VIMAccount *account, NSError *error) {
+        
+        [weakSelf authenticationCompleteWithAccount:account error:error key:UserAccountKey completionBlock:completionBlock];
+
+    }];
+}
+
+- (id<VIMRequestToken>)joinWithFacebookToken:(NSString *)facebookToken completionBlock:(VIMErrorCompletionBlock)completionBlock
+{
+    NSAssert([self.account isAuthenticatedWithUser] == NO, @"Attempt to authenticate as user when already authenticated as user");
+
+    typeof(self) weakSelf = self;
+    return [self.authenticator joinWithFacebookToken:facebookToken completionBlock:^(VIMAccount *account, NSError *error) {
+        
+        [weakSelf authenticationCompleteWithAccount:account error:error key:UserAccountKey completionBlock:completionBlock];
+
+    }];
+}
+
+- (id<VIMRequestToken>)logoutWithCompletionBlock:(VIMRequestCompletionBlock)completionBlock
+{
+    NSAssert([self.account isAuthenticatedWithUser], @"logout can only occur when a user is logged in");
+    if (![self.account isAuthenticatedWithUser])
+    {
+        return nil;
+    }
+
+    VIMAccount *account = [VIMAccountStore loadAccountForKey:ClientCredentialsAccountKey];
+    [VIMAccountStore deleteAccount:self.account forKey:UserAccountKey];
+    self.account = account;
+    
+    NSAssert(self.account != nil, @"account cannot be nil after logging out");
+    
+    [self.client.cache removeAllObjects];
+    self.client.cache = [self buildCache];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:VIMSession_AuthenticatedAccountDidChangeNotification object:nil];
+    });
+
+    return [self.client logoutWithCompletionBlock:completionBlock];
+}
+
+#pragma mark Configuration
+
+- (void)changeBaseURL:(NSString *)baseURLString
 {
     NSParameterAssert(baseURLString);
     
@@ -155,348 +373,74 @@ NSString * const VIMSession_DidFinishLoadingNotification = @"VIMSession_DidFinis
     }
     
     self.configuration.baseURLString = baseURLString;
+
+    self.authenticator = [self buildAuthenticator];
+    self.client = [self buildClient];
 }
 
-- (void)logOut
+- (id<VIMRequestToken>)refreshAuthenticatedUserWithCompletionBlock:(VIMErrorCompletionBlock)completionBlock
 {
-    [[VIMAPIClient sharedClient] logoutWithCompletionBlock:nil];
-
-    [[VIMAccountManager sharedInstance] logoutAccount:self.account];
-    
-    [[VIMCache sharedCache] removeAllObjects];
-    [[self userCache] removeAllObjects];
-    [[self appGroupUserCache] removeAllObjects];
-    [[self appGroupSharedCache] removeAllObjects];
-}
-
-#pragma mark - Observers
-
-- (void)addObservers
-{
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(accountDidChange:) name:VIMAccountStore_AccountsDidChangeNotification object:nil];
-}
-
-- (void)removeObservers
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-- (void)accountDidChange:(NSNotification *)notification // TODO: rename
-{
-    VIMAccount *changedAccount = [notification.userInfo objectForKey:VIMAccountStore_ChangedAccountKey];
-    
-    if (changedAccount && [changedAccount.accountType isEqualToString:(NSString *)kVIMAccountType_Vimeo])
-    {
-        [self setupNewAccount:changedAccount withCompletionBlock:nil];
-    }
-}
-
-#pragma mark - Authentication
-
-- (void)setCurrentAuthenticatedUser:(VIMUser *)newUser
-{
-    if (self.authenticatedUser == newUser) // TODO: unique id instead?
-        return;
-
-    NSDictionary *userInfo = (self.authenticatedUser != nil) ? @{@"old_user_object_id" : self.authenticatedUser.objectID} : @{};
-
-    self.authenticatedUser = newUser;
-    
-    [self createUserCache];
-        
-    [[NSNotificationCenter defaultCenter] postNotificationName:VIMSession_AuthenticatedUserDidChangeNotification object:self userInfo:userInfo];
-}
-
-- (void)setupNewAccount:(VIMAccount *)newAccount withCompletionBlock:(void (^)(void))completionBlock
-{
-    if (newAccount == nil)
-    {
-        NSArray *accounts = [[VIMAccountStore sharedInstance] accountsWithType:(NSString *)kVIMAccountType_Vimeo];
-        if (accounts.count > 0)
-        {
-            newAccount = [accounts firstObject];
-            
-            for (VIMAccount *account in accounts)
-            {
-                if([account isAuthenticated])
-                {
-                    newAccount = account;
-                    break;
-                }
-            }
-        }
-    }
-    
-    self.account = newAccount;
-    
-    [self updateUserForNewAccountWithCompletionBlock:completionBlock];
-}
-
-- (void)updateUserForNewAccountWithCompletionBlock:(void (^)(void))completionBlock
-{
-    // Check if we need to do anything. Go ahead only if needed
-    if ( (self.account.credential != nil && ![self.account.credential isUserCredential]) || ([self.account isAuthenticated] && self.authenticatedUser != nil) || ([self.account isAuthenticated] == NO && self.authenticatedUser == nil) )
+    if (self.account == nil || ![self.account isAuthenticatedWithUser])
     {
         if (completionBlock)
         {
-            completionBlock();
-        }
-        
-        return;
-    }
-    
-    [self setCurrentAuthenticatedUser:nil];
-
-    [self loadAuthenticatedUserFromCacheWithCompletionBlock:^(VIMUser *user, NSError *error) {
-
-        // Call completionBlock here, no matter what, so that launch doesn't depend on the remote refresh request. [AH]
-        if (completionBlock)
-        {
-            completionBlock();
-        }
-
-        if (error)
-        {
-            NSLog(@"Error loading user from cache: %@", error.localizedDescription);
-            return;
-        }
-        
-        [self refreshUserFromRemoteWithCompletionBlock:^(NSError *error) {
-
-            if (error)
-            {
-                NSLog(@"Error refreshing user from remote: %@", error.localizedDescription);
-                
-                NSHTTPURLResponse *urlResponse = [error.userInfo objectForKey:AFNetworkingOperationFailingURLResponseErrorKey];
-                if (urlResponse)
-                {
-                    NSInteger statusCode = urlResponse.statusCode;
-                    if (statusCode == 401)
-                    {
-                        self.account.credential = nil;
-                    }
-                }
-            }
-            
-        }];
-        
-    }];
-}
-
-- (void)loadAuthenticatedUserFromCacheWithCompletionBlock:(void (^)(VIMUser *user, NSError *error))completionBlock
-{
-    if (self.account == nil || ![self.account isAuthenticated])
-    {
-        NSError *error = [NSError errorWithDomain:kVimeoClientErrorDomain code:1 userInfo:[NSDictionary dictionaryWithObject:@"Could not refresh user. No account found or account is not authenticated." forKey:NSLocalizedDescriptionKey]];
-        
-        if (completionBlock)
-        {
-            completionBlock(nil, error);
-        }
-        
-        return;
-    }
-
-    id serverResponse = self.account.serverResponse;
-    if(serverResponse == nil)
-    {
-        NSError *error = [NSError errorWithDomain:kVimeoClientErrorDomain code:1 userInfo:[NSDictionary dictionaryWithObject:@"Could not get user info. Invalid server response" forKey:NSLocalizedDescriptionKey]];
-        
-        if (completionBlock)
-        {
-            completionBlock(nil, error);
-        }
-        
-        return;
-    }
-    
-    VIMRequestDescriptor *descriptor = [[VIMRequestDescriptor alloc] init];
-    descriptor.modelClass = [VIMUser class];
-    descriptor.modelKeyPath = @"user";
-    
-    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:@""]];
-    VIMRequestOperation *operation = [[VIMRequestOperation alloc] initWithRequest:request];
-    operation.descriptor = descriptor;
-
-    [VIMServerResponseMapper responseFromJSON:serverResponse operation:operation completionBlock:^(VIMServerResponse *response, NSError *error) {
-        
-        VIMUser *user = ((VIMUser *)response.result);
-
-        if (error || user == nil)
-        {
-            if (completionBlock)
-            {
-                completionBlock(nil, error);
-            }
-            
-            return;
-        }
-        
-        // Reset the cache
-        // This enables us to load latest user model object from user specific cache
-        _userCache = nil;
-        _authenticatedUser = user;
-        
-        // Try to load latest cached user
-        
-        VIMRequestDescriptor *descriptor = [[VIMRequestDescriptor alloc] init];
-        descriptor.cachePolicy = VIMCachePolicy_LocalOnly;
-        descriptor.urlPath = user.uri;
-        descriptor.modelClass = [VIMUser class];
-        descriptor.modelKeyPath = @"";
-        
-        [self refreshAuthenticatedUserWithRequestDescriptor:descriptor handler:self completionBlock:^(VIMServerResponse *response, NSError *error) {
-            
-            if (error)
-            {
-                // Not found in cache
-                // Force set the authenticated user
-
-                _authenticatedUser = nil;
-                [self setCurrentAuthenticatedUser:user];
-            
-            } // else, successfully restored latest object from cache
-            
-            if (completionBlock)
-            {
-                completionBlock(self.authenticatedUser, nil);
-            }
-            
-        }];
-    }];
-}
-
-- (id<VIMRequestToken>)refreshAuthenticatedUserWithRequestDescriptor:(VIMRequestDescriptor *)descriptor handler:(id)handler completionBlock:(VIMFetchCompletionBlock)completionBlock
-{
-    if (self.account == nil || ![self.account isAuthenticated])
-    {
-        NSError *error = [NSError errorWithDomain:kVimeoClientErrorDomain code:1 userInfo:[NSDictionary dictionaryWithObject:@"Could not refresh user. No account found or account is not authenticated." forKey:NSLocalizedDescriptionKey]];
-
-        if (completionBlock)
-        {
-            completionBlock(nil, error);
+            NSError *error = [NSError errorWithDomain:kVimeoAuthenticatorErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"Unable to refresh user, no account or account is not authenticated."}];
+            completionBlock(error);
         }
         
         return nil;
     }
     
-    __weak typeof(self) weakSelf = self;
-    return [[VIMRequestOperationManager sharedManager] fetchWithRequestDescriptor:descriptor handler:handler completionBlock:^(VIMServerResponse *response, NSError *error) {
+    VIMRequestDescriptor *descriptor = [[VIMRequestDescriptor alloc] init];
+    descriptor.cachePolicy = VIMCachePolicy_NetworkOnly;
+    descriptor.urlPath = @"/me";
+    descriptor.modelClass = [VIMUser class];
+    
+    typeof(self) weakSelf = self;
+    return [self.client requestDescriptor:descriptor completionBlock:^(VIMServerResponse *response, NSError *error) {
         
-        if (error || response == nil || response.result == nil)
+        __strong typeof(self) strongSelf = weakSelf;
+        if (strongSelf == nil)
         {
-            if (error == nil)
-            {
-                error = [NSError errorWithDomain:kVimeoClientErrorDomain code:1 userInfo:[NSDictionary dictionaryWithObject:@"Could not fetch user, response or response.result is nil." forKey:NSLocalizedDescriptionKey]];
-            }
-
+            return;
+        }
+        
+        if (error)
+        {
             if (completionBlock)
             {
-                completionBlock(nil, error);
+                completionBlock(error);
+            }
+            
+            return;
+        }
+        
+        if (response == nil || response.result == nil)
+        {
+            if (completionBlock)
+            {
+                NSError *error = [NSError errorWithDomain:kVimeoAuthenticatorErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"Unable to refresh user, no account or account is not authenticated."}];
+                completionBlock(error);
             }
             
             return;
         }
         
         VIMUser *user = response.result;
-        [weakSelf setCurrentAuthenticatedUser:user];
+        strongSelf.account.user = user;
         
+        [VIMAccountStore saveAccount:strongSelf.account forKey:UserAccountKey];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:VIMSession_AuthenticatedUserDidRefreshNotification object:nil];
+        });
+
         if (completionBlock)
         {
-            completionBlock(response, nil);
+            completionBlock(nil);
         }
         
     }];
-}
-
-#pragma mark - User Cache
-
-- (void)createUserCache
-{
-    if (self.authenticatedUser == nil)
-    {
-        _userCache = [VIMCache sharedCache];
-    }
-    else
-    {
-        NSString *userCacheName = [NSString stringWithFormat:@"user_%@", self.authenticatedUser.objectID];
-        
-        if(_userCache == nil || [_userCache.name isEqualToString:userCacheName] == NO)
-        {
-            _userCache = [[VIMCache alloc] initWithName:userCacheName];
-        }
-    }
-}
-
-- (VIMCache *)userCache
-{
-    if (_userCache == nil)
-    {
-        [self createUserCache];
-    }
-    
-    return _userCache;
-}
-
-#pragma mark - App Group Cache
-
-- (NSString *)appGroupCachesPath
-{
-    NSURL *groupURL = [[NSFileManager new] containerURLForSecurityApplicationGroupIdentifier:self.configuration.sharedContainerID];
-    
-    if (groupURL == nil)
-    {
-        NSLog(@"VIMVimeoSession: Couldn't find shared group URL.");
-        
-        return NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];
-    }
-
-    return [[groupURL path] stringByAppendingPathComponent:@"Library/Caches"];
-}
-
-- (NSString *)appGroupTmpPath
-{
-    NSURL *groupURL = [[NSFileManager new] containerURLForSecurityApplicationGroupIdentifier:self.configuration.sharedContainerID];
-    
-    if (groupURL == nil)
-    {
-        NSLog(@"VIMVimeoSession: Couldn't find shared group URL.");
-
-        return NSTemporaryDirectory();
-    }
-    
-    // TODO: create a new tmp directory here
-    //return [groupPath stringByAppendingPathComponent:@"tmp"];
-    
-    return [groupURL path];
-}
-
-- (VIMCache *)appGroupSharedCache
-{
-    static VIMCache *_sharedCache = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        NSString *basePath = [self appGroupCachesPath];
-        _sharedCache = [[VIMCache alloc] initWithName:@"SharedCache" basePath:basePath];
-    });
-    
-    return _sharedCache;
-}
-
-- (VIMCache *)appGroupUserCache
-{
-    VIMUser *user = self.authenticatedUser;
-    if(user == nil)
-    {
-        return [self appGroupSharedCache];
-    }
-    else
-    {
-        NSString *cacheName = [self userCache].name;
-        NSString *basePath = [self appGroupCachesPath];
-        
-        return [[VIMCache alloc] initWithName:cacheName basePath:basePath];
-    }
 }
 
 @end

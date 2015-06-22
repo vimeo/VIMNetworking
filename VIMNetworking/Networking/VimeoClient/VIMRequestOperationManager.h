@@ -25,15 +25,15 @@
 //
 
 #import "AFNetworking.h"
+#import "VIMRequestDescriptor.h"
+#import "VIMServerResponse.h"
 
 @protocol VIMRequestToken;
 
-@class VIMRequestDescriptor;
-@class VIMServerResponse;
 @class VIMCache;
 @class VIMRequestOperationManager;
 
-typedef void (^VIMFetchCompletionBlock)(VIMServerResponse *response, NSError *error);
+typedef void (^VIMRequestCompletionBlock)(VIMServerResponse *response, NSError *error);
 
 extern NSString *const kVimeoClientErrorDomain;
 
@@ -50,15 +50,17 @@ extern NSString *const kVimeoClientErrorDomain;
 
 @property (nonatomic, strong) VIMCache *cache;
 
-- (id<VIMRequestToken>)fetchWithRequestDescriptor:(VIMRequestDescriptor *)descriptor
-                                  completionBlock:(VIMFetchCompletionBlock)completionBlock;
+- (id<VIMRequestToken>)requestDescriptor:(VIMRequestDescriptor *)descriptor
+                         completionBlock:(VIMRequestCompletionBlock)completionBlock;
 
-- (id<VIMRequestToken>)fetchWithRequestDescriptor:(VIMRequestDescriptor *)descriptor
-                                          handler:(id)handler
-                                  completionBlock:(VIMFetchCompletionBlock)completionBlock;
+- (id<VIMRequestToken>)requestDescriptor:(VIMRequestDescriptor *)descriptor
+                                 handler:(id)handler
+                         completionBlock:(VIMRequestCompletionBlock)completionBlock;
 
 - (void)cancelRequest:(id<VIMRequestToken>)request;
 - (void)cancelAllRequestsForHandler:(id)handler;
 - (void)cancelAllRequests;
+
+NSDictionary *VIMParametersFromQueryString(NSString *queryString);
 
 @end

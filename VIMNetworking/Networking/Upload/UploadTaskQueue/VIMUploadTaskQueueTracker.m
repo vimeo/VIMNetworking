@@ -212,7 +212,7 @@ static void *UploadStateContext = &UploadStateContext;
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(authenticatedUserDidChange:)
-                                                 name:VIMSession_AuthenticatedUserDidChangeNotification object:nil];
+                                                 name:VIMSession_AuthenticatedAccountDidChangeNotification object:nil];
 }
 
 - (void)removeObservers
@@ -222,7 +222,7 @@ static void *UploadStateContext = &UploadStateContext;
 
 - (void)didAssociateAssetsWithTasks:(NSNotification *)notification
 {
-    if ([VIMSession sharedSession].authenticatedUser == nil)
+    if ([VIMSession sharedSession].account.user == nil)
     {
         return;
     }
@@ -264,7 +264,7 @@ static void *UploadStateContext = &UploadStateContext;
 
 - (void)didAddAssets:(NSNotification *)notification
 {
-    if ([VIMSession sharedSession].authenticatedUser == nil)
+    if ([VIMSession sharedSession].account.user == nil)
     {
         return;
     }
@@ -412,7 +412,7 @@ static void *UploadStateContext = &UploadStateContext;
 
 - (void)authenticatedUserDidChange:(NSNotification *)notification
 {
-    if ([VIMSession sharedSession].authenticatedUser == nil) // User logged out
+    if ([VIMSession sharedSession].account.user == nil) // User logged out
     {
         for (VIMVideoAsset *videoAsset in self.videoAssets)
         {

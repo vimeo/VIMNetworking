@@ -40,4 +40,6 @@
 
 @interface VIMAccountStore : NSObject <VIMAccountStoreProtocol>
 
++ (VIMAccount *)loadLegacyAccount;
+
 @end

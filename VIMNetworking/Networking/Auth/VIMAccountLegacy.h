@@ -25,18 +25,14 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "VIMModelObject.h"
-#import "VIMUser.h"
 
-@interface VIMAccount : VIMModelObject
+@class VIMCredentialLegacy;
 
-@property (nonatomic, copy) NSString *accessToken;
-@property (nonatomic, copy) NSString *tokenType;
-@property (nonatomic, copy) NSString *scope;
-@property (nonatomic, strong) VIMUser *user;
+@interface VIMAccountLegacy : NSObject
 
-- (BOOL)isAuthenticated;
-- (BOOL)isAuthenticatedWithUser;
-- (BOOL)isAuthenticatedWithClientCredentials;
+@property (nonatomic, strong) VIMCredentialLegacy *credential;
+@property (nonatomic, copy) NSString *username;
+@property (nonatomic, strong) NSMutableDictionary *userData;
+@property (nonatomic, strong) id serverResponse;
 
 @end

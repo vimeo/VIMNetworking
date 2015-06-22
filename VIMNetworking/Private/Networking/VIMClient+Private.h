@@ -1,9 +1,9 @@
 //
-//  SMKAPIClient.h
+//  VIMClient+Private.h
 //  VIMNetworking
 //
-//  Created by Hanssen, Alfie on 3/6/15.
-//  Copyright (c) 2014-2015 Vimeo (https://vimeo.com)
+//  Created by Alfred Hanssen on 6/22/15.
+//  Copyright (c) 2015 Vimeo. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,27 +24,27 @@
 //  THE SOFTWARE.
 //
 
-#import "VIMAPIClient.h"
+#import "VIMClient.h"
 
-@interface VIMAPIClient (Private)
+@interface VIMClient (Private)
 
 #pragma mark - APNS
 
 #if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
 
-- (id<VIMRequestToken>)registerDeviceForPushNotificationsWithURI:(NSString *)URI parameters:(NSDictionary *)parameters completionBlock:(VIMFetchCompletionBlock)completionBlock;
+- (id<VIMRequestToken>)registerDeviceForPushNotificationsWithURI:(NSString *)URI parameters:(NSDictionary *)parameters completionBlock:(VIMRequestCompletionBlock)completionBlock;
 
-- (id<VIMRequestToken>)unregisterDeviceForPushNotificationWithURI:(NSString *)URI parameters:(NSDictionary *)parameters completionBlock:(VIMFetchCompletionBlock)completionBlock;
+- (id<VIMRequestToken>)unregisterDeviceForPushNotificationWithURI:(NSString *)URI parameters:(NSDictionary *)parameters completionBlock:(VIMRequestCompletionBlock)completionBlock;
 
-- (id<VIMRequestToken>)addPushNotificationWithParameters:(NSDictionary *)parameters completionBlock:(VIMFetchCompletionBlock)completionBlock;
+- (id<VIMRequestToken>)addPushNotificationWithParameters:(NSDictionary *)parameters completionBlock:(VIMRequestCompletionBlock)completionBlock;
 
-- (id<VIMRequestToken>)fetchUserPushNotificationsWithCompletionBlock:(VIMFetchCompletionBlock)completionBlock;
+- (id<VIMRequestToken>)fetchUserPushNotificationsWithCompletionBlock:(VIMRequestCompletionBlock)completionBlock;
 
-- (id<VIMRequestToken>)fetchDevicePushNotificationsWithURI:(NSString *)URI parameters:(NSArray *)parameters completionBlock:(VIMFetchCompletionBlock)completionBlock;
+- (id<VIMRequestToken>)fetchDevicePushNotificationsWithURI:(NSString *)URI parameters:(NSArray *)parameters completionBlock:(VIMRequestCompletionBlock)completionBlock;
 
-- (id<VIMRequestToken>)viewPushNotificationWithURI:(NSString *)URI completionBlock:(VIMFetchCompletionBlock)completionBlock;
+- (id<VIMRequestToken>)viewPushNotificationWithURI:(NSString *)URI completionBlock:(VIMRequestCompletionBlock)completionBlock;
 
-- (id<VIMRequestToken>)removePushNotificationWithURI:(NSString *)URI completionBlock:(VIMFetchCompletionBlock)completionBlock;
+- (id<VIMRequestToken>)removePushNotificationWithURI:(NSString *)URI completionBlock:(VIMRequestCompletionBlock)completionBlock;
 
 #endif
 

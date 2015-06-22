@@ -27,12 +27,52 @@
 #import "VIMAccountStore.h"
 #import "VIMAccount.h"
 #import "KeychainUtility.h"
+#import "VIMAccountLegacy.h"
+#import "VIMCredentialLegacy.h"
 
-@interface VIMAccountStore ()
-
-@end
+static NSString *const LegacyAccountKey = @"LegacyAccountKey"; // Added 6/22/2015 [AH]
 
 @implementation VIMAccountStore
+
++ (VIMAccount *)loadLegacyAccount
+{
+    // Load the legacy account data
+    NSData *data = [[KeychainUtility sharedInstance] dataForAccount:LegacyAccountKey];
+    
+    // Delete the saved legacy account object
+    [[KeychainUtility sharedInstance] deleteDataForAccount:LegacyAccountKey];
+    
+    // Convert the legacy account data into a VIMAccountLegacy object
+    VIMAccountLegacy *legacyAccount = nil;
+    if (data)
+    {
+        NSKeyedUnarchiver *keyedUnarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
+        
+        @try
+        {
+            legacyAccount = [keyedUnarchiver decodeObject];
+        }
+        @catch (NSException *exception)
+        {
+            NSLog(@"VIMAccountStore: An exception occured on load: %@", exception);
+        }
+        
+        [keyedUnarchiver finishDecoding];
+    }
+    
+    VIMAccount *account = nil;
+    
+    if (legacyAccount) // Convert the VIMAccountLegacy into a VIMAccount
+    {
+        account = [[VIMAccount alloc] init];
+        account.accessToken = legacyAccount.credential.accessToken;
+        account.tokenType = legacyAccount.credential.tokenType;
+        account.scope = nil; // Not present in legacy account object
+        account.user = nil; // TODO: load user
+    }
+    
+    return account;
+}
 
 #pragma mark - VIMAccountStoreProtocol
 

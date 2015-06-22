@@ -28,9 +28,9 @@
 
 #import "VIMReachability.h"
 #import "VIMRequestOperationManager.h"
+#import "VIMRequestDescriptor.h"
 #import "VIMSession.h"
 #import "VIMCache.h"
-#import "VIMRequestDescriptor.h"
 
 static const NSInteger DefaultNumberOfRetries = 1;
 static const NSInteger DefaultRetryDelayInSeconds = 5;
@@ -172,7 +172,7 @@ static NSString *DescriptorKey = @"descriptor";
     NSLog(@"RETRYING %@", descriptor.descriptorID);
 
     __weak typeof(self) welf = self;
-    [self.operationManager fetchWithRequestDescriptor:descriptor handler:self completionBlock:^(VIMServerResponse *response, NSError *error) {
+    [self.operationManager requestDescriptor:descriptor handler:self completionBlock:^(VIMServerResponse *response, NSError *error) {
         
         if (error)
         {
@@ -224,7 +224,17 @@ static NSString *DescriptorKey = @"descriptor";
     __weak typeof(self) welf = self;
     dispatch_async(_queue, ^{
        
-        [[[VIMSession sharedSession] userCache] objectForKey:welf.name completionBlock:^(NSDictionary *dictionary) {
+        if (![VIMSession sharedSession].client.cache)
+        {
+            if (completionBlock)
+            {
+                completionBlock();
+            }
+            
+            return;
+        }
+        
+        [[VIMSession sharedSession].client.cache objectForKey:welf.name completionBlock:^(NSDictionary *dictionary) {
 
             if (dictionary)
             {
@@ -234,8 +244,6 @@ static NSString *DescriptorKey = @"descriptor";
             {
                 welf.descriptorDictionary = [NSMutableDictionary dictionary];
             }
-            
-//            NSLog(@"LOADED %lu DESCRIPTORS", (unsigned long)[welf.descriptorDictionary count]);
             
             if (completionBlock)
             {
@@ -249,12 +257,15 @@ static NSString *DescriptorKey = @"descriptor";
 
 - (void)_save
 {
+    if (![VIMSession sharedSession].client.cache)
+    {
+        return;
+    }
+    
     __weak typeof(self) welf = self;
     dispatch_async(_queue, ^{
         
-//        NSLog(@"SAVED %lu DESCRIPTORS", (unsigned long)[welf.descriptorDictionary count]);
-
-        [[[VIMSession sharedSession] userCache] setObject:welf.descriptorDictionary forKey:welf.name];
+        [[VIMSession sharedSession].client.cache setObject:welf.descriptorDictionary forKey:welf.name];
         
     });
 }

@@ -5,13 +5,31 @@
 //  Created by Alfred Hanssen on 6/21/15.
 //  Copyright (c) 2015 Vimeo. All rights reserved.
 //
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//
+//  The above copyright notice and this permission notice shall be included in
+//  all copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//  THE SOFTWARE.
+//
 
 #import "VIMClient.h"
-#import "VIMRequestDescriptor.h"
 #import "VIMUser.h"
 #import "VIMVideo.h"
 #import "VIMComment.h"
 #import "VIMTrigger.h"
+#import "VIMRequestRetryManager.h"
 
 static NSString *const ModelKeyPathData = @"data";
 
@@ -28,7 +46,7 @@ static NSString *const ModelKeyPathData = @"data";
     self = [super init];
     if (self)
     {
-        _retryManager = [[VIMRequestRetryManager alloc] initWithName:VIMAPIClient_RetryManagerName operationManager:operationManager];
+        _retryManager = [[VIMRequestRetryManager alloc] initWithName:@"VIMClientRetryManager" operationManager:self];
     }
     
     return self;
@@ -36,13 +54,20 @@ static NSString *const ModelKeyPathData = @"data";
 
 #pragma mark - Custom
 
-- (id<VIMRequestToken>)fetchWithRequestDescriptor:(VIMRequestDescriptor *)descriptor completionBlock:(VIMFetchCompletionBlock)completionBlock
-{    
-    return [super fetchWithRequestDescriptor:descriptor completionBlock:^(VIMServerResponse *response, NSError *error) {
+- (id<VIMRequestToken>)requestDescriptor:(VIMRequestDescriptor *)descriptor completionBlock:(VIMRequestCompletionBlock)completionBlock
+{
+    __weak typeof(self) weakSelf = self;
+    return [super requestDescriptor:descriptor completionBlock:^(VIMServerResponse *response, NSError *error) {
         
+        __strong typeof(self) strongSelf = weakSelf;
+        if (strongSelf == nil)
+        {
+            return;
+        }
+
         if (error && descriptor.shouldRetryOnFailure)
         {
-            if ([self.retryManager scheduleRetryIfNecessaryForError:error requestDescriptor:descriptor])
+            if ([strongSelf.retryManager scheduleRetryIfNecessaryForError:error requestDescriptor:descriptor])
             {
                 NSLog(@"VIMAPIClient Retrying Request: %@", descriptor.urlPath);
             }
@@ -58,7 +83,7 @@ static NSString *const ModelKeyPathData = @"data";
 
 #pragma mark - Utilities
 
-- (id<VIMRequestToken>)resetPasswordWithEmail:(NSString *)email completionBlock:(VIMFetchCompletionBlock)completionBlock
+- (id<VIMRequestToken>)resetPasswordWithEmail:(NSString *)email completionBlock:(VIMRequestCompletionBlock)completionBlock
 {
     NSParameterAssert(email);
     
@@ -66,32 +91,32 @@ static NSString *const ModelKeyPathData = @"data";
     descriptor.urlPath = [NSString stringWithFormat:@"/users/%@/password/reset", email];
     descriptor.HTTPMethod = HTTPMethodPOST;
     
-    return [self fetchWithRequestDescriptor:descriptor completionBlock:completionBlock];
+    return [self requestDescriptor:descriptor completionBlock:completionBlock];
 }
 
 #pragma mark - Users
 
-- (id<VIMRequestToken>)userWithURI:(NSString *)URI completionBlock:(VIMFetchCompletionBlock)completionBlock
+- (id<VIMRequestToken>)userWithURI:(NSString *)URI completionBlock:(VIMRequestCompletionBlock)completionBlock
 {
     VIMRequestDescriptor *descriptor = [[VIMRequestDescriptor alloc] init];
     descriptor.urlPath = URI;
     descriptor.modelClass = [VIMUser class];
     descriptor.modelKeyPath = @"";
     
-    return [self fetchWithRequestDescriptor:descriptor completionBlock:completionBlock];
+    return [self requestDescriptor:descriptor completionBlock:completionBlock];
 }
 
-- (id<VIMRequestToken>)usersWithURI:(NSString *)URI completionBlock:(VIMFetchCompletionBlock)completionBlock
+- (id<VIMRequestToken>)usersWithURI:(NSString *)URI completionBlock:(VIMRequestCompletionBlock)completionBlock
 {
     VIMRequestDescriptor *descriptor = [[VIMRequestDescriptor alloc] init];
     descriptor.urlPath = URI;
     descriptor.modelClass = [VIMUser class];
     descriptor.modelKeyPath = ModelKeyPathData;
     
-    return [self fetchWithRequestDescriptor:descriptor completionBlock:completionBlock];
+    return [self requestDescriptor:descriptor completionBlock:completionBlock];
 }
 
-- (id<VIMRequestToken>)updateUserWithURI:(NSString *)URI username:(NSString *)username location:(NSString *)location completionBlock:(VIMFetchCompletionBlock)completionBlock
+- (id<VIMRequestToken>)updateUserWithURI:(NSString *)URI username:(NSString *)username location:(NSString *)location completionBlock:(VIMRequestCompletionBlock)completionBlock
 {
     NSParameterAssert(username != nil && location != nil);
     
@@ -101,52 +126,52 @@ static NSString *const ModelKeyPathData = @"data";
     descriptor.parameters = @{@"name" : username, @"location" : location};
     descriptor.shouldRetryOnFailure = YES;
     
-    return [self fetchWithRequestDescriptor:descriptor completionBlock:completionBlock];
+    return [self requestDescriptor:descriptor completionBlock:completionBlock];
 }
 
-- (id<VIMRequestToken>)followUserWithURI:(NSString *)URI completionBlock:(VIMFetchCompletionBlock)completionBlock
+- (id<VIMRequestToken>)followUserWithURI:(NSString *)URI completionBlock:(VIMRequestCompletionBlock)completionBlock
 {
     return [self toggleFollowUserWithURI:URI newValue:YES completionBlock:completionBlock];
 }
 
-- (id<VIMRequestToken>)unfollowUserWithURI:(NSString *)URI completionBlock:(VIMFetchCompletionBlock)completionBlock
+- (id<VIMRequestToken>)unfollowUserWithURI:(NSString *)URI completionBlock:(VIMRequestCompletionBlock)completionBlock
 {
     return [self toggleFollowUserWithURI:URI newValue:NO completionBlock:completionBlock];
 }
 
-- (id<VIMRequestToken>)toggleFollowUserWithURI:(NSString *)URI newValue:(BOOL)newValue completionBlock:(VIMFetchCompletionBlock)completionBlock
+- (id<VIMRequestToken>)toggleFollowUserWithURI:(NSString *)URI newValue:(BOOL)newValue completionBlock:(VIMRequestCompletionBlock)completionBlock
 {
     VIMRequestDescriptor *descriptor = [[VIMRequestDescriptor alloc] init];
     descriptor.urlPath = URI;
     descriptor.HTTPMethod = ( newValue ? HTTPMethodPUT : HTTPMethodDELETE );
     descriptor.shouldRetryOnFailure = YES;
     
-    return [self fetchWithRequestDescriptor:descriptor completionBlock:completionBlock];
+    return [self requestDescriptor:descriptor completionBlock:completionBlock];
 }
 
 #pragma mark - Videos
 
-- (id<VIMRequestToken>)videoWithURI:(NSString *)URI completionBlock:(VIMFetchCompletionBlock)completionBlock;
+- (id<VIMRequestToken>)videoWithURI:(NSString *)URI completionBlock:(VIMRequestCompletionBlock)completionBlock;
 {
     VIMRequestDescriptor *descriptor = [[VIMRequestDescriptor alloc] init];
     descriptor.urlPath = URI;
     descriptor.modelClass = [VIMVideo class];
     descriptor.modelKeyPath = @"";
     
-    return [self fetchWithRequestDescriptor:descriptor completionBlock:completionBlock];
+    return [self requestDescriptor:descriptor completionBlock:completionBlock];
 }
 
-- (id<VIMRequestToken>)videosWithURI:(NSString *)URI completionBlock:(VIMFetchCompletionBlock)completionBlock
+- (id<VIMRequestToken>)videosWithURI:(NSString *)URI completionBlock:(VIMRequestCompletionBlock)completionBlock
 {
     VIMRequestDescriptor *descriptor = [[VIMRequestDescriptor alloc] init];
     descriptor.urlPath = URI;
     descriptor.modelClass = [VIMVideo class];
     descriptor.modelKeyPath = ModelKeyPathData;
     
-    return [self fetchWithRequestDescriptor:descriptor completionBlock:completionBlock];
+    return [self requestDescriptor:descriptor completionBlock:completionBlock];
 }
 
-- (id<VIMRequestToken>)updateVideoWithURI:(NSString *)URI title:(NSString *)title description:(NSString *)description privacy:(NSString *)privacy completionHandler:(VIMFetchCompletionBlock)completionBlock
+- (id<VIMRequestToken>)updateVideoWithURI:(NSString *)URI title:(NSString *)title description:(NSString *)description privacy:(NSString *)privacy completionHandler:(VIMRequestCompletionBlock)completionBlock
 {
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     
@@ -171,60 +196,60 @@ static NSString *const ModelKeyPathData = @"data";
     descriptor.parameters = parameters;
     descriptor.shouldRetryOnFailure = YES;
     
-    return [self fetchWithRequestDescriptor:descriptor completionBlock:completionBlock];
+    return [self requestDescriptor:descriptor completionBlock:completionBlock];
 }
 
-- (id<VIMRequestToken>)likeVideoWithURI:(NSString *)URI completionBlock:(VIMFetchCompletionBlock)completionBlock
+- (id<VIMRequestToken>)likeVideoWithURI:(NSString *)URI completionBlock:(VIMRequestCompletionBlock)completionBlock
 {
     return [self toggleLikeVideoWithURI:URI newValue:YES completionBlock:completionBlock];
 }
 
-- (id<VIMRequestToken>)unlikeVideoWithURI:(NSString *)URI completionBlock:(VIMFetchCompletionBlock)completionBlock
+- (id<VIMRequestToken>)unlikeVideoWithURI:(NSString *)URI completionBlock:(VIMRequestCompletionBlock)completionBlock
 {
     return [self toggleLikeVideoWithURI:URI newValue:NO completionBlock:completionBlock];
 }
 
-- (id<VIMRequestToken>)toggleLikeVideoWithURI:(NSString *)URI newValue:(BOOL)newValue completionBlock:(VIMFetchCompletionBlock)completionBlock
+- (id<VIMRequestToken>)toggleLikeVideoWithURI:(NSString *)URI newValue:(BOOL)newValue completionBlock:(VIMRequestCompletionBlock)completionBlock
 {
     VIMRequestDescriptor *descriptor = [VIMRequestDescriptor new];
     descriptor.urlPath = URI;
     descriptor.HTTPMethod = ( newValue ? HTTPMethodPUT : HTTPMethodDELETE );
     descriptor.shouldRetryOnFailure = YES;
     
-    return [self fetchWithRequestDescriptor:descriptor completionBlock:completionBlock];
+    return [self requestDescriptor:descriptor completionBlock:completionBlock];
 }
 
-- (id<VIMRequestToken>)watchLaterVideoWithURI:(NSString *)URI completionBlock:(VIMFetchCompletionBlock)completionBlock
+- (id<VIMRequestToken>)watchLaterVideoWithURI:(NSString *)URI completionBlock:(VIMRequestCompletionBlock)completionBlock
 {
     return [self toggleWatchLaterVideoWithURI:URI newValue:YES completionBlock:completionBlock];
 }
 
-- (id<VIMRequestToken>)unwatchLaterVideoWithURI:(NSString *)URI completionBlock:(VIMFetchCompletionBlock)completionBlock
+- (id<VIMRequestToken>)unwatchLaterVideoWithURI:(NSString *)URI completionBlock:(VIMRequestCompletionBlock)completionBlock
 {
     return [self toggleWatchLaterVideoWithURI:URI newValue:NO completionBlock:completionBlock];
 }
 
-- (id<VIMRequestToken>)toggleWatchLaterVideoWithURI:(NSString *)URI newValue:(BOOL)newValue completionBlock:(VIMFetchCompletionBlock)completionBlock
+- (id<VIMRequestToken>)toggleWatchLaterVideoWithURI:(NSString *)URI newValue:(BOOL)newValue completionBlock:(VIMRequestCompletionBlock)completionBlock
 {
     VIMRequestDescriptor *descriptor = [VIMRequestDescriptor new];
     descriptor.urlPath = URI;
     descriptor.HTTPMethod = ( newValue ? HTTPMethodPUT : HTTPMethodDELETE );
     descriptor.shouldRetryOnFailure = YES;
     
-    return [self fetchWithRequestDescriptor:descriptor completionBlock:completionBlock];
+    return [self requestDescriptor:descriptor completionBlock:completionBlock];
 }
 
-- (id<VIMRequestToken>)deleteVideoWithURI:(NSString *)URI completionBlock:(VIMFetchCompletionBlock)completionBlock
+- (id<VIMRequestToken>)deleteVideoWithURI:(NSString *)URI completionBlock:(VIMRequestCompletionBlock)completionBlock
 {
     VIMRequestDescriptor *descriptor = [VIMRequestDescriptor new];
     descriptor.urlPath = URI;
     descriptor.HTTPMethod = HTTPMethodDELETE;
     descriptor.shouldRetryOnFailure = YES;
     
-    return [self fetchWithRequestDescriptor:descriptor completionBlock:completionBlock];
+    return [self requestDescriptor:descriptor completionBlock:completionBlock];
 }
 
-- (id<VIMRequestToken>)shareVideoWithURI:(NSString *)URI recipients:(NSArray *)recipients completionBlock:(VIMFetchCompletionBlock)completionBlock
+- (id<VIMRequestToken>)shareVideoWithURI:(NSString *)URI recipients:(NSArray *)recipients completionBlock:(VIMRequestCompletionBlock)completionBlock
 {
     NSParameterAssert(recipients != nil);
     
@@ -234,17 +259,17 @@ static NSString *const ModelKeyPathData = @"data";
     descriptor.parameters = recipients;
     descriptor.shouldRetryOnFailure = YES;
     
-    return [self fetchWithRequestDescriptor:descriptor completionBlock:completionBlock];
+    return [self requestDescriptor:descriptor completionBlock:completionBlock];
 }
 
 #pragma mark - Search
 
-- (id<VIMRequestToken>)searchVideosWithQuery:(NSString *)query completionBlock:(VIMFetchCompletionBlock)completionBlock
+- (id<VIMRequestToken>)searchVideosWithQuery:(NSString *)query completionBlock:(VIMRequestCompletionBlock)completionBlock
 {
     return [self searchVideosWithQuery:query filter:@"" completionBlock:completionBlock];
 }
 
-- (id<VIMRequestToken>)searchVideosWithQuery:(NSString *)query filter:(NSString *)filter completionBlock:(VIMFetchCompletionBlock)completionBlock
+- (id<VIMRequestToken>)searchVideosWithQuery:(NSString *)query filter:(NSString *)filter completionBlock:(VIMRequestCompletionBlock)completionBlock
 {
     VIMRequestDescriptor *descriptor = [[VIMRequestDescriptor alloc] init];
     descriptor.urlPath = [NSString stringWithFormat:@"/videos"];
@@ -252,12 +277,12 @@ static NSString *const ModelKeyPathData = @"data";
     descriptor.modelKeyPath = ModelKeyPathData;
     descriptor.parameters = @{@"filter" : filter, @"query" : query};
     
-    return [self fetchWithRequestDescriptor:descriptor completionBlock:completionBlock];
+    return [self requestDescriptor:descriptor completionBlock:completionBlock];
 }
 
 #pragma mark - Comments
 
-- (id<VIMRequestToken>)postCommentWithURI:(NSString *)URI text:(NSString *)text completionBlock:(VIMFetchCompletionBlock)completionBlock
+- (id<VIMRequestToken>)postCommentWithURI:(NSString *)URI text:(NSString *)text completionBlock:(VIMRequestCompletionBlock)completionBlock
 {
     NSParameterAssert(text != nil);
     
@@ -267,86 +292,56 @@ static NSString *const ModelKeyPathData = @"data";
     descriptor.parameters = @{@"text" : text};
     descriptor.shouldRetryOnFailure = YES;
     
-    return [self fetchWithRequestDescriptor:descriptor completionBlock:completionBlock];
+    return [self requestDescriptor:descriptor completionBlock:completionBlock];
 }
 
-- (id<VIMRequestToken>)commentsWithURI:(NSString *)URI completionBlock:(VIMFetchCompletionBlock)completionBlock
+- (id<VIMRequestToken>)commentsWithURI:(NSString *)URI completionBlock:(VIMRequestCompletionBlock)completionBlock
 {
     VIMRequestDescriptor *descriptor = [[VIMRequestDescriptor alloc] init];
     descriptor.urlPath = URI;
     descriptor.modelClass = [VIMComment class];
     descriptor.modelKeyPath = ModelKeyPathData;
     
-    return [self fetchWithRequestDescriptor:descriptor completionBlock:completionBlock];
+    return [self requestDescriptor:descriptor completionBlock:completionBlock];
 }
 
-- (id<VIMRequestToken>)logoutWithCompletionBlock:(VIMFetchCompletionBlock)completionBlock
+- (id<VIMRequestToken>)logoutWithCompletionBlock:(VIMRequestCompletionBlock)completionBlock
 {
     VIMRequestDescriptor *descriptor = [[VIMRequestDescriptor alloc] init];
     descriptor.urlPath = @"/tokens";
     descriptor.HTTPMethod = HTTPMethodDELETE;
-//    descriptor.shouldRetryOnFailure = YES;
+//    TODO: descriptor.shouldRetryOnFailure = YES;
     
-    return [self fetchWithRequestDescriptor:descriptor completionBlock:completionBlock];
+    return [self requestDescriptor:descriptor completionBlock:completionBlock];
 }
 
 #pragma mark - Private API
-
-//#pragma mark Misc
-//
-//- (id<VIMRequestToken>)startTwitterReverseOAuthWithCompletionBlock:(VIMFetchCompletionBlock)completionBlock
-//{
-//    VIMRequestDescriptor *descriptor = [[VIMRequestDescriptor alloc] init];
-//    descriptor.urlPath = @"_ios/me/twitter/reverse_auth/start";
-//    
-//    return [self fetchWithRequestDescriptor:descriptor completionBlock:completionBlock];
-//}
-//
-//- (id<VIMRequestToken>)connectSocialServiceWithParameters:(NSDictionary *)parameters completionBlock:(VIMFetchCompletionBlock)completionBlock
-//{
-//    VIMRequestDescriptor *descriptor = [[VIMRequestDescriptor alloc] init];
-//    descriptor.urlPath = @"me/services";
-//    descriptor.modelKeyPath = ModelKeyPathData;
-//    descriptor.HTTPMethod = HTTPMethodPOST;
-//    descriptor.parameters = parameters;
-//    
-//    return [self fetchWithRequestDescriptor:descriptor completionBlock:completionBlock];
-//}
-//
-//- (id<VIMRequestToken>)fetchConnectedServicesWithCompletionBlock:(VIMFetchCompletionBlock)completionBlock
-//{
-//    VIMRequestDescriptor *descriptor = [[VIMRequestDescriptor alloc] init];
-//    descriptor.urlPath = @"me/services";
-//    descriptor.modelKeyPath = ModelKeyPathData;
-//    
-//    return [self fetchWithRequestDescriptor:descriptor completionBlock:completionBlock];
-//}
 
 #pragma mark APNS
 
 #if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
 
-- (id<VIMRequestToken>)registerDeviceForPushNotificationsWithURI:(NSString *)URI parameters:(NSDictionary *)parameters completionBlock:(VIMFetchCompletionBlock)completionBlock
+- (id<VIMRequestToken>)registerDeviceForPushNotificationsWithURI:(NSString *)URI parameters:(NSDictionary *)parameters completionBlock:(VIMRequestCompletionBlock)completionBlock
 {
     VIMRequestDescriptor *descriptor = [VIMRequestDescriptor new];
     descriptor.urlPath = URI;
     descriptor.HTTPMethod = HTTPMethodPUT;
     descriptor.parameters = parameters;
     
-    return [self fetchWithRequestDescriptor:descriptor completionBlock:completionBlock];
+    return [self requestDescriptor:descriptor completionBlock:completionBlock];
 }
 
-- (id<VIMRequestToken>)unregisterDeviceForPushNotificationWithURI:(NSString *)URI parameters:(NSDictionary *)parameters completionBlock:(VIMFetchCompletionBlock)completionBlock
+- (id<VIMRequestToken>)unregisterDeviceForPushNotificationWithURI:(NSString *)URI parameters:(NSDictionary *)parameters completionBlock:(VIMRequestCompletionBlock)completionBlock
 {
     VIMRequestDescriptor *descriptor = [VIMRequestDescriptor new];
     descriptor.urlPath = URI;
     descriptor.HTTPMethod = HTTPMethodDELETE;
     descriptor.parameters = parameters;
     
-    return [self fetchWithRequestDescriptor:descriptor completionBlock:completionBlock];
+    return [self requestDescriptor:descriptor completionBlock:completionBlock];
 }
 
-- (id<VIMRequestToken>)addPushNotificationWithParameters:(NSDictionary *)parameters completionBlock:(VIMFetchCompletionBlock)completionBlock
+- (id<VIMRequestToken>)addPushNotificationWithParameters:(NSDictionary *)parameters completionBlock:(VIMRequestCompletionBlock)completionBlock
 {
     VIMRequestDescriptor *descriptor = [VIMRequestDescriptor new];
     descriptor.urlPath = @"/triggers";
@@ -354,10 +349,10 @@ static NSString *const ModelKeyPathData = @"data";
     descriptor.modelClass = [VIMTrigger class];
     descriptor.parameters = parameters;
     
-    return [self fetchWithRequestDescriptor:descriptor completionBlock:completionBlock];
+    return [self requestDescriptor:descriptor completionBlock:completionBlock];
 }
 
-- (id<VIMRequestToken>)fetchUserPushNotificationsWithCompletionBlock:(VIMFetchCompletionBlock)completionBlock
+- (id<VIMRequestToken>)fetchUserPushNotificationsWithCompletionBlock:(VIMRequestCompletionBlock)completionBlock
 {
     VIMRequestDescriptor *descriptor = [VIMRequestDescriptor new];
     descriptor.urlPath = @"/me/triggers";
@@ -365,10 +360,10 @@ static NSString *const ModelKeyPathData = @"data";
     descriptor.modelClass = [VIMTrigger class];
     descriptor.modelKeyPath = ModelKeyPathData;
     
-    return [self fetchWithRequestDescriptor:descriptor completionBlock:completionBlock];
+    return [self requestDescriptor:descriptor completionBlock:completionBlock];
 }
 
-- (id<VIMRequestToken>)fetchDevicePushNotificationsWithURI:(NSString *)URI parameters:(NSArray *)parameters completionBlock:(VIMFetchCompletionBlock)completionBlock
+- (id<VIMRequestToken>)fetchDevicePushNotificationsWithURI:(NSString *)URI parameters:(NSArray *)parameters completionBlock:(VIMRequestCompletionBlock)completionBlock
 {
     VIMRequestDescriptor *descriptor = [VIMRequestDescriptor new];
     descriptor.urlPath = [URI stringByAppendingPathComponent:@"triggers"];
@@ -377,62 +372,28 @@ static NSString *const ModelKeyPathData = @"data";
     descriptor.modelKeyPath = ModelKeyPathData;
     descriptor.parameters = parameters;
     
-    return [self fetchWithRequestDescriptor:descriptor completionBlock:completionBlock];
+    return [self requestDescriptor:descriptor completionBlock:completionBlock];
 }
 
-- (id<VIMRequestToken>)viewPushNotificationWithURI:(NSString *)URI completionBlock:(VIMFetchCompletionBlock)completionBlock
+- (id<VIMRequestToken>)viewPushNotificationWithURI:(NSString *)URI completionBlock:(VIMRequestCompletionBlock)completionBlock
 {
     VIMRequestDescriptor *descriptor = [VIMRequestDescriptor new];
     descriptor.urlPath = URI;
     descriptor.HTTPMethod = HTTPMethodGET;
     descriptor.modelClass = [VIMTrigger class];
     
-    return [self fetchWithRequestDescriptor:descriptor completionBlock:completionBlock];
+    return [self requestDescriptor:descriptor completionBlock:completionBlock];
 }
 
-- (id<VIMRequestToken>)removePushNotificationWithURI:(NSString *)URI completionBlock:(VIMFetchCompletionBlock)completionBlock
+- (id<VIMRequestToken>)removePushNotificationWithURI:(NSString *)URI completionBlock:(VIMRequestCompletionBlock)completionBlock
 {
     VIMRequestDescriptor *descriptor = [VIMRequestDescriptor new];
     descriptor.urlPath = URI;
     descriptor.HTTPMethod = HTTPMethodDELETE;
     
-    return [self fetchWithRequestDescriptor:descriptor completionBlock:completionBlock];
+    return [self requestDescriptor:descriptor completionBlock:completionBlock];
 }
 
 #endif
-
-#pragma mark Utilities
-
-NSDictionary *VIMParametersFromQueryString(NSString *queryString)
-{
-    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    
-    if (queryString)
-    {
-        NSScanner *parameterScanner = [[NSScanner alloc] initWithString:queryString];
-        NSString *name = nil;
-        NSString *value = nil;
-        
-        while (![parameterScanner isAtEnd])
-        {
-            name = nil;
-            
-            [parameterScanner scanUpToString:@"=" intoString:&name];
-            [parameterScanner scanString:@"=" intoString:NULL];
-            
-            value = nil;
-            
-            [parameterScanner scanUpToString:@"&" intoString:&value];
-            [parameterScanner scanString:@"&" intoString:NULL];
-            
-            if (name && value)
-            {
-                [parameters setValue:[value stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding] forKey:[name stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-            }
-        }
-    }
-    
-    return parameters;
-}
 
 @end

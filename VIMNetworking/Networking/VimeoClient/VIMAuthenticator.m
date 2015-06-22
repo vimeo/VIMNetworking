@@ -5,16 +5,42 @@
 //  Created by Alfred Hanssen on 6/21/15.
 //  Copyright (c) 2015 Vimeo. All rights reserved.
 //
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//
+//  The above copyright notice and this permission notice shall be included in
+//  all copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//  THE SOFTWARE.
+//
 
 // Legacy apple account id: com.apple.social.vimeo [AH]
 
 #import "VIMAuthenticator.h"
+#import "VIMAccount.h"
+
+NSString * const kVimeoAuthenticatorErrorDomain = @"kVimeoAuthenticatorErrorDomain";
 
 NSString * const kVimeoAccessTokenPath = @"oauth/authorize/password";
 NSString * const kVimeoClientCredentialsPath = @"oauth/authorize/client";
 NSString * const kVimeoUsersPath = @"users";
 NSString * const kVimeoFacebookTokenPath = @"oauth/authorize/facebook";
 NSString * const kVimeoCodeGrantPath = @"oauth/access_token";
+
+NSString * const kVIMOAuthGrantType_AuthorizationCode = @"authorization_code";
+NSString * const kVIMOAuthGrantType_ClientCredentials = @"client_credentials";
+NSString * const kVIMOAuthGrantType_Password = @"password";
+NSString * const kVIMOAuthGrantType_Facebook = @"facebook";
 
 @interface VIMAuthenticator ()
 
@@ -33,6 +59,11 @@ NSString * const kVimeoCodeGrantPath = @"oauth/access_token";
                           scope:(NSString *)scope
 {
     NSParameterAssert(baseURL && clientKey && clientSecret && scope);
+    
+    if (![[baseURL absoluteString] length] || ![clientKey length] || ![clientSecret length] || ![scope length])
+    {
+        return nil;
+    }
     
     self = [super initWithBaseURL:baseURL];
     if (self)
@@ -83,275 +114,216 @@ NSString * const kVimeoCodeGrantPath = @"oauth/access_token";
 
 #pragma mark - Authentication
 
-- (NSOperation *)authenticateWithClientCredentialsGrant:(VIMAuthenticatorCompletionBlock)completionBlock
+- (id<VIMRequestToken>)authenticateWithClientCredentialsGrant:(VIMAccountCompletionBlock)completionBlock
 {
-    VIMAccount *account = [[VIMAccountStore sharedInstance] accountWithID:kECAccountID_Vimeo];
-    NSAssert(account, @"No account found.");
-    
-    if([account isAuthenticated])
-    {
-        [account deleteCredential];
-        [[VIMAccountStore sharedInstance] saveAccount:account];
-    }
-    
-    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:@{@"grant_type" : kVIMOAuthGrantType_ClientCredentials}];
-    
-    NSString *credentialsGrantURL = [VIMAuthenticator clientCredentialsURL];
-    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    [mutableParameters setValue:kVIMOAuthGrantType_ClientCredentials forKey:@"grant_type"];
     [mutableParameters setValue:self.scope forKey:@"scope"];
     
-    VIMOAuthAuthenticator *authenticator = [[VIMOAuthAuthenticator alloc] initWithURL:credentialsGrantURL clientID:self.clientKey clientSecret:self.clientSecret];
-    
-    return [authenticator authenticateAccount:account parameters:mutableParameters completionBlock:^(id responseObject, NSError *error) {
-        
-        [[VIMAccountStore sharedInstance] saveAccount:account];
-        
-        if(error)
-        {
-            if(completionBlock)
-                completionBlock(error);
-        }
-        else
-        {
-            if(completionBlock)
-                completionBlock(nil);
-        }
-    }];
+    return [self authenticateWithPath:kVimeoClientCredentialsPath parameters:mutableParameters completionBlock:completionBlock];
 }
 
-- (NSOperation *)authenticateWithCodeGrantResponseURL:(NSURL *)responseURL completionBlock:(VIMAuthenticatorCompletionBlock)completionBlock
+- (id<VIMRequestToken>)authenticateWithCodeGrantResponseURL:(NSURL *)responseURL completionBlock:(VIMAccountCompletionBlock)completionBlock
 {
+    NSParameterAssert(responseURL);
+    
     NSString *parameterString = responseURL.query;
     NSDictionary *responseParameters = VIMParametersFromQueryString(parameterString);
+    
     NSString *code = responseParameters[@"code"];
     NSString *state = responseParameters[@"state"];
     
-    if ( !code || !state || ![state isEqualToString:self.state] )
+    if (!code || !state || ![state isEqualToString:self.state])
     {
-        NSError *error = [NSError errorWithDomain:@"Error" code:1 userInfo:@{NSLocalizedDescriptionKey : @"Invalid parameters for code grant response url"}];
-        
         if (completionBlock)
         {
-            completionBlock(error);
+            NSError *error = [NSError errorWithDomain:kVimeoAuthenticatorErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"Invalid code or state"}];
+            completionBlock(nil, error);
         }
         
         return nil;
     }
-    
-    NSParameterAssert(code != nil);
-    
-    VIMAccount *account = [[VIMAccountStore sharedInstance] accountWithID:kECAccountID_Vimeo];
-    NSAssert(account, @"No account found.");
-    
-    NSString *tokenURLString = [VIMAuthenticator codeGrantURL];
-    NSString *redirectURI = [self codeGrantRedirectURI];
-    VIMOAuthAuthenticator *oAuthAuthenticator = [[VIMOAuthAuthenticator alloc] initWithURL:tokenURLString clientID:self.clientKey clientSecret:self.clientSecret];
-    
-    return [oAuthAuthenticator authenticateAccount:account code:code redirectURI:redirectURI completionBlock:^(id responseObject, NSError *error) {
-        
-        [[VIMAccountStore sharedInstance] saveAccount:account];
-        
-        if(error)
-        {
-            NSLog(@"oauth code error: %@", error);
-        }
-        
-        if (completionBlock)
-        {
-            completionBlock(error);
-        }
-    }];
-}
-
-- (NSOperation *)loginWithEmail:(NSString *)email password:(NSString *)password completionBlock:(VIMAuthenticatorCompletionBlock)completionBlock
-{
-    VIMAccount *account = [[VIMAccountStore sharedInstance] accountWithID:kECAccountID_Vimeo];
-    NSAssert(account, @"No account found.");
-    
-    if ([account isAuthenticated] && [account.credential isUserCredential]) // TODO: Is this logic correct? [AH]
-    {
-        [[VIMAccountStore sharedInstance] saveAccount:account];
-        
-        if (completionBlock)
-        {
-            completionBlock(nil);
-        }
-        
-        return nil;
-    }
-    
-    NSString *accessTokenURL = [VIMAuthenticator accessTokenURL];
-    
-    VIMOAuthAuthenticator *authenticator = [[VIMOAuthAuthenticator alloc] initWithURL:accessTokenURL clientID:self.clientKey clientSecret:self.clientSecret];
-   
-    return [authenticator authenticateAccount:account email:email password:password scope:self.scope completionBlock:^(id responseObject, NSError *error) {
-        
-        [[VIMAccountStore sharedInstance] saveAccount:account];
-        
-        if(error)
-        {
-            if(completionBlock)
-                completionBlock(error);
-        }
-        else
-        {
-            if(completionBlock)
-                completionBlock(nil);
-        }
-    }];
-}
-
-- (NSOperation *)joinWithDisplayName:(NSString *)displayName email:(NSString *)email password:(NSString *)password completionBlock:(VIMAuthenticatorCompletionBlock)completionBlock
-{
-    VIMAccount *account = [[VIMAccountStore sharedInstance] accountWithID:kECAccountID_Vimeo];
-    NSAssert(account, @"No account found.");
-    
-    if ([account isAuthenticated]) // TODO: Is this logic correct? [AH]
-    {
-        [account deleteCredential];
-        [[VIMAccountStore sharedInstance] saveAccount:account];
-    }
-    
-    NSString *usersURL = [VIMAuthenticator usersURL];
     
     NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    [mutableParameters setValue:kVIMOAuthGrantType_AuthorizationCode forKey:@"grant_type"];
+    [mutableParameters setValue:code forKey:@"code"];
+    [mutableParameters setValue:[self codeGrantRedirectURI] forKey:@"redirect_uri"];
     
-    [mutableParameters setObject:displayName forKey:@"display_name"];
+    return [self authenticateWithPath:kVimeoCodeGrantPath parameters:mutableParameters completionBlock:completionBlock];
+}
+
+#pragma mark - Private API (Category Methods)
+
+- (id<VIMRequestToken>)loginWithEmail:(NSString *)email password:(NSString *)password completionBlock:(VIMAccountCompletionBlock)completionBlock
+{
+    NSParameterAssert(email);
+    NSParameterAssert(password);
+    
+    if (![email length] || ![password length])
+    {
+        if (completionBlock)
+        {
+            NSError *error = [NSError errorWithDomain:kVimeoAuthenticatorErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"email and password cannot be nil"}];
+            completionBlock(nil, error);
+        }
+        
+        return nil;
+    }
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    [mutableParameters setObject:kVIMOAuthGrantType_Password forKey:@"grant_type"];
+    [mutableParameters setValue:email forKey:@"username"];
+    [mutableParameters setValue:password forKey:@"password"];
+    [mutableParameters setValue:self.scope forKey:@"scope"];
+    
+    return [self authenticateWithPath:kVimeoAccessTokenPath parameters:mutableParameters completionBlock:completionBlock];
+}
+
+- (id<VIMRequestToken>)joinWithName:(NSString *)name email:(NSString *)email password:(NSString *)password completionBlock:(VIMAccountCompletionBlock)completionBlock
+{
+    NSParameterAssert(name);
+    NSParameterAssert(email);
+    NSParameterAssert(password);
+    
+    if (![name length] || ![email length] || ![password length])
+    {
+        if (completionBlock)
+        {
+            NSError *error = [NSError errorWithDomain:kVimeoAuthenticatorErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"name, email and password cannot be nil"}];
+            completionBlock(nil, error);
+        }
+        
+        return nil;
+    }
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    [mutableParameters setValue:name forKey:@"display_name"];
     [mutableParameters setValue:email forKey:@"email"];
     [mutableParameters setValue:password forKey:@"password"];
     [mutableParameters setValue:self.scope forKey:@"scope"];
     
-    VIMOAuthAuthenticator *authenticator = [[VIMOAuthAuthenticator alloc] initWithURL:usersURL clientID:self.clientKey clientSecret:self.clientSecret];
-    
-    return [authenticator authenticateAccount:account parameters:mutableParameters completionBlock:^(id responseObject, NSError *error) {
-        
-        [[VIMAccountStore sharedInstance] saveAccount:account];
-        
-        if (completionBlock)
-        {
-            completionBlock(error);
-        }
-        
-    }];
+    return [self authenticateWithPath:kVimeoUsersPath parameters:mutableParameters completionBlock:completionBlock];
 }
 
-- (NSOperation *)loginWithFacebookToken:(NSString *)facebookToken completionBlock:(VIMAuthenticatorCompletionBlock)completionBlock
+- (id<VIMRequestToken>)loginWithFacebookToken:(NSString *)facebookToken completionBlock:(VIMAccountCompletionBlock)completionBlock
 {
-    VIMAccount *account = [[VIMAccountStore sharedInstance] accountWithID:kECAccountID_Vimeo];
-    NSAssert(account, @"No account found.");
+    NSParameterAssert(facebookToken);
     
-    if ([account isAuthenticated] && [account.credential isUserCredential]) // TODO: Is this logic correct? [AH]
+    if (![facebookToken length])
     {
-        [[VIMAccountStore sharedInstance] saveAccount:account];
-        
         if (completionBlock)
         {
-            completionBlock(YES, nil);
+            NSError *error = [NSError errorWithDomain:kVimeoAuthenticatorErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"facebook token cannot be nil"}];
+            completionBlock(nil, error);
         }
         
         return nil;
     }
     
-    return [self makeFacebookAuthenticationRequestWithAccount:account facebookToken:fbtoken completionBlock:^(id responseObject, NSError *error) {
-        
-        [[VIMAccountStore sharedInstance] saveAccount:account];
-        
-        if (completionBlock)
-        {
-            completionBlock(error == nil, error);
-        }
-        
-    }];
-}
-
-- (NSOperation *)joinWithFacebookToken:(NSString *)facebookToken completionBlock:(VIMAuthenticatorCompletionBlock)completionBlock
-{
-    VIMAccount *account = [[VIMAccountStore sharedInstance] accountWithID:kECAccountID_Vimeo];
-    NSAssert(account, @"No account found.");
-    
-    if ([account isAuthenticated]) // TODO: Is this logic correct? [AH]
-    {
-        [account deleteCredential];
-        [[VIMAccountStore sharedInstance] saveAccount:account];
-    }
-    
     NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
-    
-    NSString *usersURL = [VIMAuthenticator usersURL];
-    
+    [mutableParameters setValue:kVIMOAuthGrantType_Facebook forKey:@"grant_type"];
     [mutableParameters setValue:facebookToken forKey:@"token"];
     [mutableParameters setValue:self.scope forKey:@"scope"];
     
-    VIMOAuthAuthenticator *authenticator = [[VIMOAuthAuthenticator alloc] initWithURL:usersURL clientID:self.clientKey clientSecret:self.clientSecret];
+    return [self authenticateWithPath:kVimeoFacebookTokenPath parameters:mutableParameters completionBlock:completionBlock];
+}
+
+- (id<VIMRequestToken>)joinWithFacebookToken:(NSString *)facebookToken completionBlock:(VIMAccountCompletionBlock)completionBlock
+{
+    NSParameterAssert(facebookToken);
     
-    return [authenticator authenticateAccount:account parameters:mutableParameters completionBlock:^(id responseObject, NSError *error) {
-        
-        [[VIMAccountStore sharedInstance] saveAccount:account];
-        
+    if (![facebookToken length])
+    {
         if (completionBlock)
         {
-            completionBlock(error);
+            NSError *error = [NSError errorWithDomain:kVimeoAuthenticatorErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"facebook token cannot be nil"}];
+            completionBlock(nil, error);
         }
         
-    }];
+        return nil;
+    }
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    [mutableParameters setValue:facebookToken forKey:@"token"];
+    [mutableParameters setValue:self.scope forKey:@"scope"];
+    
+    return [self authenticateWithPath:kVimeoUsersPath parameters:mutableParameters completionBlock:completionBlock];
 }
 
 #pragma mark - Private API
 
-- (NSOperation *)makeFacebookAuthenticationRequestWithAccount:(VIMAccount *)account facebookToken:(NSString *)fbtoken completionBlock:(void (^)(id responseObject, NSError *error))completionBlock
+- (id<VIMRequestToken>)authenticateWithPath:(NSString *)path parameters:(NSMutableDictionary *)parameters completionBlock:(VIMAccountCompletionBlock)completionBlock
 {
-    NSAssert(account, @"No account found.");
-    NSString *scope = [VIMSession sharedSession].configuration.scope;
-    NSString *facebookURL = [VIMAccountManager facebookTokenURL];
-    NSString *clientKey = [VIMSession sharedSession].configuration.clientKey;
-    NSString *clientSecret = [VIMSession sharedSession].configuration.clientSecret;
+    NSParameterAssert(path);
+    NSParameterAssert(parameters);
+    NSParameterAssert(completionBlock);
     
-    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    [parameters setObject:self.clientKey forKey:@"client_id"];
+    [parameters setObject:self.clientSecret forKey:@"client_secret"];
     
-    [mutableParameters setObject:@"facebook" forKey:@"grant_type"];
-    [mutableParameters setValue:fbtoken forKey:@"token"];
-    [mutableParameters setValue:scope forKey:@"scope"];
+    // ac_account only used for OS Settings authentication [AH]
+//    if (self.ac_account)
+//    {
+//        [parameters setObject:self.clientSecret forKey:@"client_secret"];
+//        
+//        SLRequest *sl_request = [SLRequest requestForServiceType:SLServiceTypeVimeo requestMethod:SLRequestMethodPOST
+//                                                             URL:url parameters:parameters];
+//        
+//        sl_request.account = self.ac_account;
+//        
+//        request = [sl_request preparedURLRequest];
+//        
+//        NSDictionary *headers = request.allHTTPHeaderFields;
+//        
+//        NSMutableURLRequest *mutableRequest = [NSMutableURLRequest requestWithURL:request.URL];
+//        [mutableRequest setHTTPMethod:request.HTTPMethod];
+//        [mutableRequest setValue:[requestSerializater JSONAcceptHeaderString] forHTTPHeaderField:@"Accept"];
+//        [mutableRequest setValue:headers[@"Authorization"] forHTTPHeaderField:@"Authorization"];
+//        [mutableRequest setHTTPBody:request.HTTPBody];
+//        
+//        request = mutableRequest;
+//    }
     
-    VIMOAuthAuthenticator *authenticator = [[VIMOAuthAuthenticator alloc] initWithURL:facebookURL clientID:clientKey clientSecret:clientSecret];
+    VIMRequestDescriptor *descriptor = [[VIMRequestDescriptor alloc] init];
+    descriptor.urlPath = path;
+    descriptor.HTTPMethod = HTTPMethodPOST;
+    descriptor.modelClass = [VIMAccount class];
+    descriptor.parameters = parameters;
     
-    return [authenticator authenticateAccount:account parameters:mutableParameters completionBlock:completionBlock];
-}
+    __weak typeof(self) weakSelf = self;    
+    return [self requestDescriptor:descriptor completionBlock:^(VIMServerResponse *response, NSError *error) {
+    
+        __strong typeof(self) strongSelf = weakSelf;
+        if (strongSelf == nil)
+        {
+            return;
+        }
+        
+        if (completionBlock == nil)
+        {
+            return;
+        }
 
-#pragma mark - URLs
+        if (error)
+        {
+            completionBlock(nil, error);
+            
+            return;
+        }
+        
+        VIMAccount *account = response.result;
+        
+        if (account == nil)
+        {
+            NSError *error = [NSError errorWithDomain:kVimeoAuthenticatorErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"account returned is nil"}];
+            completionBlock(nil, error);
+            
+            return;
+        }
 
-+ (NSString *)clientCredentialsURL
-{
-    NSURL *baseURL = [NSURL URLWithString:[VIMSession sharedSession].configuration.baseURLString];
-    
-    return [[baseURL URLByAppendingPathComponent:kVimeoClientCredentialsPath]  absoluteString];
-}
-
-+ (NSString *)codeGrantURL
-{
-    NSURL *baseURL = [NSURL URLWithString:[VIMSession sharedSession].configuration.baseURLString];
-    
-    return [[baseURL URLByAppendingPathComponent:kVimeoCodeGrantPath]  absoluteString];
-}
-
-+ (NSString *)accessTokenURL
-{
-    NSURL *baseURL = [NSURL URLWithString:[VIMSession sharedSession].configuration.baseURLString];
-    
-    return [[baseURL URLByAppendingPathComponent:kVimeoAccessTokenPath]  absoluteString];
-}
-
-+ (NSString *)usersURL
-{
-    NSURL *baseURL = [NSURL URLWithString:[VIMSession sharedSession].configuration.baseURLString];
-    
-    return [[baseURL URLByAppendingPathComponent:kVimeoUsersPath]  absoluteString];
-}
-
-+ (NSString *)facebookTokenURL
-{
-    NSURL *baseURL = [NSURL URLWithString:[VIMSession sharedSession].configuration.baseURLString];
-    
-    return [[baseURL URLByAppendingPathComponent:kVimeoFacebookTokenPath]  absoluteString];
+        completionBlock(account, nil);
+        
+    }];
 }
 
 @end

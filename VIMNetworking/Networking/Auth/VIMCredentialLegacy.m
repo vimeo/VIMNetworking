@@ -1,8 +1,8 @@
 //
-//  VIMAccount.m
+//  VIMAccountCredential.m
 //  VIMNetworking
 //
-//  Created by Kashif Muhammad on 10/28/13.
+//  Created by Kashif Muhammad on 10/29/13.
 //  Copyright (c) 2014-2015 Vimeo (https://vimeo.com)
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,31 +24,13 @@
 //  THE SOFTWARE.
 //
 
-#import "VIMAccount.h"
-#import "VIMUser.h"
+#import "VIMCredentialLegacy.h"
 
-@interface VIMAccount () <NSCoding, NSSecureCoding>
+@interface VIMCredentialLegacy () <NSCoding, NSSecureCoding>
 
 @end
 
-@implementation VIMAccount
-
-#pragma mark - Public API
-
-- (BOOL)isAuthenticated
-{
-    return [self.accessToken length] > 0 && [[self.tokenType lowercaseString] isEqualToString:@"bearer"];
-}
-
-- (BOOL)isAuthenticatedWithUser
-{
-    return [self isAuthenticated] && self.user;
-}
-
-- (BOOL)isAuthenticatedWithClientCredentials
-{
-    return [self isAuthenticated] && !self.user;
-}
+@implementation VIMCredentialLegacy
 
 #pragma mark - NSSecureCoding
 
@@ -57,7 +39,7 @@
     return YES;
 }
 
-#pragma mark - NSCoding
+#pragma mark - NSCoding methods
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
@@ -66,8 +48,9 @@
     {
         self.accessToken = [aDecoder decodeObjectOfClass:[NSString class] forKey:@"accessToken"];
         self.tokenType = [aDecoder decodeObjectOfClass:[NSString class] forKey:@"tokenType"];
-        self.scope = [aDecoder decodeObjectOfClass:[NSString class] forKey:@"scope"];
-        self.user = [aDecoder decodeObjectOfClass:[VIMUser class] forKey:@"user"];
+        self.refreshToken = [aDecoder decodeObjectOfClass:[NSString class] forKey:@"refreshToken"];
+        self.expirationDate = [aDecoder decodeObjectOfClass:[NSDate class] forKey:@"expirationDate"];
+        self.grantType = [aDecoder decodeObjectOfClass:[NSString class] forKey:@"grantType"];
     }
     
     return self;
@@ -75,10 +58,11 @@
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
-    [aCoder encodeObject:self.accessToken forKey:NSStringFromSelector(@selector(accessToken))];
+    [aCoder encodeObject:self.accessToken forKey:@"accessToken"];
     [aCoder encodeObject:self.tokenType forKey:@"tokenType"];
-    [aCoder encodeObject:self.scope forKey:@"scope"];
-    [aCoder encodeObject:self.user forKey:@"user"];
+    [aCoder encodeObject:self.refreshToken forKey:@"refreshToken"];
+    [aCoder encodeObject:self.expirationDate forKey:@"expirationDate"];
+    [aCoder encodeObject:self.grantType forKey:@"grantType"];
 }
 
 @end
