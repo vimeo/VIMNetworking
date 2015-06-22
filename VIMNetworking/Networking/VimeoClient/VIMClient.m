@@ -69,7 +69,7 @@ static NSString *const ModelKeyPathData = @"data";
         {
             if ([strongSelf.retryManager scheduleRetryIfNecessaryForError:error requestDescriptor:descriptor])
             {
-                NSLog(@"VIMAPIClient Retrying Request: %@", descriptor.urlPath);
+                NSLog(@"VIMClient Retrying Request: %@", descriptor.urlPath);
             }
         }
         
