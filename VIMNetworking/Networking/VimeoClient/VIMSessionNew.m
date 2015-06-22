@@ -66,6 +66,7 @@ static VIMSessionNew *_sharedSession;
         _client = [[VIMClient alloc] initWithBaseURL:baseURL];
         _client.requestSerializer = [[VIMRequestSerializer alloc] initWithAPIVersionString:self.configuration.APIVersionString];
         _client.delegate = self;
+        _client.cache = nil; // TODO: set this to non-nil value [AH]
     }
     
     return self;
