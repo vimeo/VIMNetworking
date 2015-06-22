@@ -28,20 +28,16 @@
 
 @class VIMAccount;
 
-extern NSString * const VIMAccountStore_AccountsDidChangeNotification;
+@protocol VIMAccountStoreProtocol <NSObject>
 
-extern NSString * const VIMAccountStore_ChangedAccountKey;
+@required
 
-@interface VIMAccountStore : NSObject
++ (VIMAccount *)loadAccountForKey:(NSString *)key;
++ (BOOL)saveAccount:(VIMAccount *)account forKey:(NSString *)key;
++ (BOOL)deleteAccount:(VIMAccount *)account forKey:(NSString *)key;
 
-+ (VIMAccountStore *)sharedInstance;
+@end
 
-- (void)saveAccount:(VIMAccount *)account;
-- (void)removeAccount:(VIMAccount *)account;
-
-- (VIMAccount *)accountWithID:(NSString *)accountID;
-- (NSArray *)accountsWithType:(NSString *)accountType;
-
-- (void)reload;
+@interface VIMAccountStore : NSObject <VIMAccountStoreProtocol>
 
 @end

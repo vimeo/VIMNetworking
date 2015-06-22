@@ -26,48 +26,25 @@
 
 #import "VIMRequestOperationManager.h"
 #import "AFHTTPRequestOperation.h"
-#import "AFURLRequestSerialization.h"
-#import "AFURLResponseSerialization.h"
 #import "VIMMappable.h"
 #import "VIMObjectMapper.h"
 #import "VIMCache.h"
 #import "VIMRequestDescriptor.h"
 #import "VIMRequestToken.h"
 #import "VIMRequestOperation.h"
-#import "VIMUser.h"
-#import "VIMConnection.h"
 #import "VIMServerResponse.h"
-#import "VIMNetworking.h"
-#import "VIMAccount.h"
-#import "VIMAccountStore.h"
-#import "VIMAccountCredential.h"
+#import "VIMServerResponseMapper.h"
+#import "NSError+BaseError.h"
 #import "VIMRequestSerializer.h"
 #import "VIMResponseSerializer.h"
-#import "NSError+BaseError.h"
-#import "VIMSession.h"
-#import "VIMServerResponseMapper.h"
 
 NSString * const kVimeoClientErrorDomain = @"VimeoClientErrorDomain";
 
-@interface VIMRequestOperationManager ()
-{
-    dispatch_queue_t _responseQueue;
-}
-
-@end
-
 @implementation VIMRequestOperationManager
 
-+ (VIMRequestOperationManager *)sharedManager
+- (void)dealloc
 {
-    static VIMRequestOperationManager *_sharedClient = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        NSURL *URL = [NSURL URLWithString:[VIMSession sharedSession].configuration.baseURLString];
-        _sharedClient = [[VIMRequestOperationManager alloc] initWithBaseURL:URL];
-    });
-    
-    return _sharedClient;
+    [self cancelAllRequests];
 }
 
 - (instancetype)initWithBaseURL:(NSURL *)url
@@ -75,11 +52,11 @@ NSString * const kVimeoClientErrorDomain = @"VimeoClientErrorDomain";
     self = [super initWithBaseURL:url];
     if(self)
     {
-		_responseQueue = dispatch_queue_create("com.vimeo.VIMVimeoClient.responseQueue", DISPATCH_QUEUE_SERIAL);
+		self.completionQueue = dispatch_queue_create("com.vimeo.VIMClient.completionQueue", DISPATCH_QUEUE_SERIAL);
         
-        self.requestSerializer = [VIMRequestSerializer serializerWithSession:[VIMSession sharedSession]];
+        self.requestSerializer = [VIMRequestSerializer serializer];
         self.responseSerializer = [VIMResponseSerializer serializer];
-        
+
 #if (defined(ADHOC) || defined(RELEASE))
         self.securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeCertificate];
         self.securityPolicy.allowInvalidCertificates = NO;
@@ -97,43 +74,56 @@ NSString * const kVimeoClientErrorDomain = @"VimeoClientErrorDomain";
 {
     if ([request isKindOfClass:[VIMRequestOperation class]])
     {
-        VIMRequestOperation *requestOperation = (VIMRequestOperation *)request;
-        NSLog(@"cancelRequest: %@", requestOperation.request.URL.path);
-        [requestOperation cancel];
+        VIMRequestOperation *operation = (VIMRequestOperation *)request;
+
+        [operation cancel];
     }
 }
 
 - (void)cancelAllRequestsForHandler:(id)handler
 {
-    if(handler == nil)
+    NSParameterAssert(handler);
+    
+    if (handler == nil)
+    {
         return;
+    }
     
     for (NSOperation *operation in [self.operationQueue operations])
     {
         if ([operation isKindOfClass:[VIMRequestOperation class]])
         {
-            if(((VIMRequestOperation *)operation).handler == handler)
+            if (((VIMRequestOperation *)operation).handler == handler)
             {
-                NSLog(@"cancelAllRequestsForHandler: %@", NSStringFromClass([handler class]));
                 [operation cancel];
             }
         }
     }
 }
 
+- (void)cancelAllRequests
+{
+    [self.operationQueue cancelAllOperations];
+}
+
 #pragma mark - Requests
 
-- (id<VIMRequestToken>)fetchWithRequestDescriptor:(VIMRequestDescriptor *)descriptor handler:(id)handler completionBlock:(VIMFetchCompletionBlock)completionBlock
+- (id<VIMRequestToken>)fetchWithRequestDescriptor:(VIMRequestDescriptor *)descriptor
+                                  completionBlock:(VIMFetchCompletionBlock)completionBlock
 {
+    return [self fetchWithRequestDescriptor:descriptor handler:self completionBlock:completionBlock];
+}
+
+- (id<VIMRequestToken>)fetchWithRequestDescriptor:(VIMRequestDescriptor *)descriptor
+                                          handler:(id)handler
+                                  completionBlock:(VIMFetchCompletionBlock)completionBlock
+{
+    NSParameterAssert(descriptor);
+
+    NSParameterAssert([descriptor.urlPath length]);
+
     NSAssert([descriptor.parameters isKindOfClass:[NSArray class]] || [descriptor.parameters isKindOfClass:[NSDictionary class]] || descriptor.parameters == nil, @"Invalid parameters");
     
-    if (descriptor.userConnectionKey.length > 0)
-    {
-        VIMConnection *connection = [[VIMSession sharedSession].authenticatedUser connectionWithName:descriptor.userConnectionKey];
-        if(connection)
-            descriptor.urlPath = connection.uri;
-    }
-
     if (descriptor.parameters == nil)
     {
         descriptor.parameters = [NSMutableDictionary dictionary];
@@ -156,9 +146,16 @@ NSString * const kVimeoClientErrorDomain = @"VimeoClientErrorDomain";
     
     NSError* __autoreleasing error = nil;
         
-    NSURLRequest *urlRequest = [self.requestSerializer requestWithMethod:descriptor.HTTPMethod URLString:fullURLString parameters:descriptor.parameters error:&error];
+    NSMutableURLRequest *urlRequest = [self.requestSerializer requestWithMethod:descriptor.HTTPMethod URLString:fullURLString parameters:descriptor.parameters error:&error];
     
-    if(descriptor.cachePolicy == VIMCachePolicy_LocalOnly || descriptor.cachePolicy == VIMCachePolicy_LocalAndNetwork)
+    if (self.delegate && [self.delegate respondsToSelector:@selector(authorizationHeaderValue:)])
+    {
+        NSString *value = [self.delegate authorizationHeaderValue:self];
+        
+        [urlRequest setValue:value forHTTPHeaderField:@"Authorization"];
+    }
+    
+    if (descriptor.cachePolicy == VIMCachePolicy_LocalOnly || descriptor.cachePolicy == VIMCachePolicy_LocalAndNetwork)
     {
         CFTimeInterval startTime = CACurrentMediaTime();
         NSLog(@"cache start (%@)", descriptor.urlPath);

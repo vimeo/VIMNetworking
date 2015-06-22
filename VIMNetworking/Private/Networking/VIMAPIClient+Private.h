@@ -28,18 +28,6 @@
 
 @interface VIMAPIClient (Private)
 
-#pragma mark - Authentication
-
-- (NSOperation *)loginWithEmail:(NSString *)email password:(NSString *)password completionBlock:(VIMErrorCompletionBlock)completionBlock;
-
-- (NSOperation *)joinWithDisplayName:(NSString *)username email:(NSString *)email password:(NSString *)password completionBlock:(VIMErrorCompletionBlock)completionBlock;
-
-- (NSOperation *)loginWithFacebookToken:(NSString *)facebookToken completionBlock:(VIMBooleanCompletionBlock)completionBlock;
-
-- (NSOperation *)joinWithFacebookToken:(NSString *)facebookToken completionBlock:(VIMErrorCompletionBlock)completionBlock;
-
-- (id<VIMRequestToken>)resetPasswordWithEmail:(NSString *)email completionBlock:(VIMErrorCompletionBlock)completionBlock;
-
 #pragma mark - APNS
 
 #if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR

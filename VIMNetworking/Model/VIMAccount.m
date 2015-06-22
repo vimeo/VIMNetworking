@@ -1,8 +1,8 @@
 //
-//  VIMAccountCredential.m
+//  VIMAccount.m
 //  VIMNetworking
 //
-//  Created by Kashif Muhammad on 10/29/13.
+//  Created by Kashif Muhammad on 10/28/13.
 //  Copyright (c) 2014-2015 Vimeo (https://vimeo.com)
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,14 +24,21 @@
 //  THE SOFTWARE.
 //
 
-#import "VIMAccountCredential.h"
-#import "VIMOAuthAuthenticator.h"
+#import "VIMAccount.h"
+#import "VIMUser.h"
 
-@interface VIMAccountCredential () <NSCoding, NSSecureCoding>
+@interface VIMAccount () <NSCoding, NSSecureCoding>
 
 @end
 
-@implementation VIMAccountCredential
+@implementation VIMAccount
+
+#pragma mark - Public API
+
+- (BOOL)isAuthenticated
+{
+    return [self.accessToken length] > 0;
+}
 
 #pragma mark - NSSecureCoding
 
@@ -40,7 +47,7 @@
     return YES;
 }
 
-#pragma mark - NSCoding methods
+#pragma mark - NSCoding
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
@@ -49,9 +56,9 @@
     {
         self.accessToken = [aDecoder decodeObjectOfClass:[NSString class] forKey:@"accessToken"];
         self.tokenType = [aDecoder decodeObjectOfClass:[NSString class] forKey:@"tokenType"];
-        self.refreshToken = [aDecoder decodeObjectOfClass:[NSString class] forKey:@"refreshToken"];
-        self.expirationDate = [aDecoder decodeObjectOfClass:[NSDate class] forKey:@"expirationDate"];
-        self.grantType = [aDecoder decodeObjectOfClass:[NSString class] forKey:@"grantType"];
+        self.scope = [aDecoder decodeObjectOfClass:[NSString class] forKey:@"scope"];
+        self.user = [aDecoder decodeObjectOfClass:[VIMUser class] forKey:@"user"];
+        self.userResponse = [aDecoder decodeObjectOfClass:[NSDictionary class] forKey:@"userResponse"];
     }
     
     return self;
@@ -59,23 +66,11 @@
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
-    [aCoder encodeObject:self.accessToken forKey:@"accessToken"];
+    [aCoder encodeObject:self.accessToken forKey:NSStringFromSelector(@selector(accessToken))];
     [aCoder encodeObject:self.tokenType forKey:@"tokenType"];
-    [aCoder encodeObject:self.refreshToken forKey:@"refreshToken"];
-    [aCoder encodeObject:self.expirationDate forKey:@"expirationDate"];
-    [aCoder encodeObject:self.grantType forKey:@"grantType"];
-}
-
-#pragma mark - Public API
-
-- (BOOL)isUserCredential
-{
-    return (![self.grantType isEqualToString:kVIMOAuthGrantType_ClientCredentials]);
-}
-
-- (BOOL)isExpired
-{
-    return self.expirationDate && [self.expirationDate timeIntervalSinceNow] >= 0;
+    [aCoder encodeObject:self.scope forKey:@"scope"];
+    [aCoder encodeObject:self.user forKey:@"user"];
+    [aCoder encodeObject:self.userResponse forKey:@"userResponse"];
 }
 
 @end

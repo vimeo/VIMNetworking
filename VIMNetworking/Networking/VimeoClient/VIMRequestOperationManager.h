@@ -26,26 +26,39 @@
 
 #import "AFNetworking.h"
 
+@protocol VIMRequestToken;
+
 @class VIMRequestDescriptor;
 @class VIMServerResponse;
-@class VIMSession;
-
-@protocol VIMRequestToken;
+@class VIMCache;
+@class VIMRequestOperationManager;
 
 typedef void (^VIMFetchCompletionBlock)(VIMServerResponse *response, NSError *error);
 
-extern NSString * const kVimeoClientErrorDomain;
+extern NSString *const kVimeoClientErrorDomain;
+
+@protocol VIMRequestOperationManagerDelegate <NSObject>
+
+@required
+- (NSString *)authorizationHeaderValue:(VIMRequestOperationManager *)operationManager;
+
+@end
 
 @interface VIMRequestOperationManager : AFHTTPRequestOperationManager
 
-+ (VIMRequestOperationManager *)sharedManager;
+@property (nonatomic, weak) id<VIMRequestOperationManagerDelegate> delegate;
+
+@property (nonatomic, strong) VIMCache *cache;
+
+- (id<VIMRequestToken>)fetchWithRequestDescriptor:(VIMRequestDescriptor *)descriptor
+                                  completionBlock:(VIMFetchCompletionBlock)completionBlock;
 
 - (id<VIMRequestToken>)fetchWithRequestDescriptor:(VIMRequestDescriptor *)descriptor
                                           handler:(id)handler
                                   completionBlock:(VIMFetchCompletionBlock)completionBlock;
 
 - (void)cancelRequest:(id<VIMRequestToken>)request;
-
 - (void)cancelAllRequestsForHandler:(id)handler;
+- (void)cancelAllRequests;
 
 @end

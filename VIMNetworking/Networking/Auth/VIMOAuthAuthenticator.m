@@ -34,7 +34,7 @@
 #import <Accounts/Accounts.h>
 #import <Social/Social.h>
 
-static NSString * const SLServiceTypeVimeo = @"com.apple.social.vimeo";
+static NSString * const SLServiceTypeVimeo = @"com.apple.social.vimeo"; // Do not delete this, even if unused [AH]
 
 NSString * const kVIMOAuthGrantType_AuthorizationCode = @"authorization_code";
 NSString * const kVIMOAuthGrantType_ClientCredentials = @"client_credentials";

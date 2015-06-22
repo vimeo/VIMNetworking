@@ -41,7 +41,6 @@ NSString *HTTPMethodDELETE = @"DELETE";
 	{
         self.descriptorID = @"";
 		self.urlPath = @"";
-		self.userConnectionKey = @"";
 		self.HTTPMethod = HTTPMethodGET;
 		self.parameters = nil;
 		self.cachePolicy = VIMCachePolicy_NetworkOnly;
@@ -68,7 +67,6 @@ NSString *HTTPMethodDELETE = @"DELETE";
     {
         self.descriptorID = [aDecoder decodeObjectForKey:@"descriptorID"];
         self.urlPath = [aDecoder decodeObjectForKey:@"urlPath"];
-        self.userConnectionKey = [aDecoder decodeObjectForKey:@"userConnectionKey"];
         self.HTTPMethod = [aDecoder decodeObjectForKey:@"HTTPMethod"];
 
         self.parameters = [aDecoder decodeObjectForKey:@"parameters"];
@@ -87,7 +85,6 @@ NSString *HTTPMethodDELETE = @"DELETE";
 {
     [aCoder encodeObject:self.descriptorID forKey:@"descriptorID"];
     [aCoder encodeObject:self.urlPath forKey:@"urlPath"];
-    [aCoder encodeObject:self.userConnectionKey forKey:@"userConnectionKey"];
     [aCoder encodeObject:self.HTTPMethod forKey:@"HTTPMethod"];
 
     [aCoder encodeObject:self.parameters forKey:@"parameters"];
@@ -108,7 +105,6 @@ NSString *HTTPMethodDELETE = @"DELETE";
     {
         copy.descriptorID = self.descriptorID;
         copy.urlPath = self.urlPath;
-        copy.userConnectionKey = self.userConnectionKey;
         copy.HTTPMethod = self.HTTPMethod;
         copy.parameters = self.parameters;
         copy.cachePolicy = self.cachePolicy;
