@@ -27,6 +27,8 @@
 #import "AFNetworking.h"
 #import "VIMRequestDescriptor.h"
 #import "VIMServerResponse.h"
+#import "VIMRequestSerializer.h"
+#import "VIMResponseSerializer.h"
 
 @protocol VIMRequestToken;
 
