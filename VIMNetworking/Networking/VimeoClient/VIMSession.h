@@ -56,7 +56,9 @@ extern NSString *const VIMSession_AuthenticatedUserDidRefreshNotification; // Po
 
 #pragma mark - Configuration
 
-- (void)changeBaseURL:(NSString *)baseURLString;
+- (BOOL)changeAccount:(VIMAccount *)account;
+
+- (BOOL)changeBaseURL:(NSString *)baseURLString;
 
 - (id<VIMRequestToken>)refreshAuthenticatedUserWithCompletionBlock:(VIMErrorCompletionBlock)completionBlock;
 

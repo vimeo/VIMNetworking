@@ -363,19 +363,48 @@ static VIMSession *_sharedSession;
 
 #pragma mark Configuration
 
-- (void)changeBaseURL:(NSString *)baseURLString
+- (BOOL)changeAccount:(VIMAccount *)account
+{
+    NSParameterAssert(account);
+    if (account == nil || ![account isAuthenticated])
+    {
+        return NO;
+    }
+    
+    if ([account isAuthenticatedWithClientCredentials])
+    {
+        [VIMAccountStore saveAccount:account forKey:ClientCredentialsAccountKey];
+    }
+    else
+    {
+        [VIMAccountStore saveAccount:account forKey:UserAccountKey];
+    }
+    
+    self.account = account;
+    self.client.cache = [self buildCache];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:VIMSession_AuthenticatedAccountDidChangeNotification object:nil];
+    });
+    
+    return YES;
+}
+
+- (BOOL)changeBaseURL:(NSString *)baseURLString
 {
     NSParameterAssert(baseURLString);
     
     if (baseURLString == nil)
     {
-        return;
+        return NO;
     }
     
     self.configuration.baseURLString = baseURLString;
 
     self.authenticator = [self buildAuthenticator];
     self.client = [self buildClient];
+    
+    return YES;
 }
 
 - (id<VIMRequestToken>)refreshAuthenticatedUserWithCompletionBlock:(VIMErrorCompletionBlock)completionBlock
