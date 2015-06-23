@@ -86,8 +86,6 @@ NSString *const kVimeoClient_InvalidTokenNotification = @"kVimeoClient_InvalidTo
 
 - (void)cancelRequest:(id<VIMRequestToken>)request
 {
-    NSParameterAssert(request);
-
     if ([request isKindOfClass:[VIMRequestOperation class]])
     {
         VIMRequestOperation *operation = (VIMRequestOperation *)request;
