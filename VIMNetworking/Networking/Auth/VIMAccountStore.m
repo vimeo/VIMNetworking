@@ -29,6 +29,8 @@
 #import "KeychainUtility.h"
 #import "VIMAccount.h"
 #import "VIMAccountCredential.h"
+#import "VIMObjectMapper.h"
+#import "VIMUser.h"
 
 static NSString *const LegacyAccountKey = @"kVIMAccountStore_SaveKey"; // Added 6/22/2015 [AH]
 
@@ -70,7 +72,12 @@ static NSString *const LegacyAccountKey = @"kVIMAccountStore_SaveKey"; // Added 
         account.accessToken = legacyAccount.credential.accessToken;
         account.tokenType = legacyAccount.credential.tokenType;
         account.scope = nil; // Not present in legacy account object
-        account.user = nil; // TODO: load user
+        
+        VIMObjectMapper *mapper = [[VIMObjectMapper alloc] init];
+        [mapper addMappingClass:[VIMUser class] forKeypath:@"user"];
+        VIMUser *user = [mapper applyMappingToJSON:legacyAccount.serverResponse];
+
+        account.user = user;
     }
     
     return account;
