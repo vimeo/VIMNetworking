@@ -37,6 +37,10 @@ extern NSString * const kVimeoAuthenticatorErrorDomain;
 
 @interface VIMAuthenticator : VIMRequestOperationManager
 
+@property (nonatomic, strong, readonly) NSString *clientKey;
+@property (nonatomic, strong, readonly) NSString *clientSecret;
+@property (nonatomic, strong, readonly) NSString *scope;
+
 - (instancetype)initWithBaseURL:(NSURL *)url
                       clientKey:(NSString *)clientKey
                    clientSecret:(NSString *)clientSecret

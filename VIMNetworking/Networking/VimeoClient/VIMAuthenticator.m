@@ -45,9 +45,9 @@ NSString * const kVIMOAuthGrantType_Facebook = @"facebook";
 @interface VIMAuthenticator ()
 
 @property (nonatomic, strong) NSString *state;
-@property (nonatomic, strong) NSString *clientKey;
-@property (nonatomic, strong) NSString *clientSecret;
-@property (nonatomic, strong) NSString *scope;
+@property (nonatomic, strong, readwrite) NSString *clientKey;
+@property (nonatomic, strong, readwrite) NSString *clientSecret;
+@property (nonatomic, strong, readwrite) NSString *scope;
 
 @end
 
@@ -260,39 +260,16 @@ NSString * const kVIMOAuthGrantType_Facebook = @"facebook";
     
     [parameters setObject:self.clientKey forKey:@"client_id"];
     [parameters setObject:self.clientSecret forKey:@"client_secret"];
-    
-    // ac_account only used for OS Settings authentication [AH]
-//    if (self.ac_account)
-//    {
-//        [parameters setObject:self.clientSecret forKey:@"client_secret"];
-//        
-//        SLRequest *sl_request = [SLRequest requestForServiceType:SLServiceTypeVimeo requestMethod:SLRequestMethodPOST
-//                                                             URL:url parameters:parameters];
-//        
-//        sl_request.account = self.ac_account;
-//        
-//        request = [sl_request preparedURLRequest];
-//        
-//        NSDictionary *headers = request.allHTTPHeaderFields;
-//        
-//        NSMutableURLRequest *mutableRequest = [NSMutableURLRequest requestWithURL:request.URL];
-//        [mutableRequest setHTTPMethod:request.HTTPMethod];
-//        [mutableRequest setValue:[requestSerializater JSONAcceptHeaderString] forHTTPHeaderField:@"Accept"];
-//        [mutableRequest setValue:headers[@"Authorization"] forHTTPHeaderField:@"Authorization"];
-//        [mutableRequest setHTTPBody:request.HTTPBody];
-//        
-//        request = mutableRequest;
-//    }
-    
+
     VIMRequestDescriptor *descriptor = [[VIMRequestDescriptor alloc] init];
     descriptor.urlPath = path;
     descriptor.HTTPMethod = HTTPMethodPOST;
     descriptor.modelClass = [VIMAccount class];
     descriptor.parameters = parameters;
     
-    __weak typeof(self) weakSelf = self;    
+    __weak typeof(self) weakSelf = self;
     return [self requestDescriptor:descriptor completionBlock:^(VIMServerResponse *response, NSError *error) {
-    
+        
         __strong typeof(self) strongSelf = weakSelf;
         if (strongSelf == nil)
         {
@@ -303,7 +280,7 @@ NSString * const kVIMOAuthGrantType_Facebook = @"facebook";
         {
             return;
         }
-
+        
         if (error)
         {
             completionBlock(nil, error);
@@ -320,7 +297,7 @@ NSString * const kVIMOAuthGrantType_Facebook = @"facebook";
             
             return;
         }
-
+        
         completionBlock(account, nil);
         
     }];
