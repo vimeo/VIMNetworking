@@ -108,8 +108,6 @@ static VIMSession *_sharedSession;
         
         weakSelf.currentUserRefreshRequest = nil;
         
-        // TODO: check for invalid token error [AH]
-        
     }];
 }
 
@@ -129,6 +127,13 @@ static VIMSession *_sharedSession;
     }
     
     return value;
+}
+
+- (NSString *)acceptHeaderValue:(VIMRequestOperationManager *)operationManager
+{
+    VIMRequestSerializer *requestSerializer = [[VIMRequestSerializer alloc] initWithAPIVersionString:self.configuration.APIVersionString];
+
+    return [requestSerializer acceptHeaderValue];
 }
 
 #pragma mark - Private API
@@ -164,7 +169,8 @@ static VIMSession *_sharedSession;
                                                                       clientKey:self.configuration.clientKey
                                                                    clientSecret:self.configuration.clientSecret
                                                                           scope:self.configuration.scope];
-    authenticator.requestSerializer = [[VIMRequestSerializer alloc] initWithAPIVersionString:self.configuration.APIVersionString];
+    authenticator.requestSerializer = [AFHTTPRequestSerializer serializer];
+    authenticator.responseSerializer = [AFJSONResponseSerializer serializer];
     authenticator.delegate = self;
     
     return authenticator;

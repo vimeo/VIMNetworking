@@ -181,7 +181,16 @@ NSString *const kVimeoClient_InvalidTokenNotification = @"kVimeoClient_InvalidTo
         
         [request setValue:value forHTTPHeaderField:@"Authorization"];
     }
-    
+
+    if (self.delegate && [self.delegate respondsToSelector:@selector(acceptHeaderValue:)])
+    {
+        NSString *value = [self.delegate acceptHeaderValue:self];
+        if (value)
+        {
+            [request setValue:value forHTTPHeaderField:@"Accept"];
+        }
+    }
+
     if (self.cache && (descriptor.cachePolicy == VIMCachePolicy_LocalOnly || descriptor.cachePolicy == VIMCachePolicy_LocalAndNetwork))
     {
         CFTimeInterval startTime = CACurrentMediaTime();

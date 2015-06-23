@@ -259,7 +259,7 @@ NSString * const kVIMOAuthGrantType_Facebook = @"facebook";
     NSParameterAssert(completionBlock);
     
     [parameters setObject:self.clientKey forKey:@"client_id"];
-    [parameters setObject:self.clientSecret forKey:@"client_secret"];
+//    [parameters setObject:self.clientSecret forKey:@"client_secret"];
 
     VIMRequestDescriptor *descriptor = [[VIMRequestDescriptor alloc] init];
     descriptor.urlPath = path;
