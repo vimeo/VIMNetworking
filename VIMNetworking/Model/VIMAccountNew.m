@@ -50,6 +50,18 @@
     return [self isAuthenticated] && !self.user;
 }
 
+#pragma mark - VIMMappable
+
+- (Class)getClassForObjectKey:(NSString *)key
+{
+    if ([key isEqualToString:@"user"])
+    {
+        return [VIMUser class];
+    }
+    
+    return nil;
+}
+
 #pragma mark - NSSecureCoding
 
 + (BOOL)supportsSecureCoding
