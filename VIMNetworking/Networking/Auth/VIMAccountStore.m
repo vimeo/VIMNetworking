@@ -30,7 +30,7 @@
 #import "VIMAccountLegacy.h"
 #import "VIMCredentialLegacy.h"
 
-static NSString *const LegacyAccountKey = @"LegacyAccountKey"; // Added 6/22/2015 [AH]
+static NSString *const LegacyAccountKey = @"kVIMAccountStore_SaveKey"; // Added 6/22/2015 [AH]
 
 @implementation VIMAccountStore
 
