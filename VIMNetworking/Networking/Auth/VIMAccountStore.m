@@ -73,11 +73,15 @@ static NSString *const LegacyAccountKey = @"kVIMAccountStore_SaveKey"; // Added 
         account.tokenType = legacyAccount.credential.tokenType;
         account.scope = nil; // Not present in legacy account object
         
-        VIMObjectMapper *mapper = [[VIMObjectMapper alloc] init];
-        [mapper addMappingClass:[VIMUser class] forKeypath:@"user"];
-        VIMUser *user = [mapper applyMappingToJSON:legacyAccount.serverResponse];
-
-        account.user = user;
+        NSDictionary *userDictionary = legacyAccount.serverResponse[@"user"];
+        if (userDictionary)
+        {
+            VIMObjectMapper *mapper = [[VIMObjectMapper alloc] init];
+            [mapper addMappingClass:[VIMUser class] forKeypath:@""];
+            VIMUser *user = [mapper applyMappingToJSON:userDictionary];
+            
+            account.user = user;
+        }
     }
     
     return account;
