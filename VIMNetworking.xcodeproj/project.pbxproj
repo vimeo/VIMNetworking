@@ -68,6 +68,7 @@
 		50E5091A1B1E327E00DF1F7A /* VIMVideoLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E508D71B1E327E00DF1F7A /* VIMVideoLog.m */; };
 		50FD87BC1B3097650064EC16 /* VIMPreference.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FD87BB1B3097650064EC16 /* VIMPreference.m */; };
 		50FD87BF1B3097E80064EC16 /* VIMVideoPreference.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FD87BE1B3097E80064EC16 /* VIMVideoPreference.m */; };
+		50FD880A1B39C2A10064EC16 /* NSError+VIMNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FD88091B39C2A10064EC16 /* NSError+VIMNetworking.m */; };
 		AFFA203C1B34C157001211E2 /* VIMAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = AFFA20391B34C157001211E2 /* VIMAccount.m */; };
 		AFFA20411B34CA0F001211E2 /* VIMSession.m in Sources */ = {isa = PBXBuildFile; fileRef = AFFA20401B34CA0F001211E2 /* VIMSession.m */; };
 		AFFA207A1B3756FF001211E2 /* VIMAuthenticator.m in Sources */ = {isa = PBXBuildFile; fileRef = AFFA20791B3756FF001211E2 /* VIMAuthenticator.m */; };
@@ -228,6 +229,8 @@
 		50FD87BB1B3097650064EC16 /* VIMPreference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMPreference.m; sourceTree = "<group>"; };
 		50FD87BD1B3097E80064EC16 /* VIMVideoPreference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMVideoPreference.h; sourceTree = "<group>"; };
 		50FD87BE1B3097E80064EC16 /* VIMVideoPreference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMVideoPreference.m; sourceTree = "<group>"; };
+		50FD88081B39C2A10064EC16 /* NSError+VIMNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+VIMNetworking.h"; sourceTree = "<group>"; };
+		50FD88091B39C2A10064EC16 /* NSError+VIMNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+VIMNetworking.m"; sourceTree = "<group>"; };
 		87F4839252229F85024E18ED /* Pods-VIMNetworking.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VIMNetworking.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VIMNetworking/Pods-VIMNetworking.debug.xcconfig"; sourceTree = "<group>"; };
 		9248A53C565F6AEB7FAE4A8D /* Pods-VIMNetworking.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VIMNetworking.release.xcconfig"; path = "Pods/Target Support Files/Pods-VIMNetworking/Pods-VIMNetworking.release.xcconfig"; sourceTree = "<group>"; };
 		AFFA20381B34C157001211E2 /* VIMAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMAccount.h; sourceTree = "<group>"; };
@@ -430,6 +433,8 @@
 			children = (
 				50E508741B1E327D00DF1F7A /* NSError+BaseError.h */,
 				50E508751B1E327D00DF1F7A /* NSError+BaseError.m */,
+				50FD88081B39C2A10064EC16 /* NSError+VIMNetworking.h */,
+				50FD88091B39C2A10064EC16 /* NSError+VIMNetworking.m */,
 			);
 			path = ErrorReporting;
 			sourceTree = "<group>";
@@ -796,6 +801,7 @@
 				50E508F81B1E327E00DF1F7A /* VIMNetworkTaskSessionManager.m in Sources */,
 				50E508EA1B1E327E00DF1F7A /* VIMVideoFile.m in Sources */,
 				50E508FE1B1E327E00DF1F7A /* VIMAddMetadataTask.m in Sources */,
+				50FD880A1B39C2A10064EC16 /* NSError+VIMNetworking.m in Sources */,
 				AFFA207D1B37570F001211E2 /* VIMClient.m in Sources */,
 				50E508E91B1E327E00DF1F7A /* VIMVideo.m in Sources */,
 				50E509021B1E327E00DF1F7A /* VIMUploadSessionManager.m in Sources */,
