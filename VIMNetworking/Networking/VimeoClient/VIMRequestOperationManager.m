@@ -33,6 +33,8 @@
 #import "VIMRequestOperation.h"
 #import "VIMServerResponseMapper.h"
 #import "NSError+BaseError.h"
+#import "VIMRequestSerializer.h"
+#import "VIMResponseSerializer.h"
 
 NSString * const kVimeoClientErrorDomain = @"VimeoClientErrorDomain";
 
