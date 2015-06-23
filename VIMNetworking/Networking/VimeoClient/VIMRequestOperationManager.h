@@ -53,6 +53,9 @@ extern NSString *const kVimeoClient_InvalidTokenNotification;
 
 @property (nonatomic, strong) VIMCache *cache;
 
+- (id<VIMRequestToken>)requestURI:(NSString *)URI
+                  completionBlock:(VIMRequestCompletionBlock)completionBlock;
+
 - (id<VIMRequestToken>)requestDescriptor:(VIMRequestDescriptor *)descriptor
                          completionBlock:(VIMRequestCompletionBlock)completionBlock;
 

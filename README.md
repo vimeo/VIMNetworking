@@ -15,7 +15,7 @@ Check out the sample project [here](https://github.com/vimeo/Pegasus).
 ```Ruby
 # Add this to your podfile
 target 'MyTarget' do
-	pod 'VIMNetworking', '5.4.2'
+	pod 'VIMNetworking', '5.4.2' # Replace with the latest version
 end
 ```
 
@@ -49,7 +49,8 @@ git clone --recursive https://github.com/vimeo/VIMNetworking.git
 
 ## Initialization
 
-On app launch, configure `VIMSession` with your client key, secret, and scope strings.
+On app launch, configure `VIMSession` with your client key, secret, and scope strings. And once initialization is complete, authenticate if necessary.
+
 
 ```Objective-C
 
@@ -59,37 +60,27 @@ On app launch, configure `VIMSession` with your client key, secret, and scope st
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions 
 {
+    [KeychainUtility configureWithService:@"YOUR SERVICE" accessGroup:@"YOUR GROUP OR NIL"];
+
     VIMSessionConfiguration *config = [[VIMSessionConfiguration alloc] init];
     config.clientKey = @"your_client_key";
     config.clientSecret = @"your_client_secret";
-    config.scope = @"private public create edit delete interact";
+    config.scope = @"private public create edit delete interact"; // Replace with your scope
     
-    [[VIMSession sharedSession] setupWithConfiguration:config completionBlock:^(BOOL success) {
-    	
-    	NSLog(@"VIMSession setup success? %d", success);
-    
-    }];
-    
-    // Alternatively, pass a nil completionBlock and subscribe to the VIMSession_DidFinishLoadingNotification
+    [[VIMSession sharedSession] setupWithConfiguration:config];    
+
+    if ([[VIMSession sharedSession].account isAuthenticated] == NO)
+    {
+        NSLog(@"Authenticate...");
+    }
+    else
+    {
+        NSLog(@"Already authenticated!");
+    }
 
     . . .
 }
 
-```
-
-Once initialization is complete, authenticate if necessary:
-
-```Objective-C
-NSLog(@"VIMSession setup success? %d", success);
-
-if ([[VIMSession sharedSession].account isAuthenticated] == NO)
-{
-	NSLog(@"Authenticate...");
-}
-else
-{
-	NSLog(@"Already authenticated!");
-}
 ```
 
 ## Authentication 
@@ -103,7 +94,7 @@ All calls to the Vimeo API must be [authenticated](https://developer.vimeo.com/a
 ### Client Credentials Grant
 
 ```Objective-C
-[[VIMAPIClient sharedClient] authenticateWithClientCredentialsGrant:^(NSError *error) {
+[[VIMSession sharedSession] authenticateWithClientCredentialsGrant:^(NSError *error) {
 
         if (error == nil)
         {
@@ -129,7 +120,7 @@ You also need to add this redirect URL to your app on the Vimeo API site.  Under
 1. Open the authorization URL in Mobile Safari: 
 
 ```Objective-C
-NSURL *URL = [[VIMAPIClient sharedClient] codeGrantAuthorizationURL];
+NSURL *URL = [[VIMSession sharedSession].authenticator codeGrantAuthorizationURL];
 [[UIApplication sharedApplication] openURL:URL];
 ```
 
@@ -140,7 +131,7 @@ NSURL *URL = [[VIMAPIClient sharedClient] codeGrantAuthorizationURL];
 ```Objective-C
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
-    [[VIMAPIClient sharedClient] authenticateWithCodeGrantResponseURL:url completionBlock:^(NSError *error) {
+    [[VIMSession sharedSession] authenticateWithCodeGrantResponseURL:url completionBlock:^(NSError *error) {
         
         if (error == nil)
         {
@@ -165,7 +156,7 @@ With `VIMNetworking` configured and authenticated, you’re ready to start makin
 
 ```Objective-C
 
-[[VIMAPIClient sharedClient] fetchWithURI:@"/videos/77091919" completionBlock:^(VIMServerResponse *response, NSError *error) {
+[[VIMSession sharedSession].client requestURI:@"/videos/77091919" completionBlock:^(VIMServerResponse *response, NSError *error) {
 	
 	id JSONObject = response.result;
 	NSLog(@"JSONObject: %@", JSONObject);
@@ -182,7 +173,7 @@ VIMRequestDescriptor *descriptor = [[VIMRequestDescriptor alloc] init];
 descriptor.urlPath = @"/videos/77091919";
 descriptor.modelClass = [VIMVideo class];
 
-[[VIMAPIClient sharedClient] fetchWithRequestDescriptor:descriptor completionBlock:^(VIMServerResponse *response, NSError *error) {
+[[VIMSession sharedSession].client requestDescriptor:descriptor completionBlock:^(VIMServerResponse *response, NSError *error) {
 	
 	VIMVideo *video = (VIMVideo *)response.result;
 	NSLog(@"VIMVideo object: %@", video);
@@ -200,7 +191,7 @@ descriptor.urlPath = @"/me/videos";
 descriptor.modelClass = [VIMVideo class];
 descriptor.modelKeyPath = @"data";
 
-[[VIMAPIClient sharedClient] fetchWithRequestDescriptor:descriptor completionBlock:^(VIMServerResponse *response, NSError *error) {
+[[VIMSession sharedSession].client requestDescriptor:descriptor completionBlock:^(VIMServerResponse *response, NSError *error) {
 
 	NSArray *videos = (NSArray *)response.result; 
 	NSLog(@"Array of VIMVideo objects: %@", videos);
@@ -213,18 +204,18 @@ descriptor.modelKeyPath = @"data";
 
 ```Objective-C
 
-id<VIMRequestToken> currentRequest = [[VIMAPIClient sharedClient] fetchWithURI:@"/videos/77091919" completionBlock:^(VIMServerResponse *response, NSError *error) {
+id<VIMRequestToken> currentRequest = [[VIMSession sharedSession].client requestURI:@"/videos/77091919" completionBlock:^(VIMServerResponse *response, NSError *error) {
 
 	id JSONObject = response.result;
 	NSLog(@"JSONObject: %@", JSONObject);
 
 }];
 
-[[VIMAPIClient sharedClient] cancelRequest:currentRequest];
+[[VIMSession sharedSession].client cancelRequest:currentRequest];
 
 // or
 
-[[VIMAPIClient sharedClient] cancelAllRequests];
+[[VIMSession sharedSession].client cancelAllRequests];
 
 ```
 

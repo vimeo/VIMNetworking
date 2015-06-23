@@ -122,6 +122,14 @@ NSString *const kVimeoClient_InvalidTokenNotification = @"kVimeoClient_InvalidTo
 
 #pragma mark - Requests
 
+- (id<VIMRequestToken>)requestURI:(NSString *)URI completionBlock:(VIMRequestCompletionBlock)completionBlock
+{
+    VIMRequestDescriptor *descriptor = [[VIMRequestDescriptor alloc] init];
+    descriptor.urlPath = URI;
+    
+    return [self requestDescriptor:descriptor completionBlock:completionBlock];
+}
+
 - (id<VIMRequestToken>)requestDescriptor:(VIMRequestDescriptor *)descriptor
                                   completionBlock:(VIMRequestCompletionBlock)completionBlock
 {
