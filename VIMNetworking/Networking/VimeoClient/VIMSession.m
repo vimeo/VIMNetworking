@@ -255,6 +255,11 @@ static VIMSession *_sharedSession;
     dispatch_async(dispatch_get_main_queue(), ^{
         [[NSNotificationCenter defaultCenter] postNotificationName:VIMSession_AuthenticatedAccountDidChangeNotification object:nil];
     });
+    
+    if (completionBlock)
+    {
+        completionBlock(nil);
+    }
 }
 
 #pragma mark - Public API
