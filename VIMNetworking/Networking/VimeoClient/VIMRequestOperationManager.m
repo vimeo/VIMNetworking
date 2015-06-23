@@ -33,10 +33,13 @@
 #import "VIMRequestOperation.h"
 #import "VIMServerResponseMapper.h"
 #import "NSError+BaseError.h"
+#import "NSError+VIMNetworking.h"
 #import "VIMRequestSerializer.h"
 #import "VIMResponseSerializer.h"
 
-NSString * const kVimeoClientErrorDomain = @"VimeoClientErrorDomain";
+NSString *const kVimeoClientErrorDomain = @"VimeoClientErrorDomain";
+NSString *const kVimeoClient_ServiceUnavailableNotification = @"kVimeoClient_ServiceUnavailableNotification";
+NSString *const kVimeoClient_InvalidTokenNotification = @"kVimeoClient_InvalidTokenNotification";
 
 @interface VIMRequestOperationManager ()
 {
@@ -301,6 +304,19 @@ NSString * const kVimeoClientErrorDomain = @"VimeoClientErrorDomain";
             return;
         }
 
+        // TODO: take greater advantage of these [AH]
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if ([error isInvalidTokenError])
+            {
+                [[NSNotificationCenter defaultCenter] postNotificationName:kVimeoClient_InvalidTokenNotification object:nil];
+            }
+            else if ([error isServiceUnavailableError])
+            {
+                [[NSNotificationCenter defaultCenter] postNotificationName:kVimeoClient_ServiceUnavailableNotification object:nil];
+            }
+        });
+        
         dispatch_async(_responseQueue, ^{
 
             VIMServerResponse *response = [[VIMServerResponse alloc] init];
