@@ -64,6 +64,17 @@
     return sharedExtensionInstance;
 }
 
+// TODO: eliminate the need for this dependency [AH]
++ (NSString *)authorizationHeaderValue
+{
+    if ([VIMSession sharedSession].account.accessToken && [[[VIMSession sharedSession].account.tokenType lowercaseString] isEqualToString:@"bearer"])
+    {
+        return [NSString stringWithFormat:@"Bearer %@", [VIMSession sharedSession].account.accessToken];
+    }
+    
+    return nil;
+}
+
 #pragma mark - Private API
 
 - (instancetype)initWithSessionConfiguration:(NSURLSessionConfiguration *)configuration
