@@ -28,7 +28,7 @@
 #import "VIMModelObject.h"
 #import "VIMUser.h"
 
-@interface VIMAccount : VIMModelObject
+@interface VIMAccountNew : VIMModelObject
 
 @property (nonatomic, copy) NSString *accessToken;
 @property (nonatomic, copy) NSString *tokenType;

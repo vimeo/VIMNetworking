@@ -29,9 +29,9 @@
 
 @protocol VIMRequestToken;
 
-@class VIMAccount;
+@class VIMAccountNew;
 
-typedef void (^VIMAccountCompletionBlock)(VIMAccount *account, NSError *error);
+typedef void (^VIMAccountCompletionBlock)(VIMAccountNew *account, NSError *error);
 
 extern NSString * const kVimeoAuthenticatorErrorDomain;
 

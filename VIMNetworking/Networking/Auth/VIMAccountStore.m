@@ -25,16 +25,16 @@
 //
 
 #import "VIMAccountStore.h"
-#import "VIMAccount.h"
+#import "VIMAccountNew.h"
 #import "KeychainUtility.h"
-#import "VIMAccountLegacy.h"
-#import "VIMCredentialLegacy.h"
+#import "VIMAccount.h"
+#import "VIMAccountCredential.h"
 
 static NSString *const LegacyAccountKey = @"kVIMAccountStore_SaveKey"; // Added 6/22/2015 [AH]
 
 @implementation VIMAccountStore
 
-+ (VIMAccount *)loadLegacyAccount
++ (VIMAccountNew *)loadLegacyAccount
 {
     // Load the legacy account data
     NSData *data = [[KeychainUtility sharedInstance] dataForAccount:LegacyAccountKey];
@@ -42,15 +42,15 @@ static NSString *const LegacyAccountKey = @"kVIMAccountStore_SaveKey"; // Added 
     // Delete the saved legacy account object
     [[KeychainUtility sharedInstance] deleteDataForAccount:LegacyAccountKey];
     
-    // Convert the legacy account data into a VIMAccountLegacy object
-    VIMAccountLegacy *legacyAccount = nil;
+    // Convert the legacy account data into an array of VIMAccountLegacy objects
+    NSArray *legacyAccounts = nil;
     if (data)
     {
         NSKeyedUnarchiver *keyedUnarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
         
         @try
         {
-            legacyAccount = [keyedUnarchiver decodeObject];
+            legacyAccounts = [keyedUnarchiver decodeObject];
         }
         @catch (NSException *exception)
         {
@@ -60,11 +60,13 @@ static NSString *const LegacyAccountKey = @"kVIMAccountStore_SaveKey"; // Added 
         [keyedUnarchiver finishDecoding];
     }
     
-    VIMAccount *account = nil;
+    VIMAccountNew *account = nil;
     
-    if (legacyAccount) // Convert the VIMAccountLegacy into a VIMAccount
+    if (legacyAccounts && [legacyAccounts count]) // Convert the VIMAccountLegacy into a VIMAccount
     {
-        account = [[VIMAccount alloc] init];
+        VIMAccount *legacyAccount = legacyAccounts[0];
+        
+        account = [[VIMAccountNew alloc] init];
         account.accessToken = legacyAccount.credential.accessToken;
         account.tokenType = legacyAccount.credential.tokenType;
         account.scope = nil; // Not present in legacy account object
@@ -76,7 +78,7 @@ static NSString *const LegacyAccountKey = @"kVIMAccountStore_SaveKey"; // Added 
 
 #pragma mark - VIMAccountStoreProtocol
 
-+ (VIMAccount *)loadAccountForKey:(NSString *)key
++ (VIMAccountNew *)loadAccountForKey:(NSString *)key
 {
     NSParameterAssert(key);
     
@@ -85,7 +87,7 @@ static NSString *const LegacyAccountKey = @"kVIMAccountStore_SaveKey"; // Added 
         return nil;
     }
     
-    VIMAccount *account = nil;
+    VIMAccountNew *account = nil;
     
     NSData *data = [[KeychainUtility sharedInstance] dataForAccount:key];
     if (data)
@@ -111,7 +113,7 @@ static NSString *const LegacyAccountKey = @"kVIMAccountStore_SaveKey"; // Added 
 
 // TODO: should we not be saving the user object? [AH]
 
-+ (BOOL)saveAccount:(VIMAccount *)account forKey:(NSString *)key
++ (BOOL)saveAccount:(VIMAccountNew *)account forKey:(NSString *)key
 {
     NSParameterAssert(key);
     NSParameterAssert(account);
@@ -130,7 +132,7 @@ static NSString *const LegacyAccountKey = @"kVIMAccountStore_SaveKey"; // Added 
     return [[KeychainUtility sharedInstance] setData:data forAccount:key];
 }
 
-+ (BOOL)deleteAccount:(VIMAccount *)account forKey:(NSString *)key
++ (BOOL)deleteAccount:(VIMAccountNew *)account forKey:(NSString *)key
 {
     NSParameterAssert(key);
     

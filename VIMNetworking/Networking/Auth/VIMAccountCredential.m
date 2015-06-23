@@ -24,13 +24,13 @@
 //  THE SOFTWARE.
 //
 
-#import "VIMCredentialLegacy.h"
+#import "VIMAccountCredential.h"
 
-@interface VIMCredentialLegacy () <NSCoding, NSSecureCoding>
+@interface VIMAccountCredential () <NSCoding, NSSecureCoding>
 
 @end
 
-@implementation VIMCredentialLegacy
+@implementation VIMAccountCredential
 
 #pragma mark - NSSecureCoding
 

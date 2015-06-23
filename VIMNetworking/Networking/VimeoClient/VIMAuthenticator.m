@@ -27,7 +27,7 @@
 // Legacy apple account id: com.apple.social.vimeo [AH]
 
 #import "VIMAuthenticator.h"
-#import "VIMAccount.h"
+#import "VIMAccountNew.h"
 
 NSString * const kVimeoAuthenticatorErrorDomain = @"kVimeoAuthenticatorErrorDomain";
 
@@ -264,7 +264,7 @@ NSString * const kVIMOAuthGrantType_Facebook = @"facebook";
     VIMRequestDescriptor *descriptor = [[VIMRequestDescriptor alloc] init];
     descriptor.urlPath = path;
     descriptor.HTTPMethod = HTTPMethodPOST;
-    descriptor.modelClass = [VIMAccount class];
+    descriptor.modelClass = [VIMAccountNew class];
     descriptor.parameters = parameters;
     
     __weak typeof(self) weakSelf = self;
@@ -288,7 +288,7 @@ NSString * const kVIMOAuthGrantType_Facebook = @"facebook";
             return;
         }
         
-        VIMAccount *account = response.result;
+        VIMAccountNew *account = response.result;
         
         if (account == nil)
         {

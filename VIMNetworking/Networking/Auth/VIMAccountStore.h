@@ -26,20 +26,20 @@
 
 #import <Foundation/Foundation.h>
 
-@class VIMAccount;
+@class VIMAccountNew;
 
 @protocol VIMAccountStoreProtocol <NSObject>
 
 @required
 
-+ (VIMAccount *)loadAccountForKey:(NSString *)key;
-+ (BOOL)saveAccount:(VIMAccount *)account forKey:(NSString *)key;
-+ (BOOL)deleteAccount:(VIMAccount *)account forKey:(NSString *)key;
++ (VIMAccountNew *)loadAccountForKey:(NSString *)key;
++ (BOOL)saveAccount:(VIMAccountNew *)account forKey:(NSString *)key;
++ (BOOL)deleteAccount:(VIMAccountNew *)account forKey:(NSString *)key;
 
 @end
 
 @interface VIMAccountStore : NSObject <VIMAccountStoreProtocol>
 
-+ (VIMAccount *)loadLegacyAccount;
++ (VIMAccountNew *)loadLegacyAccount;
 
 @end

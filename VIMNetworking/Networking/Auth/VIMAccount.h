@@ -1,8 +1,8 @@
 //
-//  VIMAccountCredential.h
+//  VIMAccount.h
 //  VIMNetworking
 //
-//  Created by Kashif Muhammad on 10/29/13.
+//  Created by Kashif Muhammad on 10/28/13.
 //  Copyright (c) 2014-2015 Vimeo (https://vimeo.com)
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -26,12 +26,13 @@
 
 #import <Foundation/Foundation.h>
 
-@interface VIMCredentialLegacy: NSObject
+@class VIMAccountCredential;
 
-@property (nonatomic, copy) NSString *accessToken;
-@property (nonatomic, copy) NSString *tokenType;
-@property (nonatomic, copy) NSString *refreshToken;
-@property (nonatomic, copy) NSDate *expirationDate;
-@property (nonatomic, copy) NSString *grantType;
+@interface VIMAccount : NSObject
+
+@property (nonatomic, strong) VIMAccountCredential *credential;
+@property (nonatomic, copy) NSString *username;
+@property (nonatomic, strong) NSMutableDictionary *userData;
+@property (nonatomic, strong) id serverResponse;
 
 @end
