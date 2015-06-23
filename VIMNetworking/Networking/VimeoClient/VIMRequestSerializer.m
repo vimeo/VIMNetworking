@@ -26,6 +26,12 @@
 
 #import "VIMRequestSerializer.h"
 
+@interface VIMRequestSerializer ()
+
+@property (nonatomic, strong) NSString *APIVersionString;
+
+@end
+
 @implementation VIMRequestSerializer
 
 - (instancetype)initWithAPIVersionString:(NSString *)APIVersionString
@@ -35,7 +41,9 @@
     self = [self init];
     if (self)
     {
-        NSString *value = [NSString stringWithFormat:@"application/vnd.vimeo.*+json; version=%@", APIVersionString];
+        _APIVersionString = APIVersionString;
+        
+        NSString *value = [self acceptHeaderValue];
         [self setValue:value forHTTPHeaderField:@"Accept"];
     }
     
@@ -66,6 +74,13 @@
     }
     
     return self;
+}
+
+#pragma mark - Public API
+
+- (NSString *)acceptHeaderValue
+{
+    return [NSString stringWithFormat:@"application/vnd.vimeo.*+json; version=%@", self.APIVersionString];
 }
 
 #pragma mark - Private API

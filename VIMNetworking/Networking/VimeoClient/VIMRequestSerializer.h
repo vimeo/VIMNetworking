@@ -30,4 +30,6 @@
 
 - (instancetype)initWithAPIVersionString:(NSString *)APIVersionString;
 
+- (NSString *)acceptHeaderValue;
+
 @end
