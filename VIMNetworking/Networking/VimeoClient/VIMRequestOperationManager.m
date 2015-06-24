@@ -64,7 +64,7 @@ NSString *const kVimeoClient_InvalidTokenNotification = @"kVimeoClient_InvalidTo
     {
         // TODO: Do we need both queues or will one suffice? [AH]
 		
-        _responseQueue = dispatch_queue_create("com.vimeo.VIMClient.completionQueue", DISPATCH_QUEUE_SERIAL);
+        _responseQueue = dispatch_queue_create("com.vimeo.VIMClient.requestQueue", DISPATCH_QUEUE_SERIAL);
 
         self.completionQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
         

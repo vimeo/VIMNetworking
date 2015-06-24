@@ -103,7 +103,7 @@ static VIMSession *_sharedSession;
         [[NSNotificationCenter defaultCenter] postNotificationName:VIMSession_AuthenticatedAccountDidChangeNotification object:nil];
     });
 
-    typeof(self) weakSelf = self;
+    __weak typeof(self) weakSelf = self;
     self.currentUserRefreshRequest = [self refreshAuthenticatedUserWithCompletionBlock:^(NSError *error) {
         
         weakSelf.currentUserRefreshRequest = nil;
@@ -280,7 +280,7 @@ static VIMSession *_sharedSession;
         return nil;
     }
     
-    typeof(self) weakSelf = self;
+    __weak typeof(self) weakSelf = self;
     return [self.authenticator authenticateWithClientCredentialsGrant:^(VIMAccountNew *account, NSError *error) {
         
         [weakSelf authenticationCompleteWithAccount:account error:error key:ClientCredentialsAccountKey completionBlock:completionBlock];
@@ -292,7 +292,7 @@ static VIMSession *_sharedSession;
 {
     NSAssert([self.account isAuthenticatedWithUser] == NO, @"Attempt to authenticate as user when already authenticated as user");
 
-    typeof(self) weakSelf = self;
+    __weak typeof(self) weakSelf = self;
     return [self.authenticator authenticateWithCodeGrantResponseURL:responseURL completionBlock:^(VIMAccountNew *account, NSError *error) {
         
         [weakSelf authenticationCompleteWithAccount:account error:error key:UserAccountKey completionBlock:completionBlock];
@@ -304,7 +304,7 @@ static VIMSession *_sharedSession;
 {
     NSAssert([self.account isAuthenticatedWithUser] == NO, @"Attempt to authenticate as user when already authenticated as user");
 
-    typeof(self) weakSelf = self;
+    __weak typeof(self) weakSelf = self;
     return [self.authenticator loginWithEmail:email password:password completionBlock:^(VIMAccountNew *account, NSError *error) {
         
         [weakSelf authenticationCompleteWithAccount:account error:error key:UserAccountKey completionBlock:completionBlock];
@@ -316,7 +316,7 @@ static VIMSession *_sharedSession;
 {
     NSAssert([self.account isAuthenticatedWithUser] == NO, @"Attempt to authenticate as user when already authenticated as user");
 
-    typeof(self) weakSelf = self;
+    __weak typeof(self) weakSelf = self;
     return [self.authenticator joinWithName:name email:email password:password completionBlock:^(VIMAccountNew *account, NSError *error) {
         
         [weakSelf authenticationCompleteWithAccount:account error:error key:UserAccountKey completionBlock:completionBlock];
@@ -328,7 +328,7 @@ static VIMSession *_sharedSession;
 {
     NSAssert([self.account isAuthenticatedWithUser] == NO, @"Attempt to authenticate as user when already authenticated as user");
 
-    typeof(self) weakSelf = self;
+    __weak typeof(self) weakSelf = self;
     return [self.authenticator loginWithFacebookToken:facebookToken completionBlock:^(VIMAccountNew *account, NSError *error) {
         
         [weakSelf authenticationCompleteWithAccount:account error:error key:UserAccountKey completionBlock:completionBlock];
@@ -340,7 +340,7 @@ static VIMSession *_sharedSession;
 {
     NSAssert([self.account isAuthenticatedWithUser] == NO, @"Attempt to authenticate as user when already authenticated as user");
 
-    typeof(self) weakSelf = self;
+    __weak typeof(self) weakSelf = self;
     return [self.authenticator joinWithFacebookToken:facebookToken completionBlock:^(VIMAccountNew *account, NSError *error) {
         
         [weakSelf authenticationCompleteWithAccount:account error:error key:UserAccountKey completionBlock:completionBlock];
@@ -436,7 +436,7 @@ static VIMSession *_sharedSession;
     descriptor.urlPath = @"/me";
     descriptor.modelClass = [VIMUser class];
     
-    typeof(self) weakSelf = self;
+    __weak typeof(self) weakSelf = self;
     return [self.client requestDescriptor:descriptor completionBlock:^(VIMServerResponse *response, NSError *error) {
         
         __strong typeof(self) strongSelf = weakSelf;
