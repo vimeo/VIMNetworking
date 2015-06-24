@@ -64,6 +64,17 @@
     return sharedExtensionInstance;
 }
 
+// TODO: eliminate the need for this dependency [AH]
++ (NSString *)authorizationHeaderValue
+{
+    if ([VIMSession sharedSession].account.accessToken && [[[VIMSession sharedSession].account.tokenType lowercaseString] isEqualToString:@"bearer"])
+    {
+        return [NSString stringWithFormat:@"Bearer %@", [VIMSession sharedSession].account.accessToken];
+    }
+    
+    return nil;
+}
+
 #pragma mark - Private API
 
 - (instancetype)initWithSessionConfiguration:(NSURLSessionConfiguration *)configuration
@@ -73,7 +84,7 @@
     if (self)
 
     {
-        self.requestSerializer = [VIMRequestSerializer serializerWithSession:[VIMSession sharedSession]];
+        self.requestSerializer = [[VIMRequestSerializer alloc] initWithAPIVersionString:[VIMSession sharedSession].configuration.APIVersionString];
         self.responseSerializer = [VIMResponseSerializer serializerWithReadingOptions:NSJSONReadingAllowFragments];
 
 #if (defined(ADHOC) || defined(RELEASE))

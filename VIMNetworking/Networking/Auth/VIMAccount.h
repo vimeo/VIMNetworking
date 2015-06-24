@@ -28,23 +28,11 @@
 
 @class VIMAccountCredential;
 
-extern const NSString *kVIMAccountType_Vimeo;
-
-@interface VIMAccount : NSObject 
-
-@property (nonatomic, readonly) NSString *accountID;
-@property (nonatomic, readonly) NSString *accountType;
-@property (nonatomic, readonly) NSString *accountName;
+@interface VIMAccount : NSObject
 
 @property (nonatomic, strong) VIMAccountCredential *credential;
 @property (nonatomic, copy) NSString *username;
 @property (nonatomic, strong) NSMutableDictionary *userData;
 @property (nonatomic, strong) id serverResponse;
-
-- (instancetype)initWithAccountID:(NSString *)accountID accountType:(NSString *)accountType accountName:(NSString *)accountName;
-
-- (BOOL)isAuthenticated;
-
-- (void)deleteCredential;
 
 @end

@@ -1,8 +1,8 @@
 //
-//  AAA.h
+//  VIMAccount.h
 //  VIMNetworking
 //
-//  Created by Hanssen, Alfie on 3/6/15.
+//  Created by Kashif Muhammad on 10/28/13.
 //  Copyright (c) 2014-2015 Vimeo (https://vimeo.com)
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,16 +24,19 @@
 //  THE SOFTWARE.
 //
 
-#import "VIMAccountManager.h"
+#import <Foundation/Foundation.h>
+#import "VIMModelObject.h"
+#import "VIMUser.h"
 
-@interface VIMAccountManager (Private)
+@interface VIMAccountNew : VIMModelObject
 
-- (NSOperation *)joinWithDisplayName:(NSString *)displayName email:(NSString *)email password:(NSString *)password completionBlock:(VIMAccountManagerErrorCompletionBlock)completionBlock;
+@property (nonatomic, copy) NSString *accessToken;
+@property (nonatomic, copy) NSString *tokenType;
+@property (nonatomic, copy) NSString *scope;
+@property (nonatomic, strong) VIMUser *user;
 
-- (NSOperation *)loginWithEmail:(NSString *)email password:(NSString *)password completionBlock:(VIMAccountManagerErrorCompletionBlock)completionBlock;
-
-- (NSOperation *)joinWithFacebookToken:(NSString *)facebookToken completionBlock:(VIMAccountManagerErrorCompletionBlock)completionBlock;
-
-- (NSOperation *)loginWithFacebookToken:(NSString *)facebookToken completionBlock:(void (^)(BOOL associatedVimeoAccountExists, NSError *error))completionBlock;
+- (BOOL)isAuthenticated;
+- (BOOL)isAuthenticatedWithUser;
+- (BOOL)isAuthenticatedWithClientCredentials;
 
 @end

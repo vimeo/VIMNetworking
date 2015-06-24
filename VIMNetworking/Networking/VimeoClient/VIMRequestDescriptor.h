@@ -44,7 +44,6 @@ extern NSString *HTTPMethodDELETE;
 
 @property (nonatomic, copy) NSString *descriptorID;
 @property (nonatomic, copy) NSString *urlPath;
-@property (nonatomic, copy) NSString *userConnectionKey;
 @property (nonatomic, copy) NSString *HTTPMethod;
 
 @property (nonatomic, strong) id parameters;

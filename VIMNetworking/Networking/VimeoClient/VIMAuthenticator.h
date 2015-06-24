@@ -1,9 +1,9 @@
 //
-//  VIMAccountStore.h
+//  VIMAuthenticator.h
 //  VIMNetworking
 //
-//  Created by Kashif Muhammad on 10/28/13.
-//  Copyright (c) 2014-2015 Vimeo (https://vimeo.com)
+//  Created by Alfred Hanssen on 6/21/15.
+//  Copyright (c) 2015 Vimeo. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,21 +25,37 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "VIMRequestOperationManager.h"
+
+@protocol VIMRequestToken;
 
 @class VIMAccountNew;
 
-@protocol VIMAccountStoreProtocol <NSObject>
+typedef void (^VIMAccountCompletionBlock)(VIMAccountNew *account, NSError *error);
 
-@required
+extern NSString * const kVimeoAuthenticatorErrorDomain;
 
-+ (VIMAccountNew *)loadAccountForKey:(NSString *)key;
-+ (BOOL)saveAccount:(VIMAccountNew *)account forKey:(NSString *)key;
-+ (BOOL)deleteAccount:(VIMAccountNew *)account forKey:(NSString *)key;
+@interface VIMAuthenticator : VIMRequestOperationManager
 
-@end
+@property (nonatomic, strong, readonly) NSString *clientKey;
+@property (nonatomic, strong, readonly) NSString *clientSecret;
+@property (nonatomic, strong, readonly) NSString *scope;
 
-@interface VIMAccountStore : NSObject <VIMAccountStoreProtocol>
+- (instancetype)initWithBaseURL:(NSURL *)url
+                      clientKey:(NSString *)clientKey
+                   clientSecret:(NSString *)clientSecret
+                          scope:(NSString *)scope;
 
-+ (VIMAccountNew *)loadLegacyAccount;
+#pragma mark - URLs
+
+- (NSURL *)codeGrantAuthorizationURL;
+
+- (NSString *)codeGrantRedirectURI;
+
+#pragma mark - Authentication
+
+- (id<VIMRequestToken>)authenticateWithClientCredentialsGrant:(VIMAccountCompletionBlock)completionBlock;
+
+- (id<VIMRequestToken>)authenticateWithCodeGrantResponseURL:(NSURL *)responseURL completionBlock:(VIMAccountCompletionBlock)completionBlock;
 
 @end

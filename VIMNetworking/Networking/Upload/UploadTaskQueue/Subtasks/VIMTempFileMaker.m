@@ -26,6 +26,7 @@
 
 #import "VIMTempFileMaker.h"
 #import "VIMSession.h"
+#import "VIMSessionConfiguration.h"
 #import <Photos/Photos.h>
 #import <AVFoundation/AVFoundation.h>
 #import <MobileCoreServices/MobileCoreServices.h>
