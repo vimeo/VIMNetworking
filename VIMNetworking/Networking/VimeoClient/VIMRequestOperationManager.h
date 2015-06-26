@@ -43,6 +43,8 @@ extern NSString *const kVimeoClient_InvalidTokenNotification;
 
 @required
 - (NSString *)authorizationHeaderValue:(VIMRequestOperationManager *)operationManager;
+
+@optional
 - (NSString *)acceptHeaderValue:(VIMRequestOperationManager *)operationManager;
 
 @end
