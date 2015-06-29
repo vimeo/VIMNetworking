@@ -278,8 +278,16 @@
     else
     {
         VIMConnection *connection = [self connectionWithName:VIMConnectionNameComments];
+        
         return (connection && [connection canPost]);
     }
+}
+
+- (BOOL)canLike
+{
+    VIMInteraction *interaction = [self interactionWithName:VIMInteractionNameLike];
+    
+    return interaction && [interaction.uri length];
 }
 
 - (BOOL)canViewComments
