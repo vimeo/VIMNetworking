@@ -37,6 +37,7 @@ NSString *const VIMConnectionNameCredits;
 NSString *const VIMConnectionNameFeed;
 NSString *const VIMConnectionNameFollowers;
 NSString *const VIMConnectionNameFollowing;
+NSString *const VIMConnectionNameUsers;
 NSString *const VIMConnectionNameGroups;
 NSString *const VIMConnectionNameLikes;
 NSString *const VIMConnectionNamePictures;
