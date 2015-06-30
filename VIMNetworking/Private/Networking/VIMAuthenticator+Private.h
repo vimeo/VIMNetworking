@@ -1,9 +1,9 @@
 //
-//  VIMAccountCredential.h
+//  VIMAuthenticator+Private.h
 //  VIMNetworking
 //
-//  Created by Kashif Muhammad on 10/29/13.
-//  Copyright (c) 2014-2015 Vimeo (https://vimeo.com)
+//  Created by Alfred Hanssen on 6/22/15.
+//  Copyright (c) 2015 Vimeo. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,14 +24,16 @@
 //  THE SOFTWARE.
 //
 
-#import <Foundation/Foundation.h>
+#import "VIMAuthenticator.h"
 
-@interface VIMAccountCredential: NSObject
+@interface VIMAuthenticator (Private)
 
-@property (nonatomic, copy) NSString *accessToken;
-@property (nonatomic, copy) NSString *tokenType;
-@property (nonatomic, copy) NSString *refreshToken;
-@property (nonatomic, copy) NSDate *expirationDate;
-@property (nonatomic, copy) NSString *grantType;
+- (id<VIMRequestToken>)loginWithEmail:(NSString *)email password:(NSString *)password completionBlock:(VIMAccountCompletionBlock)completionBlock;
+
+- (id<VIMRequestToken>)joinWithName:(NSString *)name email:(NSString *)email password:(NSString *)password completionBlock:(VIMAccountCompletionBlock)completionBlock;
+
+- (id<VIMRequestToken>)loginWithFacebookToken:(NSString *)facebookToken completionBlock:(VIMAccountCompletionBlock)completionBlock;
+
+- (id<VIMRequestToken>)joinWithFacebookToken:(NSString *)facebookToken completionBlock:(VIMAccountCompletionBlock)completionBlock;
 
 @end

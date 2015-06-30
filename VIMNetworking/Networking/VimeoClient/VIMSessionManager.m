@@ -29,6 +29,7 @@
 #import "VIMResponseSerializer.h"
 #import "VIMRequestSerializer.h"
 #import "VIMSession.h"
+#import "VIMSessionConfiguration.h"
 
 @interface VIMSessionManager ()
 
@@ -75,7 +76,7 @@
 
 - (void)initialSetup
 {
-    self.requestSerializer = [VIMRequestSerializer serializerWithSession:[VIMSession sharedSession]];
+    self.requestSerializer = [[VIMRequestSerializer alloc] initWithAPIVersionString:[VIMSession sharedSession].configuration.APIVersionString];
     self.responseSerializer = [VIMResponseSerializer serializerWithReadingOptions:NSJSONReadingAllowFragments];
 }
 

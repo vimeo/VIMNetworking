@@ -29,7 +29,7 @@
 #import "VIMSession.h"
 #import "VIMSessionConfiguration.h"
 
-#import "VIMAPIClient.h"
+#import "VIMClient.h"
 #import "VIMRequestOperationManager.h"
 #import "VIMRequestDescriptor.h"
 #import "VIMServerResponse.h"

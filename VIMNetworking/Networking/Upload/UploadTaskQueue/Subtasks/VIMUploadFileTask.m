@@ -25,6 +25,7 @@
 //
 
 #import "VIMUploadFileTask.h"
+#import "VIMUploadSessionManager.h"
 
 static const NSString *VIMUploadFileTaskName = @"FILE_UPLOAD";
 static const NSString *VIMUploadFileTaskErrorDomain = @"VIMUploadFileTaskErrorDomain";
@@ -107,6 +108,12 @@ static const NSString *VIMUploadFileTaskErrorDomain = @"VIMUploadFileTaskErrorDo
         return;
     }
     
+    NSString *value = [VIMUploadSessionManager authorizationHeaderValue];
+    if (value)
+    {
+        [request setValue:value forHTTPHeaderField:@"Authorization"];
+    }
+
     NSURL *sourceURL = [NSURL fileURLWithPath:self.source];
     
     NSNumber *size = nil;

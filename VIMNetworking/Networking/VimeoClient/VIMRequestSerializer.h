@@ -26,13 +26,10 @@
 
 #import "AFURLRequestSerialization.h"
 
-@class VIMAccount;
-@class VIMSession;
-
 @interface VIMRequestSerializer : AFJSONRequestSerializer
 
-+ (instancetype)serializerWithSession:(VIMSession *)session;
+- (instancetype)initWithAPIVersionString:(NSString *)APIVersionString;
 
-- (NSString *)JSONAcceptHeaderString;
+- (NSString *)acceptHeaderValue;
 
 @end

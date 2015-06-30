@@ -31,4 +31,7 @@
 + (instancetype)sharedAppInstance;
 + (instancetype)sharedExtensionInstance;
 
+// TODO: eliminate the need for this dependency [AH]
++ (NSString *)authorizationHeaderValue;
+
 @end

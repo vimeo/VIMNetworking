@@ -24,14 +24,43 @@
 //  THE SOFTWARE.
 //
 
-#import "VIMAccount.h"
-#import "VIMAccountCredential.h"
+#import "VIMAccountNew.h"
+#import "VIMUser.h"
 
-@interface VIMAccount () <NSCoding, NSSecureCoding>
+@interface VIMAccountNew () <NSCoding, NSSecureCoding>
 
 @end
 
-@implementation VIMAccount
+@implementation VIMAccountNew
+
+#pragma mark - Public API
+
+- (BOOL)isAuthenticated
+{
+    return [self.accessToken length] > 0 && [[self.tokenType lowercaseString] isEqualToString:@"bearer"];
+}
+
+- (BOOL)isAuthenticatedWithUser
+{
+    return [self isAuthenticated] && self.user;
+}
+
+- (BOOL)isAuthenticatedWithClientCredentials
+{
+    return [self isAuthenticated] && !self.user;
+}
+
+#pragma mark - VIMMappable
+
+- (Class)getClassForObjectKey:(NSString *)key
+{
+    if ([key isEqualToString:@"user"])
+    {
+        return [VIMUser class];
+    }
+    
+    return nil;
+}
 
 #pragma mark - NSSecureCoding
 
@@ -47,29 +76,10 @@
     self = [super init];
     if(self)
     {
-        // TODO: need to use decodeObjectOfClass but this is type id, what to do? [AH]
-        
-        id response = nil;
-        @try
-        {
-            response = [aDecoder decodeObjectOfClass:[NSDictionary class] forKey:@"serverResponse"];
-        }
-        @catch (NSException *exception)
-        {
-            @try
-            {
-                response = [aDecoder decodeObjectOfClass:[NSArray class] forKey:@"serverResponse"];
-            }
-            @catch (NSException *exception)
-            {
-                NSLog(@"Unable to unarchive server response");
-            }
-        }
-
-        self.username = [aDecoder decodeObjectOfClass:[NSString class] forKey:@"username"];
-        self.serverResponse = response;
-        self.userData = [aDecoder decodeObjectOfClass:[NSMutableDictionary class] forKey:@"userData"];
-        self.credential = [aDecoder decodeObjectOfClass:[VIMAccountCredential class] forKey:@"credential"];
+        self.accessToken = [aDecoder decodeObjectOfClass:[NSString class] forKey:@"accessToken"];
+        self.tokenType = [aDecoder decodeObjectOfClass:[NSString class] forKey:@"tokenType"];
+        self.scope = [aDecoder decodeObjectOfClass:[NSString class] forKey:@"scope"];
+        self.user = [aDecoder decodeObjectOfClass:[VIMUser class] forKey:@"user"];
     }
     
     return self;
@@ -77,10 +87,10 @@
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
-    [aCoder encodeObject:self.username forKey:@"username"];
-    [aCoder encodeObject:self.serverResponse forKey:@"serverResponse"];
-    [aCoder encodeObject:self.userData forKey:@"userData"];
-    [aCoder encodeObject:self.credential forKey:@"credential"];
+    [aCoder encodeObject:self.accessToken forKey:NSStringFromSelector(@selector(accessToken))];
+    [aCoder encodeObject:self.tokenType forKey:@"tokenType"];
+    [aCoder encodeObject:self.scope forKey:@"scope"];
+    [aCoder encodeObject:self.user forKey:@"user"];
 }
 
 @end

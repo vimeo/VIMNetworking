@@ -25,27 +25,50 @@
 //
 
 #import "AFNetworking.h"
-
-@class VIMRequestDescriptor;
-@class VIMServerResponse;
-@class VIMSession;
+#import "VIMRequestDescriptor.h"
+#import "VIMServerResponse.h"
 
 @protocol VIMRequestToken;
 
-typedef void (^VIMFetchCompletionBlock)(VIMServerResponse *response, NSError *error);
+@class VIMCache;
+@class VIMRequestOperationManager;
 
-extern NSString * const kVimeoClientErrorDomain;
+typedef void (^VIMRequestCompletionBlock)(VIMServerResponse *response, NSError *error);
+
+extern NSString *const kVimeoClientErrorDomain;
+extern NSString *const kVimeoClient_ServiceUnavailableNotification;
+extern NSString *const kVimeoClient_InvalidTokenNotification;
+
+@protocol VIMRequestOperationManagerDelegate <NSObject>
+
+@required
+- (NSString *)authorizationHeaderValue:(VIMRequestOperationManager *)operationManager;
+
+@optional
+- (NSString *)acceptHeaderValue:(VIMRequestOperationManager *)operationManager;
+
+@end
 
 @interface VIMRequestOperationManager : AFHTTPRequestOperationManager
 
-+ (VIMRequestOperationManager *)sharedManager;
+@property (nonatomic, weak) id<VIMRequestOperationManagerDelegate> delegate;
 
-- (id<VIMRequestToken>)fetchWithRequestDescriptor:(VIMRequestDescriptor *)descriptor
-                                          handler:(id)handler
-                                  completionBlock:(VIMFetchCompletionBlock)completionBlock;
+@property (nonatomic, strong) VIMCache *cache;
+
+- (id<VIMRequestToken>)requestURI:(NSString *)URI
+                  completionBlock:(VIMRequestCompletionBlock)completionBlock;
+
+- (id<VIMRequestToken>)requestDescriptor:(VIMRequestDescriptor *)descriptor
+                         completionBlock:(VIMRequestCompletionBlock)completionBlock;
+
+- (id<VIMRequestToken>)requestDescriptor:(VIMRequestDescriptor *)descriptor
+                                 handler:(id)handler
+                         completionBlock:(VIMRequestCompletionBlock)completionBlock;
 
 - (void)cancelRequest:(id<VIMRequestToken>)request;
-
 - (void)cancelAllRequestsForHandler:(id)handler;
+- (void)cancelAllRequests;
+
+NSDictionary *VIMParametersFromQueryString(NSString *queryString);
 
 @end

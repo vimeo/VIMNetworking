@@ -25,50 +25,39 @@
 //
 
 #import "VIMRequestSerializer.h"
-#import "VIMSession.h"
-#import "VIMAccount.h"
-#import "VIMAccountCredential.h"
-#import "VIMSessionConfiguration.h"
 
 @interface VIMRequestSerializer ()
 
-@property (nonatomic, strong) VIMSession *vimeoSession;
+@property (nonatomic, strong) NSString *APIVersionString;
 
 @end
 
 @implementation VIMRequestSerializer
 
-+ (instancetype)serializer
+- (instancetype)initWithAPIVersionString:(NSString *)APIVersionString
 {
-    return nil;
+    NSParameterAssert(APIVersionString);
+
+    self = [self init];
+    if (self)
+    {
+        _APIVersionString = APIVersionString;
+        
+        NSString *value = [self acceptHeaderValue];
+        [self setValue:value forHTTPHeaderField:@"Accept"];
+    }
+    
+    return self;
 }
 
-+ (instancetype)serializerWithSession:(VIMSession *)session
-{
-    NSAssert(session != nil, @"Serializer must be initialized with a session object");
-    
-    VIMRequestSerializer *serializer = [[self alloc] init];
-    serializer.writingOptions = 0;
-    serializer.vimeoSession = session;
-    
-    [serializer setValue:[serializer JSONAcceptHeaderString] forHTTPHeaderField:@"Accept"]; // Switching from "acceptHeaderString" method
-
-    return serializer;
-}
-
-- (id)init
+- (instancetype)init
 {
     self = [super init];
-    if(self)
+    if (self)
     {
-        NSString *userAgent = nil;
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wgnu"
-#if defined(__IPHONE_OS_VERSION_MIN_REQUIRED)
-        // User-Agent Header; see http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.43
-        userAgent = [NSString stringWithFormat:@"%@/%@ (%@; iOS %@; Scale/%0.2f; Version %@)", [[[NSBundle mainBundle] infoDictionary] objectForKey:(__bridge NSString *)kCFBundleExecutableKey] ?: [[[NSBundle mainBundle] infoDictionary] objectForKey:(__bridge NSString *)kCFBundleIdentifierKey], (__bridge id)CFBundleGetValueForInfoDictionaryKey(CFBundleGetMainBundle(), kCFBundleVersionKey) ?: [[[NSBundle mainBundle] infoDictionary] objectForKey:(__bridge NSString *)kCFBundleVersionKey], [[UIDevice currentDevice] model], [[UIDevice currentDevice] systemVersion], [[UIScreen mainScreen] scale], [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
-#endif
-#pragma clang diagnostic pop
+        self.writingOptions = 0;
+
+        NSString *userAgent = [VIMRequestSerializer userAgentString];
         if (userAgent)
         {
             if (![userAgent canBeConvertedToEncoding:NSASCIIStringEncoding])
@@ -87,42 +76,30 @@
     return self;
 }
 
-#pragma mark - Requests
+#pragma mark - Public API
 
-- (NSMutableURLRequest *)requestWithMethod:(NSString *)method URLString:(NSString *)URLString parameters:(id)parameters error:(NSError *__autoreleasing *)error
+- (NSString *)acceptHeaderValue
 {
-    NSMutableURLRequest *request = [super requestWithMethod:method URLString:URLString parameters:parameters error:error];
-    [request setValue:[self authorizationHeaderString] forHTTPHeaderField:@"Authorization"];
-
-    return request;
+    return [NSString stringWithFormat:@"application/vnd.vimeo.*+json; version=%@", self.APIVersionString];
 }
 
-- (NSString *)authorizationHeaderString
-{
-    if (self.vimeoSession.account && self.vimeoSession.account.credential)
-    {
-        if ([[self.vimeoSession.account.credential.tokenType lowercaseString] isEqualToString:@"bearer"])
-        {
-            return [NSString stringWithFormat:@"Bearer %@", self.vimeoSession.account.credential.accessToken];
-        }
-    }
-        
-    NSString *authString = [NSString stringWithFormat:@"%@:%@", self.vimeoSession.configuration.clientKey, self.vimeoSession.configuration.clientSecret];
-    
-    NSData *plainData = [authString dataUsingEncoding:NSUTF8StringEncoding];
-    NSString *base64String = [plainData base64EncodedStringWithOptions:0];
+#pragma mark - Private API
 
-    return [NSString stringWithFormat:@"Basic %@", base64String];
-}
-
-- (NSString *)JSONAcceptHeaderString
++ (NSString *)userAgentString
 {
-    if (self.vimeoSession.configuration.APIVersionString == nil)
-    {
-        return nil;
-    }
+    NSString *userAgent = nil;
     
-    return [NSString stringWithFormat:@"application/vnd.vimeo.*+json; version=%@", self.vimeoSession.configuration.APIVersionString];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wgnu"
+#if defined(__IPHONE_OS_VERSION_MIN_REQUIRED)
+    
+    // User-Agent Header; see http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.43
+    userAgent = [NSString stringWithFormat:@"%@/%@ (%@; iOS %@; Scale/%0.2f; Version %@)", [[[NSBundle mainBundle] infoDictionary] objectForKey:(__bridge NSString *)kCFBundleExecutableKey] ?: [[[NSBundle mainBundle] infoDictionary] objectForKey:(__bridge NSString *)kCFBundleIdentifierKey], (__bridge id)CFBundleGetValueForInfoDictionaryKey(CFBundleGetMainBundle(), kCFBundleVersionKey) ?: [[[NSBundle mainBundle] infoDictionary] objectForKey:(__bridge NSString *)kCFBundleVersionKey], [[UIDevice currentDevice] model], [[UIDevice currentDevice] systemVersion], [[UIScreen mainScreen] scale], [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
+
+#endif
+#pragma clang diagnostic pop
+
+    return userAgent;
 }
 
 @end

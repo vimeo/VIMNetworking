@@ -58,6 +58,7 @@ NSString * const VIMReachabilityStatusChangeWasOfflineInfoKey = @"VIMReachabilit
     if (self)
     {
         _wasOffline = NO;
+        
         [[AFNetworkReachabilityManager sharedManager] startMonitoring];
         
         __weak typeof(self) weakSelf = self;
