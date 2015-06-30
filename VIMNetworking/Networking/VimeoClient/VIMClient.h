@@ -49,6 +49,8 @@
 
 - (id<VIMRequestToken>)toggleFollowUserWithURI:(NSString *)URI newValue:(BOOL)newValue completionBlock:(VIMRequestCompletionBlock)completionBlock;
 
+- (id<VIMRequestToken>)toggleFollowURI:(NSString *)URI newValue:(BOOL)newValue completionBlock:(VIMRequestCompletionBlock)completionBlock;
+
 #pragma mark - Videos
 
 - (id<VIMRequestToken>)videoWithURI:(NSString *)URI completionBlock:(VIMRequestCompletionBlock)completionBlock;
