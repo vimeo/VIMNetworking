@@ -60,7 +60,8 @@
 
 - (NSDictionary *)getObjectMapping
 {
-    return @{@"description" : @"channelDescription"};
+    return @{@"description" : @"channelDescription",
+             @"pictures": @"pictureCollection"};
 }
 
 - (Class)getClassForObjectKey:(NSString *)key
@@ -73,6 +74,11 @@
     if ([key isEqualToString:@"user"])
     {
         return [VIMUser class];
+    }
+    
+    if ([key isEqualToString:@"pictures"])
+    {
+        return [VIMPictureCollection class];
     }
     
     return nil;
