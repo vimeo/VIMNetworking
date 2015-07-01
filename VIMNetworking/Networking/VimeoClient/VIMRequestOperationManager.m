@@ -37,6 +37,7 @@
 #import "VIMRequestSerializer.h"
 #import "VIMResponseSerializer.h"
 
+NSInteger const kVimeoClientErrorCodeCacheUnavailable = 666;
 NSString *const kVimeoClientErrorDomain = @"VimeoClientErrorDomain";
 NSString *const kVimeoClient_ServiceUnavailableNotification = @"kVimeoClient_ServiceUnavailableNotification";
 NSString *const kVimeoClient_InvalidTokenNotification = @"kVimeoClient_InvalidTokenNotification";
@@ -235,7 +236,7 @@ NSString *const kVimeoClient_InvalidTokenNotification = @"kVimeoClient_InvalidTo
                     
                     if (completionBlock)
                     {
-                        NSError *error = [NSError errorWithDomain:kVimeoClientErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"no cached response found"}];
+                        NSError *error = [NSError errorWithDomain:kVimeoClientErrorDomain code:kVimeoClientErrorCodeCacheUnavailable userInfo:@{NSLocalizedDescriptionKey : @"no cached response found"}];
                         completionBlock(response, error);
                     }
                     
