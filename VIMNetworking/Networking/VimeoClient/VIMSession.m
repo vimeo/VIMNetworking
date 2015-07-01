@@ -268,7 +268,7 @@ static VIMSession *_sharedSession;
 
 - (id<VIMRequestToken>)authenticateWithClientCredentialsGrant:(VIMErrorCompletionBlock)completionBlock
 {
-    if ([self.account isAuthenticatedWithClientCredentials])
+    if ([self.account isAuthenticatedWithClientCredentials] && !self.account.isInvalid)
     {
         if (completionBlock)
         {
@@ -349,7 +349,7 @@ static VIMSession *_sharedSession;
 - (id<VIMRequestToken>)logoutWithCompletionBlock:(VIMRequestCompletionBlock)completionBlock
 {
     NSAssert([self.account isAuthenticatedWithUser], @"logout can only occur when a user is logged in");
-    if (![self.account isAuthenticatedWithUser])
+    if (![self.account isAuthenticatedWithUser] && !self.account.isInvalid)
     {
         return nil;
     }
