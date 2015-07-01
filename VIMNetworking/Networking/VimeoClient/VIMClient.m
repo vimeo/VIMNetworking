@@ -141,6 +141,11 @@ static NSString *const ModelKeyPathData = @"data";
 
 - (id<VIMRequestToken>)toggleFollowUserWithURI:(NSString *)URI newValue:(BOOL)newValue completionBlock:(VIMRequestCompletionBlock)completionBlock
 {
+    return [self toggleFollowURI:URI newValue:newValue completionBlock:completionBlock];
+}
+
+- (id<VIMRequestToken>)toggleFollowURI:(NSString *)URI newValue:(BOOL)newValue completionBlock:(VIMRequestCompletionBlock)completionBlock
+{
     VIMRequestDescriptor *descriptor = [[VIMRequestDescriptor alloc] init];
     descriptor.urlPath = URI;
     descriptor.HTTPMethod = ( newValue ? HTTPMethodPUT : HTTPMethodDELETE );
