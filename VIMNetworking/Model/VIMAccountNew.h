@@ -35,6 +35,8 @@
 @property (nonatomic, copy) NSString *scope;
 @property (nonatomic, strong) VIMUser *user;
 
+@property (nonatomic, assign, getter=isInvalid) BOOL invalid;
+
 - (BOOL)isAuthenticated;
 - (BOOL)isAuthenticatedWithUser;
 - (BOOL)isAuthenticatedWithClientCredentials;

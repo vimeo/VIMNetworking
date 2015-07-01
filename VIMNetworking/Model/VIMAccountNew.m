@@ -37,7 +37,7 @@
 
 - (BOOL)isAuthenticated
 {
-    return [self.accessToken length] > 0 && [[self.tokenType lowercaseString] isEqualToString:@"bearer"];
+    return [self.accessToken length] > 0 && [[self.tokenType lowercaseString] isEqualToString:@"bearer"] && self.isInvalid == NO;
 }
 
 - (BOOL)isAuthenticatedWithUser
@@ -80,6 +80,8 @@
         self.tokenType = [aDecoder decodeObjectOfClass:[NSString class] forKey:@"tokenType"];
         self.scope = [aDecoder decodeObjectOfClass:[NSString class] forKey:@"scope"];
         self.user = [aDecoder decodeObjectOfClass:[VIMUser class] forKey:@"user"];
+        
+        // Intentionally not persisting the fact that a token is invalid, the next request will just re-set the flag [AH]
     }
     
     return self;
@@ -91,6 +93,8 @@
     [aCoder encodeObject:self.tokenType forKey:@"tokenType"];
     [aCoder encodeObject:self.scope forKey:@"scope"];
     [aCoder encodeObject:self.user forKey:@"user"];
+
+    // Intentionally not persisting the fact that a token is invalid, the next request will just re-set the flag [AH]
 }
 
 @end

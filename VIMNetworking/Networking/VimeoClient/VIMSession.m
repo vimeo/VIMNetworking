@@ -267,7 +267,7 @@ static VIMSession *_sharedSession;
 #pragma mark Authentication
 
 - (id<VIMRequestToken>)authenticateWithClientCredentialsGrant:(VIMErrorCompletionBlock)completionBlock
-{    
+{
     if ([self.account isAuthenticatedWithClientCredentials])
     {
         if (completionBlock)
