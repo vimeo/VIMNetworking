@@ -37,7 +37,7 @@
 
 - (BOOL)isAuthenticated
 {
-    return [self.accessToken length] > 0 && [[self.tokenType lowercaseString] isEqualToString:@"bearer"] && self.isInvalid == NO;
+    return [self.accessToken length] > 0 && [[self.tokenType lowercaseString] isEqualToString:@"bearer"];
 }
 
 - (BOOL)isAuthenticatedWithUser
