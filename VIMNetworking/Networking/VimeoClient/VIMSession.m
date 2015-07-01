@@ -267,9 +267,7 @@ static VIMSession *_sharedSession;
 #pragma mark Authentication
 
 - (id<VIMRequestToken>)authenticateWithClientCredentialsGrant:(VIMErrorCompletionBlock)completionBlock
-{
-    NSAssert([self.account isAuthenticatedWithClientCredentials] == NO, @"Attempt to authenticate with client credentials grant when already authenticated with client credentials grant");
-    
+{    
     if ([self.account isAuthenticatedWithClientCredentials])
     {
         if (completionBlock)
