@@ -346,13 +346,16 @@ static VIMSession *_sharedSession;
     }];
 }
 
-- (id<VIMRequestToken>)logoutWithCompletionBlock:(VIMRequestCompletionBlock)completionBlock
+- (id<VIMRequestToken>)logout
 {
     NSAssert([self.account isAuthenticatedWithUser], @"logout can only occur when a user is logged in");
     if (![self.account isAuthenticatedWithUser] && !self.account.isInvalid)
     {
         return nil;
     }
+
+    // Must call logout before account is changed [AH]
+    id<VIMRequestToken> logoutRequest = [self.client logoutWithCompletionBlock:nil];
 
     VIMAccountNew *account = [VIMAccountStore loadAccountForKey:ClientCredentialsAccountKey];
     [VIMAccountStore deleteAccount:self.account forKey:UserAccountKey];
@@ -367,7 +370,7 @@ static VIMSession *_sharedSession;
         [[NSNotificationCenter defaultCenter] postNotificationName:VIMSession_AuthenticatedAccountDidChangeNotification object:nil];
     });
 
-    return [self.client logoutWithCompletionBlock:completionBlock];
+    return logoutRequest;
 }
 
 #pragma mark Configuration
