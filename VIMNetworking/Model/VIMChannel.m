@@ -144,4 +144,12 @@
     self.interactions = interactions;
 }
 
+#pragma mark - Helpers
+
+- (BOOL)isFollowing
+{
+    VIMInteraction *interaction = [self interactionWithName:VIMInteractionNameFollow];
+    return (interaction && interaction.added.boolValue);
+}
+
 @end
