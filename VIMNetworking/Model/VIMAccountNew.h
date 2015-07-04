@@ -33,8 +33,10 @@
 @property (nonatomic, copy) NSString *accessToken;
 @property (nonatomic, copy) NSString *tokenType;
 @property (nonatomic, copy) NSString *scope;
-@property (nonatomic, strong) VIMUser *user;
+@property (nonatomic, copy) NSDictionary *userJSON;
 
+// Not persisted
+@property (nonatomic, strong) VIMUser *user;
 @property (nonatomic, assign, getter=isInvalid) BOOL invalid;
 
 - (BOOL)isAuthenticated;

@@ -32,6 +32,7 @@
 #import "VIMAuthenticator+Private.h"
 #import "VIMReachability.h"
 #import "VIMCache.h"
+#import "VIMObjectMapper.h"
 
 static NSString *const ClientCredentialsAccountKey = @"ClientCredentialsAccountKey";
 static NSString *const UserAccountKey = @"UserAccountKey";
@@ -358,7 +359,7 @@ static VIMSession *_sharedSession;
     id<VIMRequestToken> logoutRequest = [self.client logoutWithCompletionBlock:nil];
 
     VIMAccountNew *account = [VIMAccountStore loadAccountForKey:ClientCredentialsAccountKey];
-    [VIMAccountStore deleteAccount:self.account forKey:UserAccountKey];
+    [VIMAccountStore deleteAccountForKey:UserAccountKey];
     self.account = account;
     
     NSAssert(self.account != nil, @"account cannot be nil after logging out");
@@ -378,7 +379,7 @@ static VIMSession *_sharedSession;
 - (BOOL)changeAccount:(VIMAccountNew *)account
 {
     NSParameterAssert(account);
-    if (account == nil || ![account isAuthenticated])
+    if (account == nil || ![account isAuthenticated] || ([account isAuthenticatedWithUser] && (account.user == nil || account.userJSON == nil)))
     {
         return NO;
     }
@@ -435,7 +436,6 @@ static VIMSession *_sharedSession;
     VIMRequestDescriptor *descriptor = [[VIMRequestDescriptor alloc] init];
     descriptor.cachePolicy = VIMCachePolicy_NetworkOnly;
     descriptor.urlPath = @"/me";
-    descriptor.modelClass = [VIMUser class];
     
     __weak typeof(self) weakSelf = self;
     return [self.client requestDescriptor:descriptor completionBlock:^(VIMServerResponse *response, NSError *error) {
@@ -467,8 +467,12 @@ static VIMSession *_sharedSession;
             return;
         }
         
-        VIMUser *user = response.result;
+        VIMObjectMapper *mapper = [[VIMObjectMapper alloc] init];
+        [mapper addMappingClass:[VIMUser class] forKeypath:@""];
+        VIMUser *user = [mapper applyMappingToJSON:response.result];
+
         strongSelf.account.user = user;
+        strongSelf.account.userJSON = response.result;
         
         [VIMAccountStore saveAccount:strongSelf.account forKey:UserAccountKey];
         

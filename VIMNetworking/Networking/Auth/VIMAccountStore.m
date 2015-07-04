@@ -73,14 +73,15 @@ static NSString *const LegacyAccountKey = @"kVIMAccountStore_SaveKey"; // Added 
         account.tokenType = legacyAccount.credential.tokenType;
         account.scope = nil; // Not present in legacy account object
         
-        NSDictionary *userDictionary = legacyAccount.serverResponse[@"user"];
-        if (userDictionary)
+        NSDictionary *userJSON = legacyAccount.serverResponse[@"user"];
+        if (userJSON)
         {
             VIMObjectMapper *mapper = [[VIMObjectMapper alloc] init];
             [mapper addMappingClass:[VIMUser class] forKeypath:@""];
-            VIMUser *user = [mapper applyMappingToJSON:userDictionary];
+            VIMUser *user = [mapper applyMappingToJSON:userJSON];
             
             account.user = user;
+            account.userJSON = userJSON;
         }
     }
     
@@ -108,6 +109,15 @@ static NSString *const LegacyAccountKey = @"kVIMAccountStore_SaveKey"; // Added 
         @try
         {
             account = [keyedUnarchiver decodeObject];
+            
+            if (account.userJSON)
+            {
+                VIMObjectMapper *mapper = [[VIMObjectMapper alloc] init];
+                [mapper addMappingClass:[VIMUser class] forKeypath:@""];
+                VIMUser *user = [mapper applyMappingToJSON:account.userJSON];
+                
+                account.user = user;
+            }
         }
         @catch (NSException *exception)
         {
@@ -143,7 +153,7 @@ static NSString *const LegacyAccountKey = @"kVIMAccountStore_SaveKey"; // Added 
     return [[KeychainUtility sharedInstance] setData:data forAccount:key];
 }
 
-+ (BOOL)deleteAccount:(VIMAccountNew *)account forKey:(NSString *)key
++ (BOOL)deleteAccountForKey:(NSString *)key
 {
     NSParameterAssert(key);
     
