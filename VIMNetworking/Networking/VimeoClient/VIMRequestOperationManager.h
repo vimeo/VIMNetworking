@@ -35,6 +35,7 @@
 
 typedef void (^VIMRequestCompletionBlock)(VIMServerResponse *response, NSError *error);
 
+extern NSInteger const kVimeoClientErrorCodeCacheUnavailable;
 extern NSString *const kVimeoClientErrorDomain;
 extern NSString *const kVimeoClient_ServiceUnavailableNotification;
 extern NSString *const kVimeoClient_InvalidTokenNotification;

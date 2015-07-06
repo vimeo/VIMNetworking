@@ -52,7 +52,7 @@ extern NSString *const VIMSession_AuthenticatedUserDidRefreshNotification; // Po
 
 - (id<VIMRequestToken>)authenticateWithCodeGrantResponseURL:(NSURL *)responseURL completionBlock:(VIMErrorCompletionBlock)completionBlock;
 
-- (id<VIMRequestToken>)logoutWithCompletionBlock:(VIMRequestCompletionBlock)completionBlock;
+- (id<VIMRequestToken>)logout;
 
 #pragma mark - Configuration
 

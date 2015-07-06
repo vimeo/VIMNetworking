@@ -34,7 +34,7 @@
 
 + (VIMAccountNew *)loadAccountForKey:(NSString *)key;
 + (BOOL)saveAccount:(VIMAccountNew *)account forKey:(NSString *)key;
-+ (BOOL)deleteAccount:(VIMAccountNew *)account forKey:(NSString *)key;
++ (BOOL)deleteAccountForKey:(NSString *)key;
 
 @end
 

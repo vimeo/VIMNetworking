@@ -28,6 +28,7 @@
 
 #import "VIMAuthenticator.h"
 #import "VIMAccountNew.h"
+#import "VIMObjectMapper.h"
 
 NSString * const kVimeoAuthenticatorErrorDomain = @"kVimeoAuthenticatorErrorDomain";
 
@@ -259,12 +260,10 @@ NSString * const kVIMOAuthGrantType_Facebook = @"facebook";
     NSParameterAssert(completionBlock);
     
     [parameters setObject:self.clientKey forKey:@"client_id"];
-//    [parameters setObject:self.clientSecret forKey:@"client_secret"];
 
     VIMRequestDescriptor *descriptor = [[VIMRequestDescriptor alloc] init];
     descriptor.urlPath = path;
     descriptor.HTTPMethod = HTTPMethodPOST;
-    descriptor.modelClass = [VIMAccountNew class];
     descriptor.parameters = parameters;
     
     __weak typeof(self) weakSelf = self;
@@ -288,7 +287,10 @@ NSString * const kVIMOAuthGrantType_Facebook = @"facebook";
             return;
         }
         
-        VIMAccountNew *account = response.result;
+        VIMObjectMapper *mapper = [[VIMObjectMapper alloc] init];
+        [mapper addMappingClass:[VIMAccountNew class] forKeypath:@""];
+        VIMAccountNew *account = [mapper applyMappingToJSON:response.result];
+        account.userJSON = response.result[@"user"];
         
         if (account == nil)
         {

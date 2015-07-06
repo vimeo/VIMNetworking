@@ -79,7 +79,10 @@
         self.accessToken = [aDecoder decodeObjectOfClass:[NSString class] forKey:@"accessToken"];
         self.tokenType = [aDecoder decodeObjectOfClass:[NSString class] forKey:@"tokenType"];
         self.scope = [aDecoder decodeObjectOfClass:[NSString class] forKey:@"scope"];
-        self.user = [aDecoder decodeObjectOfClass:[VIMUser class] forKey:@"user"];
+        self.userJSON = [aDecoder decodeObjectOfClass:[NSDictionary class] forKey:@"userJSON"];
+        
+        // Intentionally not persisting the VIMUser object [AH]
+        // Intentionally not persisting the fact that a token is invalid, the next request will just re-set the flag [AH]
     }
     
     return self;
@@ -90,7 +93,10 @@
     [aCoder encodeObject:self.accessToken forKey:NSStringFromSelector(@selector(accessToken))];
     [aCoder encodeObject:self.tokenType forKey:@"tokenType"];
     [aCoder encodeObject:self.scope forKey:@"scope"];
-    [aCoder encodeObject:self.user forKey:@"user"];
+    [aCoder encodeObject:self.userJSON forKey:@"userJSON"];
+
+    // Intentionally not persisting the VIMUser object [AH]
+    // Intentionally not persisting the fact that a token is invalid, the next request will just re-set the flag [AH]
 }
 
 @end
