@@ -61,7 +61,8 @@
 - (NSDictionary *)getObjectMapping
 {
     return @{@"description" : @"channelDescription",
-             @"pictures": @"pictureCollection"};
+             @"pictures": @"pictureCollection",
+             @"header": @"headerPictureCollection"};
 }
 
 - (Class)getClassForObjectKey:(NSString *)key
@@ -77,6 +78,11 @@
     }
     
     if ([key isEqualToString:@"pictures"])
+    {
+        return [VIMPictureCollection class];
+    }
+    
+    if ([key isEqualToString:@"header"])
     {
         return [VIMPictureCollection class];
     }
