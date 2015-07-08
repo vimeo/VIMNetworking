@@ -193,7 +193,7 @@ static VIMSession *_sharedSession;
 {
     VIMCache *cache = [VIMCache sharedCache];
     
-    if ([self.account isAuthenticatedWithUser])
+    if (self.account && [self.account isAuthenticatedWithUser])
     {
         NSString *name = [NSString stringWithFormat:@"user_%@", self.account.user.objectID];
         cache = [[VIMCache alloc] initWithName:name];
@@ -362,10 +362,18 @@ static VIMSession *_sharedSession;
     [VIMAccountStore deleteAccountForKey:UserAccountKey];
     self.account = account;
     
-    NSAssert(self.account != nil, @"account cannot be nil after logging out");
-    
     [self.client.cache removeAllObjects];
     self.client.cache = [self buildCache];
+
+    // Client Credentials Account can be nil if upgraded from v5.4.2 as a logged in user. [AH]
+    if (account == nil)
+    {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:kVimeoClient_InvalidTokenNotification object:nil];
+        });
+        
+        return nil;
+    }
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [[NSNotificationCenter defaultCenter] postNotificationName:VIMSession_AuthenticatedAccountDidChangeNotification object:nil];
