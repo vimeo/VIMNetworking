@@ -104,6 +104,11 @@ static VIMSession *_sharedSession;
         [[NSNotificationCenter defaultCenter] postNotificationName:VIMSession_AuthenticatedAccountDidChangeNotification object:nil];
     });
 
+    if (self.currentUserRefreshRequest)
+    {
+        return;
+    }
+    
     __weak typeof(self) weakSelf = self;
     self.currentUserRefreshRequest = [self refreshAuthenticatedUserWithCompletionBlock:^(NSError *error) {
         
