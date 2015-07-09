@@ -38,7 +38,8 @@
 @property (nonatomic, copy, nullable) NSString *channelDescription;
 @property (nonatomic, copy, nullable) NSString *link;
 @property (nonatomic, copy, nullable) NSString *name;
-@property (nonatomic, strong, nullable) VIMPictureCollection *pictureCollection; // Unused for now [AH]
+@property (nonatomic, strong, nullable) VIMPictureCollection *pictureCollection;
+@property (nonatomic, strong, nullable) VIMPictureCollection *headerPictureCollection;
 @property (nonatomic, strong, nullable) VIMPrivacy *privacy;
 @property (nonatomic, copy, nonnull) NSString *uri;
 @property (nonatomic, strong, nullable) VIMUser *user;
