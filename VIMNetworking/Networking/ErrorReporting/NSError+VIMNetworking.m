@@ -12,6 +12,79 @@
 
 @implementation NSError (VIMNetworking)
 
+#pragma mark - User Presentable Errors
+
+- (NSString *)presentableTitle
+{
+    NSString *title = nil;
+    
+    switch ([self errorCode])
+    {
+        case VIMErrorCodePasswordInsecure:
+        case VIMErrorCodePasswordContainsInsecureText:
+        case VIMErrorCodePasswordVeryInsecure:
+        case VIMErrorCodeEmailMalformed:
+        case VIMErrorCodeEmailTooLong:
+            title = NSLocalizedString(@"InvalidEmailPassword", nil);
+            break;
+            
+        default: // not found
+            title = nil;
+            break;
+    }
+    
+    return title;
+}
+
+- (NSString *)presentableDescription
+{
+    NSString *description = nil;
+    
+    switch ([self errorCode])
+    {
+        case VIMErrorCodeEmailMalformed:
+            description = NSLocalizedString(@"EmailRequired", nil);
+            break;
+        case VIMErrorCodeEmailTooLong:
+            description = NSLocalizedString(@"EmailLengthErrorMessage", nil);
+            break;
+        case VIMErrorCodePasswordInsecure:
+            description = NSLocalizedString(@"PasswordLengthErrorMessage", nil);
+            break;
+        case VIMErrorCodePasswordContainsInsecureText:
+            description = NSLocalizedString(@"PasswordUniquenessErrorMessage", nil);
+            break;
+        case VIMErrorCodePasswordVeryInsecure:
+            description = NSLocalizedString(@"PasswordLengthAndUniquenessErrorMessage", nil);
+            break;
+            
+        default: // not found
+            description = nil;
+            break;
+    }
+    
+    return description;
+}
+
+#pragma mark - Error Types
+
+- (NSInteger)errorCode
+{
+    NSError *baseError = self;
+    if (self.userInfo[BaseErrorKey])
+    {
+        baseError = self.userInfo[BaseErrorKey];
+    }
+    
+    NSHTTPURLResponse *urlResponse = baseError.userInfo[AFNetworkingOperationFailingURLResponseErrorKey];
+    if (urlResponse)
+    {
+        return [urlResponse statusCode];
+    }
+    
+    return 0;
+}
+
 - (BOOL)isServiceUnavailableError
 {
     NSError *baseError = self;
@@ -21,7 +94,7 @@
     }
     
     NSHTTPURLResponse *urlResponse = baseError.userInfo[AFNetworkingOperationFailingURLResponseErrorKey];
-    if (urlResponse && [urlResponse statusCode] == 503)
+    if (urlResponse && [urlResponse statusCode] == HTTPErrorCodeServiceUnavailable)
     {
         return YES;
     }
@@ -38,7 +111,7 @@
     }
     
     NSHTTPURLResponse *urlResponse = baseError.userInfo[AFNetworkingOperationFailingURLResponseErrorKey];
-    if (urlResponse && [urlResponse statusCode] == 401)
+    if (urlResponse && [urlResponse statusCode] == HTTPErrorCodeUnauthorized)
     {
         NSString *header = urlResponse.allHeaderFields[@"WWW-Authenticate"];
         if ([header isEqualToString:@"Bearer error=\"invalid_token\""])
