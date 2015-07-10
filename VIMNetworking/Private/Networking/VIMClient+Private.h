@@ -32,19 +32,19 @@
 
 #if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
 
-- (id<VIMRequestToken>)registerDeviceForPushNotificationsWithURI:(NSString *)URI parameters:(NSDictionary *)parameters completionBlock:(VIMRequestCompletionBlock)completionBlock;
+- (nullable id<VIMRequestToken>)registerDeviceForPushNotificationsWithURI:(nonnull NSString *)URI parameters:(nonnull NSDictionary *)parameters completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 
-- (id<VIMRequestToken>)unregisterDeviceForPushNotificationWithURI:(NSString *)URI parameters:(NSDictionary *)parameters completionBlock:(VIMRequestCompletionBlock)completionBlock;
+- (nullable id<VIMRequestToken>)unregisterDeviceForPushNotificationWithURI:(nonnull NSString *)URI parameters:(nonnull NSDictionary *)parameters completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 
-- (id<VIMRequestToken>)addPushNotificationWithParameters:(NSDictionary *)parameters completionBlock:(VIMRequestCompletionBlock)completionBlock;
+- (nullable id<VIMRequestToken>)addPushNotificationWithParameters:(nonnull NSDictionary *)parameters completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 
-- (id<VIMRequestToken>)fetchUserPushNotificationsWithCompletionBlock:(VIMRequestCompletionBlock)completionBlock;
+- (nullable id<VIMRequestToken>)fetchUserPushNotificationsWithCompletionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 
-- (id<VIMRequestToken>)fetchDevicePushNotificationsWithURI:(NSString *)URI parameters:(NSArray *)parameters completionBlock:(VIMRequestCompletionBlock)completionBlock;
+- (nullable id<VIMRequestToken>)fetchDevicePushNotificationsWithURI:(nonnull NSString *)URI parameters:(nonnull NSArray *)parameters completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 
-- (id<VIMRequestToken>)viewPushNotificationWithURI:(NSString *)URI completionBlock:(VIMRequestCompletionBlock)completionBlock;
+- (nullable id<VIMRequestToken>)viewPushNotificationWithURI:(nonnull NSString *)URI completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 
-- (id<VIMRequestToken>)removePushNotificationWithURI:(NSString *)URI completionBlock:(VIMRequestCompletionBlock)completionBlock;
+- (nullable id<VIMRequestToken>)removePushNotificationWithURI:(nonnull NSString *)URI completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 
 #endif
 

@@ -32,14 +32,14 @@
 
 @required
 
-+ (VIMAccountNew *)loadAccountForKey:(NSString *)key;
-+ (BOOL)saveAccount:(VIMAccountNew *)account forKey:(NSString *)key;
-+ (BOOL)deleteAccountForKey:(NSString *)key;
++ (nullable VIMAccountNew *)loadAccountForKey:(nonnull NSString *)key;
++ (BOOL)saveAccount:(nonnull VIMAccountNew *)account forKey:(nonnull NSString *)key;
++ (BOOL)deleteAccountForKey:(nonnull NSString *)key;
 
 @end
 
 @interface VIMAccountStore : NSObject <VIMAccountStoreProtocol>
 
-+ (VIMAccountNew *)loadLegacyAccount;
++ (nullable VIMAccountNew *)loadLegacyAccount;
 
 @end

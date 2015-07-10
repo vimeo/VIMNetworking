@@ -28,10 +28,10 @@
 
 @interface VIMTag : VIMModelObject
 
-@property (nonatomic, copy, readonly) NSString *name;
-@property (nonatomic, copy, readonly) NSString *tag;
-@property (nonatomic, copy, readonly) NSString *uri;
-@property (nonatomic, copy, readonly) NSString *canonical;
-@property (nonatomic, copy, readonly) NSDictionary *metadata;
+@property (nonatomic, copy, readonly, nullable) NSString *name;
+@property (nonatomic, copy, readonly, nullable) NSString *tag;
+@property (nonatomic, copy, readonly, nullable) NSString *uri;
+@property (nonatomic, copy, readonly, nullable) NSString *canonical;
+@property (nonatomic, copy, readonly, nullable) NSDictionary *metadata;
 
 @end

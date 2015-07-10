@@ -43,20 +43,30 @@
 
 - (Class)getClassForObjectKey:(NSString *)key
 {
-    if([key isEqualToString:@"clip"])
+    if ([key isEqualToString:@"clip"])
+    {
         return [VIMVideo class];
+    }
 
-    if([key isEqualToString:@"user"])
+    if ([key isEqualToString:@"user"])
+    {
         return [VIMUser class];
+    }
 
-    if([key isEqualToString:@"channel"])
+    if ([key isEqualToString:@"channel"])
+    {
         return [VIMChannel class];
+    }
 
-    if([key isEqualToString:@"group"])
+    if ([key isEqualToString:@"group"])
+    {
         return [VIMGroup class];
+    }
     
-    if([key isEqualToString:@"tag"])
+    if ([key isEqualToString:@"tag"])
+    {
         return [VIMTag class];
+    }
 
     return nil;
 }
@@ -65,8 +75,10 @@
 {
     self.objectID = [self.uri MD5];
 
-    if([self.time isKindOfClass:[NSString class]])
+    if ([self.time isKindOfClass:[NSString class]])
+    {
         self.time = [[VIMModelObject dateFormatter] dateFromString:(NSString *)self.time];
+    }
 }
 
 @end

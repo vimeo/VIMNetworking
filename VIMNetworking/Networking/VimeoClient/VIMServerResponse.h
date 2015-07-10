@@ -30,16 +30,16 @@
 
 @interface VIMServerResponse : NSObject
 
-@property (nonatomic, strong) id<VIMRequestToken> request;
+@property (nonatomic, strong, nullable) id<VIMRequestToken> request;
 
 @property (nonatomic, assign) BOOL isCachedResponse;
 @property (nonatomic, assign) BOOL isFinalResponse;
 
 // Result
 
-@property (nonatomic, strong) NSURLResponse *urlResponse;
+@property (nonatomic, strong, nullable) NSURLResponse *urlResponse;
 
-@property (nonatomic, strong) id result;
+@property (nonatomic, strong, nullable) id result;
 
 @property (nonatomic, assign) int totalResults;
 @property (nonatomic, assign) int totalPages;
@@ -48,9 +48,9 @@
 
 // New
 
-@property (nonatomic, copy) NSString *first;
-@property (nonatomic, copy) NSString *last;
-@property (nonatomic, copy) NSString *next;
-@property (nonatomic, copy) NSString *previous;
+@property (nonatomic, copy, nullable) NSString *first;
+@property (nonatomic, copy, nullable) NSString *last;
+@property (nonatomic, copy, nullable) NSString *next;
+@property (nonatomic, copy, nullable) NSString *previous;
 
 @end

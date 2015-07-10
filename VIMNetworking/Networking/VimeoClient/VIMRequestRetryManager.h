@@ -31,9 +31,9 @@
 
 @interface VIMRequestRetryManager : NSObject
 
-- (instancetype)initWithName:(NSString *)name operationManager:(VIMRequestOperationManager *)operationManager;
+- (nullable instancetype)initWithName:(nonnull NSString *)name operationManager:(nonnull VIMRequestOperationManager *)operationManager;
 
-- (BOOL)scheduleRetryIfNecessaryForError:(NSError *)error requestDescriptor:(VIMRequestDescriptor *)descriptor;
+- (BOOL)scheduleRetryIfNecessaryForError:(nonnull NSError *)error requestDescriptor:(nonnull VIMRequestDescriptor *)descriptor;
 
 /*
 

@@ -34,7 +34,7 @@ typedef NS_ENUM(NSInteger, VIMCopyrightMatchStatus)
 
 @interface VIMAppeal : VIMModelObject
 
-@property (nonatomic, copy) NSString *link;
+@property (nonatomic, copy, nullable) NSString *link;
 @property (nonatomic, assign, readonly) VIMCopyrightMatchStatus copyrightMatchStatus;
 
 @end

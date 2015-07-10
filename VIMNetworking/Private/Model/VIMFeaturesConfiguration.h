@@ -32,6 +32,6 @@
 @property (nonatomic, assign, readonly) BOOL iapEnabled;
 @property (nonatomic, assign, readonly) BOOL comScoreEnabled;
 @property (nonatomic, assign, readonly) BOOL playTrackingEnabled;
-@property (nonatomic, strong, readonly) NSString *chromecastReceiverAppID;
+@property (nonatomic, strong, readonly, nullable) NSString *chromecastReceiverAppID;
 
 @end

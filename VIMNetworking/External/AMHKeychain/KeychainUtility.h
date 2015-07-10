@@ -10,11 +10,12 @@
 
 @interface KeychainUtility : NSObject
 
-+ (void)configureWithService:(NSString *)service accessGroup:(NSString *)accessGroup; // Optional configuration
-+ (instancetype)sharedInstance;
++ (void)configureWithService:(nonnull NSString *)service accessGroup:(nullable NSString *)accessGroup; // Optional configuration
 
-- (BOOL)setData:(NSData *)data forAccount:(NSString *)account;
-- (NSData *)dataForAccount:(NSString *)account;
-- (BOOL)deleteDataForAccount:(NSString *)account;
++ (nullable instancetype)sharedInstance;
+
+- (BOOL)setData:(nonnull NSData *)data forAccount:(nonnull NSString *)account;
+- (nullable NSData *)dataForAccount:(nonnull NSString *)account;
+- (BOOL)deleteDataForAccount:(nonnull NSString *)account;
 
 @end

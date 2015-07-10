@@ -29,8 +29,8 @@
 @interface VIMActivateTicketTask : VIMNetworkTask
 
 // Output
-@property (nonatomic, copy, readonly) NSString *videoURI;
+@property (nonatomic, copy, readonly, nullable) NSString *videoURI;
 
-- (instancetype)initWithActivationURI:(NSString *)activationURI;
+- (nullable instancetype)initWithActivationURI:(nonnull NSString *)activationURI;
 
 @end

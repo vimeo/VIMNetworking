@@ -30,9 +30,9 @@
 
 @interface VIMAccount : NSObject
 
-@property (nonatomic, strong) VIMAccountCredential *credential;
-@property (nonatomic, copy) NSString *username;
-@property (nonatomic, strong) NSMutableDictionary *userData;
-@property (nonatomic, strong) id serverResponse;
+@property (nonatomic, strong, nullable) VIMAccountCredential *credential;
+@property (nonatomic, copy, nullable) NSString *username;
+@property (nonatomic, strong, nullable) NSMutableDictionary *userData;
+@property (nonatomic, strong, nullable) id serverResponse;
 
 @end

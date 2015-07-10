@@ -15,23 +15,23 @@ typedef void (^ApplicationDelegateCompletionHandler)(void);
 @protocol VIMNetworkTaskSessionManagerDelegate <NSObject>
 
 @required
-- (void)sessionManager:(VIMNetworkTaskSessionManager *)sessionManager taskDidComplete:(NSURLSessionTask *)task;
+- (void)sessionManager:(nonnull VIMNetworkTaskSessionManager *)sessionManager taskDidComplete:(nonnull NSURLSessionTask *)task;
 
 @optional
-- (void)sessionManager:(VIMNetworkTaskSessionManager *)sessionManager downloadTask:(NSURLSessionDownloadTask *)downloadTask didFinishWithLocation:(NSURL *)location;
+- (void)sessionManager:(nonnull VIMNetworkTaskSessionManager *)sessionManager downloadTask:(nonnull NSURLSessionDownloadTask *)downloadTask didFinishWithLocation:(nullable NSURL *)location;
 
 // Tasks implementing this method to return NO must be prepared
 // To call -callBackgroundEventsCompletionHandler at the appropriate time [AH]
 
-- (BOOL)sessionManagerShouldCallBackgroundEventsCompletionHandler:(VIMNetworkTaskSessionManager *)sessionManager;
+- (BOOL)sessionManagerShouldCallBackgroundEventsCompletionHandler:(nonnull VIMNetworkTaskSessionManager *)sessionManager;
 
 @end
 
 @interface VIMNetworkTaskSessionManager : AFHTTPSessionManager
 
-@property (nonatomic, weak) id<VIMNetworkTaskSessionManagerDelegate> delegate;
+@property (nonatomic, weak, nullable) id<VIMNetworkTaskSessionManagerDelegate> delegate;
 
-@property (nonatomic, copy) ApplicationDelegateCompletionHandler completionHandler;
+@property (nonatomic, copy, nullable) ApplicationDelegateCompletionHandler completionHandler;
 
 - (void)setupBlocks;
 

@@ -26,23 +26,23 @@
 
 #import <Foundation/Foundation.h>
 
-extern NSString *const VIMTaskQueueTaskFailedNotification;
-extern NSString *const VIMTaskQueueTaskSucceededNotification;
+extern NSString *const __nonnull VIMTaskQueueTaskFailedNotification;
+extern NSString *const __nonnull VIMTaskQueueTaskSucceededNotification;
 
 @class VIMTask;
 
 @interface VIMTaskQueue : NSObject
 
-@property (nonatomic, strong, readonly) NSString *name;
+@property (nonatomic, strong, readonly, nullable) NSString *name;
 
 @property (nonatomic, assign, readonly) NSInteger taskCount;
 
-- (instancetype)initWithName:(NSString *)name;
+- (nullable instancetype)initWithName:(nonnull NSString *)name;
 
-- (void)addTasks:(NSArray *)tasks;
-- (void)addTask:(VIMTask *)task;
+- (void)addTasks:(nonnull NSArray *)tasks;
+- (void)addTask:(nonnull VIMTask *)task;
 - (void)cancelAllTasks;
-- (void)cancelTask:(VIMTask *)task;
+- (void)cancelTask:(nonnull VIMTask *)task;
 - (void)suspend;
 - (void)resume;
 - (BOOL)isSuspended;
@@ -50,11 +50,11 @@ extern NSString *const VIMTaskQueueTaskSucceededNotification;
 // Optional subclass overrides
 
 // Override to modiy task before it is started [AH]
-- (void)prepareTask:(VIMTask *)task;
+- (void)prepareTask:(nonnull VIMTask *)task;
 
-- (VIMTask *)taskForIdentifier:(NSString *)identifier;
+- (nullable VIMTask *)taskForIdentifier:(nonnull NSString *)identifier;
 
 // Override to return shared container defaults [AH]
-- (NSUserDefaults *)taskQueueDefaults; // TODO: set this as a property instead? [AH]
+- (nonnull NSUserDefaults *)taskQueueDefaults; // TODO: set this as a property instead? [AH]
 
 @end

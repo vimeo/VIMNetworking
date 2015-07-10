@@ -28,8 +28,8 @@
 
 @interface VIMRequestSerializer : AFJSONRequestSerializer
 
-- (instancetype)initWithAPIVersionString:(NSString *)APIVersionString;
+- (nullable instancetype)initWithAPIVersionString:(nonnull NSString *)APIVersionString;
 
-- (NSString *)acceptHeaderValue;
+- (nonnull NSString *)acceptHeaderValue;
 
 @end

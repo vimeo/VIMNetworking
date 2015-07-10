@@ -32,11 +32,11 @@
 - (BOOL)cancelTaskWithIdentifier:(NSUInteger)taskIdentifier;
 - (void)cancelAllTasks;
 
-- (NSURLSessionTask *)taskForIdentifier:(NSUInteger)taskIdentifier;
-- (NSURLSessionUploadTask *)uploadTaskForIdentifier:(NSUInteger)taskIdentifier;
-- (NSURLSessionDownloadTask *)downloadTaskForIdentifier:(NSUInteger)taskIdentifier;
+- (nullable NSURLSessionTask *)taskForIdentifier:(NSUInteger)taskIdentifier;
+- (nullable NSURLSessionUploadTask *)uploadTaskForIdentifier:(NSUInteger)taskIdentifier;
+- (nullable NSURLSessionDownloadTask *)downloadTaskForIdentifier:(NSUInteger)taskIdentifier;
 
-- (NSProgress *)uploadProgressForTaskWithIdentifier:(NSUInteger)taskIdentifier;
+- (nullable NSProgress *)uploadProgressForTaskWithIdentifier:(NSUInteger)taskIdentifier;
 - (BOOL)taskExistsForIdentifier:(NSUInteger)taskIdentifier;
 
 @end

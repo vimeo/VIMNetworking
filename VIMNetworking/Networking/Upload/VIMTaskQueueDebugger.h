@@ -28,7 +28,7 @@
 
 @interface VIMTaskQueueDebugger : NSObject
 
-+ (void)postLocalNotificationWithContext:(NSString *)context message:(NSString *)message;
-+ (void)postLocalNotificationWithMessage:(NSString *)message;
++ (void)postLocalNotificationWithContext:(nonnull NSString *)context message:(nonnull NSString *)message;
++ (void)postLocalNotificationWithMessage:(nonnull NSString *)message;
 
 @end

@@ -34,16 +34,16 @@
 
 @interface VIMGroup : VIMModelObject
 
-@property (nonatomic, copy) NSString *uri;
-@property (nonatomic, strong) NSDate *createdTime;
-@property (nonatomic, copy) NSString *groupDescription;
-@property (nonatomic, copy) NSString *link;
-@property (nonatomic, copy) NSString *name;
-@property (nonatomic, strong) VIMPictureCollection *pictureCollection; // Unused for now [AH]
-@property (nonatomic, strong) VIMPrivacy *privacy;
-@property (nonatomic, strong) VIMUser *user;
+@property (nonatomic, copy, nullable) NSString *uri;
+@property (nonatomic, strong, nullable) NSDate *createdTime;
+@property (nonatomic, copy, nullable) NSString *groupDescription;
+@property (nonatomic, copy, nullable) NSString *link;
+@property (nonatomic, copy, nullable) NSString *name;
+@property (nonatomic, strong, nullable) VIMPictureCollection *pictureCollection; // Unused for now [AH]
+@property (nonatomic, strong, nullable) VIMPrivacy *privacy;
+@property (nonatomic, strong, nullable) VIMUser *user;
 
-- (VIMConnection *)connectionWithName:(NSString *)connectionName;
-- (VIMInteraction *)interactionWithName:(NSString *)name;
+- (nullable VIMConnection *)connectionWithName:(nonnull NSString *)connectionName;
+- (nullable VIMInteraction *)interactionWithName:(nonnull NSString *)name;
 
 @end

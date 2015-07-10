@@ -28,7 +28,7 @@
 
 @interface VIMSessionManager : AFHTTPSessionManager
 
-- (instancetype)initWithDefaultSession;
-- (instancetype)initWithBackgroundSessionID:(NSString *)sessionID;
+- (nullable instancetype)initWithDefaultSession;
+- (nullable instancetype)initWithBackgroundSessionID:(nonnull NSString *)sessionID;
 
 @end

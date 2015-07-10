@@ -26,20 +26,20 @@
 
 #import "VIMModelObject.h"
 
-extern NSString *VIMPrivacy_Private;
-extern NSString *VIMPrivacy_Select;
-extern NSString *VIMPrivacy_Public;
-extern NSString *VIMPrivacy_VOD;
-extern NSString *VIMPrivacy_Following;
-extern NSString *VIMPrivacy_Password;
+extern NSString * __nonnull VIMPrivacy_Private;
+extern NSString * __nonnull VIMPrivacy_Select;
+extern NSString * __nonnull VIMPrivacy_Public;
+extern NSString * __nonnull VIMPrivacy_VOD;
+extern NSString * __nonnull VIMPrivacy_Following;
+extern NSString * __nonnull VIMPrivacy_Password;
 
 @interface VIMPrivacy : VIMModelObject
 
-@property (nonatomic, copy) NSNumber *canAdd;
-@property (nonatomic, copy) NSNumber *canDownload;
+@property (nonatomic, copy, nullable) NSNumber *canAdd;
+@property (nonatomic, copy, nullable) NSNumber *canDownload;
 
-@property (nonatomic, copy) NSString *comments;
-@property (nonatomic, copy) NSString *embed;
-@property (nonatomic, copy) NSString *view;
+@property (nonatomic, copy, nullable) NSString *comments;
+@property (nonatomic, copy, nullable) NSString *embed;
+@property (nonatomic, copy, nullable) NSString *view;
 
 @end

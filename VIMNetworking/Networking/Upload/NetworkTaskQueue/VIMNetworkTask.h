@@ -31,7 +31,7 @@
 
 @interface VIMNetworkTask : VIMTask <VIMNetworkTaskSessionManagerDelegate>
 
-@property (nonatomic, strong) VIMNetworkTaskSessionManager *sessionManager;
+@property (nonatomic, strong, nullable) VIMNetworkTaskSessionManager *sessionManager;
 
 @property (nonatomic, assign) NSUInteger backgroundTaskIdentifier;
 

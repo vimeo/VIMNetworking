@@ -28,12 +28,12 @@
 
 @interface VIMSession (Private)
 
-- (id<VIMRequestToken>)loginWithEmail:(NSString *)email password:(NSString *)password completionBlock:(VIMErrorCompletionBlock)completionBlock;
+- (nullable id<VIMRequestToken>)loginWithEmail:(nonnull NSString *)email password:(nonnull NSString *)password completionBlock:(nonnull VIMErrorCompletionBlock)completionBlock;
 
-- (id<VIMRequestToken>)joinWithName:(NSString *)name email:(NSString *)email password:(NSString *)password completionBlock:(VIMErrorCompletionBlock)completionBlock;
+- (nullable id<VIMRequestToken>)joinWithName:(nonnull NSString *)name email:(nonnull NSString *)email password:(nonnull NSString *)password completionBlock:(nonnull VIMErrorCompletionBlock)completionBlock;
 
-- (id<VIMRequestToken>)loginWithFacebookToken:(NSString *)facebookToken completionBlock:(VIMErrorCompletionBlock)completionBlock;
+- (nullable id<VIMRequestToken>)loginWithFacebookToken:(nonnull NSString *)facebookToken completionBlock:(nonnull VIMErrorCompletionBlock)completionBlock;
 
-- (id<VIMRequestToken>)joinWithFacebookToken:(NSString *)facebookToken completionBlock:(VIMErrorCompletionBlock)completionBlock;
+- (nullable id<VIMRequestToken>)joinWithFacebookToken:(nonnull NSString *)facebookToken completionBlock:(nonnull VIMErrorCompletionBlock)completionBlock;
 
 @end
