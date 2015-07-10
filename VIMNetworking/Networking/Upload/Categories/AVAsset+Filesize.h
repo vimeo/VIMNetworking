@@ -9,10 +9,12 @@
 #import <Foundation/Foundation.h>
 #import <AVFoundation/AVAsset.h>
 
+typedef void(^FileSizeCompletionBlock)(CGFloat fileSize, NSError *error);
+
 @interface AVAsset (Filesize)
 
-- (CGFloat)calculateFilesizeInMB;
+- (CGFloat)calculateFilesize; // Synchronous
 
-- (CGFloat)calculateFilesize;
+- (void)calculateFilesizeWithCompletionBlock:(FileSizeCompletionBlock)completionBlock;
 
 @end
