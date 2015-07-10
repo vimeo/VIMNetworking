@@ -29,9 +29,9 @@
 
 @interface VIMVideoMetadata : NSObject
 
-@property (nonatomic, strong) NSString *videoTitle;
-@property (nonatomic, strong) NSString *videoDescription;
-@property (nonatomic, strong) NSString *videoPrivacy;
-@property (nonatomic, strong) NSArray *tags;
+@property (nonatomic, strong, nullable) NSString *videoTitle;
+@property (nonatomic, strong, nullable) NSString *videoDescription;
+@property (nonatomic, strong, nullable) NSString *videoPrivacy;
+@property (nonatomic, strong, nullable) NSArray *tags;
 
 @end

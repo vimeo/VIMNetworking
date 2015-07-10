@@ -28,6 +28,6 @@
 
 @interface NSURLSessionConfiguration (Extensions)
 
-+ (NSURLSessionConfiguration *)backgroundSessionConfigurationWithID:(NSString *)sessionID sharedContainerID:(NSString *)sharedContainerID;
++ (nullable NSURLSessionConfiguration *)backgroundSessionConfigurationWithID:(nonnull NSString *)sessionID sharedContainerID:(nullable NSString *)sharedContainerID;
 
 @end

@@ -28,9 +28,9 @@
 
 @interface VIMPicture : VIMModelObject
 
-@property (nonatomic, strong) NSNumber *width;
-@property (nonatomic, strong) NSNumber *height;
-@property (nonatomic, copy) NSString *link;
-@property (nonatomic, copy) NSString *type;
+@property (nonatomic, strong, nullable) NSNumber *width;
+@property (nonatomic, strong, nullable) NSNumber *height;
+@property (nonatomic, copy, nullable) NSString *link;
+@property (nonatomic, copy, nullable) NSString *type;
 
 @end

@@ -29,11 +29,11 @@
 @class PHAsset;
 @class AVURLAsset;
 
-typedef void(^TempFileCompletionBlock)(NSString *path, NSError *error);
+typedef void(^TempFileCompletionBlock)(NSString * __nullable path, NSError * __nullable error);
 
 @interface VIMTempFileMaker : NSObject
 
-+ (void)tempFileFromURLAsset:(AVURLAsset *)URLAsset completionBlock:(TempFileCompletionBlock)completionBlock;
-+ (void)tempFileFromPHAsset:(PHAsset *)phAsset completionBlock:(TempFileCompletionBlock)completionBlock;
++ (void)tempFileFromURLAsset:(nonnull AVURLAsset *)URLAsset completionBlock:(nonnull TempFileCompletionBlock)completionBlock;
++ (void)tempFileFromPHAsset:(nonnull PHAsset *)phAsset completionBlock:(nonnull TempFileCompletionBlock)completionBlock;
 
 @end

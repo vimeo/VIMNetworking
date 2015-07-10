@@ -33,62 +33,62 @@
 
 #pragma mark - Utilities
 
-- (id<VIMRequestToken>)resetPasswordWithEmail:(NSString *)email completionBlock:(VIMRequestCompletionBlock)completionBlock;
+- (nullable id<VIMRequestToken>)resetPasswordWithEmail:(nonnull NSString *)email completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 
 #pragma mark - Users
 
-- (id<VIMRequestToken>)userWithURI:(NSString *)URI completionBlock:(VIMRequestCompletionBlock)completionBlock;
+- (nullable id<VIMRequestToken>)userWithURI:(nonnull NSString *)URI completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 
-- (id<VIMRequestToken>)usersWithURI:(NSString *)URI completionBlock:(VIMRequestCompletionBlock)completionBlock;
+- (nullable id<VIMRequestToken>)usersWithURI:(nonnull NSString *)URI completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 
-- (id<VIMRequestToken>)updateUserWithURI:(NSString *)URI username:(NSString *)username location:(NSString *)location completionBlock:(VIMRequestCompletionBlock)completionBlock;
+- (nullable id<VIMRequestToken>)updateUserWithURI:(nonnull NSString *)URI username:(nonnull NSString *)username location:(nonnull NSString *)location completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 
-- (id<VIMRequestToken>)followUserWithURI:(NSString *)URI completionBlock:(VIMRequestCompletionBlock)completionBlock;
+- (nullable id<VIMRequestToken>)followUserWithURI:(nonnull NSString *)URI completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 
-- (id<VIMRequestToken>)unfollowUserWithURI:(NSString *)URI completionBlock:(VIMRequestCompletionBlock)completionBlock;
+- (nullable id<VIMRequestToken>)unfollowUserWithURI:(nonnull NSString *)URI completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 
-- (id<VIMRequestToken>)toggleFollowUserWithURI:(NSString *)URI newValue:(BOOL)newValue completionBlock:(VIMRequestCompletionBlock)completionBlock;
+- (nullable id<VIMRequestToken>)toggleFollowUserWithURI:(nonnull NSString *)URI newValue:(BOOL)newValue completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 
-- (id<VIMRequestToken>)toggleFollowURI:(NSString *)URI newValue:(BOOL)newValue completionBlock:(VIMRequestCompletionBlock)completionBlock;
+- (nullable id<VIMRequestToken>)toggleFollowURI:(nonnull NSString *)URI newValue:(BOOL)newValue completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 
 #pragma mark - Videos
 
-- (id<VIMRequestToken>)videoWithURI:(NSString *)URI completionBlock:(VIMRequestCompletionBlock)completionBlock;
+- (nullable id<VIMRequestToken>)videoWithURI:(nonnull NSString *)URI completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 
-- (id<VIMRequestToken>)videosWithURI:(NSString *)URI completionBlock:(VIMRequestCompletionBlock)completionBlock;
+- (nullable id<VIMRequestToken>)videosWithURI:(nonnull NSString *)URI completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 
-- (id<VIMRequestToken>)updateVideoWithURI:(NSString *)URI title:(NSString *)title description:(NSString *)description privacy:(NSString *)privacy completionHandler:(VIMRequestCompletionBlock)completionBlock;
+- (nullable id<VIMRequestToken>)updateVideoWithURI:(nonnull NSString *)URI title:(nullable NSString *)title description:(nullable NSString *)description privacy:(nullable NSString *)privacy completionHandler:(nonnull VIMRequestCompletionBlock)completionBlock;
 
-- (id<VIMRequestToken>)likeVideoWithURI:(NSString *)URI completionBlock:(VIMRequestCompletionBlock)completionBlock;
+- (nullable id<VIMRequestToken>)likeVideoWithURI:(nonnull NSString *)URI completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 
-- (id<VIMRequestToken>)unlikeVideoWithURI:(NSString *)URI completionBlock:(VIMRequestCompletionBlock)completionBlock;
+- (nullable id<VIMRequestToken>)unlikeVideoWithURI:(nonnull NSString *)URI completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 
-- (id<VIMRequestToken>)toggleLikeVideoWithURI:(NSString *)URI newValue:(BOOL)newValue completionBlock:(VIMRequestCompletionBlock)completionBlock;
+- (nullable id<VIMRequestToken>)toggleLikeVideoWithURI:(nonnull NSString *)URI newValue:(BOOL)newValue completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 
-- (id<VIMRequestToken>)watchLaterVideoWithURI:(NSString *)URI completionBlock:(VIMRequestCompletionBlock)completionBlock;
+- (nullable id<VIMRequestToken>)watchLaterVideoWithURI:(nonnull NSString *)URI completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 
-- (id<VIMRequestToken>)unwatchLaterVideoWithURI:(NSString *)URI completionBlock:(VIMRequestCompletionBlock)completionBlock;
+- (nullable id<VIMRequestToken>)unwatchLaterVideoWithURI:(nonnull NSString *)URI completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 
-- (id<VIMRequestToken>)toggleWatchLaterVideoWithURI:(NSString *)URI newValue:(BOOL)newValue completionBlock:(VIMRequestCompletionBlock)completionBlock;
+- (nullable id<VIMRequestToken>)toggleWatchLaterVideoWithURI:(nonnull NSString *)URI newValue:(BOOL)newValue completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 
-- (id<VIMRequestToken>)deleteVideoWithURI:(NSString *)URI completionBlock:(VIMRequestCompletionBlock)completionBlock;
+- (nullable id<VIMRequestToken>)deleteVideoWithURI:(nonnull NSString *)URI completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 
-- (id<VIMRequestToken>)shareVideoWithURI:(NSString *)URI recipients:(NSArray *)recipients completionBlock:(VIMRequestCompletionBlock)completionBlock;
+- (nullable id<VIMRequestToken>)shareVideoWithURI:(nonnull NSString *)URI recipients:(nonnull NSArray *)recipients completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 
 #pragma mark - Search
 
-- (id<VIMRequestToken>)searchVideosWithQuery:(NSString *)query completionBlock:(VIMRequestCompletionBlock)completionBlock;
+- (nullable id<VIMRequestToken>)searchVideosWithQuery:(nonnull NSString *)query completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 
-- (id<VIMRequestToken>)searchVideosWithQuery:(NSString *)query filter:(NSString *)filter completionBlock:(VIMRequestCompletionBlock)completionBlock;
+- (nullable id<VIMRequestToken>)searchVideosWithQuery:(nonnull NSString *)query filter:(nullable nonnull NSString *)filter completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 
 #pragma mark - Comments
 
-- (id<VIMRequestToken>)postCommentWithURI:(NSString *)URI text:(NSString *)text completionBlock:(VIMRequestCompletionBlock)completionBlock;
+- (nullable id<VIMRequestToken>)postCommentWithURI:(nonnull NSString *)URI text:(nonnull NSString *)text completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 
-- (id<VIMRequestToken>)commentsWithURI:(NSString *)URI completionBlock:(VIMRequestCompletionBlock)completionBlock;
+- (nullable id<VIMRequestToken>)commentsWithURI:(nonnull NSString *)URI completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 
 #pragma mark - Logout
 
-- (id<VIMRequestToken>)logoutWithCompletionBlock:(VIMRequestCompletionBlock)completionBlock;
+- (nullable id<VIMRequestToken>)logoutWithCompletionBlock:(nullable VIMRequestCompletionBlock)completionBlock;
 
 @end

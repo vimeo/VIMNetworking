@@ -30,6 +30,6 @@
 
 @interface VIMAddMetadataTask : VIMNetworkTask
 
-- (instancetype)initWithVideoURI:(NSString *)videoURI metadata:(VIMVideoMetadata *)videoMetadata;
+- (nullable instancetype)initWithVideoURI:(nonnull NSString *)videoURI metadata:(nullable VIMVideoMetadata *)videoMetadata;
 
 @end

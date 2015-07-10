@@ -46,8 +46,10 @@
 
 - (Class)getClassForObjectKey:(NSString *)key
 {
-    if([key isEqualToString:@"user"])
+    if ([key isEqualToString:@"user"])
+    {
         return [VIMUser class];
+    }
     
     return nil;
 }
@@ -56,8 +58,10 @@
 {
     self.objectID = [self.uri MD5];
 
-    if([self.dateCreated isKindOfClass:[NSString class]])
+    if ([self.dateCreated isKindOfClass:[NSString class]])
+    {
         self.dateCreated = [[VIMModelObject dateFormatter] dateFromString:(NSString *)self.dateCreated];
+    }
     
     [self parseReplies];
 }

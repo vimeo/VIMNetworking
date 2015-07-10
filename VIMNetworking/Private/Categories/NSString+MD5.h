@@ -28,6 +28,6 @@
 
 @interface NSString (MD5)
 
-- (NSString *)MD5;
+- (nonnull NSString *)MD5;
 
 @end

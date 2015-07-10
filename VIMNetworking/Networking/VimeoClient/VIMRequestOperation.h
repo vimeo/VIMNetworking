@@ -32,9 +32,9 @@
 
 @interface VIMRequestOperation : AFHTTPRequestOperation <VIMRequestToken>
 
-@property (nonatomic, strong) VIMRequestDescriptor *descriptor;
+@property (nonatomic, strong, nullable) VIMRequestDescriptor *descriptor;
 
-@property (nonatomic, weak) id handler;
+@property (nonatomic, weak, nullable) id handler;
 
 @end
 

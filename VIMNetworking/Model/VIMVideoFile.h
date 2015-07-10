@@ -30,21 +30,21 @@
 
 @class VIMVideoLog;
 
-extern NSString *const VIMVideoFileQualityHLS;
-extern NSString *const VIMVideoFileQualityHD;
-extern NSString *const VIMVideoFileQualitySD;
-extern NSString *const VIMVideoFileQualityMobile;
+extern NSString *const __nonnull VIMVideoFileQualityHLS;
+extern NSString *const __nonnull VIMVideoFileQualityHD;
+extern NSString *const __nonnull VIMVideoFileQualitySD;
+extern NSString *const __nonnull VIMVideoFileQualityMobile;
 
 @interface VIMVideoFile : VIMModelObject
 
-@property (nonatomic, strong) NSDate *expirationDate;
-@property (nonatomic, strong) NSNumber *width;
-@property (nonatomic, strong) NSNumber *height;
-@property (nonatomic, strong) NSNumber *size;
-@property (nonatomic, copy) NSString *link;
-@property (nonatomic, copy) NSString *quality;
-@property (nonatomic, copy) NSString *type;
-@property (nonatomic, strong) VIMVideoLog *log;
+@property (nonatomic, strong, nullable) NSDate *expirationDate;
+@property (nonatomic, strong, nullable) NSNumber *width;
+@property (nonatomic, strong, nullable) NSNumber *height;
+@property (nonatomic, strong, nullable) NSNumber *size;
+@property (nonatomic, copy, nullable) NSString *link;
+@property (nonatomic, copy, nullable) NSString *quality;
+@property (nonatomic, copy, nullable) NSString *type;
+@property (nonatomic, strong, nullable) VIMVideoLog *log;
 
 - (BOOL)isSupportedMimeType;
 - (BOOL)isDownloadable;
@@ -52,8 +52,8 @@ extern NSString *const VIMVideoFileQualityMobile;
 
 // TODO: This property and the playbackURL method should live within the app, not within VIMNetworking [AH]
 
-@property (nonatomic, strong) NSURL *localFileURL;
+@property (nonatomic, strong, nullable) NSURL *localFileURL;
 
-- (NSURL *)playbackURL;
+- (nullable NSURL *)playbackURL;
 
 @end

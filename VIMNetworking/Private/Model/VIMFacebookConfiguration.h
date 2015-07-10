@@ -28,6 +28,6 @@
 
 @interface VIMFacebookConfiguration : VIMModelObject
 
-@property (nonatomic, strong) NSArray *requiredScopes;
+@property (nonatomic, strong, nullable) NSArray *requiredScopes;
 
 @end

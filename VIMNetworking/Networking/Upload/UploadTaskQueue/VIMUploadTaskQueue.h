@@ -31,29 +31,29 @@
 @class VIMVideoMetadata;
 @class VIMUploadTaskQueueTracker;
 
-extern NSString *const VIMUploadTaskQueue_DidAssociateAssetsWithTasksNotification;
-extern NSString *const VIMUploadTaskQueue_DidAddAssetsNotification;
-extern NSString *const VIMUploadTaskQueue_DidCancelAssetNotification;
-extern NSString *const VIMUploadTaskQueue_DidCancelAllAssetsNotification;
+extern NSString *const __nonnull VIMUploadTaskQueue_DidAssociateAssetsWithTasksNotification;
+extern NSString *const __nonnull VIMUploadTaskQueue_DidAddAssetsNotification;
+extern NSString *const __nonnull VIMUploadTaskQueue_DidCancelAssetNotification;
+extern NSString *const __nonnull VIMUploadTaskQueue_DidCancelAllAssetsNotification;
 
-extern NSString *const VIMUploadTaskQueue_NameKey;
+extern NSString *const __nonnull VIMUploadTaskQueue_NameKey;
 
 typedef void(^AddMetadataCompletionBlock)(BOOL didAdd);
 
 @interface VIMUploadTaskQueue : VIMNetworkTaskQueue
 
-@property (nonatomic, strong, readonly) VIMUploadTaskQueueTracker *uploadQueueTracker;
+@property (nonatomic, strong, readonly, nullable) VIMUploadTaskQueueTracker *uploadQueueTracker;
 
-+ (instancetype)sharedAppQueue;
-+ (instancetype)sharedExtensionQueue;
++ (nullable instancetype)sharedAppQueue;
++ (nullable instancetype)sharedExtensionQueue;
 
-- (void)uploadVideoAssets:(NSArray *)videoAssets;
+- (void)uploadVideoAssets:(nonnull NSArray *)videoAssets;
 
-- (void)cancelUploadForVideoAsset:(VIMVideoAsset *)videoAsset;
+- (void)cancelUploadForVideoAsset:(nonnull VIMVideoAsset *)videoAsset;
 - (void)cancelAllUploads;
 
-- (NSMutableArray *)associateVideoAssetsWithUploads:(NSArray *)videoAssets;
+- (nullable NSMutableArray *)associateVideoAssetsWithUploads:(nonnull NSArray *)videoAssets;
 
-- (void)addMetadata:(VIMVideoMetadata *)metadata toVideoAsset:(VIMVideoAsset *)videoAsset withCompletionBlock:(AddMetadataCompletionBlock)completionBlock;
+- (void)addMetadata:(nonnull VIMVideoMetadata *)metadata toVideoAsset:(nonnull VIMVideoAsset *)videoAsset withCompletionBlock:(nonnull AddMetadataCompletionBlock)completionBlock;
 
 @end

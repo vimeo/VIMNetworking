@@ -28,33 +28,33 @@
 
 @class VIMVideoAsset;
 
-extern NSString *const VIMUploadTaskQueueTracker_CurrentVideoAssetDidChangeNotification;
-extern NSString *const VIMUploadTaskQueueTracker_DidRefreshQueuedAssetsNotification;
-extern NSString *const VIMUploadTaskQueueTracker_DidAddQueuedAssetsNotification;
-extern NSString *const VIMUploadTaskQueueTracker_DidRemoveQueuedAssetsNotification;
-extern NSString *const VIMUploadTaskQueueTracker_DidRemoveFailedAssetsNotification;
-extern NSString *const VIMUploadTaskQueueTracker_QueuedAssetDidFailNotification;
-extern NSString *const VIMUploadTaskQueueTracker_FailedAssetDidRetryNotification;
+extern NSString *const __nonnull VIMUploadTaskQueueTracker_CurrentVideoAssetDidChangeNotification;
+extern NSString *const __nonnull VIMUploadTaskQueueTracker_DidRefreshQueuedAssetsNotification;
+extern NSString *const __nonnull VIMUploadTaskQueueTracker_DidAddQueuedAssetsNotification;
+extern NSString *const __nonnull VIMUploadTaskQueueTracker_DidRemoveQueuedAssetsNotification;
+extern NSString *const __nonnull VIMUploadTaskQueueTracker_DidRemoveFailedAssetsNotification;
+extern NSString *const __nonnull VIMUploadTaskQueueTracker_QueuedAssetDidFailNotification;
+extern NSString *const __nonnull VIMUploadTaskQueueTracker_FailedAssetDidRetryNotification;
 
-extern NSString *const VIMUploadTaskQueueTracker_AssetIndicesKey;
-extern NSString *const VIMUploadTaskQueueTracker_OriginalIndexKey;
-extern NSString *const VIMUploadTaskQueueTracker_NewIndexKey;
-extern NSString *const VIMUploadTaskQueueTracker_QueuedAssetsKey;
-extern NSString *const VIMUploadTaskQueueTracker_FailedAssetsKey;
-extern NSString *const VIMUploadTaskQueueTracker_AssetsKey;
-extern NSString *const VIMUploadTaskQueueTracker_SessionIdentifierKey;
+extern NSString *const __nonnull VIMUploadTaskQueueTracker_AssetIndicesKey;
+extern NSString *const __nonnull VIMUploadTaskQueueTracker_OriginalIndexKey;
+extern NSString *const __nonnull VIMUploadTaskQueueTracker_NewIndexKey;
+extern NSString *const __nonnull VIMUploadTaskQueueTracker_QueuedAssetsKey;
+extern NSString *const __nonnull VIMUploadTaskQueueTracker_FailedAssetsKey;
+extern NSString *const __nonnull VIMUploadTaskQueueTracker_AssetsKey;
+extern NSString *const __nonnull VIMUploadTaskQueueTracker_SessionIdentifierKey;
 
 @interface VIMUploadTaskQueueTracker : NSObject
 
-@property (nonatomic, strong, readonly) VIMVideoAsset *currentVideoAsset;
-@property (nonatomic, strong, readonly) NSMutableArray *videoAssets;
-@property (nonatomic, strong, readonly) NSMutableArray *failedAssets;
+@property (nonatomic, strong, readonly, nullable) VIMVideoAsset *currentVideoAsset;
+@property (nonatomic, strong, readonly, nullable) NSMutableArray *videoAssets;
+@property (nonatomic, strong, readonly, nullable) NSMutableArray *failedAssets;
 
-- (instancetype)initWithSessionIdentifier:(NSString *)sessionIdentifier;
+- (nullable instancetype)initWithSessionIdentifier:(nonnull NSString *)sessionIdentifier;
 
 // This method must be called when a user "ignores" a failed asset [AH]
-- (void)ignoreFailedAsset:(VIMVideoAsset *)videoAsset;
+- (void)ignoreFailedAsset:(nonnull VIMVideoAsset *)videoAsset;
 
-- (VIMVideoAsset *)assetForIdentifier:(NSString *)identifier;
+- (nullable VIMVideoAsset *)assetForIdentifier:(nonnull NSString *)identifier;
 
 @end
