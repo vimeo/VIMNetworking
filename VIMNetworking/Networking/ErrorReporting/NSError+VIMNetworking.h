@@ -13,12 +13,14 @@ typedef NS_ENUM(NSInteger, VIMErrorCode)
     VIMErrorCodeUploadStorageQuotaExceeded = 4101,
     VIMErrorCodeUploadDailyQuotaExceeded = 4102,
     
-    VIMErrorCodeEmailMalformed = 4207, // TODO; add real error codes
-    VIMErrorCodeEmailTooLong = 42071,
-    VIMErrorCodePasswordInsecure = 42072,  // when a password is shorter than 8 chars or doesn't contain 4 unique chars
-    VIMErrorCodePasswordContainsInsecureText = 42073, // when a password contains the username or email
-    VIMErrorCodePasswordVeryInsecure = 42074, // both of the two preceding error conditions above are present
-    VIMErrorCodeCredentialsRejected = 42075  // Username and/or password are incorrect
+    VIMErrorCodeInvalidRequestInput = 4204, // root error code for all invalid parameters errors below
+    
+    VIMErrorCodeEmailMalformed = 4219, // email doesn't contain @ sign
+    VIMErrorCodeEmailTooLong = 4218, // email is greater than 128 characters
+    VIMErrorCodePasswordInsecureShort = 4211,  // when a password is shorter than 8 chars
+    VIMErrorCodePasswordInsecureSimple = 4213,  // when a password doesn't contain 4 unique chars
+    VIMErrorCodePasswordInsecureContainsUserInfo = 4214, // when a password contains the username or email
+    VIMErrorCodeCredentialsRejected = 4220  // Username and/or password are incorrect
 };
 
 typedef NS_ENUM(NSInteger, HTTPErrorCode)
@@ -29,11 +31,6 @@ typedef NS_ENUM(NSInteger, HTTPErrorCode)
 };
 
 @interface NSError (VIMNetworking)
-
-#pragma mark - User Presentable Errors
-
-- (NSString *)presentableTitle;
-- (NSString *)presentableDescription;
 
 #pragma mark - Error Types
 
@@ -46,5 +43,12 @@ typedef NS_ENUM(NSInteger, HTTPErrorCode)
 - (BOOL)isUploadQuotaError;
 - (BOOL)isUploadQuotaDailyExceededError;
 - (BOOL)isUploadQuotaStorageExceededError;
+
+#pragma mark - Helpers
+
+- (NSInteger)statusCode;
+- (NSInteger)serverErrorCode;
+- (NSInteger)serverInvalidParametersErrorCode;
+- (NSDictionary *)errorResponseBodyJSON;
 
 @end

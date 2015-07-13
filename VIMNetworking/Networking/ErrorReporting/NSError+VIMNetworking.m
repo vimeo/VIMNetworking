@@ -12,64 +12,6 @@
 
 @implementation NSError (VIMNetworking)
 
-#pragma mark - User Presentable Errors
-
-- (NSString *)presentableTitle
-{
-    NSString *title = nil;
-    
-    NSInteger errorCode = [self serverErrorCode];
-    
-    switch (errorCode)
-    {
-        case VIMErrorCodePasswordInsecure:
-        case VIMErrorCodePasswordContainsInsecureText:
-        case VIMErrorCodePasswordVeryInsecure:
-        case VIMErrorCodeEmailMalformed:
-        case VIMErrorCodeEmailTooLong:
-            title = NSLocalizedString(@"InvalidEmailPassword", nil);
-            break;
-            
-        default: // not found
-            title = nil;
-            break;
-    }
-    
-    return title;
-}
-
-- (NSString *)presentableDescription
-{
-    NSString *description = nil;
-    
-    NSInteger errorCode = [self serverErrorCode];
-    
-    switch (errorCode)
-    {
-        case VIMErrorCodeEmailMalformed:
-            description = NSLocalizedString(@"EmailRequired", nil);
-            break;
-        case VIMErrorCodeEmailTooLong:
-            description = NSLocalizedString(@"EmailLengthErrorMessage", nil);
-            break;
-        case VIMErrorCodePasswordInsecure:
-            description = NSLocalizedString(@"PasswordLengthErrorMessage", nil);
-            break;
-        case VIMErrorCodePasswordContainsInsecureText:
-            description = NSLocalizedString(@"PasswordUniquenessErrorMessage", nil);
-            break;
-        case VIMErrorCodePasswordVeryInsecure:
-            description = NSLocalizedString(@"PasswordLengthAndUniquenessErrorMessage", nil);
-            break;
-            
-        default: // not found
-            description = nil;
-            break;
-    }
-    
-    return description;
-}
-
 #pragma mark - Error Types
 
 - (BOOL)isServiceUnavailableError
@@ -147,7 +89,61 @@
         return errorCode;
     }
     
+    NSHTTPURLResponse *response = self.userInfo[AFNetworkingOperationFailingURLResponseErrorKey];
+    if (response)
+    {
+        NSDictionary *headers = [response allHeaderFields];
+        NSString *vimeoError = headers[@"Vimeo-Error-Code"];
+        
+        if (vimeoError)
+        {
+            return [vimeoError integerValue];
+        }
+    }
+    
     return 0;
+}
+
+- (NSInteger)serverInvalidParametersErrorCode
+{
+    NSDictionary *json = [self errorResponseBodyJSON];
+    
+    if (json)
+    {
+        NSArray *invalidParameters = json[@"invalid_parameters"];
+        NSMutableArray *errorCodes = [NSMutableArray new];
+        
+        for (NSDictionary *errorJSON in invalidParameters)
+        {
+            NSString *errorCode = errorJSON[@"code"];
+            
+            if (errorCode)
+            {
+                [errorCodes addObject:@([errorCode integerValue])];
+            }
+        }
+        
+        return [[errorCodes firstObject] integerValue];
+    }
+    
+    return 0;
+}
+
+- (NSDictionary *)errorResponseBodyJSON
+{
+    NSData *data = self.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
+    if (data)
+    {
+        NSError *error;
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+        
+        if (json && !error)
+        {
+            return json;
+        }
+    }
+    
+    return nil;
 }
 
 @end
