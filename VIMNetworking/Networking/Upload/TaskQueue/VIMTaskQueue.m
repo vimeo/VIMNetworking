@@ -197,9 +197,9 @@ static void *TaskQueueSpecific = "TaskQueueSpecific";
 
     self.suspended = NO;
     
-    [self save];
-
     dispatch_async(_tasksQueue, ^{
+
+        [self save];
 
         [self restart];
     
