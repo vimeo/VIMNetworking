@@ -12,6 +12,6 @@
 
 @interface VIMPreference : VIMModelObject
 
-@property (nonatomic, strong) VIMVideoPreference *videos;
+@property (nonatomic, strong, nullable) VIMVideoPreference *videos;
 
 @end

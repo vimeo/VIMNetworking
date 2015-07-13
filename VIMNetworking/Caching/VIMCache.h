@@ -28,27 +28,27 @@
 
 // A thread-safe LRU cache
 
-typedef void(^VIMCacheCompletionBlock)(id object);
+typedef void(^VIMCacheCompletionBlock)(__nullable id object);
 
 @interface VIMCache : NSObject
 
-@property(nonatomic, copy, readonly) NSString *name;
-@property(nonatomic, copy, readonly) NSString *basePath;
+@property(nonatomic, copy, readonly, nonnull) NSString *name;
+@property(nonatomic, copy, readonly, nonnull) NSString *basePath;
 
 @property (nonatomic, assign) NSUInteger memoryCapacity;
 
-+ (instancetype)sharedCache;
++ (nullable instancetype)sharedCache;
 
-- (instancetype)initWithName:(NSString *)name;
-- (instancetype)initWithName:(NSString *)name basePath:(NSString *)basePath;
+- (nullable instancetype)initWithName:(nonnull NSString *)name;
+- (nullable instancetype)initWithName:(nonnull NSString *)name basePath:(nonnull NSString *)basePath;
 
-- (id)objectForKey:(NSString *)key; // This is a blocking method, use objectForKey:completionBlock: for better performance
+- (nullable id)objectForKey:(nonnull NSString *)key; // This is a blocking method, use objectForKey:completionBlock: for better performance
 
-- (void)objectForKey:(NSString *)key completionBlock:(VIMCacheCompletionBlock)completionBlock;
+- (void)objectForKey:(nonnull NSString *)key completionBlock:(nonnull VIMCacheCompletionBlock)completionBlock;
 
-- (void)setObject:(id)object forKey:(NSString *)key;
+- (void)setObject:(nonnull id)object forKey:(nonnull NSString *)key;
 
-- (void)removeObjectForKey:(NSString *)key;
+- (void)removeObjectForKey:(nonnull NSString *)key;
 
 - (void)removeAllObjects;
 - (void)clearMemory;
@@ -60,8 +60,8 @@ typedef void(^VIMCacheCompletionBlock)(id object);
 
 @interface VIMCache (Subclass)
 
-- (NSData *)dataWithObject:(id)object;
-- (id)objectWithData:(NSData *)data;
-- (NSUInteger)cacheCostForObject:(id)object fromData:(NSData *)data;
+- (nullable NSData *)dataWithObject:(nonnull id)object;
+- (nullable id)objectWithData:(nonnull NSData *)data;
+- (NSUInteger)cacheCostForObject:(nonnull id)object fromData:(nullable NSData *)data;
 
 @end

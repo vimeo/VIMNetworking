@@ -125,19 +125,23 @@
 
             if (completionBlock)
             {
-                CGFloat size = fileSize / (1024.0 * 1024.0);
-                completionBlock(size, error);
+                fileSize = fileSize / (1024.0 * 1024.0);
+                completionBlock(fileSize, error);
             }
 
         }];
     }
     else if (self.URLAsset)
     {
-        CGFloat rawSize = [self.URLAsset calculateFilesizeInMB];
-        if (completionBlock)
-        {
-            completionBlock(rawSize, nil);
-        }
+        [self.URLAsset calculateFilesizeWithCompletionBlock:^(CGFloat fileSize, NSError *error) {
+            
+            if (completionBlock)
+            {
+                fileSize = fileSize / (1024.0 * 1024.0);
+                completionBlock(fileSize, error);
+            }
+
+        }];
     }
     
     return 0; // No need to return a cancellation handler for non PH requests [AH]

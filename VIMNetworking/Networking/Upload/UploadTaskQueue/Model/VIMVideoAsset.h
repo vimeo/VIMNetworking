@@ -32,34 +32,34 @@
 
 @class VIMVideoMetadata;
 
-typedef void(^FileSizeCompletionBlock)(CGFloat fileSize, NSError *error);
-typedef void(^ImageCompletionBlock)(UIImage *image, NSError *error);
+typedef void(^FileSizeCompletionBlock)(CGFloat fileSize, NSError * __nullable error);
+typedef void(^ImageCompletionBlock)(UIImage * __nullable image, NSError * __nullable error);
 
 @interface VIMVideoAsset : NSObject
 
-@property (nonatomic, strong, readonly) NSString *identifier;
+@property (nonatomic, strong, readonly, nullable) NSString *identifier;
 
-@property (nonatomic, strong, readonly) PHAsset *phAsset;
-@property (nonatomic, strong, readonly) AVURLAsset *URLAsset;
+@property (nonatomic, strong, readonly, nullable) PHAsset *phAsset;
+@property (nonatomic, strong, readonly, nullable) AVURLAsset *URLAsset;
 @property (nonatomic, assign, readonly) BOOL canUploadFromSource;
 
-@property (nonatomic, strong) VIMVideoMetadata *metadata;
+@property (nonatomic, strong, nullable) VIMVideoMetadata *metadata;
 
 @property (nonatomic, assign) VIMUploadState uploadState;
 @property (nonatomic, assign) double uploadProgressFraction;
 
-@property (nonatomic, strong) NSString *videoURI;
-@property (nonatomic, strong) NSError *error;
+@property (nonatomic, strong, nullable) NSString *videoURI;
+@property (nonatomic, strong, nullable) NSError *error;
 
-- (instancetype)initWithPHAsset:(PHAsset *)phAsset;
-- (instancetype)initWithURLAsset:(AVURLAsset *)URLAsset canUploadFromSource:(BOOL)canUploadFromSource;
+- (nullable instancetype)initWithPHAsset:(nonnull PHAsset *)phAsset;
+- (nullable instancetype)initWithURLAsset:(nonnull AVURLAsset *)URLAsset canUploadFromSource:(BOOL)canUploadFromSource;
 
-- (void)requestAVAssetWithCompletionBlock:(void (^)(AVAsset *asset, NSError *error))completionBlock;
+- (void)requestAVAssetWithCompletionBlock:(void (^ __nonnull)(AVAsset * __nullable asset, NSError * __nullable error))completionBlock;
 
 - (NSTimeInterval)duration;
 
-- (int32_t)fileSizeWithCompletionBlock:(FileSizeCompletionBlock)completionBlock;
-- (int32_t)imageWithSize:(CGSize)size completionBlock:(ImageCompletionBlock)completionBlock;
+- (int32_t)fileSizeWithCompletionBlock:(nonnull FileSizeCompletionBlock)completionBlock;
+- (int32_t)imageWithSize:(CGSize)size completionBlock:(nonnull ImageCompletionBlock)completionBlock;
 
 - (BOOL)isUploading;
 - (BOOL)didFinishUploading;

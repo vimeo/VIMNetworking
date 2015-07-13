@@ -30,9 +30,9 @@
 
 @interface VIMVideoLog : VIMModelObject
 
-@property (nonatomic, copy, readonly) NSString *playURLString;
-@property (nonatomic, copy, readonly) NSString *loadURLString;
-@property (nonatomic, copy, readonly) NSString *likeURLString;
-@property (nonatomic, copy, readonly) NSString *watchLaterURLString;
+@property (nonatomic, copy, readonly, nullable) NSString *playURLString;
+@property (nonatomic, copy, readonly, nullable) NSString *loadURLString;
+@property (nonatomic, copy, readonly, nullable) NSString *likeURLString;
+@property (nonatomic, copy, readonly, nullable) NSString *watchLaterURLString;
 
 @end

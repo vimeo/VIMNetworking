@@ -28,12 +28,12 @@
 
 @interface VIMAuthenticator (Private)
 
-- (id<VIMRequestToken>)loginWithEmail:(NSString *)email password:(NSString *)password completionBlock:(VIMAccountCompletionBlock)completionBlock;
+- (nullable id<VIMRequestToken>)loginWithEmail:(nonnull NSString *)email password:(nonnull NSString *)password completionBlock:(nonnull VIMAccountCompletionBlock)completionBlock;
 
-- (id<VIMRequestToken>)joinWithName:(NSString *)name email:(NSString *)email password:(NSString *)password completionBlock:(VIMAccountCompletionBlock)completionBlock;
+- (nullable id<VIMRequestToken>)joinWithName:(nonnull NSString *)name email:(nonnull NSString *)email password:(nonnull NSString *)password completionBlock:(nonnull VIMAccountCompletionBlock)completionBlock;
 
-- (id<VIMRequestToken>)loginWithFacebookToken:(NSString *)facebookToken completionBlock:(VIMAccountCompletionBlock)completionBlock;
+- (nullable id<VIMRequestToken>)loginWithFacebookToken:(nonnull NSString *)facebookToken completionBlock:(nonnull VIMAccountCompletionBlock)completionBlock;
 
-- (id<VIMRequestToken>)joinWithFacebookToken:(NSString *)facebookToken completionBlock:(VIMAccountCompletionBlock)completionBlock;
+- (nullable id<VIMRequestToken>)joinWithFacebookToken:(nonnull NSString *)facebookToken completionBlock:(nonnull VIMAccountCompletionBlock)completionBlock;
 
 @end

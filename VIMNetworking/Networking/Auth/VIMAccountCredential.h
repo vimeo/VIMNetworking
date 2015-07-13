@@ -28,10 +28,10 @@
 
 @interface VIMAccountCredential: NSObject
 
-@property (nonatomic, copy) NSString *accessToken;
-@property (nonatomic, copy) NSString *tokenType;
-@property (nonatomic, copy) NSString *refreshToken;
-@property (nonatomic, copy) NSDate *expirationDate;
-@property (nonatomic, copy) NSString *grantType;
+@property (nonatomic, copy, nullable) NSString *accessToken;
+@property (nonatomic, copy, nullable) NSString *tokenType;
+@property (nonatomic, copy, nullable) NSString *refreshToken;
+@property (nonatomic, copy, nullable) NSDate *expirationDate;
+@property (nonatomic, copy, nullable) NSString *grantType;
 
 @end

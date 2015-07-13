@@ -30,13 +30,13 @@
 
 @interface VIMAccountNew : VIMModelObject
 
-@property (nonatomic, copy) NSString *accessToken;
-@property (nonatomic, copy) NSString *tokenType;
-@property (nonatomic, copy) NSString *scope;
-@property (nonatomic, copy) NSDictionary *userJSON;
+@property (nonatomic, copy, nullable) NSString *accessToken;
+@property (nonatomic, copy, nullable) NSString *tokenType;
+@property (nonatomic, copy, nullable) NSString *scope;
+@property (nonatomic, copy, nullable) NSDictionary *userJSON;
 
 // Not persisted
-@property (nonatomic, strong) VIMUser *user;
+@property (nonatomic, strong, nullable) VIMUser *user;
 @property (nonatomic, assign, getter=isInvalid) BOOL invalid;
 
 - (BOOL)isAuthenticated;

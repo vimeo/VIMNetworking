@@ -29,10 +29,10 @@
 @class VIMServerResponse;
 @class VIMRequestOperation;
 
-typedef void (^VIMServerResponseMapperCompletionBlock)(VIMServerResponse *response, NSError *error);
+typedef void (^VIMServerResponseMapperCompletionBlock)(VIMServerResponse * __nullable response, NSError * __nullable error);
 
 @interface VIMServerResponseMapper : NSObject
 
-+ (void)responseFromJSON:(id)JSON operation:(VIMRequestOperation *)operation completionBlock:(VIMServerResponseMapperCompletionBlock)completionBlock;
++ (void)responseFromJSON:(nonnull id)JSON operation:(nonnull VIMRequestOperation *)operation completionBlock:(nonnull VIMServerResponseMapperCompletionBlock)completionBlock;
 
 @end

@@ -28,12 +28,12 @@
 
 @class VIMNetworkTaskSessionManager;
 
-extern NSString *const VIMNetworkTaskQueue_DidSuspendOrResumeNotification;
+extern NSString *const __nonnull VIMNetworkTaskQueue_DidSuspendOrResumeNotification;
 
 @interface VIMNetworkTaskQueue : VIMTaskQueue
 
 @property (nonatomic, assign, getter=isCellularUploadEnabled) BOOL cellularUploadEnabled;
 
-- (instancetype)initWithSessionManager:(VIMNetworkTaskSessionManager *)sessionManager;
+- (nullable instancetype)initWithSessionManager:(nonnull VIMNetworkTaskSessionManager *)sessionManager;
 
 @end

@@ -31,31 +31,31 @@
 
 @class VIMAccountNew;
 
-typedef void (^VIMAccountCompletionBlock)(VIMAccountNew *account, NSError *error);
+typedef void (^VIMAccountCompletionBlock)(VIMAccountNew * __nullable account, NSError * __nullable error);
 
-extern NSString * const kVimeoAuthenticatorErrorDomain;
+extern NSString * const __nullable kVimeoAuthenticatorErrorDomain;
 
 @interface VIMAuthenticator : VIMRequestOperationManager
 
-@property (nonatomic, strong, readonly) NSString *clientKey;
-@property (nonatomic, strong, readonly) NSString *clientSecret;
-@property (nonatomic, strong, readonly) NSString *scope;
+@property (nonatomic, strong, readonly, nonnull) NSString *clientKey;
+@property (nonatomic, strong, readonly, nonnull) NSString *clientSecret;
+@property (nonatomic, strong, readonly, nonnull) NSString *scope;
 
-- (instancetype)initWithBaseURL:(NSURL *)url
-                      clientKey:(NSString *)clientKey
-                   clientSecret:(NSString *)clientSecret
-                          scope:(NSString *)scope;
+- (nullable instancetype)initWithBaseURL:(nonnull NSURL *)url
+                               clientKey:(nonnull NSString *)clientKey
+                            clientSecret:(nonnull NSString *)clientSecret
+                                   scope:(nonnull NSString *)scope;
 
 #pragma mark - URLs
 
-- (NSURL *)codeGrantAuthorizationURL;
+- (nullable NSURL *)codeGrantAuthorizationURL;
 
-- (NSString *)codeGrantRedirectURI;
+- (nullable NSString *)codeGrantRedirectURI;
 
 #pragma mark - Authentication
 
-- (id<VIMRequestToken>)authenticateWithClientCredentialsGrant:(VIMAccountCompletionBlock)completionBlock;
+- (nullable id<VIMRequestToken>)authenticateWithClientCredentialsGrant:(nonnull VIMAccountCompletionBlock)completionBlock;
 
-- (id<VIMRequestToken>)authenticateWithCodeGrantResponseURL:(NSURL *)responseURL completionBlock:(VIMAccountCompletionBlock)completionBlock;
+- (nullable id<VIMRequestToken>)authenticateWithCodeGrantResponseURL:(nonnull NSURL *)responseURL completionBlock:(nonnull VIMAccountCompletionBlock)completionBlock;
 
 @end

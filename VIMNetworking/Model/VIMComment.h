@@ -30,12 +30,12 @@
 
 @interface VIMComment : VIMModelObject
 
-@property (nonatomic, strong) VIMUser *user;
-@property (nonatomic, copy) NSString *text;
-@property (nonatomic, copy) NSString *uri;
-@property (nonatomic, strong) NSDate *dateCreated;
+@property (nonatomic, strong, nullable) VIMUser *user;
+@property (nonatomic, copy, nullable) NSString *text;
+@property (nonatomic, copy, nullable) NSString *uri;
+@property (nonatomic, strong, nullable) NSDate *dateCreated;
 
-@property (nonatomic, strong) NSNumber *totalReplies;
-@property (nonatomic, copy) NSString *repliesURI;
+@property (nonatomic, strong, nullable) NSNumber *totalReplies;
+@property (nonatomic, copy, nullable) NSString *repliesURI;
 
 @end

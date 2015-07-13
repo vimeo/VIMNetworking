@@ -30,36 +30,36 @@
 #import "VIMAccountNew.h"
 #import "VIMSessionConfiguration.h"
 
-typedef void (^VIMErrorCompletionBlock)(NSError *error);
+typedef void (^VIMErrorCompletionBlock)(NSError * __nullable error);
 
-extern NSString *const VIMSession_AuthenticatedAccountDidChangeNotification; // Posted when the account changes (log in or log out)
-extern NSString *const VIMSession_AuthenticatedUserDidRefreshNotification; // Posted when the authenticated user object refreshes (user refresh)
+extern NSString *const __nonnull VIMSession_AuthenticatedAccountDidChangeNotification; // Posted when the account changes (log in or log out)
+extern NSString *const __nonnull VIMSession_AuthenticatedUserDidRefreshNotification; // Posted when the authenticated user object refreshes (user refresh)
 
 @interface VIMSession : NSObject
 
-@property (nonatomic, strong, readonly) VIMSessionConfiguration *configuration;
-@property (nonatomic, strong, readonly) VIMAccountNew *account;
-@property (nonatomic, strong, readonly) VIMAuthenticator *authenticator;
-@property (nonatomic, strong, readonly) VIMClient *client;
+@property (nonatomic, strong, readonly, nonnull) VIMSessionConfiguration *configuration;
+@property (nonatomic, strong, readonly, nullable) VIMAccountNew *account;
+@property (nonatomic, strong, readonly, nonnull) VIMAuthenticator *authenticator;
+@property (nonatomic, strong, readonly, nonnull) VIMClient *client;
 
-+ (void)setupWithConfiguration:(VIMSessionConfiguration *)configuration;
++ (void)setupWithConfiguration:(nonnull VIMSessionConfiguration *)configuration;
 
-+ (instancetype)sharedSession;
++ (nullable instancetype)sharedSession;
 
 #pragma mark - Authentication
 
-- (id<VIMRequestToken>)authenticateWithClientCredentialsGrant:(VIMErrorCompletionBlock)completionBlock;
+- (nullable nullable id<VIMRequestToken>)authenticateWithClientCredentialsGrant:(nonnull VIMErrorCompletionBlock)completionBlock;
 
-- (id<VIMRequestToken>)authenticateWithCodeGrantResponseURL:(NSURL *)responseURL completionBlock:(VIMErrorCompletionBlock)completionBlock;
+- (nullable id<VIMRequestToken>)authenticateWithCodeGrantResponseURL:(nonnull NSURL *)responseURL completionBlock:(nonnull VIMErrorCompletionBlock)completionBlock;
 
-- (id<VIMRequestToken>)logout;
+- (nullable id<VIMRequestToken>)logout;
 
 #pragma mark - Configuration
 
-- (BOOL)changeAccount:(VIMAccountNew *)account;
+- (BOOL)changeAccount:(nonnull VIMAccountNew *)account;
 
-- (BOOL)changeBaseURL:(NSString *)baseURLString;
+- (BOOL)changeBaseURL:(nonnull NSString *)baseURLString;
 
-- (id<VIMRequestToken>)refreshAuthenticatedUserWithCompletionBlock:(VIMErrorCompletionBlock)completionBlock;
+- (nullable id<VIMRequestToken>)refreshAuthenticatedUserWithCompletionBlock:(nullable VIMErrorCompletionBlock)completionBlock;
 
 @end

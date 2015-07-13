@@ -33,25 +33,25 @@
 
 typedef void(^UploadStateBlock)(VIMUploadState state);
 typedef void(^UploadProgressBlock)(double uploadProgressFraction);
-typedef void(^UploadCompletionBlock)(NSString *videoURI, NSError *error);
+typedef void(^UploadCompletionBlock)(NSString * __nullable videoURI, NSError * __nullable error);
 
 @interface VIMUploadTask : VIMNetworkTask
 
 // Input
-@property (nonatomic, copy) UploadStateBlock uploadStateBlock;
-@property (nonatomic, copy) UploadProgressBlock uploadProgressBlock;
-@property (nonatomic, copy) UploadCompletionBlock uploadCompletionBlock;
+@property (nonatomic, copy, nullable) UploadStateBlock uploadStateBlock;
+@property (nonatomic, copy, nullable) UploadProgressBlock uploadProgressBlock;
+@property (nonatomic, copy, nullable) UploadCompletionBlock uploadCompletionBlock;
 
-@property (nonatomic, strong) VIMVideoMetadata *videoMetadata; // This is only used for UploadQueueCell title display [AH]
+@property (nonatomic, strong, nullable) VIMVideoMetadata *videoMetadata; // This is only used for UploadQueueCell title display [AH]
 
 // Output
 @property (nonatomic, assign, readonly) VIMUploadState uploadState;
-@property (nonatomic, copy, readonly) NSString *videoURI;
+@property (nonatomic, copy, readonly, nullable) NSString *videoURI;
 
-@property (nonatomic, strong, readonly) PHAsset *phAsset;
-@property (nonatomic, strong, readonly) AVURLAsset *URLAsset;
+@property (nonatomic, strong, readonly, nullable) PHAsset *phAsset;
+@property (nonatomic, strong, readonly, nullable) AVURLAsset *URLAsset;
 
-- (instancetype)initWithPHAsset:(PHAsset *)phAsset;
-- (instancetype)initWithURLAsset:(AVURLAsset *)URLAsset canUploadFromSource:(BOOL)canUploadFromSource;
+- (nullable instancetype)initWithPHAsset:(nonnull PHAsset *)phAsset;
+- (nullable instancetype)initWithURLAsset:(nonnull AVURLAsset *)URLAsset canUploadFromSource:(BOOL)canUploadFromSource;
 
 @end

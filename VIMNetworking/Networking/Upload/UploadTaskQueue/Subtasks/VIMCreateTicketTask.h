@@ -31,14 +31,14 @@
 @interface VIMCreateTicketTask : VIMNetworkTask
 
 // Output
-@property (nonatomic, copy, readonly) NSString *localURI; // TODO: possible to eliminate this? [AH]
-@property (nonatomic, copy, readonly) NSString *uploadURI;
-@property (nonatomic, copy, readonly) NSString *activationURI;
+@property (nonatomic, copy, readonly, nullable) NSString *localURI; // TODO: possible to eliminate this? [AH]
+@property (nonatomic, copy, readonly, nullable) NSString *uploadURI;
+@property (nonatomic, copy, readonly, nullable) NSString *activationURI;
 
-@property (nonatomic, strong, readonly) PHAsset *phAsset;
-@property (nonatomic, strong, readonly) AVURLAsset *URLAsset;
+@property (nonatomic, strong, readonly, nullable) PHAsset *phAsset;
+@property (nonatomic, strong, readonly, nullable) AVURLAsset *URLAsset;
 
-- (instancetype)initWithPHAsset:(PHAsset *)phAsset;
-- (instancetype)initWithURLAsset:(AVURLAsset *)URLAsset canUploadFromSource:(BOOL)canUploadFromSource;
+- (nullable instancetype)initWithPHAsset:(nonnull PHAsset *)phAsset;
+- (nullable instancetype)initWithURLAsset:(nonnull AVURLAsset *)URLAsset canUploadFromSource:(BOOL)canUploadFromSource;
 
 @end
