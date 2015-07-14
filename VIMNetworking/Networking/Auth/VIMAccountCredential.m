@@ -25,7 +25,6 @@
 //
 
 #import "VIMAccountCredential.h"
-#import "VIMOAuthAuthenticator.h"
 
 @interface VIMAccountCredential () <NSCoding, NSSecureCoding>
 
@@ -64,18 +63,6 @@
     [aCoder encodeObject:self.refreshToken forKey:@"refreshToken"];
     [aCoder encodeObject:self.expirationDate forKey:@"expirationDate"];
     [aCoder encodeObject:self.grantType forKey:@"grantType"];
-}
-
-#pragma mark - Public API
-
-- (BOOL)isUserCredential
-{
-    return (![self.grantType isEqualToString:kVIMOAuthGrantType_ClientCredentials]);
-}
-
-- (BOOL)isExpired
-{
-    return self.expirationDate && [self.expirationDate timeIntervalSinceNow] >= 0;
 }
 
 @end

@@ -28,14 +28,14 @@
 
 // Interaction names
 
-extern NSString * const VIMInteractionNameWatchLater;
-extern NSString * const VIMInteractionNameFollow;
-extern NSString * const VIMInteractionNameLike;
+extern NSString * const __nonnull VIMInteractionNameWatchLater;
+extern NSString * const __nonnull VIMInteractionNameFollow;
+extern NSString * const __nonnull VIMInteractionNameLike;
 
 @interface VIMInteraction : VIMModelObject
 
-@property (nonatomic, copy) NSString *uri;
-@property (nonatomic, strong) NSNumber *added;
-@property (nonatomic, strong) NSDate *added_time;
+@property (nonatomic, copy, nullable) NSString *uri;
+@property (nonatomic, strong, nullable) NSNumber *added;
+@property (nonatomic, strong, nullable) NSDate *added_time;
 
 @end

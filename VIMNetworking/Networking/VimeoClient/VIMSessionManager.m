@@ -29,6 +29,7 @@
 #import "VIMResponseSerializer.h"
 #import "VIMRequestSerializer.h"
 #import "VIMSession.h"
+#import "VIMSessionConfiguration.h"
 
 @interface VIMSessionManager ()
 
@@ -38,7 +39,7 @@
 
 - (instancetype)initWithDefaultSession
 {
-    NSURL *baseURL = [NSURL URLWithString:[[VIMSession sharedSession] baseURLString]];
+    NSURL *baseURL = [NSURL URLWithString:[VIMSession sharedSession].configuration.baseURLString];
     
     return [self initWithBaseURL:baseURL sessionConfiguration:nil];
 }
@@ -57,7 +58,7 @@
 
 - (instancetype)initWithSessionConfiguration:(NSURLSessionConfiguration *)configuration
 {
-    NSURL *baseURL = [NSURL URLWithString:[[VIMSession sharedSession] baseURLString]];
+    NSURL *baseURL = [NSURL URLWithString:[VIMSession sharedSession].configuration.baseURLString];
     
     return [self initWithBaseURL:baseURL sessionConfiguration:configuration];
 }
@@ -75,7 +76,7 @@
 
 - (void)initialSetup
 {
-    self.requestSerializer = [VIMRequestSerializer serializerWithSession:[VIMSession sharedSession]];
+    self.requestSerializer = [[VIMRequestSerializer alloc] initWithAPIVersionString:[VIMSession sharedSession].configuration.APIVersionString];
     self.responseSerializer = [VIMResponseSerializer serializerWithReadingOptions:NSJSONReadingAllowFragments];
 }
 

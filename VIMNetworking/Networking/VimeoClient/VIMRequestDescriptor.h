@@ -34,25 +34,24 @@ typedef NS_ENUM(NSInteger, VIMCachePolicy)
 	VIMCachePolicy_LocalAndNetwork,         // Both results will be returned. First from local cache and then from network
 };
 
-extern NSString *HTTPMethodGET;
-extern NSString *HTTPMethodPOST;
-extern NSString *HTTPMethodPATCH;
-extern NSString *HTTPMethodPUT;
-extern NSString *HTTPMethodDELETE;
+extern NSString * __nonnull HTTPMethodGET;
+extern NSString * __nonnull HTTPMethodPOST;
+extern NSString * __nonnull HTTPMethodPATCH;
+extern NSString * __nonnull HTTPMethodPUT;
+extern NSString * __nonnull HTTPMethodDELETE;
 
 @interface VIMRequestDescriptor : NSObject <NSSecureCoding, NSCopying>
 
-@property (nonatomic, copy) NSString *descriptorID;
-@property (nonatomic, copy) NSString *urlPath;
-@property (nonatomic, copy) NSString *userConnectionKey;
-@property (nonatomic, copy) NSString *HTTPMethod;
+@property (nonatomic, copy, nullable) NSString *descriptorID;
+@property (nonatomic, copy, nullable) NSString *urlPath;
+@property (nonatomic, copy, nullable) NSString *HTTPMethod;
 
-@property (nonatomic, strong) id parameters;
+@property (nonatomic, strong, nullable) id parameters;
 @property (nonatomic, assign) VIMCachePolicy cachePolicy;
 @property (nonatomic, assign) BOOL shouldCacheResponse;
 @property (nonatomic, assign) BOOL shouldRetryOnFailure;
 
-@property (nonatomic) Class modelClass;
-@property (nonatomic, copy) NSString *modelKeyPath;
+@property (nonatomic, strong, nullable) Class modelClass;
+@property (nonatomic, copy, nullable) NSString *modelKeyPath;
 
 @end

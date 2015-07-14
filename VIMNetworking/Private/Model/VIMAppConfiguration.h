@@ -32,10 +32,10 @@
 
 @interface VIMAppConfiguration : VIMModelObject
 
-@property (nonatomic, strong, readonly) VIMFacebookConfiguration *facebookConfiguration;
-@property (nonatomic, strong, readonly) VIMFeaturesConfiguration *featuresConfiguration;
-@property (nonatomic, strong, readonly) VIMAPIConfiguration *APIConfiguration;
+@property (nonatomic, strong, readonly, nullable) VIMFacebookConfiguration *facebookConfiguration;
+@property (nonatomic, strong, readonly, nullable) VIMFeaturesConfiguration *featuresConfiguration;
+@property (nonatomic, strong, readonly, nullable) VIMAPIConfiguration *APIConfiguration;
 
-@property (nonatomic, strong, readonly) NSString *keyValueHash;
+@property (nonatomic, strong, readonly, nullable) NSString *keyValueHash;
 
 @end

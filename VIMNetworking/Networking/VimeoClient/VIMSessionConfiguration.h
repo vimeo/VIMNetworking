@@ -28,15 +28,16 @@
 
 @interface VIMSessionConfiguration : NSObject
 
-@property (nonatomic, copy) NSString *clientKey;
-@property (nonatomic, copy) NSString *clientSecret;
-@property (nonatomic, copy) NSString *scope;
+@property (nonatomic, copy, nullable) NSString *clientKey;
+@property (nonatomic, copy, nullable) NSString *clientSecret;
+@property (nonatomic, copy, nullable) NSString *scope;
+@property (nonatomic, copy, nullable) NSString *baseURLString;
 
-@property (nonatomic, copy) NSString *backgroundSessionIdentifierApp;
-@property (nonatomic, copy) NSString *backgroundSessionIdentifierExtension;
-@property (nonatomic, copy) NSString *sharedContainerID;
+@property (nonatomic, copy, nullable) NSString *backgroundSessionIdentifierApp;
+@property (nonatomic, copy, nullable) NSString *backgroundSessionIdentifierExtension;
+@property (nonatomic, copy, nullable) NSString *sharedContainerID;
 
-@property (nonatomic, copy) NSString *APIVersionString;
+@property (nonatomic, copy, nullable) NSString *APIVersionString;
 
 - (BOOL)isValid;
 

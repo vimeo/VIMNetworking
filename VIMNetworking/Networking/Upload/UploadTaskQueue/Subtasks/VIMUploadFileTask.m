@@ -25,6 +25,9 @@
 //
 
 #import "VIMUploadFileTask.h"
+#import "VIMUploadSessionManager.h"
+#import <AVFoundation/AVFoundation.h>
+#import "AVAsset+Filesize.h"
 
 static const NSString *VIMUploadFileTaskName = @"FILE_UPLOAD";
 static const NSString *VIMUploadFileTaskErrorDomain = @"VIMUploadFileTaskErrorDomain";
@@ -107,20 +110,18 @@ static const NSString *VIMUploadFileTaskErrorDomain = @"VIMUploadFileTaskErrorDo
         return;
     }
     
+    NSString *value = [VIMUploadSessionManager authorizationHeaderValue];
+    if (value)
+    {
+        [request setValue:value forHTTPHeaderField:@"Authorization"];
+    }
+
     NSURL *sourceURL = [NSURL fileURLWithPath:self.source];
     
-    NSNumber *size = nil;
-    BOOL success = [sourceURL getResourceValue:&size forKey:NSURLFileSizeKey error:&error];
-    if (!success)
-    {
-        self.error = [NSError errorWithDomain:(NSString *)VIMUploadFileTaskErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"Unable to get file size."}];
-        
-        [self taskDidComplete];
-        
-        return;
-    }
-    
-    [request setValue:[NSString stringWithFormat:@"%llu", [size unsignedLongLongValue]] forHTTPHeaderField:@"Content-Length"];
+    AVURLAsset *URLAsset = [AVURLAsset assetWithURL:sourceURL];
+    CGFloat filesize = [URLAsset calculateFilesize];
+
+    [request setValue:[NSString stringWithFormat:@"%.0f", filesize] forHTTPHeaderField:@"Content-Length"];
     [request setValue:@"video/mp4" forHTTPHeaderField:@"Content-Type"];
     
     NSProgress *progress = nil;

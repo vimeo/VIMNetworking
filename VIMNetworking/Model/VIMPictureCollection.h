@@ -32,10 +32,10 @@
 
 @interface VIMPictureCollection : VIMModelObject
 
-@property (strong, nonatomic) NSString *uri;
-@property (strong, nonatomic) NSArray *pictures;
+@property (strong, nonatomic, nullable) NSString *uri;
+@property (strong, nonatomic, nullable) NSArray *pictures;
 
-- (VIMPicture *)pictureForHeight:(CGFloat)height;
-- (VIMPicture *)pictureForWidth:(CGFloat)width;
+- (nullable VIMPicture *)pictureForHeight:(CGFloat)height;
+- (nullable VIMPicture *)pictureForWidth:(CGFloat)width;
 
 @end

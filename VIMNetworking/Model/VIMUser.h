@@ -31,6 +31,7 @@
 @class VIMConnection;
 @class VIMInteraction;
 @class VIMPictureCollection;
+@class VIMPreference;
 
 typedef NS_ENUM(NSInteger, VIMUserAccountType)
 {
@@ -43,24 +44,25 @@ typedef NS_ENUM(NSInteger, VIMUserAccountType)
 @interface VIMUser : VIMModelObject
 
 @property (nonatomic, assign, readonly) VIMUserAccountType accountType;
-@property (nonatomic, copy) NSString *bio;
-@property (nonatomic, copy) NSString *contentFilter;
-@property (nonatomic, strong) NSDate *createdTime;
-@property (nonatomic, copy) NSString *link;
-@property (nonatomic, copy) NSString *location;
-@property (nonatomic, copy) NSString *name;
-@property (nonatomic, strong) VIMPictureCollection *pictureCollection;
-@property (nonatomic, strong) id stats;
-@property (nonatomic, copy) NSString *uri;
-@property (nonatomic, strong) NSArray *websites;
-@property (nonatomic, strong) NSDictionary *uploadQuota;
+@property (nonatomic, copy, nullable) NSString *bio;
+@property (nonatomic, copy, nullable) NSString *contentFilter;
+@property (nonatomic, strong, nullable) NSDate *createdTime;
+@property (nonatomic, copy, nullable) NSString *link;
+@property (nonatomic, copy, nullable) NSString *location;
+@property (nonatomic, copy, nullable) NSString *name;
+@property (nonatomic, strong, nullable) VIMPictureCollection *pictureCollection;
+@property (nonatomic, strong, nullable) id stats;
+@property (nonatomic, copy, nullable) NSString *uri;
+@property (nonatomic, strong, nullable) NSArray *websites;
+@property (nonatomic, strong, nullable) NSDictionary *uploadQuota;
+@property (nonatomic, strong, nullable) VIMPreference *preferences;
 
-- (VIMConnection *)connectionWithName:(NSString *)connectionName;
-- (VIMInteraction *)interactionWithName:(NSString *)name;
+- (nullable VIMConnection *)connectionWithName:(nonnull NSString *)connectionName;
+- (nullable VIMInteraction *)interactionWithName:(nonnull NSString *)name;
 
 - (BOOL)hasCopyrightMatch;
 - (BOOL)isFollowing;
 
-- (NSString *)accountTypeAnalyticsIdentifier;
+- (nullable NSString *)accountTypeAnalyticsIdentifier;
 
 @end

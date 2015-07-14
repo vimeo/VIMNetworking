@@ -26,6 +26,7 @@
 
 #import "VIMTempFileMaker.h"
 #import "VIMSession.h"
+#import "VIMSessionConfiguration.h"
 #import <Photos/Photos.h>
 #import <AVFoundation/AVFoundation.h>
 #import <MobileCoreServices/MobileCoreServices.h>
@@ -122,8 +123,7 @@ static const NSString *VIMTempFileMakerErrorDomain = @"VIMTempFileMakerErrorDoma
     {
         if (completionBlock)
         {
-            NSString *description = [NSString stringWithFormat:@"Asset is not exportable. Class: %@ Asset: %@", NSStringFromClass([asset class]), asset];
-            NSError *error = [NSError errorWithDomain:(NSString *)VIMTempFileMakerErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : description}];
+            NSError *error = [NSError errorWithDomain:(NSString *)VIMTempFileMakerErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"Asset is not exportable."}];
             completionBlock(nil, error);
         }
         
@@ -260,7 +260,7 @@ static const NSString *VIMTempFileMakerErrorDomain = @"VIMTempFileMakerErrorDoma
 {
     NSURL *groupURL = nil;
     
-    NSString *sharedContainerID = [[VIMSession sharedSession] sharedContainerID]; // TODO: eliminate VIMSession dependency [AH]
+    NSString *sharedContainerID = [VIMSession sharedSession].configuration.sharedContainerID; // TODO: eliminate VIMSession dependency [AH]
     if (sharedContainerID)
     {
         groupURL = [[NSFileManager new] containerURLForSecurityApplicationGroupIdentifier:sharedContainerID];

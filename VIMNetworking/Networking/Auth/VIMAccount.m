@@ -27,44 +27,11 @@
 #import "VIMAccount.h"
 #import "VIMAccountCredential.h"
 
-const NSString *kVIMAccountType_Vimeo = @"VIMAccountType_Vimeo";
-
 @interface VIMAccount () <NSCoding, NSSecureCoding>
-
-@property (nonatomic, strong, readwrite) NSString *accountID;
-@property (nonatomic, strong, readwrite) NSString *accountType;
-@property (nonatomic, strong, readwrite) NSString *accountName;
 
 @end
 
 @implementation VIMAccount
-
-- (instancetype)initWithAccountID:(NSString *)accountID accountType:(NSString *)accountType accountName:(NSString *)accountName
-{
-    self = [super init];
-    if (self)
-    {
-        _accountID = accountID;
-        _accountType = accountType;
-        _accountName = accountName;
-        _userData = [NSMutableDictionary dictionary];
-    }
-    
-    return self;
-}
-
-- (BOOL)isAuthenticated
-{
-    return (self.credential != nil && self.credential.accessToken != nil);
-}
-
-- (void)deleteCredential
-{
-    if (self.credential)
-    {
-        self.credential = nil;
-    }
-}
 
 #pragma mark - NSSecureCoding
 
@@ -80,10 +47,6 @@ const NSString *kVIMAccountType_Vimeo = @"VIMAccountType_Vimeo";
     self = [super init];
     if(self)
     {
-        self.accountID = [aDecoder decodeObjectOfClass:[NSString class] forKey:@"accountID"];
-        self.accountType = [aDecoder decodeObjectOfClass:[NSString class] forKey:@"accountType"];
-        self.accountName = [aDecoder decodeObjectOfClass:[NSString class] forKey:@"accountName"];
-
         // TODO: need to use decodeObjectOfClass but this is type id, what to do? [AH]
         
         id response = nil;
@@ -114,10 +77,6 @@ const NSString *kVIMAccountType_Vimeo = @"VIMAccountType_Vimeo";
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
-    [aCoder encodeObject:self.accountID forKey:@"accountID"];
-    [aCoder encodeObject:self.accountType forKey:@"accountType"];
-    [aCoder encodeObject:self.accountName forKey:@"accountName"];
-    
     [aCoder encodeObject:self.username forKey:@"username"];
     [aCoder encodeObject:self.serverResponse forKey:@"serverResponse"];
     [aCoder encodeObject:self.userData forKey:@"userData"];

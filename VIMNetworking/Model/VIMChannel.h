@@ -34,16 +34,19 @@
 
 @interface VIMChannel : VIMModelObject
 
-@property (nonatomic, strong) NSDate *createdTime;
-@property (nonatomic, copy) NSString *channelDescription;
-@property (nonatomic, copy) NSString *link;
-@property (nonatomic, copy) NSString *name;
-@property (nonatomic, strong) VIMPictureCollection *pictureCollection; // Unused for now [AH]
-@property (nonatomic, strong) VIMPrivacy *privacy;
-@property (nonatomic, copy) NSString *uri;
-@property (nonatomic, strong) VIMUser *user;
+@property (nonatomic, strong, nullable) NSDate *createdTime;
+@property (nonatomic, copy, nullable) NSString *channelDescription;
+@property (nonatomic, copy, nullable) NSString *link;
+@property (nonatomic, copy, nullable) NSString *name;
+@property (nonatomic, strong, nullable) VIMPictureCollection *pictureCollection;
+@property (nonatomic, strong, nullable) VIMPictureCollection *headerPictureCollection;
+@property (nonatomic, strong, nullable) VIMPrivacy *privacy;
+@property (nonatomic, copy, nonnull) NSString *uri;
+@property (nonatomic, strong, nullable) VIMUser *user;
 
-- (VIMConnection *)connectionWithName:(NSString *)connectionName;
-- (VIMInteraction *)interactionWithName:(NSString *)name;
+- (nullable VIMConnection *)connectionWithName:(nonnull NSString *)connectionName;
+- (nullable VIMInteraction *)interactionWithName:(nonnull NSString *)name;
+
+- (BOOL)isFollowing;
 
 @end

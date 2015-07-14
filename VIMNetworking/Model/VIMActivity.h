@@ -34,14 +34,14 @@
 
 @interface VIMActivity : VIMModelObject
 
-@property (nonatomic, strong) VIMVideo *video;
-@property (nonatomic, strong) VIMUser *user;
-@property (nonatomic, strong) VIMChannel *channel;
-@property (nonatomic, strong) VIMGroup *group;
-@property (nonatomic, strong) VIMTag *tag;
+@property (nonatomic, strong, nullable) VIMVideo *video;
+@property (nonatomic, strong, nullable) VIMUser *user;
+@property (nonatomic, strong, nullable) VIMChannel *channel;
+@property (nonatomic, strong, nullable) VIMGroup *group;
+@property (nonatomic, strong, nullable) VIMTag *tag;
 
-@property (nonatomic, copy) NSString *uri;
-@property (nonatomic, copy) NSString *type;
-@property (nonatomic, strong) NSDate *time;
+@property (nonatomic, copy, nullable) NSString *uri;
+@property (nonatomic, copy, nullable) NSString *type;
+@property (nonatomic, strong, nullable) NSDate *time;
 
 @end

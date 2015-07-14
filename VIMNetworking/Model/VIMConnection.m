@@ -37,6 +37,7 @@ NSString *const VIMConnectionNameCredits = @"credits";
 NSString *const VIMConnectionNameFeed = @"feed";
 NSString *const VIMConnectionNameFollowers = @"followers";
 NSString *const VIMConnectionNameFollowing = @"following";
+NSString *const VIMConnectionNameUsers = @"users";
 NSString *const VIMConnectionNameGroups = @"groups";
 NSString *const VIMConnectionNameLikes = @"likes";
 NSString *const VIMConnectionNamePictures = @"pictures";

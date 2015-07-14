@@ -29,8 +29,8 @@
 @interface VIMUploadFileTask : VIMNetworkTask
 
 // Output
-@property (nonatomic, strong, readonly) NSProgress *uploadProgress;
+@property (nonatomic, strong, readonly, nullable) NSProgress *uploadProgress;
 
-- (instancetype)initWithSource:(NSString *)source destination:(NSString *)destination;
+- (nullable instancetype)initWithSource:(nonnull NSString *)source destination:(nonnull NSString *)destination;
 
 @end

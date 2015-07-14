@@ -28,7 +28,10 @@
 
 @interface VIMUploadSessionManager : VIMNetworkTaskSessionManager
 
-+ (instancetype)sharedAppInstance;
-+ (instancetype)sharedExtensionInstance;
++ (nullable instancetype)sharedAppInstance;
++ (nullable instancetype)sharedExtensionInstance;
+
+// TODO: eliminate the need for this dependency [AH]
++ (nonnull NSString *)authorizationHeaderValue;
 
 @end

@@ -104,7 +104,7 @@
     {
         response.result = JSON;
     }
-    
+        
     // Get paging information
     
     int page = [[modelParentRoot objectForKey:@"page"] intValue];
@@ -129,8 +129,10 @@
         response.previous = [self isNull:paging[@"previous"]] ? nil : paging[@"previous"];
     }
     
-    if(completionBlock)
+    if (completionBlock)
+    {
         completionBlock(response, nil);
+    }
 }
 
 + (BOOL)isNull:(id)element

@@ -26,7 +26,7 @@
 
 #import <Foundation/Foundation.h>
 
-extern const NSString *VIMTaskErrorDomain;
+extern const NSString * __nonnull VIMTaskErrorDomain;
 
 typedef NS_ENUM(NSInteger, VIMTaskState)
 {
@@ -42,22 +42,22 @@ typedef NS_ENUM(NSInteger, VIMTaskState)
 @protocol VIMTaskDelegate <NSObject>
 
 @optional
-- (void)taskDidStart:(VIMTask *)task;
-- (void)task:(VIMTask *)task didStartSubtask:(VIMTask *)subtask;
-- (void)task:(VIMTask *)task didCompleteSubtask:(VIMTask *)subtask;
+- (void)taskDidStart:(nonnull VIMTask *)task;
+- (void)task:(nonnull VIMTask *)task didStartSubtask:(nonnull VIMTask *)subtask;
+- (void)task:(nonnull VIMTask *)task didCompleteSubtask:(nonnull VIMTask *)subtask;
 
 @required
-- (void)taskDidComplete:(VIMTask *)task;
+- (void)taskDidComplete:(nonnull VIMTask *)task;
 
 @end
 
 @interface VIMTask : NSObject <NSCoding>
 
-@property (nonatomic, weak) id<VIMTaskDelegate> delegate;
+@property (nonatomic, weak, nullable) id<VIMTaskDelegate> delegate;
 
-@property (nonatomic, strong) NSString *identifier;
-@property (nonatomic, strong) NSString *name;
-@property (nonatomic, strong) NSError *error;
+@property (nonatomic, strong, nullable) NSString *identifier;
+@property (nonatomic, strong, nullable) NSString *name;
+@property (nonatomic, strong, nullable) NSError *error;
 @property (nonatomic, assign) VIMTaskState state;
 
 - (void)resume;

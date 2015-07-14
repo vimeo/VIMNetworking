@@ -29,6 +29,7 @@
 #include "AVAsset+Filesize.h"
 #import "PHAsset+Filesize.h"
 #import "NSError+BaseError.h"
+#import "VIMUploadSessionManager.h"
 
 static const NSString *RecordCreationPath = @"/me/videos";
 static const NSString *VIMCreateRecordTaskName = @"CREATE";
@@ -131,6 +132,12 @@ static NSString *const VIMCreateRecordTaskErrorDomain = @"VIMCreateRecordTaskErr
     NSError *error = nil;
     NSMutableURLRequest *request = [self.sessionManager.requestSerializer requestWithMethod:@"POST" URLString:[fullURL absoluteString] parameters:parameters error:&error];
     NSAssert(error == nil, @"Unable to construct request");
+    
+    NSString *value = [VIMUploadSessionManager authorizationHeaderValue];
+    if (value)
+    {
+        [request setValue:value forHTTPHeaderField:@"Authorization"];
+    }
     
     NSURLSessionDownloadTask *task = [self.sessionManager downloadTaskWithRequest:request progress:NULL destination:nil completionHandler:nil];
     self.backgroundTaskIdentifier = task.taskIdentifier;

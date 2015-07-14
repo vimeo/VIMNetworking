@@ -45,39 +45,40 @@ typedef NS_ENUM(NSUInteger, VIMVideoProcessingStatus) {
 
 @interface VIMVideo : VIMModelObject
 
-@property (nonatomic, copy) NSArray *contentRating;
-@property (nonatomic, strong) NSDate *createdTime;
-@property (nonatomic, strong) NSDate *modifiedTime;
-@property (nonatomic, copy) NSString *videoDescription;
-@property (nonatomic, strong) NSNumber *duration;
-@property (nonatomic, strong) NSArray *files;
-@property (nonatomic, strong) NSNumber *width;
-@property (nonatomic, strong) NSNumber *height;
-@property (nonatomic, copy) NSString *license;
-@property (nonatomic, copy) NSString *link;
-@property (nonatomic, copy) NSString *name;
-@property (nonatomic, strong) VIMPictureCollection *pictureCollection;
-@property (nonatomic, strong) NSDictionary *stats;
-@property (nonatomic, strong) NSArray *tags;
-@property (nonatomic, copy) NSString *uri;
-@property (nonatomic, strong) VIMUser *user;
-@property (nonatomic, copy) NSString *status;
-@property (nonatomic, copy) NSString *type;
-@property (nonatomic, strong) VIMAppeal *appeal;
-@property (nonatomic, strong) VIMPrivacy *privacy;
-@property (nonatomic, strong) VIMVideoLog *log;
-@property (nonatomic, strong) NSNumber *numPlays;
-@property (nonatomic, strong) NSArray *categories;
+@property (nonatomic, copy, nullable) NSArray *contentRating;
+@property (nonatomic, strong, nullable) NSDate *createdTime;
+@property (nonatomic, strong, nullable) NSDate *modifiedTime;
+@property (nonatomic, copy, nullable) NSString *videoDescription;
+@property (nonatomic, strong, nullable) NSNumber *duration;
+@property (nonatomic, strong, nullable) NSArray *files;
+@property (nonatomic, strong, nullable) NSNumber *width;
+@property (nonatomic, strong, nullable) NSNumber *height;
+@property (nonatomic, copy, nullable) NSString *license;
+@property (nonatomic, copy, nullable) NSString *link;
+@property (nonatomic, copy, nullable) NSString *name;
+@property (nonatomic, strong, nullable) VIMPictureCollection *pictureCollection;
+@property (nonatomic, strong, nullable) NSDictionary *stats;
+@property (nonatomic, strong, nullable) NSArray *tags;
+@property (nonatomic, copy, nullable) NSString *uri;
+@property (nonatomic, strong, nullable) VIMUser *user;
+@property (nonatomic, copy, nullable) NSString *status;
+@property (nonatomic, copy, nullable) NSString *type;
+@property (nonatomic, strong, nullable) VIMAppeal *appeal;
+@property (nonatomic, strong, nullable) VIMPrivacy *privacy;
+@property (nonatomic, strong, nullable) VIMVideoLog *log;
+@property (nonatomic, strong, nullable) NSNumber *numPlays;
+@property (nonatomic, strong, nullable) NSArray *categories;
 
 @property (nonatomic, assign) VIMVideoProcessingStatus videoStatus;
 
-- (VIMConnection *)connectionWithName:(NSString *)connectionName;
-- (VIMInteraction *)interactionWithName:(NSString *)name;
+- (nullable VIMConnection *)connectionWithName:(nonnull NSString *)connectionName;
+- (nullable VIMInteraction *)interactionWithName:(nonnull NSString *)name;
 
 // Helpers
 
 - (BOOL)canViewInfo;
 - (BOOL)canComment;
+- (BOOL)canLike;
 - (BOOL)canViewComments;
 - (BOOL)isVOD;
 - (BOOL)isPrivate;

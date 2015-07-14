@@ -1,9 +1,9 @@
 //
-//  VIMVimeoSession.h
+//  VIMSession.h
 //  VIMNetworking
 //
-//  Created by Hanssen, Alfie on 9/19/14.
-//  Copyright (c) 2014-2015 Vimeo (https://vimeo.com)
+//  Created by Alfred Hanssen on 6/19/15.
+//  Copyright (c) 2015 Vimeo. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,40 +25,41 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "VIMAuthenticator.h"
+#import "VIMClient.h"
+#import "VIMAccountNew.h"
 #import "VIMSessionConfiguration.h"
 
-@class VIMCache;
-@class VIMUser;
-@class VIMAccount;
+typedef void (^VIMErrorCompletionBlock)(NSError * __nullable error);
 
-extern NSString *VimeoBaseURLString;
-
-extern NSString *const VIMSession_DidFinishLoadingNotification;
-extern NSString *const VIMSession_AuthenticatedUserDidChangeNotification; // Sent whenever authenticated user changes
+extern NSString *const __nonnull VIMSession_AuthenticatedAccountDidChangeNotification; // Posted when the account changes (log in or log out)
+extern NSString *const __nonnull VIMSession_AuthenticatedUserDidRefreshNotification; // Posted when the authenticated user object refreshes (user refresh)
 
 @interface VIMSession : NSObject
 
-@property (nonatomic, strong, readonly) VIMAccount *account;
-@property (nonatomic, strong, readonly) VIMUser *authenticatedUser;
-@property (nonatomic, strong, readonly) VIMSessionConfiguration *configuration;
+@property (nonatomic, strong, readonly, nonnull) VIMSessionConfiguration *configuration;
+@property (nonatomic, strong, readonly, nullable) VIMAccountNew *account;
+@property (nonatomic, strong, readonly, nonnull) VIMAuthenticator *authenticator;
+@property (nonatomic, strong, readonly, nonnull) VIMClient *client;
 
-+ (instancetype)sharedSession;
++ (void)setupWithConfiguration:(nonnull VIMSessionConfiguration *)configuration;
 
-- (void)setupWithConfiguration:(VIMSessionConfiguration *)configuration completionBlock:(void(^)(BOOL success))completionBlock;
++ (nullable instancetype)sharedSession;
 
-- (void)refreshUserFromRemoteWithCompletionBlock:(void (^)(NSError *error))completionBlock;
+#pragma mark - Authentication
 
-- (void)changeBaseURLString:(NSString *)baseURLString;
+- (nullable nullable id<VIMRequestToken>)authenticateWithClientCredentialsGrant:(nonnull VIMErrorCompletionBlock)completionBlock;
 
-- (void)logOut;
+- (nullable id<VIMRequestToken>)authenticateWithCodeGrantResponseURL:(nonnull NSURL *)responseURL completionBlock:(nonnull VIMErrorCompletionBlock)completionBlock;
 
-- (NSString *)baseURLString;
-- (VIMCache *)userCache; // Get local cache for current user. Returns shared cache if no current user.
-- (VIMCache *)appGroupSharedCache;
+- (nullable id<VIMRequestToken>)logout;
 
-- (NSString *)backgroundSessionIdentifierApp;
-- (NSString *)backgroundSessionIdentifierExtension;
-- (NSString *)sharedContainerID;
+#pragma mark - Configuration
+
+- (BOOL)changeAccount:(nonnull VIMAccountNew *)account;
+
+- (BOOL)changeBaseURL:(nonnull NSString *)baseURLString;
+
+- (nullable id<VIMRequestToken>)refreshAuthenticatedUserWithCompletionBlock:(nullable VIMErrorCompletionBlock)completionBlock;
 
 @end

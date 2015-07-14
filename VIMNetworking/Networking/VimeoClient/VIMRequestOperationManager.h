@@ -25,27 +25,51 @@
 //
 
 #import "AFNetworking.h"
-
-@class VIMRequestDescriptor;
-@class VIMServerResponse;
-@class VIMSession;
+#import "VIMRequestDescriptor.h"
+#import "VIMServerResponse.h"
 
 @protocol VIMRequestToken;
 
-typedef void (^VIMFetchCompletionBlock)(VIMServerResponse *response, NSError *error);
+@class VIMCache;
+@class VIMRequestOperationManager;
 
-extern NSString * const kVimeoClientErrorDomain;
+typedef void (^VIMRequestCompletionBlock)(VIMServerResponse * __nullable response, NSError * __nullable error);
+
+extern NSInteger const kVimeoClientErrorCodeCacheUnavailable;
+extern NSString *const __nonnull kVimeoClientErrorDomain;
+extern NSString *const __nonnull kVimeoClient_ServiceUnavailableNotification;
+extern NSString *const __nonnull kVimeoClient_InvalidTokenNotification;
+
+@protocol VIMRequestOperationManagerDelegate <NSObject>
+
+@required
+- (nullable NSString *)authorizationHeaderValue:(nonnull VIMRequestOperationManager *)operationManager;
+
+@optional
+- (nullable NSString *)acceptHeaderValue:(nonnull VIMRequestOperationManager *)operationManager;
+
+@end
 
 @interface VIMRequestOperationManager : AFHTTPRequestOperationManager
 
-+ (VIMRequestOperationManager *)sharedManager;
+@property (nonatomic, weak, nullable) id<VIMRequestOperationManagerDelegate> delegate;
 
-- (id<VIMRequestToken>)fetchWithRequestDescriptor:(VIMRequestDescriptor *)descriptor
-                                          handler:(id)handler
-                                  completionBlock:(VIMFetchCompletionBlock)completionBlock;
+@property (nonatomic, strong, nullable) VIMCache *cache;
 
-- (void)cancelRequest:(id<VIMRequestToken>)request;
+- (nullable id<VIMRequestToken>)requestURI:(nonnull NSString *)URI
+                           completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 
-- (void)cancelAllRequestsForHandler:(id)handler;
+- (nullable id<VIMRequestToken>)requestDescriptor:(nonnull VIMRequestDescriptor *)descriptor
+                                  completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
+
+- (nullable id<VIMRequestToken>)requestDescriptor:(nonnull VIMRequestDescriptor *)descriptor
+                                          handler:(nonnull id)handler
+                                  completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
+
+- (void)cancelRequest:(nullable id<VIMRequestToken>)request;
+- (void)cancelAllRequestsForHandler:(nonnull id)handler;
+- (void)cancelAllRequests;
+
+NSDictionary * __nullable VIMParametersFromQueryString(NSString * __nonnull queryString);
 
 @end

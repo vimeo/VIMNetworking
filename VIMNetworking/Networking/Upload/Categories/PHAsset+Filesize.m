@@ -35,18 +35,20 @@
 - (int32_t)calculateFilesizeWithCompletionBlock:(FileSizeCompletionBlock)completionBlock
 {
     PHVideoRequestOptions *options = [PHVideoRequestOptions new];
-    options.deliveryMode = PHVideoRequestOptionsDeliveryModeHighQualityFormat;
-    options.networkAccessAllowed = NO;
+    options.deliveryMode = PHVideoRequestOptionsDeliveryModeHighQualityFormat; // TODO: How does this impact things? [AH]
+    options.networkAccessAllowed = YES; // TODO: is this a problem? [AH]
 
     return [[PHImageManager defaultManager] requestAVAssetForVideo:self options:options resultHandler:^(AVAsset *asset, AVAudioMix *audioMix, NSDictionary *info) {
         
-        CGFloat rawSize = [asset calculateFilesize];
-        
-        if (completionBlock)
-        {
-            NSError *error = info[PHImageErrorKey];
-            completionBlock(rawSize, error);
-        }
+        [asset calculateFilesizeWithCompletionBlock:^(CGFloat fileSize, NSError *error) {
+            
+            if (completionBlock)
+            {
+                NSError *error = info[PHImageErrorKey];
+                completionBlock(fileSize, error);
+            }
+
+        }];
         
     }];
 }

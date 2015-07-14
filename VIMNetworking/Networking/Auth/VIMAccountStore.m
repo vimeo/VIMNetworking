@@ -25,183 +25,144 @@
 //
 
 #import "VIMAccountStore.h"
-
-#import "VIMAccount.h"
-#import "VIMCache.h"
-#import "VIMNetworking.h"
+#import "VIMAccountNew.h"
 #import "KeychainUtility.h"
+#import "VIMAccount.h"
+#import "VIMAccountCredential.h"
+#import "VIMObjectMapper.h"
+#import "VIMUser.h"
 
-static NSString * const kVIMAccountStore_SaveKey = @"kVIMAccountStore_SaveKey";
-
-NSString * const VIMAccountStore_AccountsDidChangeNotification = @"VIMAccountStore_AccountsDidChangeNotification";
-
-NSString * const VIMAccountStore_ChangedAccountKey = @"VIMAccountStore_ChangedAccountKey";
-
-
-@interface VIMAccountStore ()
-
-@property (nonatomic, strong) NSMutableArray *accounts;
-
-@end
+static NSString *const LegacyAccountKey = @"kVIMAccountStore_SaveKey"; // Added 6/22/2015 [AH]
 
 @implementation VIMAccountStore
 
-+ (VIMAccountStore *)sharedInstance
++ (VIMAccountNew *)loadLegacyAccount
 {
-    static VIMAccountStore *_sharedInstance = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        _sharedInstance = [[VIMAccountStore alloc] init];
-    });
+    // Load the legacy account data
+    NSData *data = [[KeychainUtility sharedInstance] dataForAccount:LegacyAccountKey];
     
-    return _sharedInstance;
-}
-
-- (id)init
-{
-    self = [super init];
-    if(self)
-    {
-        _accounts = [NSMutableArray array];
-        
-        [self _load];
-    }
+    // Delete the saved legacy account object
+    [[KeychainUtility sharedInstance] deleteDataForAccount:LegacyAccountKey];
     
-    return self;
-}
-
-- (void)saveAccount:(VIMAccount *)account
-{
-    VIMAccount *existingAccount = [self accountWithID:account.accountID];
-    if(account != existingAccount)
-    {
-        if(existingAccount)
-            [self.accounts removeObject:existingAccount];
-        
-        [self.accounts addObject:account];
-    }
-    
-    [self _save];
-    
-    [self sendAccountChangeNotification:account];
-}
-
-- (void)removeAccount:(VIMAccount *)account
-{
-    VIMAccount *existingAccount = [self accountWithID:account.accountID];
-    if(existingAccount)
-        [self.accounts removeObject:existingAccount];
-
-    [self _save];
-
-    [self sendAccountChangeNotification:account];
-}
-
-- (VIMAccount *)accountWithID:(NSString *)accountID
-{
-    for(VIMAccount *account in self.accounts)
-    {
-        if([account.accountID isEqualToString:accountID])
-            return account;
-    }
-    
-    return nil;
-}
-
-- (NSArray *)accountsWithType:(NSString *)accountType
-{
-    NSMutableArray *result = [NSMutableArray array];
-    
-    for(VIMAccount *account in self.accounts)
-    {
-        if([account.accountType isEqualToString:accountType])
-            [result addObject:account];
-    }
-    
-    return result;
-}
-
-- (void)sendAccountChangeNotification:(VIMAccount *)account
-{
-    NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
-    if(account)
-        [userInfo setObject:account forKey:VIMAccountStore_ChangedAccountKey];
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:VIMAccountStore_AccountsDidChangeNotification object:self userInfo:userInfo];
-}
-
-- (void)reload
-{
-    [self _load];
-    
-    NSArray *accounts = self.accounts;
-    
-    for(VIMAccount *account in accounts)
-        [self sendAccountChangeNotification:account];
-}
-
-#pragma mark - Internal methods
-
-- (void)_save
-{
-    NSArray *accountsToSave = [NSArray arrayWithArray:self.accounts];
-
-    NSMutableData *data = [NSMutableData new];
-    NSKeyedArchiver *keyedArchiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
-    [keyedArchiver encodeObject:accountsToSave];
-    [keyedArchiver finishEncoding];
-
-    BOOL success = [[KeychainUtility sharedInstance] setData:data forAccount:kVIMAccountStore_SaveKey];
-    if (!success)
-    {
-        NSLog(@"Unable to archive account data.");
-    }
-}
-
-- (void)_load
-{
-    [self.accounts removeAllObjects];
-
-    NSArray *accounts = nil;
-    
-    NSData *data = [[KeychainUtility sharedInstance] dataForAccount:(NSString *)kVIMAccountStore_SaveKey];
+    // Convert the legacy account data into an array of VIMAccountLegacy objects
+    NSArray *legacyAccounts = nil;
     if (data)
     {
         NSKeyedUnarchiver *keyedUnarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
         
         @try
         {
-            accounts = [keyedUnarchiver decodeObject];
+            legacyAccounts = [keyedUnarchiver decodeObject];
         }
         @catch (NSException *exception)
         {
-            NSLog(@"VIMAccountStore: An exception occured while unarchiving: %@", exception);
-            
-            [[KeychainUtility sharedInstance] deleteDataForAccount:(NSString *)kVIMAccountStore_SaveKey];
+            NSLog(@"VIMAccountStore: An exception occured on load: %@", exception);
         }
         
         [keyedUnarchiver finishDecoding];
     }
     
-    // Migrate from cache if necessary [AH]
-    if (accounts == nil)
+    VIMAccountNew *account = nil;
+    
+    if (legacyAccounts && [legacyAccounts count]) // Convert the VIMAccountLegacy into a VIMAccount
     {
-        VIMCache *cache = [[VIMSession sharedSession] appGroupSharedCache];
-        accounts = [cache objectForKey:(NSString *)kVIMAccountStore_SaveKey];
+        VIMAccount *legacyAccount = legacyAccounts[0];
         
-        if (accounts)
+        account = [[VIMAccountNew alloc] init];
+        account.accessToken = legacyAccount.credential.accessToken;
+        account.tokenType = legacyAccount.credential.tokenType;
+        account.scope = nil; // Not present in legacy account object
+        
+        NSDictionary *userJSON = legacyAccount.serverResponse[@"user"];
+        if (userJSON)
         {
-            [self.accounts addObjectsFromArray:accounts];
-        
-            [self _save];
-
-            [cache removeObjectForKey:(NSString *)kVIMAccountStore_SaveKey];
+            VIMObjectMapper *mapper = [[VIMObjectMapper alloc] init];
+            [mapper addMappingClass:[VIMUser class] forKeypath:@""];
+            VIMUser *user = [mapper applyMappingToJSON:userJSON];
+            
+            account.user = user;
+            account.userJSON = userJSON;
         }
     }
-    else
+    
+    return account;
+}
+
+#pragma mark - VIMAccountStoreProtocol
+
++ (VIMAccountNew *)loadAccountForKey:(NSString *)key
+{
+    NSParameterAssert(key);
+    
+    if (key == nil)
     {
-        [self.accounts addObjectsFromArray:accounts];
+        return nil;
     }
+    
+    VIMAccountNew *account = nil;
+    
+    NSData *data = [[KeychainUtility sharedInstance] dataForAccount:key];
+    if (data)
+    {
+        NSKeyedUnarchiver *keyedUnarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
+        
+        @try
+        {
+            account = [keyedUnarchiver decodeObject];
+            
+            if (account.userJSON)
+            {
+                VIMObjectMapper *mapper = [[VIMObjectMapper alloc] init];
+                [mapper addMappingClass:[VIMUser class] forKeypath:@""];
+                VIMUser *user = [mapper applyMappingToJSON:account.userJSON];
+                
+                account.user = user;
+            }
+        }
+        @catch (NSException *exception)
+        {
+            NSLog(@"VIMAccountStore: An exception occured on load: %@", exception);
+            
+            [[KeychainUtility sharedInstance] deleteDataForAccount:key];
+        }
+        
+        [keyedUnarchiver finishDecoding];
+    }
+
+    return account;
+}
+
+// TODO: should we not be saving the user object? [AH]
+
++ (BOOL)saveAccount:(VIMAccountNew *)account forKey:(NSString *)key
+{
+    NSParameterAssert(key);
+    NSParameterAssert(account);
+    
+    if (account == nil || key == nil)
+    {
+        return NO;
+    }
+    
+    NSMutableData *data = [NSMutableData new];
+    NSKeyedArchiver *keyedArchiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
+    
+    [keyedArchiver encodeObject:account];
+    [keyedArchiver finishEncoding];
+    
+    return [[KeychainUtility sharedInstance] setData:data forAccount:key];
+}
+
++ (BOOL)deleteAccountForKey:(NSString *)key
+{
+    NSParameterAssert(key);
+    
+    if (key == nil)
+    {
+        return NO;
+    }
+
+    return [[KeychainUtility sharedInstance] deleteDataForAccount:key];
 }
 
 @end

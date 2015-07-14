@@ -28,13 +28,13 @@
 
 // TODO: morph this into a proper VIMError class [AH] 5/15/15
 
-extern NSString * const VimeoErrorCodeHeaderKey;
-extern NSString * const VimeoErrorCodeKey;
-extern NSString * const VimeoErrorDomainKey;
+extern NSString * const __nonnull VimeoErrorCodeHeaderKey;
+extern NSString * const __nonnull VimeoErrorCodeKey;
+extern NSString * const __nonnull VimeoErrorDomainKey;
 
-extern NSString * const BaseErrorKey;
-extern NSString * const AFNetworkingErrorDomain; // TODO: Why is this necessary? [AH] 5/15/15
-extern NSString * const kVimeoServerErrorDomain;
+extern NSString * const __nonnull BaseErrorKey;
+extern NSString * const __nonnull AFNetworkingErrorDomain; // TODO: Why is this necessary? [AH] 5/15/15
+extern NSString * const __nonnull kVimeoServerErrorDomain;
 
 typedef NS_ENUM(NSInteger, VIMErrorCode)
 {
@@ -44,8 +44,8 @@ typedef NS_ENUM(NSInteger, VIMErrorCode)
 
 @interface NSError (BaseError)
 
-+ (NSError *)errorFromServerError:(NSError *)error withNewDomain:(NSString *)domain;
++ (nullable NSError *)errorFromServerError:(nullable NSError *)error withNewDomain:(nullable NSString *)domain;
 
-+ (NSError *)vimeoErrorFromError:(NSError *)error withVimeoDomain:(NSString *)vimeoDomain vimeoErrorCode:(NSInteger)vimeoErrorCode;
++ (nullable NSError *)vimeoErrorFromError:(nullable NSError *)error withVimeoDomain:(nullable NSString *)vimeoDomain vimeoErrorCode:(NSInteger)vimeoErrorCode;
 
 @end

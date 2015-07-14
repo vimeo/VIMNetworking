@@ -28,29 +28,30 @@
 
 // Connection names
 
-NSString *const VIMConnectionNameActivities;
-NSString *const VIMConnectionNameAlbums;
-NSString *const VIMConnectionNameChannels;
-NSString *const VIMConnectionNameComments;
-NSString *const VIMConnectionNameCovers;
-NSString *const VIMConnectionNameCredits;
-NSString *const VIMConnectionNameFeed;
-NSString *const VIMConnectionNameFollowers;
-NSString *const VIMConnectionNameFollowing;
-NSString *const VIMConnectionNameGroups;
-NSString *const VIMConnectionNameLikes;
-NSString *const VIMConnectionNamePictures;
-NSString *const VIMConnectionNamePortfolios;
-NSString *const VIMConnectionNameShared;
-NSString *const VIMConnectionNameVideos;
-NSString *const VIMConnectionNameWatchlater;
-NSString *const VIMConnectionNameViolations;
+NSString *const __nonnull VIMConnectionNameActivities;
+NSString *const __nonnull VIMConnectionNameAlbums;
+NSString *const __nonnull VIMConnectionNameChannels;
+NSString *const __nonnull VIMConnectionNameComments;
+NSString *const __nonnull VIMConnectionNameCovers;
+NSString *const __nonnull VIMConnectionNameCredits;
+NSString *const __nonnull VIMConnectionNameFeed;
+NSString *const __nonnull VIMConnectionNameFollowers;
+NSString *const __nonnull VIMConnectionNameFollowing;
+NSString *const __nonnull VIMConnectionNameUsers;
+NSString *const __nonnull VIMConnectionNameGroups;
+NSString *const __nonnull VIMConnectionNameLikes;
+NSString *const __nonnull VIMConnectionNamePictures;
+NSString *const __nonnull VIMConnectionNamePortfolios;
+NSString *const __nonnull VIMConnectionNameShared;
+NSString *const __nonnull VIMConnectionNameVideos;
+NSString *const __nonnull VIMConnectionNameWatchlater;
+NSString *const __nonnull VIMConnectionNameViolations;
 
 @interface VIMConnection : VIMModelObject
 
-@property (nonatomic, copy) NSString *uri;
-@property (nonatomic, strong) NSNumber *total;
-@property (nonatomic, strong) NSArray *options;
+@property (nonatomic, copy, nullable) NSString *uri;
+@property (nonatomic, strong, nullable) NSNumber *total;
+@property (nonatomic, strong, nullable) NSArray *options;
 
 - (BOOL)canGet;
 - (BOOL)canPost;

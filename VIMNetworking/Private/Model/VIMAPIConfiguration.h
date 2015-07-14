@@ -28,6 +28,6 @@
 
 @interface VIMAPIConfiguration : VIMModelObject
 
-@property (nonatomic, strong) NSString *host;
+@property (nonatomic, strong, nullable) NSString *host;
 
 @end

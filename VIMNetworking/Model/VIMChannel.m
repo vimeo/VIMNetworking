@@ -60,7 +60,9 @@
 
 - (NSDictionary *)getObjectMapping
 {
-    return @{@"description" : @"channelDescription"};
+    return @{@"description" : @"channelDescription",
+             @"pictures": @"pictureCollection",
+             @"header": @"headerPictureCollection"};
 }
 
 - (Class)getClassForObjectKey:(NSString *)key
@@ -73,6 +75,16 @@
     if ([key isEqualToString:@"user"])
     {
         return [VIMUser class];
+    }
+    
+    if ([key isEqualToString:@"pictures"])
+    {
+        return [VIMPictureCollection class];
+    }
+    
+    if ([key isEqualToString:@"header"])
+    {
+        return [VIMPictureCollection class];
     }
     
     return nil;
@@ -136,6 +148,14 @@
     }
     
     self.interactions = interactions;
+}
+
+#pragma mark - Helpers
+
+- (BOOL)isFollowing
+{
+    VIMInteraction *interaction = [self interactionWithName:VIMInteractionNameFollow];
+    return (interaction && interaction.added.boolValue);
 }
 
 @end

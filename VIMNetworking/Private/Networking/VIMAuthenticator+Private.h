@@ -1,9 +1,9 @@
 //
-//  ECAccountManager.h
+//  VIMAuthenticator+Private.h
 //  VIMNetworking
 //
-//  Created by Kashif Muhammad on 10/29/13.
-//  Copyright (c) 2014-2015 Vimeo (https://vimeo.com)
+//  Created by Alfred Hanssen on 6/22/15.
+//  Copyright (c) 2015 Vimeo. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,25 +24,16 @@
 //  THE SOFTWARE.
 //
 
-#import <Accounts/Accounts.h>
+#import "VIMAuthenticator.h"
 
-typedef void (^VIMAccountManagerErrorCompletionBlock)(NSError *error);
+@interface VIMAuthenticator (Private)
 
-@class VIMAccount;
+- (nullable id<VIMRequestToken>)loginWithEmail:(nonnull NSString *)email password:(nonnull NSString *)password completionBlock:(nonnull VIMAccountCompletionBlock)completionBlock;
 
-extern NSString * const kECAccountID_Vimeo;
-extern NSString * const VIMAccountManagerErrorDomain;
+- (nullable id<VIMRequestToken>)joinWithName:(nonnull NSString *)name email:(nonnull NSString *)email password:(nonnull NSString *)password completionBlock:(nonnull VIMAccountCompletionBlock)completionBlock;
 
-@interface VIMAccountManager: NSObject
+- (nullable id<VIMRequestToken>)loginWithFacebookToken:(nonnull NSString *)facebookToken completionBlock:(nonnull VIMAccountCompletionBlock)completionBlock;
 
-+ (VIMAccountManager *)sharedInstance;
-
-- (NSOperation *)authenticateWithClientCredentialsGrantAndCompletionBlock:(VIMAccountManagerErrorCompletionBlock)completionBlock;
-
-- (NSOperation *)authenticateWithCodeGrant:(NSString *)code completionBlock:(VIMAccountManagerErrorCompletionBlock)completionBlock;
-
-- (void)logoutAccount:(VIMAccount *)account;
-
-- (void)refreshAccounts;
+- (nullable id<VIMRequestToken>)joinWithFacebookToken:(nonnull NSString *)facebookToken completionBlock:(nonnull VIMAccountCompletionBlock)completionBlock;
 
 @end

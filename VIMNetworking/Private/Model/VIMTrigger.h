@@ -28,9 +28,9 @@
 
 @interface VIMTrigger : VIMModelObject
 
-@property (nonatomic, copy, readonly) NSString *uri;
-@property (nonatomic, copy, readonly) NSString *contextType;
-@property (nonatomic, copy, readonly) NSString *contextUri;
+@property (nonatomic, copy, readonly, nullable) NSString *uri;
+@property (nonatomic, copy, readonly, nullable) NSString *contextType;
+@property (nonatomic, copy, readonly, nullable) NSString *contextUri;
 
 - (BOOL)isEnabled;
 
