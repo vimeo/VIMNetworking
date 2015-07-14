@@ -332,7 +332,7 @@ static void *TaskQueueSpecific = "TaskQueueSpecific";
     
     if (self.currentTask)
     {
-        archiveDictionary[CurrentTaskKey] = [self.currentTask copy];
+        archiveDictionary[CurrentTaskKey] = self.currentTask;
     }
     
     NSLog(@"SAVING: %@", dictionary);
