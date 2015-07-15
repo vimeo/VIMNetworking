@@ -35,7 +35,7 @@
     if (self)
     {
         _APIVersionString = @"3.2";
-        _baseURLString = @"https://api.vimeo-staging.com/";
+        _baseURLString = @"https://api.vimeo.com/";
     }
     
     return self;
