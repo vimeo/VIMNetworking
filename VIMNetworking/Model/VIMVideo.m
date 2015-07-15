@@ -40,6 +40,13 @@
 #import "VIMVideoLog.h"
 #import "VIMCategory.h"
 
+NSString *VIMContentRating_Language = @"language";
+NSString *VIMContentRating_Drugs = @"drugs";
+NSString *VIMContentRating_Violence = @"violence";
+NSString *VIMContentRating_Nudity = @"nudity";
+NSString *VIMContentRating_Unrated = @"unrated";
+NSString *VIMContentRating_Safe = @"safe";
+
 @interface VIMVideo ()
 
 @property (nonatomic, strong) NSDictionary *metadata;
@@ -259,11 +266,6 @@
 
 # pragma mark - Helpers
 
-- (BOOL)canViewInfo
-{
-    return NO;
-}
-
 - (BOOL)canComment
 {
     NSString *privacy = self.privacy.comments;
@@ -320,6 +322,95 @@
 - (BOOL)isUploading
 {
     return self.videoStatus == VIMVideoProcessingStatusUploading;
+}
+
+// New
+
+- (void)setIsLiked:(BOOL)isLiked
+{
+    VIMInteraction *interaction = [self interactionWithName:VIMInteractionNameLike];
+    interaction.added = @(isLiked);
+    
+    [self.interactions setValue:interaction forKey:VIMInteractionNameLike];
+}
+
+- (void)setIsWatchLater:(BOOL)isWatchLater
+{
+    VIMInteraction *interaction = [self interactionWithName:VIMInteractionNameWatchLater];
+    interaction.added = @(isWatchLater);
+    
+    [self.interactions setValue:interaction forKey:VIMInteractionNameWatchLater];
+}
+
+- (BOOL)isLiked
+{
+    VIMInteraction *interaction = [self interactionWithName:VIMInteractionNameLike];
+    
+    return interaction.added.boolValue;
+}
+
+- (BOOL)isWatchLater
+{
+    VIMInteraction *interaction = [self interactionWithName:VIMInteractionNameWatchLater];
+
+    return interaction.added.boolValue;
+}
+
+- (BOOL)isRatedAllAudiences
+{
+    NSString *contentRating = [self singleContentRatingIfAvailable];
+    
+    return [contentRating isEqualToString:VIMContentRating_Safe];
+}
+
+- (BOOL)isNotYetRated
+{
+    NSString *contentRating = [self singleContentRatingIfAvailable];
+    
+    return [contentRating isEqualToString:VIMContentRating_Unrated];
+}
+
+- (BOOL)isRatedMature
+{
+    NSString *contentRating = [self singleContentRatingIfAvailable];
+    
+    return ![contentRating isEqualToString:VIMContentRating_Unrated] && ![contentRating isEqualToString:VIMContentRating_Safe];
+}
+
+- (NSString *)singleContentRatingIfAvailable
+{
+    NSString *contentRating = nil;
+    
+    if (self.contentRating)
+    {
+        if ([self.contentRating isKindOfClass:[NSArray class]])
+        {
+            if ([self.contentRating count] == 1)
+            {
+                contentRating = [self.contentRating firstObject];
+            }
+        }
+        else if ([self.contentRating isKindOfClass:[NSString class]])
+        {
+            contentRating = (NSString *)self.contentRating;
+        }
+    }
+    
+    return contentRating;
+}
+
+- (NSInteger)likesCount
+{
+    VIMConnection *likesConnection = [self connectionWithName:VIMConnectionNameLikes];
+    
+    return likesConnection.total.intValue;
+}
+
+- (NSInteger)commentsCount
+{
+    VIMConnection *commentsConnection = [self connectionWithName:VIMConnectionNameComments];
+    
+    return (self.canViewComments ? commentsConnection.total.intValue : 0);
 }
 
 @end

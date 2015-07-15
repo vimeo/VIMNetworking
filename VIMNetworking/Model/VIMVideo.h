@@ -35,6 +35,13 @@
 @class VIMAppeal;
 @class VIMVideoLog;
 
+extern NSString * __nonnull VIMContentRating_Language;
+extern NSString * __nonnull VIMContentRating_Drugs;
+extern NSString * __nonnull VIMContentRating_Violence;
+extern NSString * __nonnull VIMContentRating_Nudity;
+extern NSString * __nonnull VIMContentRating_Unrated;
+extern NSString * __nonnull VIMContentRating_Safe;
+
 typedef NS_ENUM(NSUInteger, VIMVideoProcessingStatus) {
     VIMVideoProcessingStatusAvailable,
     VIMVideoProcessingStatusUploading,
@@ -76,7 +83,6 @@ typedef NS_ENUM(NSUInteger, VIMVideoProcessingStatus) {
 
 // Helpers
 
-- (BOOL)canViewInfo;
 - (BOOL)canComment;
 - (BOOL)canLike;
 - (BOOL)canViewComments;
@@ -85,5 +91,16 @@ typedef NS_ENUM(NSUInteger, VIMVideoProcessingStatus) {
 - (BOOL)isAvailable;
 - (BOOL)isTranscoding;
 - (BOOL)isUploading;
+
+- (BOOL)isLiked;
+- (BOOL)isWatchLater;
+- (BOOL)isRatedAllAudiences;
+- (BOOL)isNotYetRated;
+- (BOOL)isRatedMature;
+- (NSInteger)likesCount;
+- (NSInteger)commentsCount;
+
+- (void)setIsLiked:(BOOL)isLiked;
+- (void)setIsWatchLater:(BOOL)isWatchLater;
 
 @end
