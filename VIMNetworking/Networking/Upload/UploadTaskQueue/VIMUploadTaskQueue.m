@@ -74,8 +74,6 @@ NSString *const VIMUploadTaskQueue_NameKey = @"VIMUploadTaskQueue_NameKey";
     self = [super initWithSessionManager:sessionManager];
     if (self)
     {
-        self.cellularUploadEnabled = YES;
-        
         _uploadQueueTracker = [[VIMUploadTaskQueueTracker alloc] initWithSessionIdentifier:sessionManager.session.configuration.identifier];
     }
     
