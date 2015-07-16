@@ -13,14 +13,44 @@ typedef NS_ENUM(NSInteger, VIMErrorCode)
     VIMErrorCodeUploadStorageQuotaExceeded = 4101,
     VIMErrorCodeUploadDailyQuotaExceeded = 4102,
     
-    VIMErrorCodeInvalidRequestInput = 4204, // root error code for all invalid parameters errors below
+    VIMErrorCodeInvalidRequestInput = 2204, // root error code for all invalid parameters errors below
     
-    VIMErrorCodeEmailMalformed = 4219, // email doesn't contain @ sign
-    VIMErrorCodeEmailTooLong = 4218, // email is greater than 128 characters
-    VIMErrorCodePasswordInsecureShort = 4211,  // when a password is shorter than 8 chars
-    VIMErrorCodePasswordInsecureSimple = 4213,  // when a password doesn't contain 4 unique chars
-    VIMErrorCodePasswordInsecureContainsUserInfo = 4214, // when a password contains the username or email
-    VIMErrorCodeCredentialsRejected = 4220  // Username and/or password are incorrect
+    VIMErrorCodeWrongEmailPassword = 2207,
+    VIMErrorCodeEmailTooLong = 2217,
+    VIMErrorCodePasswordTooShort = 2211,
+    VIMErrorCodePasswordTooSimple = 2212,
+    VIMErrorCodeNameInPassword = 2213,
+    VIMErrorCodeEmailNotRecognized = 2218,
+    VIMErrorCodePasswordEmailMismatch = 2219,
+    VIMErrorCodeNoPasswordProvided = 2210,
+    VIMErrorCodeNoEmailProvided = 2215,
+    VIMErrorCodeInvalidEmail = 2216,
+    VIMErrorCodeNoNameProvided = 2214,
+    VIMErrorCodeNameTooLong = 2209,
+    VIMErrorCodeFacebookJoinInvalidToken = 2303,
+    VIMErrorCodeFacebookJoinNoToken = 2306,
+    VIMErrorCodeFacebookJoinMissingProperty = 2304,
+    VIMErrorCodeFacebookJoinMalformedToken = 2305,
+    VIMErrorCodeFacebookJoinDecryptFail = 2307,
+    VIMErrorCodeFacebookJoinTokenTooLong = 2308,
+    VIMErrorCodeFacebookLoginNoToken = 2312,
+    VIMErrorCodeFacebookLoginMissingProperty = 2310,
+    VIMErrorCodeFacebookLoginMalformedToken = 2311,
+    VIMErrorCodeFacebookLoginDecryptFail = 2313,
+    VIMErrorCodeFacebookLoginTokenTooLong = 2314,
+    VIMErrorCodeFacebookInvalidInputGrantType = 2221,
+    VIMErrorCodeFacebookJoinValidateTokenFail = 2315,
+    VIMErrorCodeFacebookInvalidNoInput = 2208,
+    VIMErrorCodeFacebookInvalidToken = 2300,
+    VIMErrorCodeFacebookMissingProperty = 2301,
+    VIMErrorCodeFacebookMalformedToken = 2302,
+    VIMErrorCodeEmailAlreadyRegistered = 2400,
+    VIMErrorCodeEmailBlocked = 2401,
+    VIMErrorCodeEmailSpammer = 2402,
+    VIMErrorCodeEmailPurgatory = 2403,
+    VIMErrorCodeURLUnavailable = 2404,
+    VIMErrorCodeTimeout = 5000,
+    VIMErrorCodeTokenNotGenerated = 5001
 };
 
 typedef NS_ENUM(NSInteger, HTTPErrorCode)
