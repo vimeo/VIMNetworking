@@ -413,4 +413,9 @@ NSString *VIMContentRating_Safe = @"safe";
     return (self.canViewComments ? commentsConnection.total.intValue : 0);
 }
 
+- (nullable VIMVideoFile *)downloadableFileForSize:(CGSize)size
+{
+    
+}
+
 @end
