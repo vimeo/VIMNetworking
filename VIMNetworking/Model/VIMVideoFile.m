@@ -121,4 +121,11 @@ NSString *const VIMVideoFileQualityMobile = @"mobile";
     return URL;
 }
 
+- (BOOL)isExpired
+{
+    NSComparisonResult result = [[NSDate date] compare:self.expirationDate];
+    
+    return (result != NSOrderedAscending && result != NSOrderedSame);
+}
+
 @end

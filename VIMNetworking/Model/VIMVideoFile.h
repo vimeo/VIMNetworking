@@ -56,4 +56,6 @@ extern NSString *const __nonnull VIMVideoFileQualityMobile;
 
 - (nullable NSURL *)playbackURL;
 
+- (BOOL)isExpired;
+
 @end

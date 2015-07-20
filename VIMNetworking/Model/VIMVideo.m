@@ -413,9 +413,63 @@ NSString *VIMContentRating_Safe = @"safe";
     return (self.canViewComments ? commentsConnection.total.intValue : 0);
 }
 
-- (nullable VIMVideoFile *)downloadableFileForSize:(CGSize)size
+- (VIMVideoFile *)downloadableFileForScreenSize:(CGSize)size
 {
+    if (CGSizeEqualToSize(size, CGSizeZero))
+    {
+        return nil;
+    }
     
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.quality != %@", VIMVideoFileQualityHLS];
+    NSArray *filteredFiles = [self.files filteredArrayUsingPredicate:predicate];
+    
+    // Sort largest to smallest
+    NSArray *sortedFiles = [filteredFiles sortedArrayUsingComparator:^NSComparisonResult(VIMVideoFile *a, VIMVideoFile *b) {
+        
+        NSNumber *first = [a width];
+        NSNumber *second = [b width];
+        
+        return [second compare:first];
+    
+    }];
+    
+    VIMVideoFile *file = nil;
+    
+    NSInteger targetWidth = size.height;
+    
+    for (VIMVideoFile *currentFile in sortedFiles)
+    {
+        NSLog(@"width: %@", currentFile.width);
+        
+        if ([currentFile isSupportedMimeType] && currentFile.link)
+        {
+            // We dont yet have a file, grab the largest one (based on sort order above)
+            if (file == nil)
+            {
+                NSLog(@"select: %@", currentFile.width);
+                
+                file = currentFile;
+                continue;
+            }
+            
+            // We dont have the info with which to compare the files
+            if ((file.width == nil || currentFile.width == nil ||
+                 [file.width isEqual:[NSNull null]] || [currentFile.width isEqual:[NSNull null]] ||
+                 [file.width isEqual:@(0)] || [currentFile.width isEqual:@(0)]))
+            {
+                continue;
+            }
+            
+            if (currentFile.width.intValue > targetWidth && currentFile.width.intValue < file.width.intValue)
+            {
+                NSLog(@"select: %@", currentFile.width);
+
+                file = currentFile;
+            }
+        }
+    }
+    
+    return file;
 }
 
 @end

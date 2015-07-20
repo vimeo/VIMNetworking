@@ -29,14 +29,14 @@
 
 @interface AFHTTPSessionManager (Extensions)
 
-- (BOOL)cancelTaskWithIdentifier:(NSUInteger)taskIdentifier;
+- (BOOL)cancelTaskWithIdentifier:(NSInteger)taskIdentifier;
 - (void)cancelAllTasks;
 
-- (nullable NSURLSessionTask *)taskForIdentifier:(NSUInteger)taskIdentifier;
-- (nullable NSURLSessionUploadTask *)uploadTaskForIdentifier:(NSUInteger)taskIdentifier;
-- (nullable NSURLSessionDownloadTask *)downloadTaskForIdentifier:(NSUInteger)taskIdentifier;
+- (nullable NSURLSessionTask *)taskForIdentifier:(NSInteger)taskIdentifier;
+- (nullable NSURLSessionUploadTask *)uploadTaskForIdentifier:(NSInteger)taskIdentifier;
+- (nullable NSURLSessionDownloadTask *)downloadTaskForIdentifier:(NSInteger)taskIdentifier;
 
-- (nullable NSProgress *)uploadProgressForTaskWithIdentifier:(NSUInteger)taskIdentifier;
-- (BOOL)taskExistsForIdentifier:(NSUInteger)taskIdentifier;
+- (nullable NSProgress *)uploadProgressForTaskWithIdentifier:(NSInteger)taskIdentifier;
+- (BOOL)taskExistsForIdentifier:(NSInteger)taskIdentifier;
 
 @end

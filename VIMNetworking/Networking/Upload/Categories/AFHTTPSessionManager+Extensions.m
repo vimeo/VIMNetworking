@@ -28,7 +28,7 @@
 
 @implementation AFHTTPSessionManager (Extensions)
 
-- (BOOL)cancelTaskWithIdentifier:(NSUInteger)taskIdentifier
+- (BOOL)cancelTaskWithIdentifier:(NSInteger)taskIdentifier
 {
     NSURLSessionTask *task = [self taskForIdentifier:taskIdentifier];
     
@@ -45,7 +45,7 @@
     }
 }
 
-- (NSURLSessionTask *)taskForIdentifier:(NSUInteger)taskIdentifier
+- (NSURLSessionTask *)taskForIdentifier:(NSInteger)taskIdentifier
 {
     for (NSURLSessionTask *task in [self tasks])
     {
@@ -58,7 +58,7 @@
     return nil;
 }
 
-- (NSURLSessionUploadTask *)uploadTaskForIdentifier:(NSUInteger)taskIdentifier
+- (NSURLSessionUploadTask *)uploadTaskForIdentifier:(NSInteger)taskIdentifier
 {
     for (NSURLSessionUploadTask *task in [self uploadTasks])
     {
@@ -71,7 +71,7 @@
     return nil;
 }
 
-- (NSURLSessionDownloadTask *)downloadTaskForIdentifier:(NSUInteger)taskIdentifier
+- (NSURLSessionDownloadTask *)downloadTaskForIdentifier:(NSInteger)taskIdentifier
 {
     for (NSURLSessionDownloadTask *task in [self downloadTasks])
     {
@@ -84,7 +84,7 @@
     return nil;
 }
 
-- (NSProgress *)uploadProgressForTaskWithIdentifier:(NSUInteger)taskIdentifier
+- (NSProgress *)uploadProgressForTaskWithIdentifier:(NSInteger)taskIdentifier
 {
     NSURLSessionUploadTask *task = [self uploadTaskForIdentifier:taskIdentifier];
     if (task)
@@ -95,7 +95,7 @@
     return nil;
 }
 
-- (BOOL)taskExistsForIdentifier:(NSUInteger)taskIdentifier
+- (BOOL)taskExistsForIdentifier:(NSInteger)taskIdentifier
 {
     NSURLSessionTask *task = [self taskForIdentifier:taskIdentifier];
     
