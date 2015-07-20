@@ -420,7 +420,7 @@ static VIMSession *_sharedSession;
 {
     NSParameterAssert(baseURLString);
     
-    if (baseURLString == nil)
+    if (baseURLString == nil || [self.configuration.baseURLString isEqualToString:baseURLString])
     {
         return NO;
     }
