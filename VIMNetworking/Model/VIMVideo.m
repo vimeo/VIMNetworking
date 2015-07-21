@@ -413,14 +413,29 @@ NSString *VIMContentRating_Safe = @"safe";
     return (self.canViewComments ? commentsConnection.total.intValue : 0);
 }
 
-- (VIMVideoFile *)downloadableFileForScreenSize:(CGSize)size
+#pragma mark - File Selection
+
+- (VIMVideoFile *)hlsFileForScreenSize:(CGSize)size
 {
-    if (CGSizeEqualToSize(size, CGSizeZero))
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.quality == %@", VIMVideoFileQualityHLS];
+    
+    return [self fileForPredicate:predicate screenSize:size];
+}
+
+- (VIMVideoFile *)mp4FileForScreenSize:(CGSize)size
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.quality != %@", VIMVideoFileQualityHLS];
+
+    return [self fileForPredicate:predicate screenSize:size];
+}
+
+- (VIMVideoFile *)fileForPredicate:(NSPredicate *)predicate screenSize:(CGSize)size
+{
+    if (CGSizeEqualToSize(size, CGSizeZero) || predicate == nil)
     {
         return nil;
     }
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.quality != %@", VIMVideoFileQualityHLS];
     NSArray *filteredFiles = [self.files filteredArrayUsingPredicate:predicate];
     
     // Sort largest to smallest
@@ -436,19 +451,20 @@ NSString *VIMContentRating_Safe = @"safe";
     VIMVideoFile *file = nil;
     
     NSInteger targetWidth = size.height;
-    
+
+    NSLog(@"SELECTING VIDEO FILE FOR SIZE: %@", NSStringFromCGSize(size));
+
     for (VIMVideoFile *currentFile in sortedFiles)
     {
-        NSLog(@"width: %@", currentFile.width);
+        NSLog(@"option: (%@, %@)", currentFile.width, currentFile.height);
         
         if ([currentFile isSupportedMimeType] && currentFile.link)
         {
             // We dont yet have a file, grab the largest one (based on sort order above)
             if (file == nil)
             {
-                NSLog(@"select: %@", currentFile.width);
-                
                 file = currentFile;
+                
                 continue;
             }
             
@@ -462,13 +478,13 @@ NSString *VIMContentRating_Safe = @"safe";
             
             if (currentFile.width.intValue > targetWidth && currentFile.width.intValue < file.width.intValue)
             {
-                NSLog(@"select: %@", currentFile.width);
-
                 file = currentFile;
             }
         }
     }
     
+    NSLog(@"selected: (%@, %@)", file.width, file.height);
+
     return file;
 }
 
