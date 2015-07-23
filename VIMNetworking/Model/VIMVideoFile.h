@@ -49,13 +49,6 @@ extern NSString *const __nonnull VIMVideoFileQualityMobile;
 - (BOOL)isSupportedMimeType;
 - (BOOL)isDownloadable;
 - (BOOL)isStreamable;
-
-// TODO: This property and the playbackURL method should live within the app, not within VIMNetworking [AH]
-
-@property (nonatomic, strong, nullable) NSURL *localFileURL;
-
-- (nullable NSURL *)playbackURL;
-
 - (BOOL)isExpired;
 
 @end

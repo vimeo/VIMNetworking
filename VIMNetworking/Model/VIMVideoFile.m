@@ -46,8 +46,10 @@ NSString *const VIMVideoFileQualityMobile = @"mobile";
 
 - (Class)getClassForObjectKey:(NSString *)key
 {
-    if( [key isEqualToString:@"log"] )
+    if ([key isEqualToString:@"log"])
+    {
         return [VIMVideoLog class];
+    }
     
     return nil;
 }
@@ -106,26 +108,11 @@ NSString *const VIMVideoFileQualityMobile = @"mobile";
     return [self isSupportedMimeType] && ([self.quality isEqualToString:VIMVideoFileQualityMobile] || [self.quality isEqualToString:VIMVideoFileQualitySD] || [self.quality isEqualToString:VIMVideoFileQualityHD] || [self.quality isEqualToString:VIMVideoFileQualityHLS]);
 }
 
-- (NSURL *)playbackURL
-{
-    NSURL *URL = nil;
-    if (self.localFileURL)
-    {
-        URL = self.localFileURL;
-    }
-    else
-    {
-        URL = [NSURL URLWithString:self.link];
-    }
-    
-    return URL;
-}
-
 - (BOOL)isExpired
 {
     NSComparisonResult result = [[NSDate date] compare:self.expirationDate];
     
-    return (result != NSOrderedAscending && result != NSOrderedSame);
+    return (result == NSOrderedDescending || result == NSOrderedSame);
 }
 
 @end
