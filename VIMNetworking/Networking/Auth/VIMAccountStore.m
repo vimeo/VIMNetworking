@@ -32,17 +32,15 @@
 #import "VIMObjectMapper.h"
 #import "VIMUser.h"
 
-static NSString *const LegacyAccountKey = @"kVIMAccountStore_SaveKey"; // Added 6/22/2015 [AH]
-
 @implementation VIMAccountStore
 
-+ (VIMAccountNew *)loadLegacyAccount
++ (VIMAccountNew *)loadLegacyAccountForKey:(NSString *)key
 {
     // Load the legacy account data
-    NSData *data = [[KeychainUtility sharedInstance] dataForAccount:LegacyAccountKey];
+    NSData *data = [[KeychainUtility sharedInstance] dataForAccount:key];
     
     // Delete the saved legacy account object
-    [[KeychainUtility sharedInstance] deleteDataForAccount:LegacyAccountKey];
+    [[KeychainUtility sharedInstance] deleteDataForAccount:key];
     
     // Convert the legacy account data into an array of VIMAccountLegacy objects
     NSArray *legacyAccounts = nil;
