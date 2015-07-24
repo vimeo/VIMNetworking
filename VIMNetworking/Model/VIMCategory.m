@@ -71,6 +71,16 @@
     return nil;
 }
 
+- (Class)getClassForCollectionKey:(NSString *)key
+{
+    if ([key isEqualToString:@"subcategories"])
+    {
+        return [VIMCategory class];
+    }
+    
+    return nil;
+}
+
 - (void)didFinishMapping
 {
     self.objectID = [self.uri MD5];
