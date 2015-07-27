@@ -450,6 +450,8 @@ static void *TaskQueueSpecific = "TaskQueueSpecific";
     
     [self logTaskStatus:task];
     
+    // Not posting these on the main thread so as to avoid doing anything async in here (background session) [AH]
+    
     if ([task didSucceed])
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:VIMTaskQueueTaskSucceededNotification object:task];
