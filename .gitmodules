@@ -1,0 +1,3 @@
+[submodule "Submodules/VIMObjectMapper"]
+	path = Submodules/VIMObjectMapper
+	url = git@github.com:vimeo/VIMObjectMapper.git
