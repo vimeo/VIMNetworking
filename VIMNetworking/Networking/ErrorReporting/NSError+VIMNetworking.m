@@ -101,6 +101,13 @@
         }
     }
     
+    NSDictionary *json = [self errorResponseBodyJSON];
+    errorCodeNumber = [json objectForKey:@"error_code"];
+    if (errorCodeNumber)
+    {
+        return [errorCodeNumber integerValue];
+    }
+    
     return 0;
 }
 
@@ -115,7 +122,7 @@
         
         for (NSDictionary *errorJSON in invalidParameters)
         {
-            NSString *errorCode = errorJSON[@"code"];
+            NSString *errorCode = errorJSON[@"error_code"];
             
             if (errorCode)
             {
