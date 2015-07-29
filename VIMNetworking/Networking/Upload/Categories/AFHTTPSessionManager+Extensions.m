@@ -95,6 +95,17 @@
     return nil;
 }
 
+- (nullable NSProgress *)downloadProgressForTaskWithIdentifier:(NSInteger)taskIdentifier
+{
+    NSURLSessionDownloadTask *task = [self downloadTaskForIdentifier:taskIdentifier];
+    if (task)
+    {
+        return [self downloadProgressForTask:task];
+    }
+    
+    return nil;
+}
+
 - (BOOL)taskExistsForIdentifier:(NSInteger)taskIdentifier
 {
     NSURLSessionTask *task = [self taskForIdentifier:taskIdentifier];

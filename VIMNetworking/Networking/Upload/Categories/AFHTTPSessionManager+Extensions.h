@@ -37,6 +37,7 @@
 - (nullable NSURLSessionDownloadTask *)downloadTaskForIdentifier:(NSInteger)taskIdentifier;
 
 - (nullable NSProgress *)uploadProgressForTaskWithIdentifier:(NSInteger)taskIdentifier;
+- (nullable NSProgress *)downloadProgressForTaskWithIdentifier:(NSInteger)taskIdentifier;
 - (BOOL)taskExistsForIdentifier:(NSInteger)taskIdentifier;
 
 @end
