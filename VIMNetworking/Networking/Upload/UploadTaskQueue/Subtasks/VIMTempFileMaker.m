@@ -289,12 +289,14 @@
 {
     uint64_t availableDiskSpace = [VIMTempFileMaker availableDiskSpace];
     uint64_t filesize = [asset calculateFilesize];
-    if (filesize > availableDiskSpace && availableDiskSpace != -1)
+    if (filesize > availableDiskSpace && availableDiskSpace > 0)
     {
         *error = [NSError errorWithDomain:VIMTempFileMakerErrorDomain code:VIMUploadErrorCodeInsufficientLocalStorage userInfo:@{NSLocalizedDescriptionKey : @"Not enough free disk space to copy video to temp directory."}];
+    
+        return NO;
     }
     
-    return (error == nil);
+    return YES;
 }
 
 + (uint64_t)availableDiskSpace
