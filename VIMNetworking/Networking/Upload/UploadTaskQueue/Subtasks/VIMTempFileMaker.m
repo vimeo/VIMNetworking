@@ -149,12 +149,9 @@
     exportSession.outputURL = [NSURL fileURLWithPath:path];
     exportSession.shouldOptimizeForNetworkUse = YES;
     
-    uint64_t availableDiskSpace = [VIMTempFileMaker availableDiskSpace];
-    uint64_t filesize = [asset calculateFilesize];
-    if (filesize > availableDiskSpace && availableDiskSpace != -1)
+    NSError *error = nil;
+    if (![VIMTempFileMaker checkDiskSpaceForURLAsset:asset error:&error])
     {
-        NSError *error = [NSError errorWithDomain:VIMTempFileMakerErrorDomain code:VIMUploadErrorCodeInsufficientLocalStorage userInfo:@{NSLocalizedDescriptionKey : @"Not enough free disk space to export video to temp directory."}];
-        
         if (completionBlock)
         {
             completionBlock(nil, error);
@@ -203,12 +200,9 @@
 
 + (void)copyURLAsset:(AVURLAsset *)URLAsset withCompletionBlock:(TempFileCompletionBlock)completionBlock
 {
-    uint64_t availableDiskSpace = [VIMTempFileMaker availableDiskSpace];
-    uint64_t filesize = [URLAsset calculateFilesize];
-    if (filesize > availableDiskSpace && availableDiskSpace != -1)
+    NSError *error = nil;
+    if (![VIMTempFileMaker checkDiskSpaceForURLAsset:URLAsset error:&error])
     {
-        NSError *error = [NSError errorWithDomain:VIMTempFileMakerErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"Not enough free disk space to copy video to temp directory."}];
-
         if (completionBlock)
         {
             completionBlock(nil, error);
@@ -289,6 +283,18 @@
     }
     
     return groupPath;
+}
+
++ (BOOL)checkDiskSpaceForURLAsset:(AVAsset *)asset error:(NSError **)error
+{
+    uint64_t availableDiskSpace = [VIMTempFileMaker availableDiskSpace];
+    uint64_t filesize = [asset calculateFilesize];
+    if (filesize > availableDiskSpace && availableDiskSpace != -1)
+    {
+        *error = [NSError errorWithDomain:VIMTempFileMakerErrorDomain code:VIMUploadErrorCodeInsufficientLocalStorage userInfo:@{NSLocalizedDescriptionKey : @"Not enough free disk space to copy video to temp directory."}];
+    }
+    
+    return (error == nil);
 }
 
 + (uint64_t)availableDiskSpace
