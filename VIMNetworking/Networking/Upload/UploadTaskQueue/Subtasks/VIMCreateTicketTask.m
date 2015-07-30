@@ -30,10 +30,10 @@
 #import "PHAsset+Filesize.h"
 #import "NSError+BaseError.h"
 #import "VIMUploadSessionManager.h"
+#import "NSError+VIMUpload.h"
 
 static const NSString *RecordCreationPath = @"/me/videos";
 static const NSString *VIMCreateRecordTaskName = @"CREATE";
-static NSString *const VIMCreateRecordTaskErrorDomain = @"VIMCreateRecordTaskErrorDomain";
 
 @interface VIMCreateTicketTask ()
 
@@ -207,14 +207,14 @@ static NSString *const VIMCreateRecordTaskErrorDomain = @"VIMCreateRecordTaskErr
     NSHTTPURLResponse *HTTPResponse = ((NSHTTPURLResponse *)downloadTask.response);
     if (HTTPResponse.statusCode < 200 || HTTPResponse.statusCode > 299)
     {
-        self.error = [NSError errorWithDomain:(NSString *)VIMCreateRecordTaskErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"Invalid status code."}];
+        self.error = [NSError errorWithDomain:VIMCreateRecordTaskErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"Invalid status code."}];
         
         return;
     }
     
     if (location == nil)
     {
-        self.error = [NSError errorWithDomain:(NSString *)VIMCreateRecordTaskErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"No location provided."}];
+        self.error = [NSError errorWithDomain:VIMCreateRecordTaskErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"No location provided."}];
         
         return;
     }
@@ -222,7 +222,7 @@ static NSString *const VIMCreateRecordTaskErrorDomain = @"VIMCreateRecordTaskErr
     NSData *data = [NSData dataWithContentsOfURL:location];
     if (data == nil)
     {
-        self.error = [NSError errorWithDomain:(NSString *)VIMCreateRecordTaskErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"No file at location."}];
+        self.error = [NSError errorWithDomain:VIMCreateRecordTaskErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"No file at location."}];
         
         return;
     }
@@ -281,7 +281,7 @@ static NSString *const VIMCreateRecordTaskErrorDomain = @"VIMCreateRecordTaskErr
     if (uploadURI == nil || activationURI == nil)
     {
         NSString *description = [NSString stringWithFormat:@"Reponse did not include upload_link_secure or complete_uri. (%@)", [self.responseDictionary description]];
-        self.error = [NSError errorWithDomain:(NSString *)VIMCreateRecordTaskErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : description}];
+        self.error = [NSError errorWithDomain:VIMCreateRecordTaskErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : description}];
 
         [self taskDidComplete];
         

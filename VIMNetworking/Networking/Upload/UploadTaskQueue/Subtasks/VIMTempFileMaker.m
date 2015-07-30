@@ -31,8 +31,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import <MobileCoreServices/MobileCoreServices.h>
 #import "AVAsset+Filesize.h"
-
-static const NSString *VIMTempFileMakerErrorDomain = @"VIMTempFileMakerErrorDomain";
+#import "NSError+VIMUpload.h"
 
 @implementation VIMTempFileMaker
 
@@ -92,7 +91,7 @@ static const NSString *VIMTempFileMakerErrorDomain = @"VIMTempFileMakerErrorDoma
         }
 
         NSString *description = [NSString stringWithFormat:@"Cannot upload unknown AVAsset type (%@).", NSStringFromClass([asset class])];
-        error = [NSError errorWithDomain:(NSString *)VIMTempFileMakerErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : description}];
+        error = [NSError errorWithDomain:VIMTempFileMakerErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : description}];
             
         if (completionBlock)
         {
@@ -112,7 +111,7 @@ static const NSString *VIMTempFileMakerErrorDomain = @"VIMTempFileMakerErrorDoma
     //    {
     //        if (completionBlock)
     //        {
-    //            NSError *error = [NSError errorWithDomain:(NSString *)VIMCreateRecordTaskErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"Incompatible export preset."}];
+    //            NSError *error = [NSError errorWithDomain:VIMTempFileMakerErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"Incompatible export preset."}];
     //            completionBlock(nil, error);
     //        }
     //
@@ -123,7 +122,7 @@ static const NSString *VIMTempFileMakerErrorDomain = @"VIMTempFileMakerErrorDoma
     {
         if (completionBlock)
         {
-            NSError *error = [NSError errorWithDomain:(NSString *)VIMTempFileMakerErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"Asset is not exportable."}];
+            NSError *error = [NSError errorWithDomain:VIMTempFileMakerErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"Asset is not exportable."}];
             completionBlock(nil, error);
         }
         
@@ -134,7 +133,7 @@ static const NSString *VIMTempFileMakerErrorDomain = @"VIMTempFileMakerErrorDoma
     {
         if (completionBlock)
         {
-            NSError *error = [NSError errorWithDomain:(NSString *)VIMTempFileMakerErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"Asset is not exportable (has protected content)."}];
+            NSError *error = [NSError errorWithDomain:VIMTempFileMakerErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"Asset is not exportable (has protected content)."}];
             completionBlock(nil, error);
         }
         
@@ -154,7 +153,7 @@ static const NSString *VIMTempFileMakerErrorDomain = @"VIMTempFileMakerErrorDoma
     uint64_t filesize = [asset calculateFilesize];
     if (filesize > availableDiskSpace && availableDiskSpace != -1)
     {
-        NSError *error = [NSError errorWithDomain:(NSString *)VIMTempFileMakerErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"Not enough free disk space to export video to temp directory."}];
+        NSError *error = [NSError errorWithDomain:VIMTempFileMakerErrorDomain code:VIMUploadErrorCodeInsufficientLocalStorage userInfo:@{NSLocalizedDescriptionKey : @"Not enough free disk space to export video to temp directory."}];
         
         if (completionBlock)
         {
@@ -187,7 +186,7 @@ static const NSString *VIMTempFileMakerErrorDomain = @"VIMTempFileMakerErrorDoma
         {
             if (completionBlock)
             {
-                NSError *error = [NSError errorWithDomain:(NSString *)VIMTempFileMakerErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"Export did not succeed."}];
+                NSError *error = [NSError errorWithDomain:VIMTempFileMakerErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"Export did not succeed."}];
                 completionBlock(nil, error);
             }
             
@@ -208,7 +207,7 @@ static const NSString *VIMTempFileMakerErrorDomain = @"VIMTempFileMakerErrorDoma
     uint64_t filesize = [URLAsset calculateFilesize];
     if (filesize > availableDiskSpace && availableDiskSpace != -1)
     {
-        NSError *error = [NSError errorWithDomain:(NSString *)VIMTempFileMakerErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"Not enough free disk space to copy video to temp directory."}];
+        NSError *error = [NSError errorWithDomain:VIMTempFileMakerErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"Not enough free disk space to copy video to temp directory."}];
 
         if (completionBlock)
         {
