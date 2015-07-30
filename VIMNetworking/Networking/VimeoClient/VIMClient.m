@@ -41,9 +41,9 @@ static NSString *const ModelKeyPathData = @"data";
 
 @implementation VIMClient
 
-- (instancetype)init
+- (instancetype)initWithBaseURL:(NSURL *)url
 {
-    self = [super init];
+    self = [super initWithBaseURL:url];
     if (self)
     {
         _retryManager = [[VIMRequestRetryManager alloc] initWithName:@"VIMClientRetryManager" operationManager:self];
