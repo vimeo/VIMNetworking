@@ -200,7 +200,7 @@ static VIMSession *_sharedSession;
     
     if (self.account && [self.account isAuthenticatedWithUser])
     {
-        NSString *name = [NSString stringWithFormat:@"user_%@", self.account.user.objectID];
+        NSString *name = [NSString stringWithFormat:@"user_%@", [self.account.user objectID]];
         cache = [[VIMCache alloc] initWithName:name];
     }
     

@@ -47,6 +47,13 @@
 
 @implementation VIMUser
 
+- (NSString *)objectID
+{
+    NSAssert([self.uri length] > 0, @"Object does not have a uri, cannot generate objectID");
+    
+    return [self.uri MD5];
+}
+
 #pragma mark - Public API
 
 - (VIMConnection *)connectionWithName:(NSString *)connectionName
@@ -83,8 +90,6 @@
 
 - (void)didFinishMapping
 {
-    self.objectID = [self.uri MD5];
-
     if ([self.pictureCollection isEqual:[NSNull null]])
     {
         self.pictureCollection = nil;
