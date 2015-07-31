@@ -457,7 +457,8 @@ NSString *VIMContentRating_Safe = @"safe";
     
     VIMVideoFile *file = nil;
     
-    NSInteger targetWidth = size.height;
+    // TODO: augment this to handle portrait videos [AH]
+    NSInteger targetScreenWidth = MAX(size.width, size.height);
 
     NSLog(@"SELECTING VIDEO FILE FOR SIZE: %@", NSStringFromCGSize(size));
 
@@ -483,7 +484,7 @@ NSString *VIMContentRating_Safe = @"safe";
                 continue;
             }
             
-            if (currentFile.width.intValue > targetWidth && currentFile.width.intValue < file.width.intValue)
+            if (currentFile.width.intValue > targetScreenWidth && currentFile.width.intValue < file.width.intValue)
             {
                 file = currentFile;
             }
