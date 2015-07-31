@@ -12,21 +12,11 @@
 
 @implementation NSError (VIMNetworking)
 
+#pragma mark - Error Types
+
 - (BOOL)isServiceUnavailableError
 {
-    NSError *baseError = self;
-    if (self.userInfo[BaseErrorKey])
-    {
-        baseError = self.userInfo[BaseErrorKey];
-    }
-    
-    NSHTTPURLResponse *urlResponse = baseError.userInfo[AFNetworkingOperationFailingURLResponseErrorKey];
-    if (urlResponse && [urlResponse statusCode] == 503)
-    {
-        return YES;
-    }
-    
-    return NO;
+    return [self statusCode] == HTTPErrorCodeServiceUnavailable;
 }
 
 - (BOOL)isInvalidTokenError
@@ -38,7 +28,7 @@
     }
     
     NSHTTPURLResponse *urlResponse = baseError.userInfo[AFNetworkingOperationFailingURLResponseErrorKey];
-    if (urlResponse && [urlResponse statusCode] == 401)
+    if (urlResponse && [urlResponse statusCode] == HTTPErrorCodeUnauthorized)
     {
         NSString *header = urlResponse.allHeaderFields[@"WWW-Authenticate"];
         if ([header isEqualToString:@"Bearer error=\"invalid_token\""])
@@ -52,6 +42,28 @@
 
 - (BOOL)isForbiddenError
 {
+    return [self statusCode] == HTTPErrorCodeForbidden;
+}
+
+- (BOOL)isUploadQuotaError
+{
+    return [self isUploadQuotaDailyExceededError] || [self isUploadQuotaStorageExceededError];
+}
+
+- (BOOL)isUploadQuotaDailyExceededError
+{
+    return [self serverErrorCode] == VIMErrorCodeUploadDailyQuotaExceeded;
+}
+
+- (BOOL)isUploadQuotaStorageExceededError
+{
+    return [self serverErrorCode] == VIMErrorCodeUploadStorageQuotaExceeded;
+}
+
+#pragma mark - Utilities
+
+- (NSInteger)statusCode
+{
     NSError *baseError = self;
     if (self.userInfo[BaseErrorKey])
     {
@@ -59,51 +71,86 @@
     }
     
     NSHTTPURLResponse *urlResponse = baseError.userInfo[AFNetworkingOperationFailingURLResponseErrorKey];
-    if (urlResponse && [urlResponse statusCode] == 403)
+    if (urlResponse)
     {
-        return YES;
+        return [urlResponse statusCode];
     }
     
-    return NO;
+    return 0;
 }
 
-- (BOOL)isUploadQuotaError
+- (NSInteger)serverErrorCode
 {
     NSNumber *errorCodeNumber = self.userInfo[VimeoErrorCodeKey];
     if (errorCodeNumber)
     {
         NSInteger errorCode = [errorCodeNumber integerValue];
         
-        return errorCode == VIMErrorCodeUploadDailyQuotaExceeded || errorCode == VIMErrorCodeUploadStorageQuotaExceeded;
+        return errorCode;
     }
     
-    return NO;
-}
-
-- (BOOL)isUploadQuotaDailyExceededError
-{
-    NSNumber *errorCodeNumber = self.userInfo[VimeoErrorCodeKey];
+    NSHTTPURLResponse *response = self.userInfo[AFNetworkingOperationFailingURLResponseErrorKey];
+    if (response)
+    {
+        NSDictionary *headers = [response allHeaderFields];
+        NSString *vimeoError = headers[@"Vimeo-Error-Code"];
+        
+        if (vimeoError)
+        {
+            return [vimeoError integerValue];
+        }
+    }
+    
+    NSDictionary *json = [self errorResponseBodyJSON];
+    errorCodeNumber = [json objectForKey:@"error_code"];
     if (errorCodeNumber)
     {
-        NSInteger errorCode = [errorCodeNumber integerValue];
-        
-        return errorCode == VIMErrorCodeUploadDailyQuotaExceeded;
+        return [errorCodeNumber integerValue];
     }
     
-    return NO;
+    return 0;
 }
 
-- (BOOL)isUploadQuotaStorageExceededError
+- (NSInteger)serverInvalidParametersErrorCode
 {
-    NSNumber *errorCodeNumber = self.userInfo[VimeoErrorCodeKey];
-    if (errorCodeNumber)
+    NSDictionary *json = [self errorResponseBodyJSON];
+    
+    if (json)
     {
-        NSInteger errorCode = [errorCodeNumber integerValue];
+        NSArray *invalidParameters = json[@"invalid_parameters"];
+        NSMutableArray *errorCodes = [NSMutableArray new];
         
-        return errorCode == VIMErrorCodeUploadStorageQuotaExceeded;
+        for (NSDictionary *errorJSON in invalidParameters)
+        {
+            NSString *errorCode = errorJSON[@"error_code"];
+            
+            if (errorCode)
+            {
+                [errorCodes addObject:@([errorCode integerValue])];
+            }
+        }
+        
+        return [[errorCodes firstObject] integerValue];
     }
     
-    return NO;
+    return 0;
+}
+
+- (NSDictionary *)errorResponseBodyJSON
+{
+    NSData *data = self.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
+    if (data)
+    {
+        NSError *error;
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+        
+        if (json && !error)
+        {
+            return json;
+        }
+    }
+    
+    return nil;
 }
 
 @end

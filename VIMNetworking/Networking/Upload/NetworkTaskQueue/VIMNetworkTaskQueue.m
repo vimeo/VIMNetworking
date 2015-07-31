@@ -132,7 +132,7 @@ static const NSString *CellularEnabledKey = @"cellular_enabled";
     
     if ([[VIMReachability sharedInstance] isOn3G] && self.isCellularUploadEnabled == NO)
     {
-        self.cellularUploadEnabled = YES;
+        return;
     }
     
     [super resume];
@@ -234,7 +234,15 @@ static const NSString *CellularEnabledKey = @"cellular_enabled";
     
     NSDictionary *dictionary = [sharedDefaults objectForKey:(NSString *)ArchiveKey];
     
-    self.cellularUploadEnabled = [dictionary[CellularEnabledKey] boolValue];
+    if (dictionary[CellularEnabledKey])
+    {
+        self.cellularUploadEnabled = [dictionary[CellularEnabledKey] boolValue];
+    }
+    else
+    {
+        self.cellularUploadEnabled = YES;
+    }
+    
     self.suspendedByUser = [dictionary[SuspendedByUserKey] boolValue];
 }
 

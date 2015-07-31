@@ -201,7 +201,7 @@ static VIMSession *_sharedSession;
     
     if (self.account && [self.account isAuthenticatedWithUser])
     {
-        NSString *name = [NSString stringWithFormat:@"user_%@", self.account.user.objectID];
+        NSString *name = [NSString stringWithFormat:@"user_%@", [self.account.user objectID]];
         cache = [[VIMCache alloc] initWithName:name];
     }
     
@@ -421,7 +421,7 @@ static VIMSession *_sharedSession;
 {
     NSParameterAssert(baseURLString);
     
-    if (baseURLString == nil)
+    if (baseURLString == nil || [self.configuration.baseURLString isEqualToString:baseURLString])
     {
         return NO;
     }

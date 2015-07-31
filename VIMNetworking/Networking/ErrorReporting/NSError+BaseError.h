@@ -36,12 +36,6 @@ extern NSString * const __nonnull BaseErrorKey;
 extern NSString * const __nonnull AFNetworkingErrorDomain; // TODO: Why is this necessary? [AH] 5/15/15
 extern NSString * const __nonnull kVimeoServerErrorDomain;
 
-typedef NS_ENUM(NSInteger, VIMErrorCode)
-{
-    VIMErrorCodeUploadStorageQuotaExceeded = 4101,
-    VIMErrorCodeUploadDailyQuotaExceeded = 4102
-};
-
 @interface NSError (BaseError)
 
 + (nullable NSError *)errorFromServerError:(nullable NSError *)error withNewDomain:(nullable NSString *)domain;

@@ -31,6 +31,8 @@
 #import <UIKit/UIKit.h>
 #endif
 
+static NSString *const SharedCacheName = @"SharedCache";
+
 @interface VIMCache ()
 {
     NSCache *_memCache;
@@ -51,7 +53,7 @@
     static VIMCache *_sharedInstance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        _sharedInstance = [[VIMCache alloc] initWithName:@"SharedCache"];
+        _sharedInstance = [[VIMCache alloc] initWithName:SharedCacheName];
     });
     
     return _sharedInstance;
@@ -74,11 +76,11 @@
 		
 		NSString *namespace = [@"com.vimeo.VIMCache" stringByAppendingPathComponent:self.name];
         
-        _memCache = [[NSCache alloc] init];
-        _memCache.name = namespace;
-        
 		self.diskPath = [basePath stringByAppendingPathComponent:namespace];
         
+        _memCache = [[NSCache alloc] init];
+        _memCache.name = namespace;
+
 		_diskQueue = dispatch_queue_create("com.vimeo.VIMCache.diskQueue", DISPATCH_QUEUE_CONCURRENT); // Using barrier blocks for write tasks
         
         [self addObservers];

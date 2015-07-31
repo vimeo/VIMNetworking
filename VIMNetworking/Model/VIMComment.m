@@ -36,6 +36,13 @@
 
 @implementation VIMComment
 
+- (NSString *)objectID
+{
+    NSAssert([self.uri length] > 0, @"Object does not have a uri, cannot generate objectID");
+    
+    return [self.uri MD5];
+}
+
 #pragma mark - VIMMappable
 
 - (NSDictionary *)getObjectMapping
@@ -56,8 +63,6 @@
 
 - (void)didFinishMapping
 {
-    self.objectID = [self.uri MD5];
-
     if ([self.dateCreated isKindOfClass:[NSString class]])
     {
         self.dateCreated = [[VIMModelObject dateFormatter] dateFromString:(NSString *)self.dateCreated];

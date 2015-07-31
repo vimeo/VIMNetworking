@@ -74,8 +74,6 @@ NSString *const VIMUploadTaskQueue_NameKey = @"VIMUploadTaskQueue_NameKey";
     self = [super initWithSessionManager:sessionManager];
     if (self)
     {
-        self.cellularUploadEnabled = YES;
-        
         _uploadQueueTracker = [[VIMUploadTaskQueueTracker alloc] initWithSessionIdentifier:sessionManager.session.configuration.identifier];
     }
     
@@ -114,10 +112,11 @@ NSString *const VIMUploadTaskQueue_NameKey = @"VIMUploadTaskQueue_NameKey";
     }
     
     [self addTasks:tasks];
-    
-    // TODO: will this always be broadcast on the main thread? [AH]
-    NSDictionary *userInfo = @{VIMUploadTaskQueue_NameKey : self.name};
-    [[NSNotificationCenter defaultCenter] postNotificationName:VIMUploadTaskQueue_DidAddAssetsNotification object:videoAssets userInfo:userInfo];
+
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSDictionary *userInfo = @{VIMUploadTaskQueue_NameKey : self.name};
+        [[NSNotificationCenter defaultCenter] postNotificationName:VIMUploadTaskQueue_DidAddAssetsNotification object:videoAssets userInfo:userInfo];
+    });
 }
 
 - (void)cancelUploadForVideoAsset:(VIMVideoAsset *)videoAsset
@@ -131,16 +130,20 @@ NSString *const VIMUploadTaskQueue_NameKey = @"VIMUploadTaskQueue_NameKey";
 
     [self cancelTask:task];
     
-    NSDictionary *userInfo = @{VIMUploadTaskQueue_NameKey : self.name};
-    [[NSNotificationCenter defaultCenter] postNotificationName:VIMUploadTaskQueue_DidCancelAssetNotification object:videoAsset userInfo:userInfo];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSDictionary *userInfo = @{VIMUploadTaskQueue_NameKey : self.name};
+        [[NSNotificationCenter defaultCenter] postNotificationName:VIMUploadTaskQueue_DidCancelAssetNotification object:videoAsset userInfo:userInfo];
+    });
 }
 
 - (void)cancelAllUploads
 {
     [self cancelAllTasks];
     
-    NSDictionary *userInfo = @{VIMUploadTaskQueue_NameKey : self.name};
-    [[NSNotificationCenter defaultCenter] postNotificationName:VIMUploadTaskQueue_DidCancelAllAssetsNotification object:nil userInfo:userInfo];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSDictionary *userInfo = @{VIMUploadTaskQueue_NameKey : self.name};
+        [[NSNotificationCenter defaultCenter] postNotificationName:VIMUploadTaskQueue_DidCancelAllAssetsNotification object:nil userInfo:userInfo];
+    });
 }
 
 - (NSMutableArray *)associateVideoAssetsWithUploads:(NSArray *)videoAssets
@@ -162,8 +165,12 @@ NSString *const VIMUploadTaskQueue_NameKey = @"VIMUploadTaskQueue_NameKey";
     
     NSLog(@"%lu new assets. %lu existing descriptors. %lu assets associated", (unsigned long)[videoAssets count], (unsigned long)self.taskCount, (unsigned long)[associatedAssets count]);
     
-    NSDictionary *userInfo = @{VIMUploadTaskQueue_NameKey : self.name};
-    [[NSNotificationCenter defaultCenter] postNotificationName:VIMUploadTaskQueue_DidAssociateAssetsWithTasksNotification object:associatedAssets userInfo:userInfo];
+    dispatch_async(dispatch_get_main_queue(), ^{
+
+        NSDictionary *userInfo = @{VIMUploadTaskQueue_NameKey : self.name};
+        [[NSNotificationCenter defaultCenter] postNotificationName:VIMUploadTaskQueue_DidAssociateAssetsWithTasksNotification object:associatedAssets userInfo:userInfo];
+
+    });
     
     return associatedAssets;
 }
