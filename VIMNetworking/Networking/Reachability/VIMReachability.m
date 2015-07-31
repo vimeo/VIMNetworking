@@ -62,16 +62,21 @@ NSString * const VIMReachabilityStatusChangeWasOfflineInfoKey = @"VIMReachabilit
         [[AFNetworkReachabilityManager sharedManager] startMonitoring];
         
         __weak typeof(self) weakSelf = self;
-        [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status)
-        {
+        [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
             if (status != AFNetworkReachabilityStatusNotReachable)
             {
-                [[NSNotificationCenter defaultCenter] postNotificationName:VIMReachabilityStatusChangeOnlineNotification object:nil userInfo:@{ VIMReachabilityStatusChangeWasOfflineInfoKey: @(weakSelf.wasOffline) }];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [[NSNotificationCenter defaultCenter] postNotificationName:VIMReachabilityStatusChangeOnlineNotification object:nil userInfo:@{ VIMReachabilityStatusChangeWasOfflineInfoKey: @(weakSelf.wasOffline) }];
+                });
+                
                 weakSelf.wasOffline = NO;
             }
             else
             {
-                [[NSNotificationCenter defaultCenter] postNotificationName:VIMReachabilityStatusChangeOfflineNotification object:nil userInfo:@{ VIMReachabilityStatusChangeWasOfflineInfoKey: @(weakSelf.wasOffline) }];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [[NSNotificationCenter defaultCenter] postNotificationName:VIMReachabilityStatusChangeOfflineNotification object:nil userInfo:@{ VIMReachabilityStatusChangeWasOfflineInfoKey: @(weakSelf.wasOffline) }];
+                });
+                
                 weakSelf.wasOffline = YES;
             }
         }];

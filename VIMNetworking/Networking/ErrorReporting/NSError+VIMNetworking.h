@@ -49,7 +49,7 @@ typedef NS_ENUM(NSInteger, VIMErrorCode)
     VIMErrorCodeEmailPurgatory = 2403,
     VIMErrorCodeURLUnavailable = 2404,
     VIMErrorCodeTimeout = 5000,
-    VIMErrorCodeTokenNotGenerated = 5001
+    VIMErrorCodeTokenNotGenerated = 5001,
 };
 
 typedef NS_ENUM(NSInteger, HTTPErrorCode)
