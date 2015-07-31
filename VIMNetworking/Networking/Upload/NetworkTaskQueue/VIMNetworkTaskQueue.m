@@ -132,7 +132,7 @@ static const NSString *CellularEnabledKey = @"cellular_enabled";
     
     if ([[VIMReachability sharedInstance] isOn3G] && self.isCellularUploadEnabled == NO)
     {
-        self.cellularUploadEnabled = YES;
+        return;
     }
     
     [super resume];
