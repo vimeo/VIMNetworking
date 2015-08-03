@@ -28,7 +28,6 @@
 #import "VIMTempFileMaker.h"
 #include "AVAsset+Filesize.h"
 #import "PHAsset+Filesize.h"
-#import "NSError+BaseError.h"
 #import "VIMUploadSessionManager.h"
 #import "NSError+VIMUpload.h"
 
@@ -258,18 +257,13 @@ static const NSString *VIMCreateRecordTaskName = @"CREATE";
     
     if (task.error)
     {
-        NSHTTPURLResponse *response = (NSHTTPURLResponse *)task.response;
-        NSDictionary *headers = response.allHeaderFields;
-        NSString *errorCode = headers[VimeoErrorCodeHeaderKey];
+        // TODO: parse out server returned error code, or is this already done elsewhere? [AH]
         
-        if (errorCode && [errorCode length] && [errorCode integerValue] > 0)
-        {
-            self.error = [NSError vimeoErrorFromError:task.error withVimeoDomain:VIMCreateRecordTaskErrorDomain vimeoErrorCode:[errorCode integerValue]];
-        }
-        else
-        {
-            self.error = task.error;
-        }
+//        NSHTTPURLResponse *response = (NSHTTPURLResponse *)task.response;
+//        NSDictionary *headers = response.allHeaderFields;
+//        NSString *errorCode = headers[VimeoErrorCodeHeaderKey];
+        
+        self.error = task.error;
         
         [self taskDidComplete];
         
