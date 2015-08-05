@@ -102,6 +102,7 @@
     [self parseInteractions];
     [self parseAccountType];
     [self formatCreatedTime];
+    [self formatModifiedTime];
 }
 
 #pragma mark - Parsing Helpers
@@ -172,6 +173,14 @@
     if ([self.createdTime isKindOfClass:[NSString class]])
     {
         self.createdTime = [[VIMModelObject dateFormatter] dateFromString:(NSString *)self.createdTime];
+    }
+}
+
+- (void)formatModifiedTime
+{
+    if ([self.modifiedTime isKindOfClass:[NSString class]])
+    {
+        self.modifiedTime = [[VIMModelObject dateFormatter] dateFromString:(NSString *)self.modifiedTime];
     }
 }
 

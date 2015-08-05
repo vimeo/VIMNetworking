@@ -44,4 +44,6 @@
 @property (nonatomic, copy, nullable) NSString *type;
 @property (nonatomic, strong, nullable) NSDate *time;
 
+- (nullable NSDate *)modifiedTime;
+
 @end
