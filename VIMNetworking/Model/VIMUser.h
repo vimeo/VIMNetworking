@@ -47,7 +47,7 @@ typedef NS_ENUM(NSInteger, VIMUserAccountType)
 @property (nonatomic, copy, nullable) NSString *bio;
 @property (nonatomic, copy, nullable) NSString *contentFilter;
 @property (nonatomic, strong, nullable) NSDate *createdTime;
-@property (nonatomic, strong, nullable) NSDate *modifiedTime;
+@property (nonatomic, strong, nullable) NSDate *modifiedTime; // This doesn't exist on user objects...yet [AH]
 @property (nonatomic, copy, nullable) NSString *link;
 @property (nonatomic, copy, nullable) NSString *location;
 @property (nonatomic, copy, nullable) NSString *name;
