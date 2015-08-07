@@ -106,6 +106,7 @@
 
     [self parseConnections];
     [self parseInteractions];
+    [self formatModifiedTime];
 }
 
 #pragma mark - Parsing Helpers
@@ -153,6 +154,14 @@
     }
     
     self.interactions = interactions;
+}
+
+- (void)formatModifiedTime
+{
+    if ([self.modifiedTime isKindOfClass:[NSString class]])
+    {
+        self.modifiedTime = [[VIMModelObject dateFormatter] dateFromString:(NSString *)self.modifiedTime];
+    }
 }
 
 #pragma mark - Helpers

@@ -34,6 +34,7 @@
 
 @property (nonatomic, copy, nullable) NSString *uri;
 @property (nonatomic, copy, nullable) NSString *name;
+@property (nonatomic, strong, nullable) NSDate *modifiedTime;
 @property (nonatomic, copy, nullable) NSString *link;
 @property (nonatomic, assign) BOOL isTopLevel;
 @property (nonatomic, strong, nullable) VIMPictureCollection *pictureCollection;
