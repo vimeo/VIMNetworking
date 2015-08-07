@@ -130,7 +130,14 @@ static const NSString *VIMCreateRecordTaskName = @"CREATE";
     
     NSError *error = nil;
     NSMutableURLRequest *request = [self.sessionManager.requestSerializer requestWithMethod:@"POST" URLString:[fullURL absoluteString] parameters:parameters error:&error];
-    NSAssert(error == nil, @"Unable to construct request");
+    if (error)
+    {
+        self.error = [NSError errorWithDomain:VIMActivateRecordTaskErrorDomain code:error.code userInfo:error.userInfo];
+        
+        [self taskDidComplete];
+        
+        return;
+    }
     
     NSString *value = [VIMUploadSessionManager authorizationHeaderValue];
     if (value)
@@ -198,7 +205,7 @@ static const NSString *VIMCreateRecordTaskName = @"CREATE";
 
     if (downloadTask.error)
     {
-        self.error = downloadTask.error;
+        self.error = [NSError errorWithDomain:VIMActivateRecordTaskErrorDomain code:downloadTask.error.code userInfo:downloadTask.error.userInfo];
         
         return;
     }
@@ -230,7 +237,7 @@ static const NSString *VIMCreateRecordTaskName = @"CREATE";
     NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
     if (error)
     {
-        self.error = error;
+        self.error = [NSError errorWithDomain:VIMActivateRecordTaskErrorDomain code:error.code userInfo:error.userInfo];
         
         return;
     }
@@ -257,13 +264,7 @@ static const NSString *VIMCreateRecordTaskName = @"CREATE";
     
     if (task.error)
     {
-        // TODO: parse out server returned error code, or is this already done elsewhere? [AH]
-        
-//        NSHTTPURLResponse *response = (NSHTTPURLResponse *)task.response;
-//        NSDictionary *headers = response.allHeaderFields;
-//        NSString *errorCode = headers[VimeoErrorCodeHeaderKey];
-        
-        self.error = task.error;
+        self.error = [NSError errorWithDomain:VIMActivateRecordTaskErrorDomain code:task.error.code userInfo:task.error.userInfo];
         
         [self taskDidComplete];
         
