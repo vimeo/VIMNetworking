@@ -364,7 +364,8 @@ static void *TaskQueueSpecific = "TaskQueueSpecific";
 {
     NSAssert([self.tasks count] == 0, @"Task array must be empty at time of load.");
 
-    NSData *data = [[self taskQueueDefaults] objectForKey:self.name];
+    NSUserDefaults *userDefaults = [self taskQueueDefaults];
+    NSData *data = [userDefaults objectForKey:self.name];
     if (data)
     {
         NSKeyedUnarchiver *keyedUnarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
@@ -379,8 +380,8 @@ static void *TaskQueueSpecific = "TaskQueueSpecific";
         {
             NSLog(@"An exception occured while unarchiving export operations: %@", exception);
             
-            [[self taskQueueDefaults] removeObjectForKey:self.name];
-            [[self taskQueueDefaults] synchronize];
+            [userDefaults removeObjectForKey:self.name];
+            [userDefaults synchronize];
         }
         
         [keyedUnarchiver finishDecoding];
