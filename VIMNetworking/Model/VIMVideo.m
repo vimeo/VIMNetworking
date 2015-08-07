@@ -57,6 +57,8 @@ NSString *VIMContentRating_Safe = @"safe";
 
 @implementation VIMVideo
 
+#pragma mark - Accessors
+
 - (NSString *)objectID
 {
     NSAssert([self.uri length] > 0, @"Object does not have a uri, cannot generate objectID");

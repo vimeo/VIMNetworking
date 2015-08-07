@@ -34,6 +34,13 @@
 
 @implementation VIMActivity
 
+#pragma mark - Accessors
+
+- (NSDate *)modifiedTime
+{
+    return self.video.modifiedTime;
+}
+
 - (NSString *)objectID
 {
     NSAssert([self.uri length] > 0, @"Object does not have a uri, cannot generate objectID");
