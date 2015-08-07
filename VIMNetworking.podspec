@@ -38,7 +38,7 @@ Pod::Spec.new do |s|
   end
 
   s.subspec 'VIMObjectMapper' do |ss|
-    ss.dependency	'VIMObjectMapper', '~> 5.5'
+    ss.dependency	'VIMObjectMapper', '~> 5.5.1'
   end
 
 end

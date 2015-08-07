@@ -82,7 +82,7 @@ static const NSString *VIMActivateRecordTaskName = @"ACTIVATE";
     NSMutableURLRequest *request = [self.sessionManager.requestSerializer requestWithMethod:@"DELETE" URLString:[fullURL absoluteString] parameters:nil error:&error];
     if (error)
     {
-        self.error = [NSError errorWithDomain:VIMActivateRecordTaskErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"Unable to serialize request."}];
+        self.error = [NSError errorWithDomain:VIMActivateRecordTaskErrorDomain code:error.code userInfo:error.userInfo];
         
         [self taskDidComplete];
         
@@ -133,7 +133,7 @@ static const NSString *VIMActivateRecordTaskName = @"ACTIVATE";
 
     if (task.error)
     {
-        self.error = task.error;
+        self.error = [NSError errorWithDomain:VIMActivateRecordTaskErrorDomain code:task.error.code userInfo:task.error.userInfo];
         
         [self taskDidComplete];
         

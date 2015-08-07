@@ -59,6 +59,9 @@ typedef NS_ENUM(NSInteger, HTTPErrorCode)
     HTTPErrorCodeForbidden = 403
 };
 
+extern NSString * const __nonnull VimeoErrorCodeHeaderKey;
+extern NSString * const __nonnull VimeoErrorCodeKey;
+
 @interface NSError (VIMNetworking)
 
 #pragma mark - Error Types
@@ -78,6 +81,6 @@ typedef NS_ENUM(NSInteger, HTTPErrorCode)
 - (NSInteger)statusCode;
 - (NSInteger)serverErrorCode;
 - (NSInteger)serverInvalidParametersErrorCode;
-- (NSDictionary *)errorResponseBodyJSON;
+- (nullable NSDictionary *)errorResponseBodyJSON;
 
 @end

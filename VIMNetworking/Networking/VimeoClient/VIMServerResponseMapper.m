@@ -30,7 +30,8 @@
 #import "VIMRequestDescriptor.h"
 #import "VIMObjectMapper.h"
 #import "VIMMappable.h"
-#import "NSError+BaseError.h"
+
+static NSString *const VIMServerResponseMapperErrorDomain = @"VIMServerResponseMapperErrorDomain";
 
 @implementation VIMServerResponseMapper
 
@@ -51,7 +52,7 @@
         NSString *localizedFailureReason = expl;
         NSDictionary *errorDict = [NSDictionary dictionaryWithObjectsAndKeys:localizedDescription, NSLocalizedDescriptionKey, localizedFailureReason, NSLocalizedFailureReasonErrorKey, nil];
         
-        NSError *error = [NSError errorWithDomain:kVimeoServerErrorDomain code:code userInfo:errorDict];
+        NSError *error = [NSError errorWithDomain:VIMServerResponseMapperErrorDomain code:code userInfo:errorDict];
         
         if(completionBlock)
             completionBlock(nil, error);

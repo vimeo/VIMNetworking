@@ -238,7 +238,11 @@ static NSString *const SharedCacheName = @"SharedCache";
                 [fileManager createDirectoryAtPath:self.diskPath withIntermediateDirectories:YES attributes:nil error:NULL];
             }
             
-            [fileManager createFileAtPath:[self _getDiskCachePathForKey:key] contents:data attributes:nil];
+            BOOL success = [fileManager createFileAtPath:[self _getDiskCachePathForKey:key] contents:data attributes:nil];
+            if (success == NO)
+            {
+                NSLog(@"Unable to store object to disk cache.");
+            }
         });
     }
 }
@@ -246,14 +250,19 @@ static NSString *const SharedCacheName = @"SharedCache";
 - (void)_deleteDiskCacheForKey:(NSString *)key
 {
 	NSString *cacheFilePath = [self _getDiskCachePathForKey:key];
-	
+	    
 	dispatch_barrier_async(_diskQueue, ^{
 
         // Create new file manager for this thread
 		NSFileManager *fileManager = [NSFileManager new];
 		if ([fileManager fileExistsAtPath:cacheFilePath])
         {
-            [fileManager removeItemAtPath:cacheFilePath error:nil];
+            NSError *error = nil;
+            BOOL success = [fileManager removeItemAtPath:cacheFilePath error:&error];
+            if (success == NO)
+            {
+                NSLog(@"Unable to remove object from disk cache.");
+            }
         }
 	
     });
