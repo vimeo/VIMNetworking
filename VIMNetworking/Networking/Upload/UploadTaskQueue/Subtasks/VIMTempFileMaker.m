@@ -67,6 +67,8 @@
         NSError *error = info[PHImageErrorKey];
         if (error)
         {
+            error = [NSError errorWithDomain:VIMTempFileMakerErrorDomain code:error.code userInfo:error.userInfo];
+
             if (completionBlock)
             {
                 completionBlock(nil, error);
@@ -152,6 +154,8 @@
     NSError *error = nil;
     if (![VIMTempFileMaker checkDiskSpaceForURLAsset:asset error:&error])
     {
+        error = [NSError errorWithDomain:VIMTempFileMakerErrorDomain code:error.code userInfo:error.userInfo];
+
         if (completionBlock)
         {
             completionBlock(nil, error);
@@ -171,9 +175,11 @@
         
         if (exportSession.error)
         {
+            NSError *error = [NSError errorWithDomain:VIMTempFileMakerErrorDomain code:exportSession.error.code userInfo:exportSession.error.userInfo];
+
             if (completionBlock)
             {
-                completionBlock(nil, exportSession.error);
+                completionBlock(nil, error);
             }
             
             return;
@@ -227,6 +233,8 @@
     }
     else
     {
+        copyError = [NSError errorWithDomain:VIMTempFileMakerErrorDomain code:copyError.code userInfo:copyError.userInfo];
+
         if (completionBlock)
         {
             completionBlock(nil, copyError);

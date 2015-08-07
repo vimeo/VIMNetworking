@@ -103,7 +103,7 @@ static const NSString *VIMUploadFileTaskName = @"FILE_UPLOAD";
     NSMutableURLRequest *request = [self.sessionManager.requestSerializer requestWithMethod:@"PUT" URLString:self.destination parameters:nil error:&error];
     if (error)
     {
-        self.error = [NSError errorWithDomain:VIMUploadFileTaskErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"Unable to serialize request."}];
+        self.error = [NSError errorWithDomain:VIMUploadFileTaskErrorDomain code:error.code userInfo:error.userInfo];
         
         [self taskDidComplete];
         
@@ -190,7 +190,7 @@ static const NSString *VIMUploadFileTaskName = @"FILE_UPLOAD";
 
     if (task.error)
     {
-        self.error = task.error;
+        self.error = [NSError errorWithDomain:VIMUploadFileTaskErrorDomain code:task.error.code userInfo:task.error.userInfo];
         
         [self taskDidComplete];
         

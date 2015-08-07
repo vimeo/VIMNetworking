@@ -120,7 +120,7 @@ static const NSString *VIMMetadataTaskName = @"METADATA";
     NSMutableURLRequest *request = [self.sessionManager.requestSerializer requestWithMethod:@"PATCH" URLString:[fullURL absoluteString] parameters:parameters error:&error];
     if (error)
     {
-        self.error = [NSError errorWithDomain:VIMMetadataTaskErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"Unable to serialize request."}];
+        self.error = [NSError errorWithDomain:VIMMetadataTaskErrorDomain code:error.code userInfo:error.userInfo];
         
         [self taskDidComplete];
         
@@ -171,7 +171,7 @@ static const NSString *VIMMetadataTaskName = @"METADATA";
     
     if (task.error)
     {
-        self.error = task.error;
+        self.error = [NSError errorWithDomain:VIMMetadataTaskErrorDomain code:task.error.code userInfo:task.error.userInfo];
         
         [self taskDidComplete];
         
