@@ -259,6 +259,18 @@ NSString * const kVIMOAuthGrantType_Facebook = @"facebook";
     NSParameterAssert(parameters);
     NSParameterAssert(completionBlock);
     
+    if (![path length] || !parameters)
+    {
+        NSError *error = [NSError errorWithDomain:kVimeoAuthenticatorErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"path or parameters not provided"}];
+
+        if (completionBlock)
+        {
+            completionBlock(nil, error);
+        }
+        
+        return nil;
+    }
+    
     [parameters setObject:self.clientKey forKey:@"client_id"];
 
     VIMRequestDescriptor *descriptor = [[VIMRequestDescriptor alloc] init];
@@ -295,6 +307,7 @@ NSString * const kVIMOAuthGrantType_Facebook = @"facebook";
         if (account == nil)
         {
             NSError *error = [NSError errorWithDomain:kVimeoAuthenticatorErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"account returned is nil"}];
+            
             completionBlock(nil, error);
             
             return;
