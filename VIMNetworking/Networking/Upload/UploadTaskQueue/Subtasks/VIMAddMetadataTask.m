@@ -27,9 +27,9 @@
 #import "VIMAddMetadataTask.h"
 #import "VIMVideoMetadata.h"
 #import "VIMUploadSessionManager.h"
+#import "NSError+VIMUpload.h"
 
 static const NSString *VIMMetadataTaskName = @"METADATA";
-static const NSString *VIMMetadataTaskErrorDomain = @"VIMMetadataTaskErrorDomain";
 
 @interface VIMAddMetadataTask ()
 
@@ -107,7 +107,7 @@ static const NSString *VIMMetadataTaskErrorDomain = @"VIMMetadataTaskErrorDomain
     
     if ([self.videoURI length] == 0)
     {
-        self.error = [NSError errorWithDomain:(NSString *)VIMMetadataTaskErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"Unable to add metadata to videoAsset, videoURI is nil."}];
+        self.error = [NSError errorWithDomain:VIMMetadataTaskErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"Unable to add metadata to videoAsset, videoURI is nil."}];
         
         [self taskDidComplete];
         
@@ -120,7 +120,7 @@ static const NSString *VIMMetadataTaskErrorDomain = @"VIMMetadataTaskErrorDomain
     NSMutableURLRequest *request = [self.sessionManager.requestSerializer requestWithMethod:@"PATCH" URLString:[fullURL absoluteString] parameters:parameters error:&error];
     if (error)
     {
-        self.error = [NSError errorWithDomain:(NSString *)VIMMetadataTaskErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"Unable to serialize request."}];
+        self.error = [NSError errorWithDomain:VIMMetadataTaskErrorDomain code:error.code userInfo:error.userInfo];
         
         [self taskDidComplete];
         
@@ -171,7 +171,7 @@ static const NSString *VIMMetadataTaskErrorDomain = @"VIMMetadataTaskErrorDomain
     
     if (task.error)
     {
-        self.error = task.error;
+        self.error = [NSError errorWithDomain:VIMMetadataTaskErrorDomain code:task.error.code userInfo:task.error.userInfo];
         
         [self taskDidComplete];
         
@@ -181,7 +181,7 @@ static const NSString *VIMMetadataTaskErrorDomain = @"VIMMetadataTaskErrorDomain
     NSHTTPURLResponse *HTTPResponse = ((NSHTTPURLResponse *)task.response);
     if (HTTPResponse.statusCode < 200 || HTTPResponse.statusCode > 299)
     {
-        self.error = [NSError errorWithDomain:(NSString *)VIMMetadataTaskErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"Invalid status code."}];
+        self.error = [NSError errorWithDomain:VIMMetadataTaskErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"Invalid status code."}];
         
         [self taskDidComplete];
         

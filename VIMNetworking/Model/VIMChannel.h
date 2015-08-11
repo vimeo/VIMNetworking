@@ -35,6 +35,7 @@
 @interface VIMChannel : VIMModelObject
 
 @property (nonatomic, strong, nullable) NSDate *createdTime;
+@property (nonatomic, strong, nullable) NSDate *modifiedTime;
 @property (nonatomic, copy, nullable) NSString *channelDescription;
 @property (nonatomic, copy, nullable) NSString *link;
 @property (nonatomic, copy, nullable) NSString *name;

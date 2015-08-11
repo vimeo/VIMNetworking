@@ -57,6 +57,17 @@ NSString *VIMContentRating_Safe = @"safe";
 
 @implementation VIMVideo
 
+#pragma mark - Accessors
+
+- (NSString *)objectID
+{
+    NSAssert([self.uri length] > 0, @"Object does not have a uri, cannot generate objectID");
+    
+    return [self.uri MD5];
+}
+
+#pragma mark - Public API
+
 - (VIMConnection *)connectionWithName:(NSString *)connectionName
 {
     return [self.connections objectForKey:connectionName];
@@ -121,8 +132,6 @@ NSString *VIMContentRating_Safe = @"safe";
 
 - (void)didFinishMapping
 {
-    self.objectID = [self.uri MD5];
-    
     if ([self.pictureCollection isEqual:[NSNull null]])
     {
         self.pictureCollection = nil;
@@ -411,6 +420,82 @@ NSString *VIMContentRating_Safe = @"safe";
     VIMConnection *commentsConnection = [self connectionWithName:VIMConnectionNameComments];
     
     return (self.canViewComments ? commentsConnection.total.intValue : 0);
+}
+
+#pragma mark - File Selection
+
+- (VIMVideoFile *)hlsFileForScreenSize:(CGSize)size
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.quality == %@", VIMVideoFileQualityHLS];
+    
+    return [self fileForPredicate:predicate screenSize:size];
+}
+
+- (VIMVideoFile *)mp4FileForScreenSize:(CGSize)size
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.quality != %@", VIMVideoFileQualityHLS];
+
+    return [self fileForPredicate:predicate screenSize:size];
+}
+
+- (VIMVideoFile *)fileForPredicate:(NSPredicate *)predicate screenSize:(CGSize)size
+{
+    if (CGSizeEqualToSize(size, CGSizeZero) || predicate == nil)
+    {
+        return nil;
+    }
+    
+    NSArray *filteredFiles = [self.files filteredArrayUsingPredicate:predicate];
+    
+    // Sort largest to smallest
+    NSArray *sortedFiles = [filteredFiles sortedArrayUsingComparator:^NSComparisonResult(VIMVideoFile *a, VIMVideoFile *b) {
+        
+        NSNumber *first = [a width];
+        NSNumber *second = [b width];
+        
+        return [second compare:first];
+    
+    }];
+    
+    VIMVideoFile *file = nil;
+    
+    // TODO: augment this to handle portrait videos [AH]
+    NSInteger targetScreenWidth = MAX(size.width, size.height);
+
+//    NSLog(@"SELECTING VIDEO FILE FOR SIZE: %@", NSStringFromCGSize(size));
+
+    for (VIMVideoFile *currentFile in sortedFiles)
+    {
+//        NSLog(@"option: (%@, %@)", currentFile.width, currentFile.height);
+        
+        if ([currentFile isSupportedMimeType] && currentFile.link)
+        {
+            // We dont yet have a file, grab the largest one (based on sort order above)
+            if (file == nil)
+            {
+                file = currentFile;
+                
+                continue;
+            }
+            
+            // We dont have the info with which to compare the files
+            if ((file.width == nil || currentFile.width == nil ||
+                 [file.width isEqual:[NSNull null]] || [currentFile.width isEqual:[NSNull null]] ||
+                 [file.width isEqual:@(0)] || [currentFile.width isEqual:@(0)]))
+            {
+                continue;
+            }
+            
+            if (currentFile.width.intValue > targetScreenWidth && currentFile.width.intValue < file.width.intValue)
+            {
+                file = currentFile;
+            }
+        }
+    }
+    
+//    NSLog(@"selected: (%@, %@)", file.width, file.height);
+
+    return file;
 }
 
 @end

@@ -28,9 +28,9 @@
 #import "VIMUploadSessionManager.h"
 #import <AVFoundation/AVFoundation.h>
 #import "AVAsset+Filesize.h"
+#import "NSError+VIMUpload.h"
 
 static const NSString *VIMUploadFileTaskName = @"FILE_UPLOAD";
-static const NSString *VIMUploadFileTaskErrorDomain = @"VIMUploadFileTaskErrorDomain";
 
 @interface VIMUploadFileTask ()
 
@@ -92,7 +92,7 @@ static const NSString *VIMUploadFileTaskErrorDomain = @"VIMUploadFileTaskErrorDo
 
     if (![[NSFileManager defaultManager] fileExistsAtPath:self.source])
     {
-        self.error = [NSError errorWithDomain:(NSString *)VIMUploadFileTaskErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"Source file does not exist."}];
+        self.error = [NSError errorWithDomain:VIMUploadFileTaskErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"Source file does not exist."}];
         
         [self taskDidComplete];
 
@@ -103,7 +103,7 @@ static const NSString *VIMUploadFileTaskErrorDomain = @"VIMUploadFileTaskErrorDo
     NSMutableURLRequest *request = [self.sessionManager.requestSerializer requestWithMethod:@"PUT" URLString:self.destination parameters:nil error:&error];
     if (error)
     {
-        self.error = [NSError errorWithDomain:(NSString *)VIMUploadFileTaskErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"Unable to serialize request."}];
+        self.error = [NSError errorWithDomain:VIMUploadFileTaskErrorDomain code:error.code userInfo:error.userInfo];
         
         [self taskDidComplete];
         
@@ -190,7 +190,7 @@ static const NSString *VIMUploadFileTaskErrorDomain = @"VIMUploadFileTaskErrorDo
 
     if (task.error)
     {
-        self.error = task.error;
+        self.error = [NSError errorWithDomain:VIMUploadFileTaskErrorDomain code:task.error.code userInfo:task.error.userInfo];
         
         [self taskDidComplete];
         
@@ -200,7 +200,7 @@ static const NSString *VIMUploadFileTaskErrorDomain = @"VIMUploadFileTaskErrorDo
     NSHTTPURLResponse *HTTPResponse = ((NSHTTPURLResponse *)task.response);
     if (HTTPResponse.statusCode < 200 || HTTPResponse.statusCode > 299)
     {
-        self.error = [NSError errorWithDomain:(NSString *)VIMUploadFileTaskErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"Invalid status code."}];
+        self.error = [NSError errorWithDomain:VIMUploadFileTaskErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"Invalid status code."}];
         
         [self taskDidComplete];
         

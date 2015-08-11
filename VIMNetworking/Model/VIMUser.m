@@ -47,6 +47,13 @@
 
 @implementation VIMUser
 
+- (NSString *)objectID
+{
+    NSAssert([self.uri length] > 0, @"Object does not have a uri, cannot generate objectID");
+    
+    return [self.uri MD5];
+}
+
 #pragma mark - Public API
 
 - (VIMConnection *)connectionWithName:(NSString *)connectionName
@@ -83,8 +90,6 @@
 
 - (void)didFinishMapping
 {
-    self.objectID = [self.uri MD5];
-
     if ([self.pictureCollection isEqual:[NSNull null]])
     {
         self.pictureCollection = nil;
@@ -97,6 +102,7 @@
     [self parseInteractions];
     [self parseAccountType];
     [self formatCreatedTime];
+    [self formatModifiedTime];
 }
 
 #pragma mark - Parsing Helpers
@@ -167,6 +173,14 @@
     if ([self.createdTime isKindOfClass:[NSString class]])
     {
         self.createdTime = [[VIMModelObject dateFormatter] dateFromString:(NSString *)self.createdTime];
+    }
+}
+
+- (void)formatModifiedTime
+{
+    if ([self.modifiedTime isKindOfClass:[NSString class]])
+    {
+        self.modifiedTime = [[VIMModelObject dateFormatter] dateFromString:(NSString *)self.modifiedTime];
     }
 }
 

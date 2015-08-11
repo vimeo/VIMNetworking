@@ -46,6 +46,13 @@
 
 #pragma mark - Public API
 
+- (NSString *)objectID
+{
+    NSAssert([self.uri length] > 0, @"Object does not have a uri, cannot generate objectID");
+    
+    return [self.uri MD5];
+}
+
 - (VIMConnection *)connectionWithName:(NSString *)connectionName
 {
     return [self.connections objectForKey:connectionName];
@@ -80,8 +87,6 @@
 
 - (void)didFinishMapping
 {
-    self.objectID = [self.uri MD5];
-
     if ([self.createdTime isKindOfClass:[NSString class]])
     {
         self.createdTime = [[VIMModelObject dateFormatter] dateFromString:(NSString *)self.createdTime];

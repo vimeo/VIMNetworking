@@ -7,8 +7,10 @@
 //
 
 #import "NSError+VIMNetworking.h"
-#import "NSError+BaseError.h"
 #import "AFURLResponseSerialization.h"
+
+NSString * const VimeoErrorCodeHeaderKey = @"Vimeo-Error-Code";
+NSString * const VimeoErrorCodeKey = @"VimeoErrorCode";
 
 @implementation NSError (VIMNetworking)
 
@@ -21,13 +23,7 @@
 
 - (BOOL)isInvalidTokenError
 {
-    NSError *baseError = self;
-    if (self.userInfo[BaseErrorKey])
-    {
-        baseError = self.userInfo[BaseErrorKey];
-    }
-    
-    NSHTTPURLResponse *urlResponse = baseError.userInfo[AFNetworkingOperationFailingURLResponseErrorKey];
+    NSHTTPURLResponse *urlResponse = self.userInfo[AFNetworkingOperationFailingURLResponseErrorKey];
     if (urlResponse && [urlResponse statusCode] == HTTPErrorCodeUnauthorized)
     {
         NSString *header = urlResponse.allHeaderFields[@"WWW-Authenticate"];
@@ -64,13 +60,7 @@
 
 - (NSInteger)statusCode
 {
-    NSError *baseError = self;
-    if (self.userInfo[BaseErrorKey])
-    {
-        baseError = self.userInfo[BaseErrorKey];
-    }
-    
-    NSHTTPURLResponse *urlResponse = baseError.userInfo[AFNetworkingOperationFailingURLResponseErrorKey];
+    NSHTTPURLResponse *urlResponse = self.userInfo[AFNetworkingOperationFailingURLResponseErrorKey];
     if (urlResponse)
     {
         return [urlResponse statusCode];
@@ -93,12 +83,19 @@
     if (response)
     {
         NSDictionary *headers = [response allHeaderFields];
-        NSString *vimeoError = headers[@"Vimeo-Error-Code"];
+        NSString *vimeoError = headers[VimeoErrorCodeHeaderKey];
         
         if (vimeoError)
         {
             return [vimeoError integerValue];
         }
+    }
+    
+    NSDictionary *json = [self errorResponseBodyJSON];
+    errorCodeNumber = [json objectForKey:@"error_code"];
+    if (errorCodeNumber)
+    {
+        return [errorCodeNumber integerValue];
     }
     
     return 0;
@@ -115,7 +112,7 @@
         
         for (NSDictionary *errorJSON in invalidParameters)
         {
-            NSString *errorCode = errorJSON[@"code"];
+            NSString *errorCode = errorJSON[@"error_code"];
             
             if (errorCode)
             {

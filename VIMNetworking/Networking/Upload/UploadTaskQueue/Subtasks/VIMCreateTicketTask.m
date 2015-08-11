@@ -28,12 +28,11 @@
 #import "VIMTempFileMaker.h"
 #include "AVAsset+Filesize.h"
 #import "PHAsset+Filesize.h"
-#import "NSError+BaseError.h"
 #import "VIMUploadSessionManager.h"
+#import "NSError+VIMUpload.h"
 
 static const NSString *RecordCreationPath = @"/me/videos";
 static const NSString *VIMCreateRecordTaskName = @"CREATE";
-static NSString *const VIMCreateRecordTaskErrorDomain = @"VIMCreateRecordTaskErrorDomain";
 
 @interface VIMCreateTicketTask ()
 
@@ -131,7 +130,14 @@ static NSString *const VIMCreateRecordTaskErrorDomain = @"VIMCreateRecordTaskErr
     
     NSError *error = nil;
     NSMutableURLRequest *request = [self.sessionManager.requestSerializer requestWithMethod:@"POST" URLString:[fullURL absoluteString] parameters:parameters error:&error];
-    NSAssert(error == nil, @"Unable to construct request");
+    if (error)
+    {
+        self.error = [NSError errorWithDomain:VIMActivateRecordTaskErrorDomain code:error.code userInfo:error.userInfo];
+        
+        [self taskDidComplete];
+        
+        return;
+    }
     
     NSString *value = [VIMUploadSessionManager authorizationHeaderValue];
     if (value)
@@ -199,7 +205,7 @@ static NSString *const VIMCreateRecordTaskErrorDomain = @"VIMCreateRecordTaskErr
 
     if (downloadTask.error)
     {
-        self.error = downloadTask.error;
+        self.error = [NSError errorWithDomain:VIMActivateRecordTaskErrorDomain code:downloadTask.error.code userInfo:downloadTask.error.userInfo];
         
         return;
     }
@@ -207,14 +213,14 @@ static NSString *const VIMCreateRecordTaskErrorDomain = @"VIMCreateRecordTaskErr
     NSHTTPURLResponse *HTTPResponse = ((NSHTTPURLResponse *)downloadTask.response);
     if (HTTPResponse.statusCode < 200 || HTTPResponse.statusCode > 299)
     {
-        self.error = [NSError errorWithDomain:(NSString *)VIMCreateRecordTaskErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"Invalid status code."}];
+        self.error = [NSError errorWithDomain:VIMCreateRecordTaskErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"Invalid status code."}];
         
         return;
     }
     
     if (location == nil)
     {
-        self.error = [NSError errorWithDomain:(NSString *)VIMCreateRecordTaskErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"No location provided."}];
+        self.error = [NSError errorWithDomain:VIMCreateRecordTaskErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"No location provided."}];
         
         return;
     }
@@ -222,7 +228,7 @@ static NSString *const VIMCreateRecordTaskErrorDomain = @"VIMCreateRecordTaskErr
     NSData *data = [NSData dataWithContentsOfURL:location];
     if (data == nil)
     {
-        self.error = [NSError errorWithDomain:(NSString *)VIMCreateRecordTaskErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"No file at location."}];
+        self.error = [NSError errorWithDomain:VIMCreateRecordTaskErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"No file at location."}];
         
         return;
     }
@@ -231,7 +237,7 @@ static NSString *const VIMCreateRecordTaskErrorDomain = @"VIMCreateRecordTaskErr
     NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
     if (error)
     {
-        self.error = error;
+        self.error = [NSError errorWithDomain:VIMActivateRecordTaskErrorDomain code:error.code userInfo:error.userInfo];
         
         return;
     }
@@ -258,18 +264,7 @@ static NSString *const VIMCreateRecordTaskErrorDomain = @"VIMCreateRecordTaskErr
     
     if (task.error)
     {
-        NSHTTPURLResponse *response = (NSHTTPURLResponse *)task.response;
-        NSDictionary *headers = response.allHeaderFields;
-        NSString *errorCode = headers[VimeoErrorCodeHeaderKey];
-        
-        if (errorCode && [errorCode length] && [errorCode integerValue] > 0)
-        {
-            self.error = [NSError vimeoErrorFromError:task.error withVimeoDomain:VIMCreateRecordTaskErrorDomain vimeoErrorCode:[errorCode integerValue]];
-        }
-        else
-        {
-            self.error = task.error;
-        }
+        self.error = [NSError errorWithDomain:VIMActivateRecordTaskErrorDomain code:task.error.code userInfo:task.error.userInfo];
         
         [self taskDidComplete];
         
@@ -281,7 +276,7 @@ static NSString *const VIMCreateRecordTaskErrorDomain = @"VIMCreateRecordTaskErr
     if (uploadURI == nil || activationURI == nil)
     {
         NSString *description = [NSString stringWithFormat:@"Reponse did not include upload_link_secure or complete_uri. (%@)", [self.responseDictionary description]];
-        self.error = [NSError errorWithDomain:(NSString *)VIMCreateRecordTaskErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : description}];
+        self.error = [NSError errorWithDomain:VIMCreateRecordTaskErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : description}];
 
         [self taskDidComplete];
         

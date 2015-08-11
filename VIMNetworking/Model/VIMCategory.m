@@ -42,6 +42,13 @@
 
 @implementation VIMCategory
 
+- (NSString *)objectID
+{
+    NSAssert([self.uri length] > 0, @"Object does not have a uri, cannot generate objectID");
+    
+    return [self.uri MD5];
+}
+
 #pragma mark - Public API
 
 - (VIMConnection *)connectionWithName:(NSString *)connectionName
@@ -83,8 +90,6 @@
 
 - (void)didFinishMapping
 {
-    self.objectID = [self.uri MD5];
-    
     if (self.topLevel && [self.topLevel isKindOfClass:[NSNumber class]])
     {
         self.isTopLevel = [self.topLevel boolValue];
@@ -92,6 +97,7 @@
     
     [self parseConnections];
     [self parseInteractions];
+    [self formatModifiedTime];
 }
 
 #pragma mark - Parsing Helpers
@@ -141,6 +147,14 @@
     }
     
     self.interactions = interactions;
+}
+
+- (void)formatModifiedTime
+{
+    if ([self.modifiedTime isKindOfClass:[NSString class]])
+    {
+        self.modifiedTime = [[VIMModelObject dateFormatter] dateFromString:(NSString *)self.modifiedTime];
+    }
 }
 
 @end

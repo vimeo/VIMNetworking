@@ -103,4 +103,7 @@ typedef NS_ENUM(NSUInteger, VIMVideoProcessingStatus) {
 - (void)setIsLiked:(BOOL)isLiked;
 - (void)setIsWatchLater:(BOOL)isWatchLater;
 
+- (nullable VIMVideoFile *)hlsFileForScreenSize:(CGSize)size;
+- (nullable VIMVideoFile *)mp4FileForScreenSize:(CGSize)size;
+
 @end

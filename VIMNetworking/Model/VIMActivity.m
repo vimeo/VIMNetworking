@@ -35,6 +35,20 @@
 
 @implementation VIMActivity
 
+#pragma mark - Accessors
+
+- (NSDate *)modifiedTime
+{
+    return self.video.modifiedTime;
+}
+
+- (NSString *)objectID
+{
+    NSAssert([self.uri length] > 0, @"Object does not have a uri, cannot generate objectID");
+    
+    return [self.uri MD5];
+}
+
 #pragma mark - VIMMappable
 
 - (NSDictionary *)getObjectMapping
@@ -79,8 +93,6 @@
 
 - (void)didFinishMapping
 {
-    self.objectID = [self.uri MD5];
-
     if ([self.time isKindOfClass:[NSString class]])
     {
         self.time = [[VIMModelObject dateFormatter] dateFromString:(NSString *)self.time];

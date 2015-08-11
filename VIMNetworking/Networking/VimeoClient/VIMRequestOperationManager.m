@@ -32,7 +32,6 @@
 #import "VIMRequestToken.h"
 #import "VIMRequestOperation.h"
 #import "VIMServerResponseMapper.h"
-#import "NSError+BaseError.h"
 #import "NSError+VIMNetworking.h"
 #import "VIMRequestSerializer.h"
 #import "VIMResponseSerializer.h"
@@ -148,6 +147,21 @@ NSString *const kVimeoClient_InvalidTokenNotification = @"kVimeoClient_InvalidTo
     NSParameterAssert([descriptor.urlPath length]);
     NSAssert([descriptor.parameters isKindOfClass:[NSArray class]] ||
              [descriptor.parameters isKindOfClass:[NSDictionary class]] || descriptor.parameters == nil, @"Invalid parameters");
+    
+    if (descriptor == nil || ![descriptor.urlPath length])
+    {
+        dispatch_async(_responseQueue, ^{
+            
+            if (completionBlock)
+            {
+                NSError *error = [NSError errorWithDomain:kVimeoClientErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"descriptor or urlPath is nil"}];
+                completionBlock(nil, error);
+            }
+        
+        });
+        
+        return nil;
+    }
     
     if (self.cache == nil && (descriptor.cachePolicy == VIMCachePolicy_LocalOnly || descriptor.cachePolicy == VIMCachePolicy_LocalAndNetwork))
     {
@@ -344,15 +358,7 @@ NSString *const kVimeoClient_InvalidTokenNotification = @"kVimeoClient_InvalidTo
             response.isCachedResponse = NO;
             response.isFinalResponse = descriptor.cachePolicy != VIMCachePolicy_TryNetworkFirst;
             
-            NSError *parsedError = [self _parseServerError:error]; // Why is this necessary? [AH]
-            if (parsedError)
-            {
-                if (completionBlock)
-                {
-                    completionBlock(response, parsedError);
-                }
-            }
-            else if (error)
+            if (error)
             {
                 if (completionBlock)
                 {
@@ -431,11 +437,6 @@ NSString *const kVimeoClient_InvalidTokenNotification = @"kVimeoClient_InvalidTo
 - (void)generateResponseFromJSON:(id)JSON operation:(VIMRequestOperation *)operation completionBlock:(VIMRequestCompletionBlock)completionBlock
 {
     [VIMServerResponseMapper responseFromJSON:JSON operation:operation completionBlock:completionBlock];
-}
-
-- (NSError *)_parseServerError:(NSError *)error
-{
-    return [NSError errorFromServerError:error withNewDomain:kVimeoServerErrorDomain];
 }
 
 #pragma mark Utilities
