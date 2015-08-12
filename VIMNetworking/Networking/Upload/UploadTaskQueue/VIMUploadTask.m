@@ -452,7 +452,8 @@ static void *UploadProgressContext = &UploadProgressContext;
                 
                 if (strongSelf.uploadProgressBlock)
                 {
-                    strongSelf.uploadProgressBlock(((NSProgress *)object).fractionCompleted);
+                    double progress = strongSelf.state == TaskStateSuspended ? 0 : ((NSProgress *)object).fractionCompleted;
+                    strongSelf.uploadProgressBlock(progress);
                 }
             });
         }
