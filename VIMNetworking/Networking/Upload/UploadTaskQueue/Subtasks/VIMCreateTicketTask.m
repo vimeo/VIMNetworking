@@ -132,7 +132,7 @@ static const NSString *VIMCreateRecordTaskName = @"CREATE";
     NSMutableURLRequest *request = [self.sessionManager.requestSerializer requestWithMethod:@"POST" URLString:[fullURL absoluteString] parameters:parameters error:&error];
     if (error)
     {
-        self.error = [NSError errorWithDomain:VIMActivateRecordTaskErrorDomain code:error.code userInfo:error.userInfo];
+        self.error = [NSError errorWithDomain:VIMCreateRecordTaskErrorDomain code:error.code userInfo:error.userInfo];
         
         [self taskDidComplete];
         
@@ -205,7 +205,7 @@ static const NSString *VIMCreateRecordTaskName = @"CREATE";
 
     if (downloadTask.error)
     {
-        self.error = [NSError errorWithDomain:VIMActivateRecordTaskErrorDomain code:downloadTask.error.code userInfo:downloadTask.error.userInfo];
+        self.error = [NSError errorWithDomain:VIMCreateRecordTaskErrorDomain code:downloadTask.error.code userInfo:downloadTask.error.userInfo];
         
         return;
     }
@@ -237,7 +237,7 @@ static const NSString *VIMCreateRecordTaskName = @"CREATE";
     NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
     if (error)
     {
-        self.error = [NSError errorWithDomain:VIMActivateRecordTaskErrorDomain code:error.code userInfo:error.userInfo];
+        self.error = [NSError errorWithDomain:VIMCreateRecordTaskErrorDomain code:error.code userInfo:error.userInfo];
         
         return;
     }
@@ -264,7 +264,7 @@ static const NSString *VIMCreateRecordTaskName = @"CREATE";
     
     if (task.error)
     {
-        self.error = [NSError errorWithDomain:VIMActivateRecordTaskErrorDomain code:task.error.code userInfo:task.error.userInfo];
+        self.error = [NSError errorWithDomain:VIMCreateRecordTaskErrorDomain code:task.error.code userInfo:task.error.userInfo];
         
         [self taskDidComplete];
         
