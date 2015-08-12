@@ -205,7 +205,7 @@ static const NSString *VIMCreateRecordTaskName = @"CREATE";
 
     if (downloadTask.error)
     {
-        self.error = [NSError errorWithDomain:VIMCreateRecordTaskErrorDomain code:downloadTask.error.code userInfo:downloadTask.error.userInfo];
+        self.error = [NSError errorWithError:downloadTask.error domain:VIMCreateRecordTaskErrorDomain URLResponse:downloadTask.response];
         
         return;
     }
@@ -264,7 +264,7 @@ static const NSString *VIMCreateRecordTaskName = @"CREATE";
     
     if (task.error)
     {
-        self.error = [NSError errorWithDomain:VIMCreateRecordTaskErrorDomain code:task.error.code userInfo:task.error.userInfo];
+        self.error = [NSError errorWithError:task.error domain:VIMCreateRecordTaskErrorDomain URLResponse:task.response];
         
         [self taskDidComplete];
         

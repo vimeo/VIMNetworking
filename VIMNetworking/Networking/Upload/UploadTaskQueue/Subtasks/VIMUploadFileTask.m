@@ -190,7 +190,7 @@ static const NSString *VIMUploadFileTaskName = @"FILE_UPLOAD";
 
     if (task.error)
     {
-        self.error = [NSError errorWithDomain:VIMUploadFileTaskErrorDomain code:task.error.code userInfo:task.error.userInfo];
+        self.error = [NSError errorWithError:task.error domain:VIMUploadFileTaskErrorDomain URLResponse:task.response];
         
         [self taskDidComplete];
         

@@ -133,7 +133,7 @@ static const NSString *VIMActivateRecordTaskName = @"ACTIVATE";
 
     if (task.error)
     {
-        self.error = [NSError errorWithDomain:VIMActivateRecordTaskErrorDomain code:task.error.code userInfo:task.error.userInfo];
+        self.error = [NSError errorWithError:task.error domain:VIMActivateRecordTaskErrorDomain URLResponse:task.response];
         
         [self taskDidComplete];
         
