@@ -110,6 +110,9 @@ static void *UploadStateContext = &UploadStateContext;
         return;
     }
     
+    VIMVideoAsset *ignoredAsset = self.failedAssets[index];
+    ignoredAsset.uploadState = VIMUploadState_None;
+    
     [self.failedAssets removeObjectAtIndex:index];
     
     dispatch_async(dispatch_get_main_queue(), ^{
