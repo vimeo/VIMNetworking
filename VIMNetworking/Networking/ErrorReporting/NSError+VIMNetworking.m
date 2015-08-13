@@ -98,7 +98,7 @@ NSString * const VimeoErrorCodeKey = @"VimeoErrorCode";
         return [errorCodeNumber integerValue];
     }
     
-    return 0;
+    return NSNotFound;
 }
 
 - (NSInteger)serverInvalidParametersErrorCode
