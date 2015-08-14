@@ -73,7 +73,11 @@
         return NO;
     }
     
-    [self deleteDataForAccount:account service:service];
+    BOOL success = [self deleteDataForAccount:account service:service];
+    if (!success)
+    {
+        NSLog(@"Unable to delete data for account: %@ service: %@", account, service);
+    }
     
     NSMutableDictionary *query = [self queryForService:service account:account];
     [query setValue:data forKey:(__bridge_transfer id)kSecValueData];
