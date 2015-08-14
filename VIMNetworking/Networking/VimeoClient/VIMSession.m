@@ -161,7 +161,15 @@ static VIMSession *_sharedSession;
         if (account)
         {
             NSString *key = [account isAuthenticatedWithUser] ? UserAccountKey : ClientCredentialsAccountKey;
-            [VIMAccountStore saveAccount:account forKey:key];
+            
+            BOOL success = [VIMAccountStore saveAccount:account forKey:key];
+            
+            NSAssert(success, @"Unable to save account for key: %@", key);
+            
+            if (!success)
+            {
+                NSLog(@"Unable to save account for key: %@", key);
+            }
         }
     }
 
@@ -254,7 +262,14 @@ static VIMSession *_sharedSession;
         return;
     }
     
-    [VIMAccountStore saveAccount:account forKey:key];
+    BOOL success = [VIMAccountStore saveAccount:account forKey:key];
+    
+    NSAssert(success, @"Unable to save account for key: %@", key);
+    
+    if (!success)
+    {
+        NSLog(@"Unable to save account for key: %@", key);
+    }
 
     self.account = account;
     self.client.cache = [self buildCache];
@@ -365,7 +380,13 @@ static VIMSession *_sharedSession;
     id<VIMRequestToken> logoutRequest = [self.client logoutWithCompletionBlock:nil];
 
     VIMAccountNew *account = [VIMAccountStore loadAccountForKey:ClientCredentialsAccountKey];
-    [VIMAccountStore deleteAccountForKey:UserAccountKey];
+    
+    BOOL success = [VIMAccountStore deleteAccountForKey:UserAccountKey];
+    if (!success)
+    {
+        NSLog(@"Unable to delete account for key: %@", UserAccountKey);
+    }
+    
     self.account = account;
     
     [self.client.cache removeAllObjects];
@@ -398,13 +419,21 @@ static VIMSession *_sharedSession;
         return NO;
     }
     
+    BOOL success = NO;
+    
     if ([account isAuthenticatedWithClientCredentials])
     {
-        [VIMAccountStore saveAccount:account forKey:ClientCredentialsAccountKey];
+        success = [VIMAccountStore saveAccount:account forKey:ClientCredentialsAccountKey];
     }
     else
     {
-        [VIMAccountStore saveAccount:account forKey:UserAccountKey];
+        success = [VIMAccountStore saveAccount:account forKey:UserAccountKey];
+    }
+    
+    NSAssert(success, @"Unable to save account");
+    if (!success)
+    {
+        NSLog(@"Unable to save account");
     }
     
     self.account = account;
@@ -488,8 +517,14 @@ static VIMSession *_sharedSession;
         strongSelf.account.user = user;
         strongSelf.account.userJSON = response.result;
         
-        [VIMAccountStore saveAccount:strongSelf.account forKey:UserAccountKey];
+        BOOL success = [VIMAccountStore saveAccount:strongSelf.account forKey:UserAccountKey];
+        NSAssert(success, @"Unable to save account for key: %@", UserAccountKey);
         
+        if (!success)
+        {
+            NSLog(@"Unable to save account for key: %@", UserAccountKey);
+        }
+
         dispatch_async(dispatch_get_main_queue(), ^{
             [[NSNotificationCenter defaultCenter] postNotificationName:VIMSession_AuthenticatedUserDidRefreshNotification object:nil];
         });

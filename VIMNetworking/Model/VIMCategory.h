@@ -38,6 +38,7 @@
 @property (nonatomic, copy, nullable) NSString *link;
 @property (nonatomic, assign) BOOL isTopLevel;
 @property (nonatomic, strong, nullable) VIMPictureCollection *pictureCollection;
+@property (nonatomic, strong, nullable) NSArray* subcategories;
 
 - (nullable VIMConnection *)connectionWithName:(nonnull NSString *)connectionName;
 - (nullable VIMInteraction *)interactionWithName:(nonnull NSString *)name;

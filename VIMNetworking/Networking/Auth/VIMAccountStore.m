@@ -40,8 +40,12 @@
     NSData *data = [[KeychainUtility sharedInstance] dataForAccount:key];
     
     // Delete the saved legacy account object
-    [[KeychainUtility sharedInstance] deleteDataForAccount:key];
-    
+    BOOL success = [[KeychainUtility sharedInstance] deleteDataForAccount:key];
+    if (!success)
+    {
+        NSLog(@"Unable to delete data for account key: %@", key);
+    }
+
     // Convert the legacy account data into an array of VIMAccountLegacy objects
     NSArray *legacyAccounts = nil;
     if (data)
@@ -121,7 +125,11 @@
         {
             NSLog(@"VIMAccountStore: An exception occured on load: %@", exception);
             
-            [[KeychainUtility sharedInstance] deleteDataForAccount:key];
+            BOOL success = [[KeychainUtility sharedInstance] deleteDataForAccount:key];
+            if (!success)
+            {
+                NSLog(@"Unable to delete data for account key: %@", key);
+            }
         }
         
         [keyedUnarchiver finishDecoding];

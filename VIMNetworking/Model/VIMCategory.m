@@ -78,6 +78,16 @@
     return nil;
 }
 
+- (Class)getClassForCollectionKey:(NSString *)key
+{
+    if ([key isEqualToString:@"subcategories"])
+    {
+        return [VIMCategory class];
+    }
+    
+    return nil;
+}
+
 - (void)didFinishMapping
 {
     if (self.topLevel && [self.topLevel isKindOfClass:[NSNumber class]])

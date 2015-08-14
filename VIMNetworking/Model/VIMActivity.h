@@ -31,6 +31,7 @@
 @class VIMChannel;
 @class VIMGroup;
 @class VIMTag;
+@class VIMCategory;
 
 @interface VIMActivity : VIMModelObject
 
@@ -39,6 +40,7 @@
 @property (nonatomic, strong, nullable) VIMChannel *channel;
 @property (nonatomic, strong, nullable) VIMGroup *group;
 @property (nonatomic, strong, nullable) VIMTag *tag;
+@property (nonatomic, strong, nullable) VIMCategory *category;
 
 @property (nonatomic, copy, nullable) NSString *uri;
 @property (nonatomic, copy, nullable) NSString *type;

@@ -36,7 +36,7 @@
 #import "VIMRequestSerializer.h"
 #import "VIMResponseSerializer.h"
 
-CGFloat const kVimeoClientTimeoutInterval = 30;
+CGFloat const kVimeoClientTimeoutInterval = 60;
 NSInteger const kVimeoClientErrorCodeCacheUnavailable = 666;
 NSString *const kVimeoClientErrorDomain = @"VimeoClientErrorDomain";
 NSString *const kVimeoClient_ServiceUnavailableNotification = @"kVimeoClient_ServiceUnavailableNotification";

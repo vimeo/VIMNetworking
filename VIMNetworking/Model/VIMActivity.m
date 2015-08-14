@@ -30,6 +30,7 @@
 #import "VIMChannel.h"
 #import "VIMGroup.h"
 #import "VIMTag.h"
+#import "VIMCategory.h"
 #import "NSString+MD5.h"
 
 @implementation VIMActivity
@@ -80,6 +81,11 @@
     if ([key isEqualToString:@"tag"])
     {
         return [VIMTag class];
+    }
+    
+    if ([key isEqualToString:@"category"])
+    {
+        return [VIMCategory class];
     }
 
     return nil;
