@@ -27,9 +27,10 @@
 #import "VIMNetworkTaskQueue.h"
 #import "VIMNetworkTaskSessionManager.h"
 #import "VIMReachability.h"
-#import "VIMSession.h" // TODO: eliminate this dependency [AH]
+//#import "VIMSession.h" // TODO: eliminate this dependency [AH]
 #import "VIMTaskQueueDebugger.h"
 #import "VIMNetworkTask.h"
+#import "VIMTaskQueueArchiver.h"
 
 NSString *const VIMNetworkTaskQueue_DidSuspendOrResumeNotification = @"VIMNetworkTaskQueue_DidSuspendOrResumeNotification";
 
@@ -56,7 +57,16 @@ static const NSString *CellularEnabledKey = @"cellular_enabled";
 
 - (instancetype)initWithSessionManager:(VIMNetworkTaskSessionManager *)sessionManager
 {
-    self = [super initWithName:sessionManager.session.configuration.identifier];
+    NSParameterAssert(sessionManager);
+    
+    if (!sessionManager)
+    {
+        return nil;
+    }
+    
+    VIMTaskQueueArchiver *archiver = [[VIMTaskQueueArchiver alloc] initWithSharedContainerID:sessionManager.session.configuration.sharedContainerIdentifier];
+    
+    self = [super initWithName:sessionManager.session.configuration.identifier archiver:archiver];
     if (self)
     {
         [VIMTaskQueueDebugger postLocalNotificationWithContext:self.name message:@"INIT"];
@@ -84,20 +94,6 @@ static const NSString *CellularEnabledKey = @"cellular_enabled";
 }
 
 #pragma mark - Superclass Overrides
-
-- (NSUserDefaults *)taskQueueDefaults
-{
-    NSString *sharedContainerID = [VIMSession sharedSession].configuration.sharedContainerID;
-    
-    if (sharedContainerID)
-    {
-        return [[NSUserDefaults alloc] initWithSuiteName:sharedContainerID];
-    }
-    else
-    {
-        return [NSUserDefaults standardUserDefaults];
-    }
-}
 
 - (void)prepareTask:(VIMTask *)task
 {
@@ -230,9 +226,7 @@ static const NSString *CellularEnabledKey = @"cellular_enabled";
 
 - (void)loadCommonSettings
 {
-    NSUserDefaults *sharedDefaults = [self taskQueueDefaults];
-    
-    NSDictionary *dictionary = [sharedDefaults objectForKey:(NSString *)ArchiveKey];
+    NSDictionary *dictionary = [self.archiver loadObjectForKey:(NSString *)ArchiveKey];
     
     if (dictionary[CellularEnabledKey])
     {
@@ -248,12 +242,9 @@ static const NSString *CellularEnabledKey = @"cellular_enabled";
 
 - (void)saveCommonSettings
 {
-    NSUserDefaults *sharedDefaults = [self taskQueueDefaults];
-    
     NSDictionary *dictionary = @{CellularEnabledKey : @(self.isCellularUploadEnabled), SuspendedByUserKey : @(self.isSuspendedByUser)};
     
-    [sharedDefaults setObject:dictionary forKey:(NSString *)ArchiveKey];
-    [sharedDefaults synchronize];
+    [self.archiver saveObject:dictionary forKey:(NSString *)ArchiveKey];
 }
 
 @end

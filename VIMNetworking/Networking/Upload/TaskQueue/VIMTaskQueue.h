@@ -31,13 +31,24 @@ extern NSString *const __nonnull VIMTaskQueueTaskSucceededNotification;
 
 @class VIMTask;
 
+@protocol VIMTaskQueueArchiverProtocol <NSObject>
+
+@required
+- (nullable id)loadObjectForKey:(nonnull NSString *)key;
+- (void)saveObject:(nonnull id)object forKey:(nonnull NSString *)key;
+- (void)deleteObjectForKey:(nonnull NSString *)key;
+
+@end
+
 @interface VIMTaskQueue : NSObject
 
 @property (nonatomic, strong, readonly, nullable) NSString *name;
 
+@property (nonatomic, strong, readonly, nullable) id<VIMTaskQueueArchiverProtocol> archiver;
+
 @property (nonatomic, assign, readonly) NSInteger taskCount;
 
-- (nullable instancetype)initWithName:(nonnull NSString *)name;
+- (nullable instancetype)initWithName:(nonnull NSString *)name archiver:(nonnull id<VIMTaskQueueArchiverProtocol>)archiver;
 
 - (void)addTasks:(nonnull NSArray *)tasks;
 - (void)addTask:(nonnull VIMTask *)task;
@@ -53,8 +64,5 @@ extern NSString *const __nonnull VIMTaskQueueTaskSucceededNotification;
 - (void)prepareTask:(nonnull VIMTask *)task;
 
 - (nullable VIMTask *)taskForIdentifier:(nonnull NSString *)identifier;
-
-// Override to return shared container defaults [AH]
-- (nonnull NSUserDefaults *)taskQueueDefaults; // TODO: set this as a property instead? [AH]
 
 @end

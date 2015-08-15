@@ -44,6 +44,8 @@ static void *TaskQueueSpecific = "TaskQueueSpecific";
 
 @property (nonatomic, strong, readwrite) NSString *name;
 
+@property (nonatomic, strong, readwrite) id<VIMTaskQueueArchiverProtocol> archiver;
+
 @property (nonatomic, assign, getter=isSuspended) BOOL suspended;
 
 @property (nonatomic, strong) NSMutableArray *tasks;
@@ -56,12 +58,13 @@ static void *TaskQueueSpecific = "TaskQueueSpecific";
 
 @implementation VIMTaskQueue
 
-- (instancetype)initWithName:(NSString *)name
+- (instancetype)initWithName:(NSString *)name archiver:(nonnull id<VIMTaskQueueArchiverProtocol>)archiver
 {
     self = [super init];
     if (self)
     {
         _name = name;
+        _archiver = archiver;
         
         _archivalQueue = dispatch_queue_create("com.vimeo.uploadQueue.archivalQueue", DISPATCH_QUEUE_SERIAL);
         _tasksQueue = dispatch_queue_create("com.vimeo.uploadQueue.taskQueue", DISPATCH_QUEUE_SERIAL);
@@ -258,13 +261,6 @@ static void *TaskQueueSpecific = "TaskQueueSpecific";
     // Optional subclass override
 }
 
-- (NSUserDefaults *)taskQueueDefaults
-{
-    // Optional subclass override
-
-    return [NSUserDefaults standardUserDefaults];
-}
-
 #pragma mark - Private API
 
 - (void)restart
@@ -352,8 +348,7 @@ static void *TaskQueueSpecific = "TaskQueueSpecific";
         [keyedArchiver encodeObject:archiveDictionary];
         [keyedArchiver finishEncoding];
         
-        [[strongSelf taskQueueDefaults] setObject:data forKey:strongSelf.name];
-        [[strongSelf taskQueueDefaults] synchronize];
+        [strongSelf.archiver saveObject:data forKey:strongSelf.name];
         
 //        NSString *message = [NSString stringWithFormat:@"SAVE %lu", (unsigned long)[dictionary[TasksKey] count]];
 //        [UploadDebugger postLocalNotificationWithContext:strongSelf.name message:message];
@@ -364,8 +359,8 @@ static void *TaskQueueSpecific = "TaskQueueSpecific";
 {
     NSAssert([self.tasks count] == 0, @"Task array must be empty at time of load.");
 
-    NSUserDefaults *userDefaults = [self taskQueueDefaults];
-    NSData *data = [userDefaults objectForKey:self.name];
+    NSData *data = [self.archiver loadObjectForKey:self.name];
+    
     if (data)
     {
         NSKeyedUnarchiver *keyedUnarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
@@ -380,8 +375,7 @@ static void *TaskQueueSpecific = "TaskQueueSpecific";
         {
             NSLog(@"An exception occured while unarchiving export operations: %@", exception);
             
-            [userDefaults removeObjectForKey:self.name];
-            [userDefaults synchronize];
+            [self.archiver deleteObjectForKey:self.name];
         }
         
         [keyedUnarchiver finishDecoding];
