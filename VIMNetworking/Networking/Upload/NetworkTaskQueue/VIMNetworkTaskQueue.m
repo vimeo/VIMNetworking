@@ -51,7 +51,7 @@ static const NSString *CellularEnabledKey = @"cellular_enabled";
 - (void)dealloc
 {
     [VIMTaskQueueDebugger postLocalNotificationWithContext:self.name message:@"DEALLOC"];
-
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -64,7 +64,14 @@ static const NSString *CellularEnabledKey = @"cellular_enabled";
         return nil;
     }
     
-    VIMTaskQueueArchiver *archiver = [[VIMTaskQueueArchiver alloc] initWithSharedContainerID:sessionManager.session.configuration.sharedContainerIdentifier];
+    NSString *sharedContainerID = nil;
+    
+    if ([sessionManager.session.configuration respondsToSelector:@selector(sharedContainerIdentifier)])
+    {
+        sharedContainerID = [sessionManager.session.configuration sharedContainerIdentifier];
+    }
+    
+    VIMTaskQueueArchiver *archiver = [[VIMTaskQueueArchiver alloc] initWithSharedContainerID:sharedContainerID];
     
     self = [super initWithName:sessionManager.session.configuration.identifier archiver:archiver];
     if (self)
@@ -72,7 +79,7 @@ static const NSString *CellularEnabledKey = @"cellular_enabled";
         [VIMTaskQueueDebugger postLocalNotificationWithContext:self.name message:@"INIT"];
         
         _sessionManager = sessionManager;
-                
+        
         [self loadCommonSettings];
         
         [self resumeIfAllowed];

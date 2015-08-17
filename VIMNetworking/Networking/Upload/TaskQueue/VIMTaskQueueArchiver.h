@@ -11,6 +11,6 @@
 
 @interface VIMTaskQueueArchiver : NSObject <VIMTaskQueueArchiverProtocol>
 
-- (nullable instancetype)initWithSharedContainerID:(nonnull NSString *)containerID;
+- (nullable instancetype)initWithSharedContainerID:(nullable NSString *)containerID;
 
 @end
