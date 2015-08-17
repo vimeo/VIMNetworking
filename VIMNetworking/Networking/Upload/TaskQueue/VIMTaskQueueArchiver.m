@@ -13,7 +13,7 @@ static NSString *const TaskQueueDirectory = @"task-queue";
 
 @interface VIMTaskQueueArchiver ()
 
-@property (nonnull, strong) NSString *sharedContainerID;
+@property (nullable, strong) NSString *sharedContainerID;
 
 @end
 
@@ -21,17 +21,11 @@ static NSString *const TaskQueueDirectory = @"task-queue";
 
 - (instancetype)initWithSharedContainerID:(NSString *)containerID
 {
-    NSParameterAssert(containerID);
-    
-    if (![containerID length])
-    {
-        return nil;
-    }
-    
     self = [super init];
     if (self)
     {
-        _sharedContainerID = containerID;
+        _sharedContainerID = [containerID length] ? containerID : nil;
+        
     }
     
     return self;
@@ -125,16 +119,12 @@ static NSString *const TaskQueueDirectory = @"task-queue";
         groupURL = [[NSFileManager new] containerURLForSecurityApplicationGroupIdentifier:self.sharedContainerID];
     }
     
-    //#if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_7_1
-    //    if ([self.sessionManager.session.configuration respondsToSelector:@selector(sharedContainerIdentifier)])
-    //    {
-    //        groupURL = [[NSFileManager new] containerURLForSecurityApplicationGroupIdentifier:self.sessionManager.session.configuration.sharedContainerIdentifier];
-    //    }
-    //#endif
-    
     if (groupURL == nil)
     {
-        groupURL = [NSURL URLWithString:NSTemporaryDirectory()]; // TODO: We shouldn't be using temp directory for this [AH]
+        // If there's no shared container (as in iOS7), just use the Documents dir
+        NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+        
+        groupURL = [NSURL URLWithString:documentsDirectory];
     }
     
     NSString *groupPath = [[groupURL path] stringByAppendingPathComponent:TaskQueueDirectory];
