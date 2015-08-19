@@ -80,7 +80,9 @@ extern NSString * const __nonnull VimeoErrorCodeKey;
 
 - (NSInteger)statusCode;
 - (NSInteger)serverErrorCode;
-- (NSInteger)serverInvalidParametersErrorCode;
+- (nonnull NSArray *)serverInvalidParametersErrorCodes;
+- (NSInteger)serverInvalidParametersFirstErrorCode;
+- (nullable NSString *)serverInvalidParametersErrorCodesString;
 - (nullable NSDictionary *)errorResponseBodyJSON;
 
 @end
