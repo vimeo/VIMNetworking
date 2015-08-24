@@ -26,6 +26,8 @@
 
 #import <Foundation/Foundation.h>
 
+#import "VIMTask.h"
+
 extern NSString *const __nonnull VIMTaskQueueTaskFailedNotification;
 extern NSString *const __nonnull VIMTaskQueueTaskSucceededNotification;
 
@@ -40,7 +42,7 @@ extern NSString *const __nonnull VIMTaskQueueTaskSucceededNotification;
 
 @end
 
-@interface VIMTaskQueue : NSObject
+@interface VIMTaskQueue : NSObject <VIMTaskDelegate>
 
 @property (nonatomic, strong, readonly, nullable) NSString *name;
 

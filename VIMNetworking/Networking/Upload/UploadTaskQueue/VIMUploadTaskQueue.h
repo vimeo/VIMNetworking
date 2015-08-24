@@ -35,6 +35,7 @@ extern NSString *const __nonnull VIMUploadTaskQueue_DidAssociateAssetsWithTasksN
 extern NSString *const __nonnull VIMUploadTaskQueue_DidAddAssetsNotification;
 extern NSString *const __nonnull VIMUploadTaskQueue_DidCancelAssetNotification;
 extern NSString *const __nonnull VIMUploadTaskQueue_DidCancelAllAssetsNotification;
+extern NSString *const __nonnull VIMUploadTaskQueue_DidFailToAddMetadataNotification;
 
 extern NSString *const __nonnull VIMUploadTaskQueue_NameKey;
 

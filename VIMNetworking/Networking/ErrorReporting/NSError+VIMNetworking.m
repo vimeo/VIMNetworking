@@ -7,6 +7,7 @@
 //
 
 #import "NSError+VIMNetworking.h"
+#import "NSError+VIMUpload.h"
 #import "AFURLResponseSerialization.h"
 
 NSString * const VimeoErrorCodeHeaderKey = @"Vimeo-Error-Code";
@@ -54,6 +55,11 @@ NSString * const VimeoErrorCodeKey = @"VimeoErrorCode";
 - (BOOL)isUploadQuotaStorageExceededError
 {
     return [self serverErrorCode] == VIMErrorCodeUploadStorageQuotaExceeded;
+}
+
+- (BOOL)isMetadataFailedToSaveError
+{
+    return [self.domain isEqualToString:VIMMetadataTaskErrorDomain];
 }
 
 #pragma mark - Utilities

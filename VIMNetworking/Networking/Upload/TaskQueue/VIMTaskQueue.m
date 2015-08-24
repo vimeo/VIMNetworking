@@ -459,6 +459,7 @@ static void *TaskQueueSpecific = "TaskQueueSpecific";
     [self startNextTask];
     
 }
+
 - (void)logTaskStatus:(VIMTask *)task
 {
     if ([task didSucceed])

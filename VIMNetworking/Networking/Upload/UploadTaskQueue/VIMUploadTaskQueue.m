@@ -29,11 +29,13 @@
 #import "VIMUploadTask.h"
 #import "VIMUploadTaskQueueTracker.h"
 #import "VIMUploadSessionManager.h"
+#import "VIMAddMetadataTask.h"
 
 NSString *const VIMUploadTaskQueue_DidAssociateAssetsWithTasksNotification = @"VIMUploadTaskQueue_DidAssociateAssetsWithTasksNotification";
 NSString *const VIMUploadTaskQueue_DidAddAssetsNotification = @"VIMUploadTaskQueue_DidAddAssetsNotification";
 NSString *const VIMUploadTaskQueue_DidCancelAssetNotification = @"VIMUploadTaskQueue_DidCancelAssetNotification";
 NSString *const VIMUploadTaskQueue_DidCancelAllAssetsNotification = @"VIMUploadTaskQueue_DidCancelAllAssetsNotification";
+NSString *const VIMUploadTaskQueue_DidFailToAddMetadataNotification = @"VIMUploadTaskQueue_DidFailToAddMetadataNotification";
 
 NSString *const VIMUploadTaskQueue_NameKey = @"VIMUploadTaskQueue_NameKey";
 
@@ -212,6 +214,25 @@ NSString *const VIMUploadTaskQueue_NameKey = @"VIMUploadTaskQueue_NameKey";
         asset.videoURI = videoURI;
         asset.error = error;
     }];
+}
+
+#pragma mark - Task Delegate
+
+- (void)task:(nonnull VIMTask *)task didCompleteSubtask:(nonnull VIMTask *)subtask
+{
+    [super task:task didCompleteSubtask:subtask];
+    
+    if ([subtask isKindOfClass:[VIMAddMetadataTask class]])
+    {
+        VIMAddMetadataTask *addMetadataTask = (VIMAddMetadataTask *)subtask;
+        if (addMetadataTask.error)
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                NSDictionary *userInfo = @{VIMUploadTaskQueue_NameKey : self.name};
+                [[NSNotificationCenter defaultCenter] postNotificationName:VIMUploadTaskQueue_DidFailToAddMetadataNotification object:addMetadataTask.error userInfo:userInfo];
+            });
+        }
+    }
 }
 
 @end
