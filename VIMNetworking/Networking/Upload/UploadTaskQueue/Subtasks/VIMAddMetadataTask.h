@@ -30,6 +30,8 @@
 
 @interface VIMAddMetadataTask : VIMNetworkTask
 
+@property (nonatomic, strong, readonly, nonnull) NSString *videoURI;
+
 - (nullable instancetype)initWithVideoURI:(nonnull NSString *)videoURI metadata:(nullable VIMVideoMetadata *)videoMetadata;
 
 @end
