@@ -229,7 +229,7 @@ NSString *const VIMUploadTaskQueue_NameKey = @"VIMUploadTaskQueue_NameKey";
         {
             dispatch_async(dispatch_get_main_queue(), ^{
                 NSDictionary *userInfo = @{VIMUploadTaskQueue_NameKey : self.name};
-                [[NSNotificationCenter defaultCenter] postNotificationName:VIMUploadTaskQueue_DidFailToAddMetadataNotification object:addMetadataTask.error userInfo:userInfo];
+                [[NSNotificationCenter defaultCenter] postNotificationName:VIMUploadTaskQueue_DidFailToAddMetadataNotification object:addMetadataTask userInfo:userInfo];
             });
         }
     }
