@@ -26,6 +26,8 @@
 
 #import <Foundation/Foundation.h>
 
+extern NSString * const __nullable DefaultBaseURL;
+
 @interface VIMSessionConfiguration : NSObject
 
 @property (nonatomic, copy, nullable) NSString *clientKey;

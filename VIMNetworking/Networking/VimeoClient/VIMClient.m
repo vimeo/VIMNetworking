@@ -30,6 +30,7 @@
 #import "VIMComment.h"
 #import "VIMTrigger.h"
 #import "VIMRequestRetryManager.h"
+#import "VIMSessionConfiguration.h"
 
 static NSString *const ModelKeyPathData = @"data";
 
@@ -40,6 +41,11 @@ static NSString *const ModelKeyPathData = @"data";
 @end
 
 @implementation VIMClient
+
+- (instancetype)initWithDefaultBaseURL
+{
+    return [self initWithBaseURL:[NSURL URLWithString:DefaultBaseURL]];
+}
 
 - (instancetype)initWithBaseURL:(NSURL *)url
 {
