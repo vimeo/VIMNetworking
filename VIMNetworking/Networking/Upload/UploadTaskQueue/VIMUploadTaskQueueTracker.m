@@ -102,27 +102,29 @@ static void *UploadStateContext = &UploadStateContext;
 
 - (void)ignoreFailedAsset:(VIMVideoAsset *)videoAsset
 {
-    NSInteger index = [self indexOfFailedAsset:videoAsset];
-    NSAssert(index != NSNotFound, @"Invalid index");
-    
-    if (index == NSNotFound)
-    {
-        return;
-    }
-    
-    VIMVideoAsset *ignoredAsset = self.failedAssets[index];
-    ignoredAsset.uploadState = VIMUploadState_None;
-    
-    [self.failedAssets removeObjectAtIndex:index];
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
+    [self indexOfFailedAsset:videoAsset completion:^(NSInteger index, VIMVideoAsset *asset) {
 
-        NSDictionary *userInfo = @{VIMUploadTaskQueueTracker_AssetIndicesKey : @[@(index)]};
-        [[NSNotificationCenter defaultCenter] postNotificationName:VIMUploadTaskQueueTracker_DidRemoveFailedAssetsNotification
-                                                            object:self.failedAssets
-                                                          userInfo:userInfo];
+        NSAssert(index != NSNotFound, @"Invalid index");
+        
+        if (index == NSNotFound)
+        {
+            return;
+        }
+        
+        asset.uploadState = VIMUploadState_None;
+        
+        [self.failedAssets removeObjectAtIndex:index];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            NSDictionary *userInfo = @{VIMUploadTaskQueueTracker_AssetIndicesKey : @[@(index)]};
+            [[NSNotificationCenter defaultCenter] postNotificationName:VIMUploadTaskQueueTracker_DidRemoveFailedAssetsNotification
+                                                                object:self.failedAssets
+                                                              userInfo:userInfo];
+            
+        });
 
-    });
+    }];
 }
 
 - (VIMVideoAsset *)assetForIdentifier:(NSString *)identifier
@@ -158,18 +160,27 @@ static void *UploadStateContext = &UploadStateContext;
 
 #pragma mark - Private API
 
-- (NSInteger)indexOfFailedAsset:(VIMVideoAsset *)videoAsset
+- (void)indexOfFailedAsset:(VIMVideoAsset *)videoAsset completion:(void (^)(NSInteger index, VIMVideoAsset *asset))completion
 {
+    NSInteger index = NSNotFound;
+    VIMVideoAsset *asset = nil;
+    
     for (NSInteger i = 0; i < [self.failedAssets count]; i++)
     {
         VIMVideoAsset *failedAsset = self.failedAssets[i];
         if ([failedAsset.identifier isEqualToString:videoAsset.identifier])
         {
-            return i;
+            index = i;
+            asset = failedAsset;
+            
+            break;
         }
     }
     
-    return NSNotFound;
+    if (completion)
+    {
+        completion(index, asset);
+    }
 }
 
 #pragma mark - Accessors
@@ -282,7 +293,7 @@ static void *UploadStateContext = &UploadStateContext;
     NSArray *object = (NSArray *)[notification object];
     if (object && [object isKindOfClass:[NSArray class]])
     {
-        NSInteger failedIndex = NSNotFound;
+        __block NSInteger failedIndex = NSNotFound;
         NSInteger index = [self.videoAssets count];
         NSMutableArray *indices = [NSMutableArray array];
         
@@ -294,11 +305,18 @@ static void *UploadStateContext = &UploadStateContext;
             index++;
             
             // If this is a failed asset being retried, remove it from the failed list [AH]
-            failedIndex = [self indexOfFailedAsset:videoAsset];
-            if (failedIndex != NSNotFound)
-            {
-                [self.failedAssets removeObjectAtIndex:failedIndex];
-            }
+            [self indexOfFailedAsset:videoAsset completion:^(NSInteger index, VIMVideoAsset *asset) {
+
+                failedIndex = index;
+                
+                if (failedIndex != NSNotFound)
+                {
+                    [self removeObserversForVideoAsset:asset];
+                    
+                    [self.failedAssets removeObjectAtIndex:failedIndex];
+                }
+
+            }];
             
             [self addObserversForVideoAsset:videoAsset];
         }
