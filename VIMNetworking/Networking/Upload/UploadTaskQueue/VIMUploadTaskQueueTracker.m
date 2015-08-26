@@ -160,7 +160,7 @@ static void *UploadStateContext = &UploadStateContext;
 
 #pragma mark - Private API
 
-- (NSInteger)indexOfFailedAsset:(VIMVideoAsset *)videoAsset completion:(void (^)(NSInteger index, VIMVideoAsset *asset))completion
+- (void)indexOfFailedAsset:(VIMVideoAsset *)videoAsset completion:(void (^)(NSInteger index, VIMVideoAsset *asset))completion
 {
     NSInteger index = NSNotFound;
     VIMVideoAsset *asset = nil;
@@ -181,8 +181,6 @@ static void *UploadStateContext = &UploadStateContext;
     {
         completion(index, asset);
     }
-    
-    return NSNotFound;
 }
 
 #pragma mark - Accessors
