@@ -261,7 +261,14 @@ static const NSString *VIMCreateRecordTaskName = @"CREATE";
 
         return;
     }
-    
+
+    if (self.error)
+    {
+        [self taskDidComplete];
+        
+        return;
+    }
+
     if (task.error)
     {
         self.error = [NSError errorWithError:task.error domain:VIMCreateRecordTaskErrorDomain URLResponse:task.response];
