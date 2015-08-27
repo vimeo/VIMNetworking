@@ -29,7 +29,6 @@
 #import "VIMUploadTask.h"
 #import "VIMUploadTaskQueueTracker.h"
 #import "VIMUploadSessionManager.h"
-#import "VIMAddMetadataTask.h"
 
 NSString *const VIMUploadTaskQueue_DidAssociateAssetsWithTasksNotification = @"VIMUploadTaskQueue_DidAssociateAssetsWithTasksNotification";
 NSString *const VIMUploadTaskQueue_DidAddAssetsNotification = @"VIMUploadTaskQueue_DidAddAssetsNotification";
