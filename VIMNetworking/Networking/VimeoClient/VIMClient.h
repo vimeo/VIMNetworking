@@ -31,6 +31,8 @@
 
 @interface VIMClient : VIMRequestOperationManager
 
+- (nullable instancetype)initWithDefaultBaseURL;
+
 #pragma mark - Utilities
 
 - (nullable id<VIMRequestToken>)resetPasswordWithEmail:(nonnull NSString *)email completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;

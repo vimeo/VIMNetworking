@@ -7,6 +7,7 @@
 //
 
 #import "NSError+VIMNetworking.h"
+#import "NSError+VIMUpload.h"
 #import "AFURLResponseSerialization.h"
 
 NSString * const VimeoErrorCodeHeaderKey = @"Vimeo-Error-Code";
@@ -56,6 +57,11 @@ NSString * const VimeoErrorCodeKey = @"VimeoErrorCode";
     return [self serverErrorCode] == VIMErrorCodeUploadStorageQuotaExceeded;
 }
 
+- (BOOL)isMetadataFailedToSaveError
+{
+    return [self.domain isEqualToString:VIMMetadataTaskErrorDomain];
+}
+
 #pragma mark - Utilities
 
 - (NSInteger)statusCode
@@ -66,7 +72,7 @@ NSString * const VimeoErrorCodeKey = @"VimeoErrorCode";
         return [urlResponse statusCode];
     }
     
-    return 0;
+    return NSNotFound;
 }
 
 - (NSInteger)serverErrorCode
@@ -101,29 +107,64 @@ NSString * const VimeoErrorCodeKey = @"VimeoErrorCode";
     return NSNotFound;
 }
 
-- (NSInteger)serverInvalidParametersErrorCode
+- (NSInteger)serverInvalidParametersFirstErrorCode
 {
-    NSDictionary *json = [self errorResponseBodyJSON];
+    NSArray *errorCodes = [self serverInvalidParametersErrorCodes];
+    if (errorCodes && [errorCodes count])
+    {
+        NSString *firstCode = [errorCodes firstObject];
+        
+        return [firstCode integerValue];
+    }
     
+    return NSNotFound;
+}
+
+- (NSArray *)serverInvalidParametersErrorCodes
+{
+    NSMutableArray *errorCodes = [NSMutableArray new];
+   
+    NSDictionary *json = [self errorResponseBodyJSON];
     if (json)
     {
         NSArray *invalidParameters = json[@"invalid_parameters"];
-        NSMutableArray *errorCodes = [NSMutableArray new];
         
         for (NSDictionary *errorJSON in invalidParameters)
         {
             NSString *errorCode = errorJSON[@"error_code"];
-            
             if (errorCode)
             {
                 [errorCodes addObject:@([errorCode integerValue])];
             }
         }
-        
-        return [[errorCodes firstObject] integerValue];
     }
     
-    return 0;
+    return errorCodes;
+}
+
+- (NSString *)serverInvalidParametersErrorCodesString
+{
+    NSString *result = nil;
+    
+    NSArray *errorCodes = [self serverInvalidParametersErrorCodes];
+    if (errorCodes && [errorCodes count])
+    {
+        result = @"";
+        
+        for (int i = 0; i < [errorCodes count]; i++)
+        {
+            NSNumber *code = errorCodes[i];
+
+            result = [result stringByAppendingFormat:@"%@", code];
+            
+            if (i < [errorCodes count] - 1)
+            {
+                result = [result stringByAppendingString:@"_"];
+            }
+        }
+    }
+    
+    return result;
 }
 
 - (NSDictionary *)errorResponseBodyJSON

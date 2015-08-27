@@ -39,8 +39,8 @@ NSString *VIMPrivacy_Password = @"password";
 
 - (NSDictionary *)getObjectMapping
 {
-    return @{@"canAdd": @"add",
-             @"canDownload" : @"download"};
+    return @{@"add": @"canAdd",
+             @"download" : @"canDownload"};
 }
 
 @end

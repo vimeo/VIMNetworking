@@ -168,6 +168,27 @@ With `VIMNetworking` configured and authenticated, you’re ready to start makin
 
 ```
 
+You can also make requests using an existing token by implementing the authorizationHeaderValue: method of VIMRequestOperationManagerDelegate.
+
+```Objective-C
+
+self.client = [[VIMClient alloc] initWithDefaultBaseURL];
+self.client.delegate = self;
+[self.client requestURI:@"/videos/77091919" completionBlock:^(VIMServerResponse *response, NSError *error)
+{
+    id JSONObject = response.result;
+    NSLog(@"JSONObject: %@", JSONObject);
+}];
+
+# pragma mark - VIMRequestOperationManagerDelegate
+
+- (NSString *)authorizationHeaderValue:(nonnull VIMRequestOperationManager *)operationManager
+{
+    return [NSString stringWithFormat:@"Bearer <TOKEN>"];
+}
+
+```
+
 ### Model Object Request
 
 ```Objective-C
