@@ -15,11 +15,11 @@ Check out the sample project [here](https://github.com/vimeo/Pegasus).
 ```Ruby
 # Add this to your podfile
 target 'MyTarget' do
-	pod 'VIMNetworking', '5.4.2' # Replace with the latest version
+	pod 'VIMNetworking', '5.5.5' # Replace with the latest version
 end
 ```
 
-Note that VIMNetworking has dependencies on `AFNetworking` and `VIMObjectMapper`.
+Note that VIMNetworking has dependencies on `AFNetworking` and `VIMObjectMapper`. They will be imported as pods. 
 
 ###Git Submodules
 
@@ -27,10 +27,11 @@ Note that VIMNetworking has dependencies on `AFNetworking` and `VIMObjectMapper`
 
 ```
 cd your_xcode_project_directory
-git clone --recursive https://github.com/vimeo/VIMNetworking.git
+git clone https://github.com/vimeo/VIMNetworking.git
 ```
+1. Note that VIMNetworking has dependencies on `AFNetworking` and `VIMObjectMapper`. Add these as submodules of VIMNetworking.
 
-1. Locate the `VIMNetworking.xcodeproj` file and add it to your Xcode project. This will add VIMNetworking as a nested subproject.
+1. Locate the `VIMNetworking.xcodeproj` file and add it to your Xcode project. This will add VIMNetworking as a nested subproject. Ensure that the AFNetworking and VIMObjectMapper files are included in the VIMNetworking project. 
 
 1. Link the VIMNetworking static library and its dependencies to your application. Navigate to your app target settings > General > Linked Frameworks and Libraries, and add the following dependencies:
 
@@ -70,7 +71,7 @@ On app launch, configure `VIMSession` with your client key, secret, and scope st
     config.clientSecret = @"your_client_secret";
     config.scope = @"private public create edit delete interact"; // Replace with your scope
     
-    [[VIMSession sharedSession] setupWithConfiguration:config];    
+    [VIMSession sharedSession setupWithConfiguration:config];    
 
     if ([[VIMSession sharedSession].account isAuthenticated] == NO)
     {
