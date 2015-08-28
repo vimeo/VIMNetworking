@@ -126,9 +126,7 @@ NSString *const VIMUploadTaskQueue_NameKey = @"VIMUploadTaskQueue_NameKey";
         return;
     }
 
-    VIMTask *task = [self taskForIdentifier:videoAsset.identifier];
-
-    [self cancelTask:task];
+    [self cancelTaskForIdentifier:videoAsset.identifier];
     
     dispatch_async(dispatch_get_main_queue(), ^{
         NSDictionary *userInfo = @{VIMUploadTaskQueue_NameKey : self.name};
