@@ -462,12 +462,8 @@ NSString *VIMContentRating_Safe = @"safe";
     // TODO: augment this to handle portrait videos [AH]
     NSInteger targetScreenWidth = MAX(size.width, size.height);
 
-//    NSLog(@"SELECTING VIDEO FILE FOR SIZE: %@", NSStringFromCGSize(size));
-
     for (VIMVideoFile *currentFile in sortedFiles)
     {
-//        NSLog(@"option: (%@, %@)", currentFile.width, currentFile.height);
-        
         if ([currentFile isSupportedMimeType] && currentFile.link)
         {
             // We dont yet have a file, grab the largest one (based on sort order above)
@@ -479,6 +475,7 @@ NSString *VIMContentRating_Safe = @"safe";
             }
             
             // We dont have the info with which to compare the files
+            // TODO: is this a problem? HLS files report width/height of 0,0 [AH] 8/31/2015
             if ((file.width == nil || currentFile.width == nil ||
                  [file.width isEqual:[NSNull null]] || [currentFile.width isEqual:[NSNull null]] ||
                  [file.width isEqual:@(0)] || [currentFile.width isEqual:@(0)]))
@@ -493,7 +490,7 @@ NSString *VIMContentRating_Safe = @"safe";
         }
     }
     
-//    NSLog(@"selected: (%@, %@)", file.width, file.height);
+//    NSLog(@"selected (%@, %@) for screensize (%@) out of %lu choices with format %@", file.width, file.height, NSStringFromCGSize(size), (unsigned long)[sortedFiles count], predicate.predicateFormat);
 
     return file;
 }
