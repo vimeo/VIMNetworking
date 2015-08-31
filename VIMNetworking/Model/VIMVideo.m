@@ -438,6 +438,39 @@ NSString *VIMContentRating_Safe = @"safe";
     return [self fileForPredicate:predicate screenSize:size];
 }
 
+- (nullable VIMVideoFile *)fallbackFileForFile:(VIMVideoFile *)file screenSize:(CGSize)size
+{
+    if (!file)
+    {
+        return nil;
+    }
+    
+    NSPredicate *predicate = nil;
+    
+    if ([file.quality isEqualToString:VIMVideoFileQualityHLS])
+    {
+        // There will only ever be one HSL file so we choose !HLS [AH] 8/31/2015
+        predicate = [NSPredicate predicateWithFormat:@"SELF.quality != %@", VIMVideoFileQualityHLS];
+    }
+    else
+    {
+        if (!file.width ||
+            !file.height ||
+            [file.width isEqual:[NSNull null]] ||
+            [file.height isEqual:[NSNull null]] ||
+            [file.width isEqual:@(0)] ||
+            [file.height isEqual:@(0)])
+        {
+            return nil;
+        }
+        
+        // And we want to exclude the file we're falling back from [AH] 8/31/2015
+        predicate = [NSPredicate predicateWithFormat:@"SELF.quality != %@ && SELF.width.integerValue < %i", VIMVideoFileQualityHLS, file.width.integerValue];
+    }
+    
+    return [self fileForPredicate:predicate screenSize:size];
+}
+
 - (VIMVideoFile *)fileForPredicate:(NSPredicate *)predicate screenSize:(CGSize)size
 {
     if (CGSizeEqualToSize(size, CGSizeZero) || predicate == nil)
