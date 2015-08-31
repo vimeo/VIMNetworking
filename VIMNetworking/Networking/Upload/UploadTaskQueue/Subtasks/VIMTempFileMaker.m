@@ -25,13 +25,14 @@
 //
 
 #import "VIMTempFileMaker.h"
-#import "VIMSession.h"
-#import "VIMSessionConfiguration.h"
 #import <Photos/Photos.h>
 #import <AVFoundation/AVFoundation.h>
 #import <MobileCoreServices/MobileCoreServices.h>
 #import "AVAsset+Filesize.h"
 #import "NSError+VIMUpload.h"
+
+#import "VIMSession.h"
+#import "VIMSessionConfiguration.h"
 
 @implementation VIMTempFileMaker
 

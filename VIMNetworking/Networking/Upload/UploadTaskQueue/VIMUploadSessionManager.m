@@ -26,9 +26,10 @@
 
 #import "VIMUploadSessionManager.h"
 #import "NSURLSessionConfiguration+Extensions.h"
-#import "VIMSession.h"
-#import "VIMRequestSerializer.h"
-#import "VIMResponseSerializer.h"
+
+//#import "VIMSession.h"
+//#import "VIMRequestSerializer.h"
+//#import "VIMResponseSerializer.h"
 
 @implementation VIMUploadSessionManager
 

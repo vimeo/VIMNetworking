@@ -27,8 +27,8 @@
 #import "VIMUploadTaskQueueTracker.h"
 #import "VIMUploadTaskQueue.h"
 #import "VIMVideoAsset.h"
-#import "VIMCache.h"
-#import "VIMSession.h"
+
+//#import "VIMSession.h"
 
 NSString *const VIMUploadTaskQueueTracker_CurrentVideoAssetDidChangeNotification = @"VIMUploadTaskQueueTracker_CurrentVideoAssetDidChangeNotification";
 NSString *const VIMUploadTaskQueueTracker_DidRefreshQueuedAssetsNotification = @"VIMUploadTaskQueueTracker_DidRefreshQueuedAssetsNotification";
@@ -224,9 +224,9 @@ static void *UploadStateContext = &UploadStateContext;
                                              selector:@selector(didCancelAllAssets:)
                                                  name:VIMUploadTaskQueue_DidCancelAllAssetsNotification object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(authenticatedUserDidChange:)
-                                                 name:VIMSession_AuthenticatedAccountDidChangeNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(authenticatedUserDidChange:)
+//                                                 name:VIMSession_AuthenticatedAccountDidChangeNotification object:nil];
 }
 
 - (void)removeObservers
@@ -236,10 +236,10 @@ static void *UploadStateContext = &UploadStateContext;
 
 - (void)didAssociateAssetsWithTasks:(NSNotification *)notification
 {
-    if ([VIMSession sharedSession].account.user == nil)
-    {
-        return;
-    }
+//    if ([VIMSession sharedSession].account.user == nil)
+//    {
+//        return;
+//    }
     
     NSDictionary *userInfo = [notification userInfo];
     NSString *name = userInfo[VIMUploadTaskQueue_NameKey];
@@ -278,10 +278,10 @@ static void *UploadStateContext = &UploadStateContext;
 
 - (void)didAddAssets:(NSNotification *)notification
 {
-    if ([VIMSession sharedSession].account.user == nil)
-    {
-        return;
-    }
+//    if ([VIMSession sharedSession].account.user == nil)
+//    {
+//        return;
+//    }
 
     NSDictionary *userInfo = [notification userInfo];
     NSString *name = userInfo[VIMUploadTaskQueue_NameKey];
@@ -431,31 +431,31 @@ static void *UploadStateContext = &UploadStateContext;
     [self save];
 }
 
-- (void)authenticatedUserDidChange:(NSNotification *)notification
-{
-    if ([VIMSession sharedSession].account.user == nil) // User logged out
-    {
-        for (VIMVideoAsset *videoAsset in self.videoAssets)
-        {
-            [self removeObserversForVideoAsset:videoAsset];
-        }
-        
-        [self.videoAssets removeAllObjects];
-        self.currentVideoAsset = nil;
-
-        [self.successfulAssetIdentifiers removeAllObjects];
-        [self.failedAssets removeAllObjects];
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-
-            [[NSNotificationCenter defaultCenter] postNotificationName:VIMUploadTaskQueueTracker_DidRefreshQueuedAssetsNotification
-                                                                object:self.videoAssets];
-
-        });
-        
-        [self save];
-    }
-}
+//- (void)authenticatedUserDidChange:(NSNotification *)notification
+//{
+//    if ([VIMSession sharedSession].account.user == nil) // User logged out
+//    {
+//        for (VIMVideoAsset *videoAsset in self.videoAssets)
+//        {
+//            [self removeObserversForVideoAsset:videoAsset];
+//        }
+//        
+//        [self.videoAssets removeAllObjects];
+//        self.currentVideoAsset = nil;
+//
+//        [self.successfulAssetIdentifiers removeAllObjects];
+//        [self.failedAssets removeAllObjects];
+//        
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//
+//            [[NSNotificationCenter defaultCenter] postNotificationName:VIMUploadTaskQueueTracker_DidRefreshQueuedAssetsNotification
+//                                                                object:self.videoAssets];
+//
+//        });
+//        
+//        [self save];
+//    }
+//}
 
 #pragma mark - KVO
 
@@ -598,31 +598,11 @@ static void *UploadStateContext = &UploadStateContext;
     {
         self.successfulAssetIdentifiers = [NSMutableSet setWithArray:successObject];
     }
-    else
-    {
-        successObject = [[VIMCache sharedCache] objectForKey:VIMUploadTaskQueueTracker_SuccessfulAssetIdentifiersCacheKey];
-        if (successObject && [successObject isKindOfClass:[NSSet class]])
-        {
-            self.successfulAssetIdentifiers = [NSMutableSet setWithSet:successObject];
-            
-            [[VIMCache sharedCache] removeObjectForKey:VIMUploadTaskQueueTracker_SuccessfulAssetIdentifiersCacheKey];
-        }
-    }
 
     id failureObject = [VIMUploadTaskQueueTracker unarchiveObjectForKey:VIMUploadTaskQueueTracker_FailedAssetsCacheKey];
     if (failureObject && [failureObject isKindOfClass:[NSArray class]])
     {
         self.failedAssets = [NSMutableArray arrayWithArray:failureObject];
-    }
-    else
-    {
-        id failureObject = [[VIMCache sharedCache] objectForKey:VIMUploadTaskQueueTracker_FailedAssetsCacheKey];
-        if (failureObject && [failureObject isKindOfClass:[NSArray class]])
-        {
-            self.failedAssets = [NSMutableArray arrayWithArray:failureObject];
-
-            [[VIMCache sharedCache] removeObjectForKey:VIMUploadTaskQueueTracker_FailedAssetsCacheKey];
-        }
     }
 }
 
