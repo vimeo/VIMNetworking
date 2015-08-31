@@ -105,5 +105,6 @@ typedef NS_ENUM(NSUInteger, VIMVideoProcessingStatus) {
 
 - (nullable VIMVideoFile *)hlsFileForScreenSize:(CGSize)size;
 - (nullable VIMVideoFile *)mp4FileForScreenSize:(CGSize)size;
+- (nullable VIMVideoFile *)fallbackFileForFile:(nonnull VIMVideoFile *)file screenSize:(CGSize)size;
 
 @end
