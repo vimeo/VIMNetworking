@@ -24,31 +24,9 @@
 //  THE SOFTWARE.
 //
 
-#import "VIMRequestSerializer.h"
+#import "VIMJSONRequestSerializer.h"
 
-@interface VIMRequestSerializer ()
-
-@property (nonatomic, strong) NSString *APIVersionString;
-
-@end
-
-@implementation VIMRequestSerializer
-
-- (instancetype)initWithAPIVersionString:(NSString *)APIVersionString
-{
-    NSParameterAssert(APIVersionString);
-
-    self = [self init];
-    if (self)
-    {
-        _APIVersionString = APIVersionString;
-        
-        NSString *value = [self acceptHeaderValue];
-        [self setValue:value forHTTPHeaderField:@"Accept"];
-    }
-    
-    return self;
-}
+@implementation VIMJSONRequestSerializer
 
 - (instancetype)init
 {
@@ -57,7 +35,7 @@
     {
         self.writingOptions = 0;
 
-        NSString *userAgent = [VIMRequestSerializer userAgentString];
+        NSString *userAgent = [VIMJSONRequestSerializer userAgentString];
         if (userAgent)
         {
             if (![userAgent canBeConvertedToEncoding:NSASCIIStringEncoding])
@@ -76,11 +54,28 @@
     return self;
 }
 
-#pragma mark - Public API
+#pragma mark - Overrides
 
-- (NSString *)acceptHeaderValue
+- (NSMutableURLRequest *)requestWithMethod:(NSString *)method
+                                 URLString:(NSString *)URLString
+                                parameters:(id)parameters
+                                     error:(NSError *__autoreleasing *)error
 {
-    return [NSString stringWithFormat:@"application/vnd.vimeo.*+json; version=%@", self.APIVersionString];
+    NSMutableURLRequest *request = [super requestWithMethod:method URLString:URLString parameters:parameters error:error];
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(authorizationHeaderValue:)])
+    {
+        NSString *value = [self.delegate authorizationHeaderValue:self];
+        [request setValue:value forHTTPHeaderField:@"Authorization"];
+    }
+
+    if (self.delegate && [self.delegate respondsToSelector:@selector(acceptHeaderValue:)])
+    {
+        NSString *value = [self.delegate acceptHeaderValue:self];
+        [request setValue:value forHTTPHeaderField:@"Accept"];
+    }
+
+    return request;
 }
 
 #pragma mark - Private API

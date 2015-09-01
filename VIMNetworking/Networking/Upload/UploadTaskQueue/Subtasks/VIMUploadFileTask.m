@@ -110,12 +110,6 @@ static const NSString *VIMUploadFileTaskName = @"FILE_UPLOAD";
         return;
     }
     
-    NSString *value = [VIMUploadSessionManager authorizationHeaderValue];
-    if (value)
-    {
-        [request setValue:value forHTTPHeaderField:@"Authorization"];
-    }
-
     NSURL *sourceURL = [NSURL fileURLWithPath:self.source];
     
     AVURLAsset *URLAsset = [AVURLAsset assetWithURL:sourceURL];

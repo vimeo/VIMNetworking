@@ -31,8 +31,8 @@
 #import "AVAsset+Filesize.h"
 #import "NSError+VIMUpload.h"
 
-#import "VIMSession.h"
-#import "VIMSessionConfiguration.h"
+//#import "VIMSession.h"
+//#import "VIMSessionConfiguration.h"
 
 @implementation VIMTempFileMaker
 
@@ -262,18 +262,11 @@
 {
     NSURL *groupURL = nil;
     
-    NSString *sharedContainerID = [VIMSession sharedSession].configuration.sharedContainerID; // TODO: eliminate VIMSession dependency [AH]
+    NSString *sharedContainerID = nil;//[VIMSession sharedSession].configuration.sharedContainerID; // TODO: eliminate VIMSession dependency [AH]
     if (sharedContainerID)
     {
         groupURL = [[NSFileManager new] containerURLForSecurityApplicationGroupIdentifier:sharedContainerID];
     }
-    
-    //#if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_7_1
-    //    if ([self.sessionManager.session.configuration respondsToSelector:@selector(sharedContainerIdentifier)])
-    //    {
-    //        groupURL = [[NSFileManager new] containerURLForSecurityApplicationGroupIdentifier:self.sessionManager.session.configuration.sharedContainerIdentifier];
-    //    }
-    //#endif
     
     if (groupURL == nil)
     {

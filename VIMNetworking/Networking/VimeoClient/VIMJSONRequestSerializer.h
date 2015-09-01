@@ -25,11 +25,10 @@
 //
 
 #import "AFURLRequestSerialization.h"
+#import "VIMRequestSerializerDelegate.h"
 
-@interface VIMRequestSerializer : AFJSONRequestSerializer
+@interface VIMJSONRequestSerializer : AFJSONRequestSerializer
 
-- (nullable instancetype)initWithAPIVersionString:(nonnull NSString *)APIVersionString;
-
-- (nonnull NSString *)acceptHeaderValue;
+@property (nonatomic, weak) id<VIMRequestSerializerDelegate> delegate;
 
 @end

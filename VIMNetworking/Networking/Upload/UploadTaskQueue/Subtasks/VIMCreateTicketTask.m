@@ -138,13 +138,7 @@ static const NSString *VIMCreateRecordTaskName = @"CREATE";
         
         return;
     }
-    
-    NSString *value = [VIMUploadSessionManager authorizationHeaderValue];
-    if (value)
-    {
-        [request setValue:value forHTTPHeaderField:@"Authorization"];
-    }
-    
+        
     NSURLSessionDownloadTask *task = [self.sessionManager downloadTaskWithRequest:request progress:NULL destination:nil completionHandler:nil];
     self.backgroundTaskIdentifier = task.taskIdentifier;
     

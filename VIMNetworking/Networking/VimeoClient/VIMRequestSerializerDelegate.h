@@ -1,8 +1,8 @@
 //
-//  VIMVimeoResponseSerializer.m
-//  VIMNetworking
+//  VIMRequestSerializerProtocol.h
+//  Pods
 //
-//  Created by Hanssen, Alfie on 9/19/14.
+//  Created by Hanssen, Alfie on 9/1/15.
 //  Copyright (c) 2014-2015 Vimeo (https://vimeo.com)
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,22 +24,13 @@
 //  THE SOFTWARE.
 //
 
-#import "VIMResponseSerializer.h"
+#import <Foundation/Foundation.h>
+#import "AFURLRequestSerialization.h"
 
-@implementation VIMResponseSerializer
+@protocol VIMRequestSerializerDelegate <NSObject>
 
-+ (instancetype)serializer
-{
-    VIMResponseSerializer *serializer = [[self alloc] init];
-    serializer.readingOptions = 0;
-    [serializer setAcceptableContentTypes:[VIMResponseSerializer acceptableContentTypes]];
-    
-    return serializer;
-}
-
-+ (NSSet *)acceptableContentTypes
-{
-    return [NSSet setWithObjects:@"application/json", @"text/json", @"text/html", @"text/javascript", @"application/vnd.vimeo.video+json", @"application/vnd.vimeo.cover+json", @"application/vnd.vimeo.service+json", @"application/vnd.vimeo.comment+json", @"application/vnd.vimeo.user+json", @"application/vnd.vimeo.activity+json", @"application/vnd.vimeo.uploadticket+json", @"application/vnd.vimeo.error+json", @"application/vnd.vimeo.trigger+json", @"application/vnd.vimeo.category+json", @"application/vnd.vimeo.channel+json", nil];
-}
+@required
+- (nullable NSString *)authorizationHeaderValue:(nonnull AFHTTPRequestSerializer *)serializer;
+- (nullable NSString *)acceptHeaderValue:(nonnull AFHTTPRequestSerializer *)serializer;
 
 @end

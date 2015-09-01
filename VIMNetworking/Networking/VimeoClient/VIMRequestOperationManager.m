@@ -33,8 +33,6 @@
 #import "VIMRequestOperation.h"
 #import "VIMServerResponseMapper.h"
 #import "NSError+VIMNetworking.h"
-#import "VIMRequestSerializer.h"
-#import "VIMResponseSerializer.h"
 
 CGFloat const kVimeoClientTimeoutInterval = 60;
 NSInteger const kVimeoClientErrorCodeCacheUnavailable = 666;
@@ -69,9 +67,6 @@ NSString *const kVimeoClient_InvalidTokenNotification = @"kVimeoClient_InvalidTo
 
         self.completionQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
         
-        self.requestSerializer = [VIMRequestSerializer serializer];
-        self.responseSerializer = [VIMResponseSerializer serializer];
-
 #if (defined(ADHOC) || defined(RELEASE))
         self.securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeCertificate];
         self.securityPolicy.allowInvalidCertificates = NO;
@@ -201,22 +196,6 @@ NSString *const kVimeoClient_InvalidTokenNotification = @"kVimeoClient_InvalidTo
     
     request.timeoutInterval = kVimeoClientTimeoutInterval;
     
-    if (self.delegate && [self.delegate respondsToSelector:@selector(authorizationHeaderValue:)])
-    {
-        NSString *value = [self.delegate authorizationHeaderValue:self];
-        
-        [request setValue:value forHTTPHeaderField:@"Authorization"];
-    }
-
-    if (self.delegate && [self.delegate respondsToSelector:@selector(acceptHeaderValue:)])
-    {
-        NSString *value = [self.delegate acceptHeaderValue:self];
-        if (value)
-        {
-            [request setValue:value forHTTPHeaderField:@"Accept"];
-        }
-    }
-
     if (self.cache && (descriptor.cachePolicy == VIMCachePolicy_LocalOnly || descriptor.cachePolicy == VIMCachePolicy_LocalAndNetwork))
     {
         CFTimeInterval startTime = CACurrentMediaTime();

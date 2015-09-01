@@ -27,12 +27,13 @@
 #import "VIMSession.h"
 #import "VIMAccountStore.h"
 #import "VIMRequestOperationManager.h"
-#import "VIMRequestSerializer.h"
-#import "VIMResponseSerializer.h"
+#import "VIMJSONRequestSerializer.h"
+#import "VIMJSONResponseSerializer.h"
 #import "VIMAuthenticator+Private.h"
 #import "VIMReachability.h"
 #import "VIMCache.h"
 #import "VIMObjectMapper.h"
+#import "VIMHTTPRequestSerializer.h"
 
 static NSString *const ClientCredentialsAccountKey = @"ClientCredentialsAccountKey";
 static NSString *const UserAccountKey = @"UserAccountKey";
@@ -41,7 +42,7 @@ static NSString *const LegacyAccountKey = @"kVIMAccountStore_SaveKey"; // Added 
 NSString *const VIMSession_AuthenticatedAccountDidChangeNotification = @"VIMSession_AuthenticatedAccountDidChangeNotification";
 NSString *const VIMSession_AuthenticatedUserDidRefreshNotification = @"VIMSession_AuthenticatedUserDidRefreshNotification";
 
-@interface VIMSession () <VIMRequestOperationManagerDelegate>
+@interface VIMSession () <VIMRequestSerializerDelegate>
 
 @property (nonatomic, strong, readwrite) VIMAccountNew *account;
 @property (nonatomic, strong, readwrite) VIMAuthenticator *authenticator;
@@ -118,11 +119,11 @@ static VIMSession *_sharedSession;
     }];
 }
 
-#pragma mark - VIMRequestOperationManager Delegate
+#pragma mark - VIMRequestSerializerDelegate
 
-- (NSString *)authorizationHeaderValue:(VIMRequestOperationManager *)operationManager
+- (NSString *)authorizationHeaderValue:(VIMJSONRequestSerializer *)serializer
 {
-    if (operationManager == self.authenticator)
+    if (serializer == self.authenticator.requestSerializer)
     {
         return [self basicAuthorizationHeaderValue];
     }
@@ -136,11 +137,30 @@ static VIMSession *_sharedSession;
     return value;
 }
 
-- (NSString *)acceptHeaderValue:(VIMRequestOperationManager *)operationManager
+- (NSString *)acceptHeaderValue:(VIMJSONRequestSerializer *)serializer
 {
-    VIMRequestSerializer *requestSerializer = [[VIMRequestSerializer alloc] initWithAPIVersionString:self.configuration.APIVersionString];
+    NSParameterAssert(self.configuration.APIVersionString);
+    
+    return [NSString stringWithFormat:@"application/vnd.vimeo.*+json; version=%@", self.configuration.APIVersionString];
+}
 
-    return [requestSerializer acceptHeaderValue];
+- (NSString *)basicAuthorizationHeaderValue
+{
+    NSString *authString = [NSString stringWithFormat:@"%@:%@", self.configuration.clientKey, self.configuration.clientSecret];
+    NSData *plainData = [authString dataUsingEncoding:NSUTF8StringEncoding];
+    NSString *base64String = [plainData base64EncodedStringWithOptions:0];
+    
+    return [NSString stringWithFormat:@"Basic %@", base64String];
+}
+
+- (NSString *)bearerAuthorizationHeaderValue
+{
+    if (self.account.accessToken && [[self.account.tokenType lowercaseString] isEqualToString:@"bearer"])
+    {
+        return [NSString stringWithFormat:@"Bearer %@", self.account.accessToken];
+    }
+    
+    return nil;
 }
 
 #pragma mark - Private API
@@ -184,9 +204,10 @@ static VIMSession *_sharedSession;
                                                                       clientKey:self.configuration.clientKey
                                                                    clientSecret:self.configuration.clientSecret
                                                                           scope:self.configuration.scope];
-    authenticator.requestSerializer = [AFHTTPRequestSerializer serializer];
+    VIMHTTPRequestSerializer *requestSerializer = [[VIMHTTPRequestSerializer alloc] init];
+    requestSerializer.delegate = self;
+    authenticator.requestSerializer = requestSerializer;
     authenticator.responseSerializer = [AFJSONResponseSerializer serializer];
-    authenticator.delegate = self;
     
     return authenticator;
 }
@@ -196,8 +217,9 @@ static VIMSession *_sharedSession;
     NSURL *baseURL = [NSURL URLWithString:self.configuration.baseURLString];
 
     VIMClient *client = [[VIMClient alloc] initWithBaseURL:baseURL];
-    client.requestSerializer = [[VIMRequestSerializer alloc] initWithAPIVersionString:self.configuration.APIVersionString];
-    client.delegate = self;
+    VIMJSONRequestSerializer *requestSerializer = [[VIMJSONRequestSerializer alloc] init];
+    requestSerializer.delegate = self;
+    client.requestSerializer = requestSerializer;
     client.cache = [self buildCache];
    
     return client;
@@ -214,25 +236,6 @@ static VIMSession *_sharedSession;
     }
     
     return cache;
-}
-
-- (NSString *)basicAuthorizationHeaderValue
-{
-    NSString *authString = [NSString stringWithFormat:@"%@:%@", self.configuration.clientKey, self.configuration.clientSecret];
-    NSData *plainData = [authString dataUsingEncoding:NSUTF8StringEncoding];
-    NSString *base64String = [plainData base64EncodedStringWithOptions:0];
-    
-    return [NSString stringWithFormat:@"Basic %@", base64String];
-}
-
-- (NSString *)bearerAuthorizationHeaderValue
-{
-    if (self.account.accessToken && [[self.account.tokenType lowercaseString] isEqualToString:@"bearer"])
-    {
-        return [NSString stringWithFormat:@"Bearer %@", self.account.accessToken];
-    }
-
-    return nil;
 }
 
 - (void)authenticationCompleteWithAccount:(VIMAccountNew *)account error:(NSError *)error key:(NSString *)key completionBlock:(VIMErrorCompletionBlock)completionBlock

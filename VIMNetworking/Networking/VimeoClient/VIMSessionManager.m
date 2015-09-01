@@ -26,12 +26,13 @@
 
 #import "VIMSessionManager.h"
 #import "NSURLSessionConfiguration+Extensions.h"
-#import "VIMResponseSerializer.h"
-#import "VIMRequestSerializer.h"
+#import "VIMJSONResponseSerializer.h"
+#import "VIMJSONRequestSerializer.h"
 #import "VIMSession.h"
 #import "VIMSessionConfiguration.h"
+#import "VIMJSONResponseSerializer.h"
 
-@interface VIMSessionManager ()
+@interface VIMSessionManager () <VIMRequestSerializerDelegate>
 
 @end
 
@@ -76,8 +77,23 @@
 
 - (void)initialSetup
 {
-    self.requestSerializer = [[VIMRequestSerializer alloc] initWithAPIVersionString:[VIMSession sharedSession].configuration.APIVersionString];
-    self.responseSerializer = [VIMResponseSerializer serializerWithReadingOptions:NSJSONReadingAllowFragments];
+    self.requestSerializer = [[VIMJSONRequestSerializer alloc] init];
+    self.responseSerializer = [VIMJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingAllowFragments];
 }
+
+#pragma mark - VIMRequestSerializerDelegate
+
+- (NSString *)authorizationHeaderValue:(VIMJSONRequestSerializer *)serializer
+{
+    return nil;
+}
+
+- (NSString *)acceptHeaderValue:(VIMJSONRequestSerializer *)serializer
+{
+    NSParameterAssert([VIMSession sharedSession].configuration.APIVersionString);
+    
+    return [NSString stringWithFormat:@"application/vnd.vimeo.*+json; version=%@", [VIMSession sharedSession].configuration.APIVersionString];
+}
+
 
 @end
