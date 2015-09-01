@@ -431,6 +431,8 @@ static void *UploadStateContext = &UploadStateContext;
     [self save];
 }
 
+// TODO: what do we need to replace this logic with? [AH] 9/1/2015
+
 //- (void)authenticatedUserDidChange:(NSNotification *)notification
 //{
 //    if ([VIMSession sharedSession].account.user == nil) // User logged out

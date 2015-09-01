@@ -28,7 +28,7 @@
 #import "VIMVideoAsset.h"
 #import "VIMUploadTask.h"
 #import "VIMUploadTaskQueueTracker.h"
-#import "VIMUploadSessionManager.h"
+#import "VIMNetworkTaskSessionManager.h"
 
 NSString *const VIMUploadTaskQueue_DidAssociateAssetsWithTasksNotification = @"VIMUploadTaskQueue_DidAssociateAssetsWithTasksNotification";
 NSString *const VIMUploadTaskQueue_DidAddAssetsNotification = @"VIMUploadTaskQueue_DidAddAssetsNotification";
@@ -44,30 +44,6 @@ NSString *const VIMUploadTaskQueue_NameKey = @"VIMUploadTaskQueue_NameKey";
 @end
 
 @implementation VIMUploadTaskQueue
-
-+ (instancetype)sharedAppQueue
-{
-    static VIMUploadTaskQueue *sharedInstance;
-    static dispatch_once_t onceToken;
-    
-    dispatch_once(&onceToken, ^{
-        sharedInstance = [[self alloc] initWithSessionManager:[VIMUploadSessionManager sharedAppInstance]];
-    });
-    
-    return sharedInstance;
-}
-
-+ (instancetype)sharedExtensionQueue
-{
-    static VIMUploadTaskQueue *sharedInstance;
-    static dispatch_once_t onceToken;
-    
-    dispatch_once(&onceToken, ^{
-        sharedInstance = [[self alloc] initWithSessionManager:[VIMUploadSessionManager sharedExtensionInstance]];
-    });
-    
-    return sharedInstance;
-}
 
 - (instancetype)initWithSessionManager:(VIMNetworkTaskSessionManager *)sessionManager
 {

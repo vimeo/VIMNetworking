@@ -28,7 +28,7 @@
 #import "VIMTempFileMaker.h"
 #include "AVAsset+Filesize.h"
 #import "PHAsset+Filesize.h"
-#import "VIMUploadSessionManager.h"
+#import "VIMNetworkTaskSessionManager.h"
 #import "NSError+VIMUpload.h"
 
 static const NSString *RecordCreationPath = @"/me/videos";

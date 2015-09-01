@@ -25,7 +25,7 @@
 //
 
 #import "VIMUploadFileTask.h"
-#import "VIMUploadSessionManager.h"
+#import "VIMNetworkTaskSessionManager.h"
 #import <AVFoundation/AVFoundation.h>
 #import "AVAsset+Filesize.h"
 #import "NSError+VIMUpload.h"
