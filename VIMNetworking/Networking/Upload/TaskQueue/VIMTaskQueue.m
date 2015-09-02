@@ -209,6 +209,16 @@ static void *TaskQueueSpecific = "TaskQueueSpecific";
     });
 }
 
+- (void)cancelTaskForIdentifier:(nonnull NSString *)identifier
+{
+    dispatch_async(_tasksQueue, ^{
+        
+        VIMTask *task = [self _taskForIdentifier:identifier];
+        [self cancelTask:task];
+        
+    });
+}
+
 - (VIMTask *)taskForIdentifier:(NSString *)identifier
 {
     if (!identifier)
@@ -233,6 +243,8 @@ static void *TaskQueueSpecific = "TaskQueueSpecific";
     
     return task;
 }
+
+// TODO: Any method that calls this and then modified the task it receives should dispatch that modification onto the queue [AH] 8/28/2015
 
 - (VIMTask *)_taskForIdentifier:(NSString *)identifier
 {

@@ -54,6 +54,9 @@ extern NSString *const __nonnull VIMTaskQueueTaskSucceededNotification;
 - (void)addTask:(nonnull VIMTask *)task;
 - (void)cancelAllTasks;
 - (void)cancelTask:(nonnull VIMTask *)task;
+- (void)cancelTaskForIdentifier:(nonnull NSString *)identifier;
+- (nullable VIMTask *)taskForIdentifier:(nonnull NSString *)identifier;
+
 - (void)suspend;
 - (void)resume;
 - (BOOL)isSuspended;
@@ -62,7 +65,5 @@ extern NSString *const __nonnull VIMTaskQueueTaskSucceededNotification;
 
 // Override to modiy task before it is started [AH]
 - (void)prepareTask:(nonnull VIMTask *)task;
-
-- (nullable VIMTask *)taskForIdentifier:(nonnull NSString *)identifier;
 
 @end
