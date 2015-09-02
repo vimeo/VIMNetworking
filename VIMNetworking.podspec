@@ -32,7 +32,7 @@ Pod::Spec.new do |s|
   s.platform     = :ios, "7.0"
 
   s.source       = { :git => "https://github.com/vimeo/VIMNetworking.git", :tag => s.version.to_s }
-  s.source_files  = "VIMNetworking", "VIMNetworking/**/*.{h,m}"
+  s.source_files  = "VIMNetworking", "VIMNetworking/**/*.{h,m,cer}"
   s.exclude_files = "VIMNetworking/Exclude"
 
   s.frameworks = "Foundation"
