@@ -26,7 +26,6 @@
 
 #import "VIMAddMetadataTask.h"
 #import "VIMVideoMetadata.h"
-#import "VIMNetworkTaskSessionManager.h"
 #import "NSError+VIMUpload.h"
 
 static const NSString *VIMMetadataTaskName = @"METADATA";

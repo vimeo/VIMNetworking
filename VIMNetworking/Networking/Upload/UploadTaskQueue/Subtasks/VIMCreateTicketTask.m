@@ -28,7 +28,6 @@
 #import "VIMTempFileMaker.h"
 #include "AVAsset+Filesize.h"
 #import "PHAsset+Filesize.h"
-#import "VIMNetworkTaskSessionManager.h"
 #import "NSError+VIMUpload.h"
 
 static const NSString *RecordCreationPath = @"/me/videos";
@@ -326,6 +325,8 @@ static const NSString *VIMCreateRecordTaskName = @"CREATE";
 
 - (void)tempFileWithCompletionBlock:(TempFileCompletionBlock)completionBlock
 {
+    VIMTempFileMaker *fileMaker = [[VIMTempFileMaker alloc] initWithSharedContainerIdentifier:self.sessionManager.session.configuration.sharedContainerIdentifier];
+    
     if (self.URLAsset)
     {
         if (self.canUploadFromSource)
@@ -337,12 +338,12 @@ static const NSString *VIMCreateRecordTaskName = @"CREATE";
         }
         else
         {
-            [VIMTempFileMaker tempFileFromURLAsset:self.URLAsset completionBlock:completionBlock];
+            [fileMaker tempFileFromURLAsset:self.URLAsset completionBlock:completionBlock];
         }
     }
     else
     {
-        [VIMTempFileMaker tempFileFromPHAsset:self.phAsset completionBlock:completionBlock];
+        [fileMaker tempFileFromPHAsset:self.phAsset completionBlock:completionBlock];
     }
 }
 

@@ -31,14 +31,28 @@
 #import "AVAsset+Filesize.h"
 #import "NSError+VIMUpload.h"
 
-//#import "VIMSession.h"
-//#import "VIMSessionConfiguration.h"
+@interface VIMTempFileMaker ()
+
+@property (nonatomic, strong) NSString *sharedContainerIdentifier;
+
+@end
 
 @implementation VIMTempFileMaker
 
+- (nonnull instancetype)initWithSharedContainerIdentifier:(nullable NSString *)sharedContainerIdentifier
+{
+    self = [super init];
+    if (self)
+    {
+        _sharedContainerIdentifier = sharedContainerIdentifier;
+    }
+    
+    return self;
+}
+
 #pragma mark - Public API
 
-+ (void)tempFileFromURLAsset:(AVURLAsset *)URLAsset completionBlock:(TempFileCompletionBlock)completionBlock
+- (void)tempFileFromURLAsset:(AVURLAsset *)URLAsset completionBlock:(TempFileCompletionBlock)completionBlock
 {
     if ([[URLAsset.URL scheme] isEqualToString:@"assets-library"])
     {
@@ -50,7 +64,7 @@
     }
 }
 
-+ (void)tempFileFromPHAsset:(PHAsset *)phAsset completionBlock:(TempFileCompletionBlock)completionBlock
+- (void)tempFileFromPHAsset:(PHAsset *)phAsset completionBlock:(TempFileCompletionBlock)completionBlock
 {
     PHVideoRequestOptions *options = [[PHVideoRequestOptions alloc] init];
     options.networkAccessAllowed = YES;
@@ -106,7 +120,7 @@
 
 #pragma mark - Private API
 
-+ (void)exportAsset:(AVAsset *)asset completionBlock:(TempFileCompletionBlock)completionBlock
+- (void)exportAsset:(AVAsset *)asset completionBlock:(TempFileCompletionBlock)completionBlock
 {
     // Per the docs AVAssetExportPresetPassthrough will never appear in the list returned from exportPresetsCompatibleWithAsset: [AH]
     //    NSArray *compatiblePresets = [AVAssetExportSession exportPresetsCompatibleWithAsset:self.URLAsset];
@@ -153,7 +167,7 @@
     exportSession.shouldOptimizeForNetworkUse = YES;
     
     NSError *error = nil;
-    if (![VIMTempFileMaker checkDiskSpaceForURLAsset:asset error:&error])
+    if (![self checkDiskSpaceForURLAsset:asset error:&error])
     {
         error = [NSError errorWithDomain:VIMTempFileMakerErrorDomain code:error.code userInfo:error.userInfo];
 
@@ -205,10 +219,10 @@
     }];
 }
 
-+ (void)copyURLAsset:(AVURLAsset *)URLAsset withCompletionBlock:(TempFileCompletionBlock)completionBlock
+- (void)copyURLAsset:(AVURLAsset *)URLAsset withCompletionBlock:(TempFileCompletionBlock)completionBlock
 {
     NSError *error = nil;
-    if (![VIMTempFileMaker checkDiskSpaceForURLAsset:URLAsset error:&error])
+    if (![self checkDiskSpaceForURLAsset:URLAsset error:&error])
     {
         if (completionBlock)
         {
@@ -245,7 +259,7 @@
 
 #pragma mark - Utilities
 
-+ (NSString *)uniqueAppGroupPathWithExtension:(NSString *)extension
+- (NSString *)uniqueAppGroupPathWithExtension:(NSString *)extension
 {
     NSString *basePath = [self appGroupExportsDirectory];
     
@@ -258,14 +272,13 @@
     return path;
 }
 
-+ (NSString *)appGroupExportsDirectory
+- (NSString *)appGroupExportsDirectory
 {
     NSURL *groupURL = nil;
     
-    NSString *sharedContainerID = nil;//[VIMSession sharedSession].configuration.sharedContainerID; // TODO: eliminate VIMSession dependency [AH]
-    if (sharedContainerID)
+    if (self.sharedContainerIdentifier)
     {
-        groupURL = [[NSFileManager new] containerURLForSecurityApplicationGroupIdentifier:sharedContainerID];
+        groupURL = [[NSFileManager new] containerURLForSecurityApplicationGroupIdentifier:self.sharedContainerIdentifier];
     }
     
     if (groupURL == nil)
@@ -287,9 +300,9 @@
     return groupPath;
 }
 
-+ (BOOL)checkDiskSpaceForURLAsset:(AVAsset *)asset error:(NSError **)error
+- (BOOL)checkDiskSpaceForURLAsset:(AVAsset *)asset error:(NSError **)error
 {
-    uint64_t availableDiskSpace = [VIMTempFileMaker availableDiskSpace];
+    uint64_t availableDiskSpace = [self availableDiskSpace];
     uint64_t filesize = [asset calculateFilesize];
     if (filesize > availableDiskSpace && availableDiskSpace > 0)
     {
@@ -301,13 +314,13 @@
     return YES;
 }
 
-+ (uint64_t)availableDiskSpace
+- (uint64_t)availableDiskSpace
 {
     uint64_t totalDiskSpace = 0;
     uint64_t availableDiskSpace = 0;
     
     NSError *error = nil;
-    NSDictionary *dictionary = [[NSFileManager defaultManager] attributesOfFileSystemForPath:[VIMTempFileMaker appGroupExportsDirectory] error: &error];
+    NSDictionary *dictionary = [[NSFileManager defaultManager] attributesOfFileSystemForPath:[self appGroupExportsDirectory] error: &error];
     
     if (dictionary)
     {

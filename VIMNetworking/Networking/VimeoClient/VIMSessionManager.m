@@ -77,8 +77,8 @@
 
 - (void)initialSetup
 {
-    self.requestSerializer = [[VIMJSONRequestSerializer alloc] init];
-    self.responseSerializer = [VIMJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingAllowFragments];
+    self.requestSerializer = [[VIMJSONRequestSerializer alloc] initWithAPIVersionString:[VIMSession sharedSession].configuration.APIVersionString];
+    self.responseSerializer = [VIMJSONResponseSerializer serializer];
 }
 
 #pragma mark - VIMRequestSerializerDelegate
@@ -87,13 +87,5 @@
 {
     return nil;
 }
-
-- (NSString *)acceptHeaderValue:(VIMJSONRequestSerializer *)serializer
-{
-    NSParameterAssert([VIMSession sharedSession].configuration.APIVersionString);
-    
-    return [NSString stringWithFormat:@"application/vnd.vimeo.*+json; version=%@", [VIMSession sharedSession].configuration.APIVersionString];
-}
-
 
 @end

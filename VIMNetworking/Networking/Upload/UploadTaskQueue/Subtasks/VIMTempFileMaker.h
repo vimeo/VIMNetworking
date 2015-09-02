@@ -33,7 +33,9 @@ typedef void(^TempFileCompletionBlock)(NSString * __nullable path, NSError * __n
 
 @interface VIMTempFileMaker : NSObject
 
-+ (void)tempFileFromURLAsset:(nonnull AVURLAsset *)URLAsset completionBlock:(nonnull TempFileCompletionBlock)completionBlock;
-+ (void)tempFileFromPHAsset:(nonnull PHAsset *)phAsset completionBlock:(nonnull TempFileCompletionBlock)completionBlock;
+- (nonnull instancetype)initWithSharedContainerIdentifier:(nullable NSString *)sharedContainerIdentifier;
+
+- (void)tempFileFromURLAsset:(nonnull AVURLAsset *)URLAsset completionBlock:(nonnull TempFileCompletionBlock)completionBlock;
+- (void)tempFileFromPHAsset:(nonnull PHAsset *)phAsset completionBlock:(nonnull TempFileCompletionBlock)completionBlock;
 
 @end

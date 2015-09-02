@@ -25,30 +25,39 @@
 //
 
 #import "VIMJSONRequestSerializer.h"
+#import "VIMHeaderProvider.h"
 
 @implementation VIMJSONRequestSerializer
+
+- (instancetype)initWithAPIVersionString:(NSString *)APIVersionString
+{
+    NSParameterAssert(APIVersionString);
+
+    self = [self init];
+    if (self)
+    {
+        NSString *acceptHeaderValue = [VIMHeaderProvider acceptHeaderValueWithAPIVersionString:APIVersionString];
+        [self setValue:acceptHeaderValue forHTTPHeaderField:AcceptHeaderKey];
+    }
+    
+    return self;
+}
 
 - (instancetype)init
 {
     self = [super init];
     if (self)
     {
-        self.writingOptions = 0;
-
-        NSString *userAgent = [VIMJSONRequestSerializer userAgentString];
+        NSString *acceptHeaderValue = [VIMHeaderProvider defaultAcceptHeaderValue];
+        [self setValue:acceptHeaderValue forHTTPHeaderField:AcceptHeaderKey];
+        
+        NSString *userAgent = [VIMHeaderProvider defaultUserAgentString];
         if (userAgent)
         {
-            if (![userAgent canBeConvertedToEncoding:NSASCIIStringEncoding])
-            {
-                NSMutableString *mutableUserAgent = [userAgent mutableCopy];
-                if (CFStringTransform((__bridge CFMutableStringRef)(mutableUserAgent), NULL, (__bridge CFStringRef)@"Any-Latin; Latin-ASCII; [:^ASCII:] Remove", false))
-                {
-                    userAgent = mutableUserAgent;
-                }
-            }
-            
-            [self setValue:userAgent forHTTPHeaderField:@"User-Agent"];
+            [self setValue:userAgent forHTTPHeaderField:UserAgentHeaderKey];
         }
+    
+        self.writingOptions = 0;
     }
     
     return self;
@@ -66,35 +75,10 @@
     if (self.delegate && [self.delegate respondsToSelector:@selector(authorizationHeaderValue:)])
     {
         NSString *value = [self.delegate authorizationHeaderValue:self];
-        [request setValue:value forHTTPHeaderField:@"Authorization"];
-    }
-
-    if (self.delegate && [self.delegate respondsToSelector:@selector(acceptHeaderValue:)])
-    {
-        NSString *value = [self.delegate acceptHeaderValue:self];
-        [request setValue:value forHTTPHeaderField:@"Accept"];
+        [request setValue:value forHTTPHeaderField:AuthorizationHeaderKey];
     }
 
     return request;
-}
-
-#pragma mark - Private API
-
-+ (NSString *)userAgentString
-{
-    NSString *userAgent = nil;
-    
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wgnu"
-#if defined(__IPHONE_OS_VERSION_MIN_REQUIRED)
-    
-    // User-Agent Header; see http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.43
-    userAgent = [NSString stringWithFormat:@"%@/%@ (%@; iOS %@; Scale/%0.2f; Version %@)", [[[NSBundle mainBundle] infoDictionary] objectForKey:(__bridge NSString *)kCFBundleExecutableKey] ?: [[[NSBundle mainBundle] infoDictionary] objectForKey:(__bridge NSString *)kCFBundleIdentifierKey], (__bridge id)CFBundleGetValueForInfoDictionaryKey(CFBundleGetMainBundle(), kCFBundleVersionKey) ?: [[[NSBundle mainBundle] infoDictionary] objectForKey:(__bridge NSString *)kCFBundleVersionKey], [[UIDevice currentDevice] model], [[UIDevice currentDevice] systemVersion], [[UIScreen mainScreen] scale], [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
-
-#endif
-#pragma clang diagnostic pop
-
-    return userAgent;
 }
 
 @end

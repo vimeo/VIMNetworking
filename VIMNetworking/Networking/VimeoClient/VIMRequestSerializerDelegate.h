@@ -31,6 +31,5 @@
 
 @required
 - (nullable NSString *)authorizationHeaderValue:(nonnull AFHTTPRequestSerializer *)serializer;
-- (nullable NSString *)acceptHeaderValue:(nonnull AFHTTPRequestSerializer *)serializer;
 
 @end

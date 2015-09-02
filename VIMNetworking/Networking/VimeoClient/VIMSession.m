@@ -137,13 +137,6 @@ static VIMSession *_sharedSession;
     return value;
 }
 
-- (NSString *)acceptHeaderValue:(VIMJSONRequestSerializer *)serializer
-{
-    NSParameterAssert(self.configuration.APIVersionString);
-    
-    return [NSString stringWithFormat:@"application/vnd.vimeo.*+json; version=%@", self.configuration.APIVersionString];
-}
-
 - (NSString *)basicAuthorizationHeaderValue
 {
     NSString *authString = [NSString stringWithFormat:@"%@:%@", self.configuration.clientKey, self.configuration.clientSecret];
@@ -204,7 +197,7 @@ static VIMSession *_sharedSession;
                                                                       clientKey:self.configuration.clientKey
                                                                    clientSecret:self.configuration.clientSecret
                                                                           scope:self.configuration.scope];
-    VIMHTTPRequestSerializer *requestSerializer = [[VIMHTTPRequestSerializer alloc] init];
+    VIMHTTPRequestSerializer *requestSerializer = [[VIMHTTPRequestSerializer alloc] initWithAPIVersionString:self.configuration.APIVersionString];
     requestSerializer.delegate = self;
     authenticator.requestSerializer = requestSerializer;
     authenticator.responseSerializer = [AFJSONResponseSerializer serializer];
@@ -217,9 +210,10 @@ static VIMSession *_sharedSession;
     NSURL *baseURL = [NSURL URLWithString:self.configuration.baseURLString];
 
     VIMClient *client = [[VIMClient alloc] initWithBaseURL:baseURL];
-    VIMJSONRequestSerializer *requestSerializer = [[VIMJSONRequestSerializer alloc] init];
+    VIMJSONRequestSerializer *requestSerializer = [[VIMJSONRequestSerializer alloc] initWithAPIVersionString:self.configuration.APIVersionString];
     requestSerializer.delegate = self;
     client.requestSerializer = requestSerializer;
+    client.responseSerializer = [VIMJSONResponseSerializer serializer];
     client.cache = [self buildCache];
    
     return client;

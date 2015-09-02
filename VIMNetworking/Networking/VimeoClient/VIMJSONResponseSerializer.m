@@ -31,7 +31,7 @@
 + (instancetype)serializer
 {
     VIMJSONResponseSerializer *serializer = [[self alloc] init];
-    serializer.readingOptions = 0;
+    serializer.readingOptions = NSJSONReadingAllowFragments;
     [serializer setAcceptableContentTypes:[VIMJSONResponseSerializer acceptableContentTypes]];
     
     return serializer;

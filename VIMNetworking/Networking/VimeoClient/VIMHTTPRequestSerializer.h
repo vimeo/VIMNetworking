@@ -13,4 +13,6 @@
 
 @property (nonatomic, weak) id<VIMRequestSerializerDelegate> delegate;
 
+- (nonnull instancetype)initWithAPIVersionString:(nonnull NSString *)APIVersionString;
+
 @end

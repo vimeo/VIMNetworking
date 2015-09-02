@@ -7,8 +7,41 @@
 //
 
 #import "VIMHTTPRequestSerializer.h"
+#import "VIMHeaderProvider.h"
 
 @implementation VIMHTTPRequestSerializer
+
+- (instancetype)initWithAPIVersionString:(NSString *)APIVersionString
+{
+    NSParameterAssert(APIVersionString);
+    
+    self = [self init];
+    if (self)
+    {
+        NSString *acceptHeaderValue = [VIMHeaderProvider acceptHeaderValueWithAPIVersionString:APIVersionString];
+        [self setValue:acceptHeaderValue forHTTPHeaderField:AcceptHeaderKey];
+    }
+    
+    return self;
+}
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self)
+    {
+        NSString *acceptHeaderValue = [VIMHeaderProvider defaultAcceptHeaderValue];
+        [self setValue:acceptHeaderValue forHTTPHeaderField:AcceptHeaderKey];
+        
+        NSString *userAgent = [VIMHeaderProvider defaultUserAgentString];
+        if (userAgent)
+        {
+            [self setValue:userAgent forHTTPHeaderField:UserAgentHeaderKey];
+        }
+    }
+    
+    return self;
+}
 
 #pragma mark - Overrides
 
@@ -22,13 +55,7 @@
     if (self.delegate && [self.delegate respondsToSelector:@selector(authorizationHeaderValue:)])
     {
         NSString *value = [self.delegate authorizationHeaderValue:self];
-        [request setValue:value forHTTPHeaderField:@"Authorization"];
-    }
-    
-    if (self.delegate && [self.delegate respondsToSelector:@selector(acceptHeaderValue:)])
-    {
-        NSString *value = [self.delegate acceptHeaderValue:self];
-        [request setValue:value forHTTPHeaderField:@"Accept"];
+        [request setValue:value forHTTPHeaderField:AuthorizationHeaderKey];
     }
     
     return request;

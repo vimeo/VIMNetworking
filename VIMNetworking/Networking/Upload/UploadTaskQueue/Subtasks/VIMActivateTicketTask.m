@@ -25,7 +25,6 @@
 //
 
 #import "VIMActivateTicketTask.h"
-#import "VIMNetworkTaskSessionManager.h"
 #import "NSError+VIMUpload.h"
 
 static const NSString *VIMActivateRecordTaskName = @"ACTIVATE";
