@@ -23,30 +23,7 @@ Note that VIMNetworking has dependencies on `AFNetworking` and `VIMObjectMapper`
 
 ###Git Submodules
 
-1. Clone the library repo into your Xcode project directory. In terminal:
-
-```
-cd your_xcode_project_directory
-git clone https://github.com/vimeo/VIMNetworking.git
-```
-1. Note that VIMNetworking has dependencies on `AFNetworking` and `VIMObjectMapper`. Add these as submodules of VIMNetworking.
-
-1. Locate the `VIMNetworking.xcodeproj` file and add it to your Xcode project. This will add VIMNetworking as a nested subproject. Ensure that the AFNetworking and VIMObjectMapper files are included in the VIMNetworking project. 
-
-1. Link the VIMNetworking static library and its dependencies to your application. Navigate to your app target settings > General > Linked Frameworks and Libraries, and add the following dependencies:
-
-  * `libVIMNetworking.a` 
-  * `Social.framework`
-  * `Accounts.framework`
-  * `MobileCoreServices.framework`
-  * `AVFoundation.framework`
-  * `SystemConfiguration.framework`
-
-1. Configure Xcode’s header file search path. Navigate to your app target settings > Build Settings.  Under “User Header Search Paths”, add the directory where `VIMNetworking` is located (relative to your project directory: './VIMNetworking/'), and select ‘recursive’.
-
-1. Configure linker settings.  Navigate to Build Settings again.  Under “Other Linker Flags”, add ‘-ObjC’.
-
-1. Add the `digicert-sha2.cer` certificate file to your Xcode project. This can be found in `VIMNetworking/Networking/Certificate/digicert-sha2.cer`. This is necessary to enable certificate pinning. 
+To be documented...
 
 ## Initialization
 
