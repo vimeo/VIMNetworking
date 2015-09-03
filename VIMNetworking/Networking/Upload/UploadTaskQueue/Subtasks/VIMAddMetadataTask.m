@@ -26,7 +26,6 @@
 
 #import "VIMAddMetadataTask.h"
 #import "VIMVideoMetadata.h"
-#import "VIMUploadSessionManager.h"
 #import "NSError+VIMUpload.h"
 
 static const NSString *VIMMetadataTaskName = @"METADATA";
@@ -127,12 +126,6 @@ static const NSString *VIMMetadataTaskName = @"METADATA";
         return;
     }
     
-    NSString *value = [VIMUploadSessionManager authorizationHeaderValue];
-    if (value)
-    {
-        [request setValue:value forHTTPHeaderField:@"Authorization"];
-    }
-
     NSURLSessionDownloadTask *task = [self.sessionManager downloadTaskWithRequest:request progress:NULL destination:nil completionHandler:nil];
     self.backgroundTaskIdentifier = task.taskIdentifier;
     

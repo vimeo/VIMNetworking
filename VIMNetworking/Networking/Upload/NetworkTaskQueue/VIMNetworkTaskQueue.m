@@ -26,11 +26,10 @@
 
 #import "VIMNetworkTaskQueue.h"
 #import "VIMNetworkTaskSessionManager.h"
-#import "VIMReachability.h"
-//#import "VIMSession.h" // TODO: eliminate this dependency [AH]
 #import "VIMTaskQueueDebugger.h"
 #import "VIMNetworkTask.h"
 #import "VIMTaskQueueArchiver.h"
+#import "AFNetworkReachabilityManager.h"
 
 NSString *const VIMNetworkTaskQueue_DidSuspendOrResumeNotification = @"VIMNetworkTaskQueue_DidSuspendOrResumeNotification";
 
@@ -128,12 +127,12 @@ static const NSString *CellularEnabledKey = @"cellular_enabled";
 
 - (void)resume
 {
-    if ([[VIMReachability sharedInstance] isNetworkReachable] == NO)
+    if ([AFNetworkReachabilityManager sharedManager].isReachable == NO)
     {
         return;
     }
     
-    if ([[VIMReachability sharedInstance] isOn3G] && self.isCellularUploadEnabled == NO)
+    if ([AFNetworkReachabilityManager sharedManager].isReachableViaWWAN && self.isCellularUploadEnabled == NO)
     {
         return;
     }
@@ -165,7 +164,7 @@ static const NSString *CellularEnabledKey = @"cellular_enabled";
         
         [self saveCommonSettings];
         
-        if ([[VIMReachability sharedInstance] isOn3G])
+        if ([AFNetworkReachabilityManager sharedManager].isReachableViaWWAN)
         {
             if (_cellularUploadEnabled)
             {
@@ -185,14 +184,24 @@ static const NSString *CellularEnabledKey = @"cellular_enabled";
 
 - (void)addObservers
 {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onlineNotification:) name:VIMReachabilityStatusChangeOnlineNotification object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(offlineNotification:) name:VIMReachabilityStatusChangeOfflineNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityNotification:) name:AFNetworkingReachabilityDidChangeNotification object:nil];
 }
 
-- (void)onlineNotification:(NSNotification *)notification
+- (void)reachabilityNotification:(NSNotification *)notification
 {
-    if ([[VIMReachability sharedInstance] isOn3G])
+    if ([AFNetworkReachabilityManager sharedManager].isReachable)
+    {
+        [self online];
+    }
+    else
+    {
+        [self offline];
+    }
+}
+
+- (void)online
+{
+    if ([AFNetworkReachabilityManager sharedManager].isReachableViaWWAN)
     {
         if (self.cellularUploadEnabled)
         {
@@ -205,13 +214,13 @@ static const NSString *CellularEnabledKey = @"cellular_enabled";
             [self notifyOfStateChange];
         }
     }
-    else if ([[VIMReachability sharedInstance] isOnWiFi])
+    else if ([AFNetworkReachabilityManager sharedManager].isReachableViaWiFi)
     {
         [self resumeIfAllowed];
     }
 }
 
-- (void)offlineNotification:(NSNotification *)notification
+- (void)offline
 {
     [super suspend];
     

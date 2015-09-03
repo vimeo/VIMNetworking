@@ -28,7 +28,6 @@
 #import "VIMTempFileMaker.h"
 #include "AVAsset+Filesize.h"
 #import "PHAsset+Filesize.h"
-#import "VIMUploadSessionManager.h"
 #import "NSError+VIMUpload.h"
 
 static const NSString *RecordCreationPath = @"/me/videos";
@@ -138,13 +137,7 @@ static const NSString *VIMCreateRecordTaskName = @"CREATE";
         
         return;
     }
-    
-    NSString *value = [VIMUploadSessionManager authorizationHeaderValue];
-    if (value)
-    {
-        [request setValue:value forHTTPHeaderField:@"Authorization"];
-    }
-    
+        
     NSURLSessionDownloadTask *task = [self.sessionManager downloadTaskWithRequest:request progress:NULL destination:nil completionHandler:nil];
     self.backgroundTaskIdentifier = task.taskIdentifier;
     
@@ -332,6 +325,8 @@ static const NSString *VIMCreateRecordTaskName = @"CREATE";
 
 - (void)tempFileWithCompletionBlock:(TempFileCompletionBlock)completionBlock
 {
+    VIMTempFileMaker *fileMaker = [[VIMTempFileMaker alloc] initWithSharedContainerIdentifier:self.sessionManager.session.configuration.sharedContainerIdentifier];
+    
     if (self.URLAsset)
     {
         if (self.canUploadFromSource)
@@ -343,12 +338,12 @@ static const NSString *VIMCreateRecordTaskName = @"CREATE";
         }
         else
         {
-            [VIMTempFileMaker tempFileFromURLAsset:self.URLAsset completionBlock:completionBlock];
+            [fileMaker tempFileFromURLAsset:self.URLAsset completionBlock:completionBlock];
         }
     }
     else
     {
-        [VIMTempFileMaker tempFileFromPHAsset:self.phAsset completionBlock:completionBlock];
+        [fileMaker tempFileFromPHAsset:self.phAsset completionBlock:completionBlock];
     }
 }
 

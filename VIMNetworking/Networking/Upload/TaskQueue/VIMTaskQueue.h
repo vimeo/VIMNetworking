@@ -25,27 +25,17 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "VIMTaskQueueArchiverProtocol.h"
 
 extern NSString *const __nonnull VIMTaskQueueTaskFailedNotification;
 extern NSString *const __nonnull VIMTaskQueueTaskSucceededNotification;
 
 @class VIMTask;
 
-@protocol VIMTaskQueueArchiverProtocol <NSObject>
-
-@required
-- (nullable id)loadObjectForKey:(nonnull NSString *)key;
-- (void)saveObject:(nonnull id)object forKey:(nonnull NSString *)key;
-- (void)deleteObjectForKey:(nonnull NSString *)key;
-
-@end
-
 @interface VIMTaskQueue : NSObject
 
 @property (nonatomic, strong, readonly, nullable) NSString *name;
-
 @property (nonatomic, strong, readonly, nullable) id<VIMTaskQueueArchiverProtocol> archiver;
-
 @property (nonatomic, assign, readonly) NSInteger taskCount;
 
 - (nullable instancetype)initWithName:(nonnull NSString *)name archiver:(nonnull id<VIMTaskQueueArchiverProtocol>)archiver;
@@ -63,7 +53,6 @@ extern NSString *const __nonnull VIMTaskQueueTaskSucceededNotification;
 
 // Optional subclass overrides
 
-// Override to modiy task before it is started [AH]
-- (void)prepareTask:(nonnull VIMTask *)task;
+- (void)prepareTask:(nonnull VIMTask *)task; // Override to modiy task before it is started [AH]
 
 @end

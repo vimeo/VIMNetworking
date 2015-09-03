@@ -26,12 +26,13 @@
 
 #import "VIMSessionManager.h"
 #import "NSURLSessionConfiguration+Extensions.h"
-#import "VIMResponseSerializer.h"
-#import "VIMRequestSerializer.h"
+#import "VIMJSONResponseSerializer.h"
+#import "VIMJSONRequestSerializer.h"
 #import "VIMSession.h"
 #import "VIMSessionConfiguration.h"
+#import "VIMJSONResponseSerializer.h"
 
-@interface VIMSessionManager ()
+@interface VIMSessionManager () <VIMRequestSerializerDelegate>
 
 @end
 
@@ -76,8 +77,15 @@
 
 - (void)initialSetup
 {
-    self.requestSerializer = [[VIMRequestSerializer alloc] initWithAPIVersionString:[VIMSession sharedSession].configuration.APIVersionString];
-    self.responseSerializer = [VIMResponseSerializer serializerWithReadingOptions:NSJSONReadingAllowFragments];
+    self.requestSerializer = [[VIMJSONRequestSerializer alloc] initWithAPIVersionString:[VIMSession sharedSession].configuration.APIVersionString];
+    self.responseSerializer = [VIMJSONResponseSerializer serializer];
+}
+
+#pragma mark - VIMRequestSerializerDelegate
+
+- (NSString *)authorizationHeaderValue:(VIMJSONRequestSerializer *)serializer
+{
+    return nil;
 }
 
 @end

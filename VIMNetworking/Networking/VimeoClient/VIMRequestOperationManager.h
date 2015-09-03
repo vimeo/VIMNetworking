@@ -31,7 +31,6 @@
 @protocol VIMRequestToken;
 
 @class VIMCache;
-@class VIMRequestOperationManager;
 
 typedef void (^VIMRequestCompletionBlock)(VIMServerResponse * __nullable response, NSError * __nullable error);
 
@@ -40,19 +39,7 @@ extern NSString *const __nonnull kVimeoClientErrorDomain;
 extern NSString *const __nonnull kVimeoClient_ServiceUnavailableNotification;
 extern NSString *const __nonnull kVimeoClient_InvalidTokenNotification;
 
-@protocol VIMRequestOperationManagerDelegate <NSObject>
-
-@required
-- (nullable NSString *)authorizationHeaderValue:(nonnull VIMRequestOperationManager *)operationManager;
-
-@optional
-- (nullable NSString *)acceptHeaderValue:(nonnull VIMRequestOperationManager *)operationManager;
-
-@end
-
 @interface VIMRequestOperationManager : AFHTTPRequestOperationManager
-
-@property (nonatomic, weak, nullable) id<VIMRequestOperationManagerDelegate> delegate;
 
 @property (nonatomic, strong, nullable) VIMCache *cache;
 

@@ -102,8 +102,4 @@ NSString * const VIMReachabilityStatusChangeWasOfflineInfoKey = @"VIMReachabilit
     return [[AFNetworkReachabilityManager sharedManager] isReachableViaWiFi];
 }
 
-//        [self.timer invalidate];
-//        
-//        self.timer = [NSTimer scheduledTimerWithTimeInterval:DefaultNotificationDelay target:self selector:@selector(notify) userInfo:nil repeats:NO];
-
 @end

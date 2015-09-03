@@ -1,8 +1,8 @@
 //
-//  UploadSessionManager.h
-//  VimeoUploader
+//  VIMVimeoRequestSerializer.h
+//  VIMNetworking
 //
-//  Created by Hanssen, Alfie on 1/29/15.
+//  Created by Kashif Muhammad on 8/27/14.
 //  Copyright (c) 2014-2015 Vimeo (https://vimeo.com)
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,14 +24,13 @@
 //  THE SOFTWARE.
 //
 
-#import "VIMNetworkTaskSessionManager.h"
+#import "AFURLRequestSerialization.h"
+#import "VIMRequestSerializerDelegate.h"
 
-@interface VIMUploadSessionManager : VIMNetworkTaskSessionManager
+@interface VIMJSONRequestSerializer : AFJSONRequestSerializer
 
-+ (nullable instancetype)sharedAppInstance;
-+ (nullable instancetype)sharedExtensionInstance;
+@property (nonatomic, weak) id<VIMRequestSerializerDelegate> delegate;
 
-// TODO: eliminate the need for this dependency [AH]
-+ (nonnull NSString *)authorizationHeaderValue;
+- (nonnull instancetype)initWithAPIVersionString:(nonnull NSString *)APIVersionString;
 
 @end

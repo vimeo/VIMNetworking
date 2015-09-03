@@ -1,8 +1,8 @@
 //
-//  VIMVimeoResponseSerializer.h
-//  VIMNetworking
+//  VIMRequestSerializerProtocol.h
+//  Pods
 //
-//  Created by Hanssen, Alfie on 9/19/14.
+//  Created by Hanssen, Alfie on 9/1/15.
 //  Copyright (c) 2014-2015 Vimeo (https://vimeo.com)
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,8 +24,12 @@
 //  THE SOFTWARE.
 //
 
-#import "AFURLResponseSerialization.h"
+#import <Foundation/Foundation.h>
+#import "AFURLRequestSerialization.h"
 
-@interface VIMResponseSerializer : AFJSONResponseSerializer
+@protocol VIMRequestSerializerDelegate <NSObject>
+
+@required
+- (nullable NSString *)authorizationHeaderValue:(nonnull AFHTTPRequestSerializer *)serializer;
 
 @end

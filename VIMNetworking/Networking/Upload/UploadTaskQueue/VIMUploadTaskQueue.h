@@ -44,8 +44,7 @@ typedef void(^AddMetadataCompletionBlock)(BOOL didAdd);
 
 @property (nonatomic, strong, readonly, nullable) VIMUploadTaskQueueTracker *uploadQueueTracker;
 
-+ (nullable instancetype)sharedAppQueue;
-+ (nullable instancetype)sharedExtensionQueue;
+- (nullable instancetype)initWithSessionManager:(nonnull VIMNetworkTaskSessionManager *)sessionManager;
 
 - (void)uploadVideoAssets:(nonnull NSArray *)videoAssets;
 

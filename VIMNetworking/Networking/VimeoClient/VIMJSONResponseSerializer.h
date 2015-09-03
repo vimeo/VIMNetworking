@@ -1,5 +1,5 @@
 //
-//  VIMVimeoResponseSerializer.m
+//  VIMVimeoResponseSerializer.h
 //  VIMNetworking
 //
 //  Created by Hanssen, Alfie on 9/19/14.
@@ -24,22 +24,8 @@
 //  THE SOFTWARE.
 //
 
-#import "VIMResponseSerializer.h"
+#import "AFURLResponseSerialization.h"
 
-@implementation VIMResponseSerializer
-
-+ (instancetype)serializer
-{
-    VIMResponseSerializer *serializer = [[self alloc] init];
-    serializer.readingOptions = 0;
-    [serializer setAcceptableContentTypes:[VIMResponseSerializer acceptableContentTypes]];
-    
-    return serializer;
-}
-
-+ (NSSet *)acceptableContentTypes
-{
-    return [NSSet setWithObjects:@"application/json", @"text/json", @"text/html", @"text/javascript", @"application/vnd.vimeo.video+json", @"application/vnd.vimeo.cover+json", @"application/vnd.vimeo.service+json", @"application/vnd.vimeo.comment+json", @"application/vnd.vimeo.user+json", @"application/vnd.vimeo.activity+json", @"application/vnd.vimeo.uploadticket+json", @"application/vnd.vimeo.error+json", @"application/vnd.vimeo.trigger+json", @"application/vnd.vimeo.category+json", @"application/vnd.vimeo.channel+json", nil];
-}
+@interface VIMJSONResponseSerializer : AFJSONResponseSerializer
 
 @end
