@@ -1,6 +1,8 @@
 # VIMNetworking
 
-`VIMNetworking` is an Objective-C library that enables interaction with the [Vimeo API](https://developers.vimeo.com).  It handles authentication, request submission, and request cancellation. Advanced features include caching and powerful model object parsing. 
+`VIMNetworking` is an Objective-C library that enables interaction with the [Vimeo API](https://developers.vimeo.com).  It handles authentication, request submission and cancellation, and video upload. Advanced features include caching and powerful model object parsing. 
+
+The upload system supports background session uploads from apps and extensions. Its core component is a serial task queue that can execute composite tasks (tasks with subtasks). For example, a composite task might include 3 steps: (1) a video file upload step, (2) a `POST` request to set file metadata (title, description, privacy), and (3) a `POST` request to share the video with friends. The upload system allows users to upload videos to Vimeo, but can be repurposed to manage background upload (or download) from any source. See detailed documentation below for more information. 
 
 ## Sample Project
 
@@ -8,11 +10,11 @@ Check out the sample project [here](https://github.com/vimeo/Pegasus).
 
 ## Setup
 
-### Cocoapods
+### Cocopods
 
 ```Ruby
 # Add this to your podfile
-target 'YourTarget' do
+target 'MyTarget' do
 	pod 'VIMNetworking', '5.5.5' # Replace with the latest version
 end
 ```
@@ -241,6 +243,223 @@ id<VIMRequestToken> currentRequest = [[VIMSession sharedSession].client requestU
 [[VIMSession sharedSession].client cancelAllRequests];
 
 ```
+
+## Video Upload
+
+The video upload system uses a background configured NSURLSession to manage a queue of video uploads (i.e. uploads continue regardless of whether the app is in the foreground or background). 
+
+The upload queue can be paused and resumed, and is automatically paused/resumed when losing/gaining a connection. It can also be configured to restrict uploads to wifi only. 
+
+The queue is persisted to disk so that in the event of an app termination event it can be reconstructed to the state it was in before termination. 
+
+When you configure VIMNetworking, set the `backgroundSessionIdentifierApp` property and include the "upload" permission in your scope. If you plan to initiate uploads from an extension, set the `backgroundSessionIdentifierExtension` and `sharedContainerID` properties as well.
+
+```Obejctive-C
+VIMSessionConfiguration *config = [[VIMSessionConfiguration alloc] init];
+config.clientKey = @"your_client_key";
+config.clientSecret = @"your_client_secret";
+config.scope = @"private public create edit delete interact upload";
+config.backgroundSessionIdentifierApp = @"your_app_background_session_id";
+config.backgroundSessionIdentifierExtension = @"your_extension_background_session_id";
+config.sharedContainerID = @"your_shared_container_id";
+```
+
+Load the `VIMUploadTaskQueue`(s) at each launch.
+
+```Objective-C
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    // ...
+
+    [VIMUploadTaskQueue sharedAppQueue];
+    [VIMUploadTaskQueue sharedExtensionQueue];
+
+    return YES;
+}
+```
+
+Implement the `application:andleEventsForBackgroundURLSession:completionHandler:` method in your AppDelegate:
+
+```Objective-C
+- (void)application:(UIApplication *)application handleEventsForBackgroundURLSession:(NSString *)identifier completionHandler:(void (^)())completionHandler
+{
+    if ([identifier isEqualToString:BackgroundSessionIdentifierApp])
+    {
+        [VIMUploadSessionManager sharedAppInstance].completionHandler = completionHandler;
+    }
+    else if ([identifier isEqualToString:BackgroundSessionIdentifierExtension])
+    {
+        [VIMUploadSessionManager sharedExtensionInstance].completionHandler = completionHandler;
+    }
+}
+```
+
+Enqueue a `PHAsset` for upload.
+
+```Objective-C
+PHAsset *asset = ...;
+VIMVideoAsset *videoAsset = [[VIMVideoAsset alloc] initWithPHAsset:asset];
+[[VIMUploadTaskQueue sharedAppQueue] uploadVideoAssets:@[videoAsset]];
+```
+
+Enqueue an `AVURLAsset` for upload.
+
+```Objective-C
+NSURL *URL = ...;
+AVURLAsset *URLAsset = [AVURLAsset assetWithURL:URL];
+BOOL canUploadFromSource = ...; // If the asset doesn't need to be copied to a tmp directory before upload, set this to YES
+VIMVideoAsset *videoAsset = [[VIMVideoAsset alloc] initWithURLAsset:URLAsset canUploadFromSource:canUploadFromSource];
+[[VIMUploadTaskQueue sharedExtensionQueue] uploadVideoAssets:@[videoAsset]];
+```
+
+Enqueue multiple assets for upload.
+
+```Objective-C
+NSArray *videoAssets = @[...];
+[[VIMUploadTaskQueue sharedAppQueue] uploadVideoAssets:videoAssets];
+```
+
+Cancel an upload.
+
+```Objective-C
+VIMVideoAsset *videoAsset = ...;
+[[VIMUploadTaskQueue sharedAppQueue] cancelUploadForVideoAsset:videoAsset];
+```
+
+Cancel all uploads.
+
+```Objective-C
+[[VIMUploadTaskQueue sharedAppQueue] cancelAllUploads];
+```
+
+Pause all uploads.
+
+```Objective-C
+[[VIMUploadTaskQueue sharedAppQueue] pause];
+```
+
+Resume all uploads.
+
+```Objective-C
+[[VIMUploadTaskQueue sharedAppQueue] resume];
+```
+
+Ensure that uploads only occur when connected via wifi...or not. If `cellularUploadEnabled` is set to `NO`, the upload queue will automatically pause when leaving wifi and automatically resume when entering wifi. (Note: the queue will automatically pause/resume when the device is taken offline/online.)
+
+```Objective-C
+[VIMUploadTaskQueue sharedAppQueue].cellularUploadEnabled = NO;
+```
+
+Add video metadata to an enqueued or in-progress upload.
+
+```Objective-C
+VIMVideoAsset *videoAsset = ...;
+
+VIMVideoMetadata *videoMetadata = [[VIMVideoMetadata alloc] init];
+videoMetadata.videoTitle = @"Really cool title";
+videoMetadata.videoDescription = @"Really cool description"";
+videoMetadata.videoPrivacy = (NSString *)VIMPrivacyValue_Private;
+
+[[VIMUploadTaskQueue sharedAppQueue] addMetadata:videoMetadata toVideoAsset:videoAsset withCompletionBlock:^(BOOL didAdd) {
+    
+    if (!didAdd)
+    {
+        // The upload has already finished, 
+        // Set the metadata using the VIMAPIClient method updateVideoWithURI:title:description:privacy:completionHandler:
+    }
+    
+}];
+```
+
+If you build UI to support pause and resume, listen for the `VIMNetworkTaskQueue_DidSuspendOrResumeNotification` notification and update your UI accordingly.
+
+```Objective-C
+- (void)addObservers
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadTaskQueueDidSuspendOrResume:) name:VIMNetworkTaskQueue_DidSuspendOrResumeNotification object:nil];
+}
+
+- (void)uploadTaskQueueDidSuspendOrResume:(NSNotification *)notification
+{
+    BOOL isSuspended = [[VIMUploadTaskQueue sharedAppQueue] isSuspended];
+    [self.pauseResumeButton setSelected:isSuspended];
+}
+```
+
+Use KVO to communicate upload state and upload progress via your UI. Observe changes to `VIMVideoAsset`'s `uploadState` and `uploadProgressFraction` properties.
+
+```Objective-C
+static void *UploadStateContext = &UploadStateContext;
+static void *UploadProgressContext = &UploadProgressContext;
+
+- (void)addObservers
+{
+    [self.videoAsset addObserver:self forKeyPath:NSStringFromSelector(@selector(uploadState)) options:NSKeyValueObservingOptionNew context:UploadStateContext];
+    
+    [self.videoAsset addObserver:self forKeyPath:NSStringFromSelector(@selector(uploadProgressFraction)) options:NSKeyValueObservingOptionNew context:UploadProgressContext];
+}
+
+- (void)removeObservers
+{
+    @try
+    {
+        [self.videoAsset removeObserver:self forKeyPath:NSStringFromSelector(@selector(uploadState)) context:UploadStateContext];
+    }
+    @catch (NSException *exception)
+    {
+        NSLog(@"Exception removing observer: %@", exception);
+    }
+
+    @try
+    {
+        [self.videoAsset removeObserver:self forKeyPath:NSStringFromSelector(@selector(uploadProgressFraction)) context:UploadProgressContext];
+    }
+    @catch (NSException *exception)
+    {
+        NSLog(@"Exception removing observer: %@", exception);
+    }
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary *)change
+                       context:(void *)context
+{
+    if (context == UploadStateContext)
+    {
+        if ([keyPath isEqualToString:NSStringFromSelector(@selector(uploadState))])
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self uploadStateDidChange];
+            });
+        }
+    }
+    else if (context == UploadProgressContext)
+    {
+        if ([keyPath isEqualToString:NSStringFromSelector(@selector(uploadProgressFraction))])
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self uploadProgressDidChange];
+            });
+        }
+    }
+    else
+    {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
+}
+```
+
+When your UI is loaded or refreshed, associate your newly create VIMVideoAsset objects with their upload task counterparts so your UI continues to communicate upload state and progress.
+
+```Objective-C
+NSArray *videoAssets = self.datasource.items; // For example
+[[VIMUploadTaskQueue sharedAppQueue] associateVideoAssetsWithUploads:videoAssets];
+```
+
+###Repurposing the Upload System
+
+The upload system can be repurposed to manage background uploads (or downloads) from any source. The simplest way to do this is to subclass `VIMNetworkTask` and `VIMNetworkTaskQueue`, using `VIMUploadTask` and `VIMUploadTaskQueue` for inspiration. 
 
 ## License
 
