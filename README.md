@@ -59,15 +59,12 @@ On app launch, configure `VIMSession` with your client key, secret, and scope st
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions 
 {
-    // You must provide a service, but group is optional (necessary if sharing an account with an app extension)
-    [KeychainUtility configureWithService:@"YOUR SERVICE" accessGroup:@"YOUR GROUP OR NIL"];
-
     VIMSessionConfiguration *config = [[VIMSessionConfiguration alloc] init];
-    
-    // Required
     config.clientKey = @"your_client_key";
     config.clientSecret = @"your_client_secret";
-    config.scope = @"private public create edit delete interact"; // Replace with your scope
+    config.scope = @"your_scope";
+    config.keychainService = @"your_service"; 
+    config.keychainAccessGroup = @"your_access_group"; // Optional
     
     [VIMSession sharedSession setupWithConfiguration:config];    
 
@@ -164,27 +161,6 @@ With `VIMNetworking` configured and authenticated, you’re ready to start makin
 	NSLog(@"JSONObject: %@", JSONObject);
 
 }];
-
-```
-
-You can also make requests using an existing token by implementing the authorizationHeaderValue: method of VIMRequestOperationManagerDelegate.
-
-```Objective-C
-
-self.client = [[VIMClient alloc] initWithDefaultBaseURL];
-self.client.delegate = self;
-[self.client requestURI:@"/videos/77091919" completionBlock:^(VIMServerResponse *response, NSError *error)
-{
-    id JSONObject = response.result;
-    NSLog(@"JSONObject: %@", JSONObject);
-}];
-
-# pragma mark - VIMRequestOperationManagerDelegate
-
-- (NSString *)authorizationHeaderValue:(nonnull VIMRequestOperationManager *)operationManager
-{
-    return [NSString stringWithFormat:@"Bearer <TOKEN>"];
-}
 
 ```
 
