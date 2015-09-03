@@ -218,6 +218,35 @@ id<VIMRequestToken> currentRequest = [[VIMSession sharedSession].client requestU
 
 ```
 
+## Lightweigh
+
+If you want to use your own OAuth token you can circumvent `VIMSession` and its authentication mechanisms and make requests like so:
+
+```Objective-C
+
+VIMJSONRequestSerializer *requestSerializer = [[VIMJSONRequestSerializer alloc] init];
+requestSerializer.delegate = self;
+
+VIMClient *client = [[VIMClient alloc] initWithDefaultBaseURL];
+client.requestSerializer = requestSerializer;
+
+[client requestURI:@"/videos/77091919" completionBlock:^(VIMServerResponse *response, NSError *error)
+{
+
+    id JSONObject = response.result;
+    NSLog(@"JSONObject: %@", JSONObject);
+
+}];
+
+#pragma mark - VIMRequestSerializerDelegate
+
+- (nullable NSString *)authorizationHeaderValue:(nonnull AFHTTPRequestSerializer *)serializer
+{
+    return [NSString stringWithFormat:@"Bearer your_token"]; // Or your base 64 encoded basic auth header value
+}
+
+```
+
 ## License
 
 `VIMNetworking` is available under the MIT license. See the LICENSE file for more info.
