@@ -218,7 +218,7 @@ id<VIMRequestToken> currentRequest = [[VIMSession sharedSession].client requestU
 
 ```
 
-## Lightweigh
+## Lightweight Use
 
 If you want to use your own OAuth token you can circumvent `VIMSession` and its authentication mechanisms and make requests like so:
 
