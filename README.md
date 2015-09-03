@@ -2,9 +2,11 @@
 
 `VIMNetworking` is an Objective-C library that enables interaction with the [Vimeo API](https://developers.vimeo.com).  It handles authentication, request submission, and request cancellation. Advanced features include caching and powerful model object parsing. 
 
+If you'd like to upload videos check out [VIMUpload](https://github.com/vimeo/VIMUpload). 
+
 ## Sample Project
 
-Check out the sample project [here](https://github.com/vimeo/Pegasus).
+Check out the [Pegasus](https://github.com/vimeo/Pegasus) sample project.
 
 ## Setup
 
