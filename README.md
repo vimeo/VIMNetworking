@@ -199,6 +199,22 @@ descriptor.modelKeyPath = @"data";
 
 ```
 
+### Caching Behavior
+
+```Objective-C
+
+VIMRequestDescriptor *descriptor = [[VIMRequestDescriptor alloc] init];
+descriptor.urlPath = @"/videos/77091919";
+descriptor.modelClass = [VIMVideo class];
+descriptor.cachePolicy = VIMCachePolicy_NetworkOnly; // Or VIMCachePolicy_LocalOnly etc.
+descriptor.shouldCacheResponse = NO; // Defaults to YES
+
+...
+
+// See VIMRequestDescriptor.h/m additional request configuration options
+
+```
+
 ### Request Cancellation
 
 ```Objective-C
@@ -224,11 +240,12 @@ If you want to use your own OAuth token you can circumvent `VIMSession` and its 
 
 ```Objective-C
 
-VIMJSONRequestSerializer *requestSerializer = [[VIMJSONRequestSerializer alloc] init];
-requestSerializer.delegate = self;
-
 VIMClient *client = [[VIMClient alloc] initWithDefaultBaseURL];
-client.requestSerializer = requestSerializer;
+client.requestSerializer = ...
+
+// Where client.requestSerializer is an AFJSONRequestSerializer subclass that sets the following information for each request:
+// [serializer setValue:@"application/vnd.vimeo.*+json; version=3.2" forHTTPHeaderField:@"Accept"];
+// [serializer setValue:@"Bearer your_oauth_token" forHTTPHeaderField:@"Authorization"];
 
 [client requestURI:@"/videos/77091919" completionBlock:^(VIMServerResponse *response, NSError *error)
 {
@@ -238,12 +255,16 @@ client.requestSerializer = requestSerializer;
 
 }];
 
-#pragma mark - VIMRequestSerializerDelegate
+```
 
-- (nullable NSString *)authorizationHeaderValue:(nonnull AFHTTPRequestSerializer *)serializer
-{
-    return [NSString stringWithFormat:@"Bearer your_token"]; // Or your base 64 encoded basic auth header value
-}
+### Caching
+
+If you'd like to turn on caching for this lighter weight use case: 
+
+```Objective-C
+VIMClient *client = [[VIMClient alloc] initWithDefaultBaseURL];
+client.cache = VIMCache *cache = [VIMCache sharedCache];
+// Or client.cache = VIMCache *cache = [[VIMCache alloc] initWithName:@"your_cache_name"];
 
 ```
 
