@@ -28,24 +28,24 @@
 
 // Connection names
 
-NSString *const __nonnull VIMConnectionNameActivities;
-NSString *const __nonnull VIMConnectionNameAlbums;
-NSString *const __nonnull VIMConnectionNameChannels;
-NSString *const __nonnull VIMConnectionNameComments;
-NSString *const __nonnull VIMConnectionNameCovers;
-NSString *const __nonnull VIMConnectionNameCredits;
-NSString *const __nonnull VIMConnectionNameFeed;
-NSString *const __nonnull VIMConnectionNameFollowers;
-NSString *const __nonnull VIMConnectionNameFollowing;
-NSString *const __nonnull VIMConnectionNameUsers;
-NSString *const __nonnull VIMConnectionNameGroups;
-NSString *const __nonnull VIMConnectionNameLikes;
-NSString *const __nonnull VIMConnectionNamePictures;
-NSString *const __nonnull VIMConnectionNamePortfolios;
-NSString *const __nonnull VIMConnectionNameShared;
-NSString *const __nonnull VIMConnectionNameVideos;
-NSString *const __nonnull VIMConnectionNameWatchlater;
-NSString *const __nonnull VIMConnectionNameViolations;
+extern NSString *const __nonnull VIMConnectionNameActivities;
+extern NSString *const __nonnull VIMConnectionNameAlbums;
+extern NSString *const __nonnull VIMConnectionNameChannels;
+extern NSString *const __nonnull VIMConnectionNameComments;
+extern NSString *const __nonnull VIMConnectionNameCovers;
+extern NSString *const __nonnull VIMConnectionNameCredits;
+extern NSString *const __nonnull VIMConnectionNameFeed;
+extern NSString *const __nonnull VIMConnectionNameFollowers;
+extern NSString *const __nonnull VIMConnectionNameFollowing;
+extern NSString *const __nonnull VIMConnectionNameUsers;
+extern NSString *const __nonnull VIMConnectionNameGroups;
+extern NSString *const __nonnull VIMConnectionNameLikes;
+extern NSString *const __nonnull VIMConnectionNamePictures;
+extern NSString *const __nonnull VIMConnectionNamePortfolios;
+extern NSString *const __nonnull VIMConnectionNameShared;
+extern NSString *const __nonnull VIMConnectionNameVideos;
+extern NSString *const __nonnull VIMConnectionNameWatchlater;
+extern NSString *const __nonnull VIMConnectionNameViolations;
 
 @interface VIMConnection : VIMModelObject
 

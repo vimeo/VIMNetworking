@@ -26,6 +26,7 @@
 
 #import "VIMHeaderProvider.h"
 #import "VIMSessionConfiguration.h"
+#import <UIKit/UIKit.h>
 
 NSString *const AcceptHeaderKey = @"Accept";
 NSString *const UserAgentHeaderKey = @"User-Agent";
