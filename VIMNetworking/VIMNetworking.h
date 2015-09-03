@@ -29,7 +29,7 @@
 #import "VIMSession.h"
 #import "VIMSessionConfiguration.h"
 
-#import "KeychainUtility.h"
+#import "VIMKeychain.h"
 
 #import "VIMClient.h"
 #import "VIMRequestOperationManager.h"

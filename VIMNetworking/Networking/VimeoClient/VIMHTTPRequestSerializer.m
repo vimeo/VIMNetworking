@@ -1,6 +1,6 @@
 //
 //  VIMHTTPRequestSerializer.m
-//  Pods
+//  VIMUpload
 //
 //  Created by Hanssen, Alfie on 9/1/15.
 //

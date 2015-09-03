@@ -34,6 +34,7 @@
 #import "VIMCache.h"
 #import "VIMObjectMapper.h"
 #import "VIMHTTPRequestSerializer.h"
+#import "VIMKeychain.h"
 
 static NSString *const ClientCredentialsAccountKey = @"ClientCredentialsAccountKey";
 static NSString *const UserAccountKey = @"UserAccountKey";
@@ -82,6 +83,8 @@ static VIMSession *_sharedSession;
     self = [super init];
     if (self)
     {
+        [VIMKeychain configureWithService:configuration.keychainService accessGroup:configuration.keychainAccessGroup];
+
         _configuration = configuration;
         _account = [self loadAccountIfPossible];
         _authenticator = [self buildAuthenticator];
@@ -200,7 +203,6 @@ static VIMSession *_sharedSession;
     VIMHTTPRequestSerializer *requestSerializer = [[VIMHTTPRequestSerializer alloc] initWithAPIVersionString:self.configuration.APIVersionString];
     requestSerializer.delegate = self;
     authenticator.requestSerializer = requestSerializer;
-    authenticator.responseSerializer = [AFJSONResponseSerializer serializer];
     
     return authenticator;
 }
@@ -213,7 +215,6 @@ static VIMSession *_sharedSession;
     VIMJSONRequestSerializer *requestSerializer = [[VIMJSONRequestSerializer alloc] initWithAPIVersionString:self.configuration.APIVersionString];
     requestSerializer.delegate = self;
     client.requestSerializer = requestSerializer;
-    client.responseSerializer = [VIMJSONResponseSerializer serializer];
     client.cache = [self buildCache];
    
     return client;

@@ -26,7 +26,7 @@
 
 #import <Foundation/Foundation.h>
 
-extern NSString * const __nullable DefaultBaseURL;
+extern NSString *const __nonnull DefaultBaseURL;
 
 @interface VIMSessionConfiguration : NSObject
 
@@ -34,12 +34,9 @@ extern NSString * const __nullable DefaultBaseURL;
 @property (nonatomic, copy, nullable) NSString *clientSecret;
 @property (nonatomic, copy, nullable) NSString *scope;
 @property (nonatomic, copy, nullable) NSString *baseURLString;
-
-@property (nonatomic, copy, nullable) NSString *backgroundSessionIdentifierApp;
-@property (nonatomic, copy, nullable) NSString *backgroundSessionIdentifierExtension;
-@property (nonatomic, copy, nullable) NSString *sharedContainerID;
-
 @property (nonatomic, copy, nullable) NSString *APIVersionString;
+@property (nonatomic, copy, nullable) NSString *keychainAccessGroup;
+@property (nonatomic, copy, nullable) NSString *keychainService;
 
 - (BOOL)isValid;
 

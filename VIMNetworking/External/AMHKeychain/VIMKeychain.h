@@ -8,7 +8,7 @@
 #import <Security/Security.h>
 #import <Foundation/Foundation.h>
 
-@interface KeychainUtility : NSObject
+@interface VIMKeychain : NSObject
 
 + (void)configureWithService:(nonnull NSString *)service accessGroup:(nullable NSString *)accessGroup; // Optional configuration
 

@@ -26,7 +26,7 @@
 
 #import "VIMAccountStore.h"
 #import "VIMAccountNew.h"
-#import "KeychainUtility.h"
+#import "VIMKeychain.h"
 #import "VIMAccount.h"
 #import "VIMAccountCredential.h"
 #import "VIMObjectMapper.h"
@@ -37,10 +37,10 @@
 + (VIMAccountNew *)loadLegacyAccountForKey:(NSString *)key
 {
     // Load the legacy account data
-    NSData *data = [[KeychainUtility sharedInstance] dataForAccount:key];
+    NSData *data = [[VIMKeychain sharedInstance] dataForAccount:key];
     
     // Delete the saved legacy account object
-    BOOL success = [[KeychainUtility sharedInstance] deleteDataForAccount:key];
+    BOOL success = [[VIMKeychain sharedInstance] deleteDataForAccount:key];
     if (!success)
     {
         NSLog(@"Unable to delete data for account key: %@", key);
@@ -103,7 +103,7 @@
     
     VIMAccountNew *account = nil;
     
-    NSData *data = [[KeychainUtility sharedInstance] dataForAccount:key];
+    NSData *data = [[VIMKeychain sharedInstance] dataForAccount:key];
     if (data)
     {
         NSKeyedUnarchiver *keyedUnarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
@@ -125,7 +125,7 @@
         {
             NSLog(@"VIMAccountStore: An exception occured on load: %@", exception);
             
-            BOOL success = [[KeychainUtility sharedInstance] deleteDataForAccount:key];
+            BOOL success = [[VIMKeychain sharedInstance] deleteDataForAccount:key];
             if (!success)
             {
                 NSLog(@"Unable to delete data for account key: %@", key);
@@ -156,7 +156,7 @@
     [keyedArchiver encodeObject:account];
     [keyedArchiver finishEncoding];
     
-    return [[KeychainUtility sharedInstance] setData:data forAccount:key];
+    return [[VIMKeychain sharedInstance] setData:data forAccount:key];
 }
 
 + (BOOL)deleteAccountForKey:(NSString *)key
@@ -168,7 +168,7 @@
         return NO;
     }
 
-    return [[KeychainUtility sharedInstance] deleteDataForAccount:key];
+    return [[VIMKeychain sharedInstance] deleteDataForAccount:key];
 }
 
 @end

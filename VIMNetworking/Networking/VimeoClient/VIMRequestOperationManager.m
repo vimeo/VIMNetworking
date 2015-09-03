@@ -33,6 +33,7 @@
 #import "VIMRequestOperation.h"
 #import "VIMServerResponseMapper.h"
 #import "NSError+VIMNetworking.h"
+#import "VIMJSONResponseSerializer.h"
 
 CGFloat const kVimeoClientTimeoutInterval = 60;
 NSInteger const kVimeoClientErrorCodeCacheUnavailable = 666;
@@ -61,18 +62,20 @@ NSString *const kVimeoClient_InvalidTokenNotification = @"kVimeoClient_InvalidTo
     self = [super initWithBaseURL:url];
     if(self)
     {
+        self.responseSerializer = [VIMJSONResponseSerializer serializer];
+
         // TODO: Do we need both queues or will one suffice? [AH]
 		
         _responseQueue = dispatch_queue_create("com.vimeo.VIMClient.requestQueue", DISPATCH_QUEUE_SERIAL);
 
         self.completionQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
         
-#if (defined(ADHOC) || defined(RELEASE))
+//#if (defined(ADHOC) || defined(RELEASE))
         self.securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeCertificate];
         self.securityPolicy.allowInvalidCertificates = NO;
         self.securityPolicy.validatesCertificateChain = NO;
         self.securityPolicy.validatesDomainName = YES;
-#endif
+//#endif
     }
     
     return self;
