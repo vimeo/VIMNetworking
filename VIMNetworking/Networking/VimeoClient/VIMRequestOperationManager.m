@@ -33,6 +33,7 @@
 #import "VIMRequestOperation.h"
 #import "VIMServerResponseMapper.h"
 #import "NSError+VIMNetworking.h"
+#import "VIMJSONResponseSerializer.h"
 
 CGFloat const kVimeoClientTimeoutInterval = 60;
 NSInteger const kVimeoClientErrorCodeCacheUnavailable = 666;
@@ -61,6 +62,8 @@ NSString *const kVimeoClient_InvalidTokenNotification = @"kVimeoClient_InvalidTo
     self = [super initWithBaseURL:url];
     if(self)
     {
+        self.responseSerializer = [VIMJSONResponseSerializer serializer];
+
         // TODO: Do we need both queues or will one suffice? [AH]
 		
         _responseQueue = dispatch_queue_create("com.vimeo.VIMClient.requestQueue", DISPATCH_QUEUE_SERIAL);

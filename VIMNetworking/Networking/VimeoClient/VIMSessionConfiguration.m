@@ -28,6 +28,7 @@
 #import <Foundation/Foundation.h>
 
 NSString * const DefaultBaseURL = @"https://api.vimeo.com/";
+static NSString * const DefaultAPIVersionString = @"3.2";
 
 @implementation VIMSessionConfiguration
 
@@ -36,7 +37,7 @@ NSString * const DefaultBaseURL = @"https://api.vimeo.com/";
     self = [super init];
     if (self)
     {
-        _APIVersionString = @"3.2";
+        _APIVersionString = DefaultAPIVersionString;
         _baseURLString = DefaultBaseURL;
     }
     
@@ -47,9 +48,15 @@ NSString * const DefaultBaseURL = @"https://api.vimeo.com/";
 
 - (BOOL)isValid
 {
-    NSParameterAssert(self.clientKey && self.clientSecret && self.scope && self.baseURLString && self.APIVersionString);
+    NSParameterAssert(self.clientKey);
+    NSParameterAssert(self.clientSecret);
+    NSParameterAssert(self.scope);
+    NSParameterAssert(self.baseURLString);
+    NSParameterAssert(self.APIVersionString);
+    NSParameterAssert(self.keychainAccessGroup);
+    NSParameterAssert(self.keychainService);
     
-    return self.clientKey && self.clientSecret && self.scope && self.baseURLString && self.APIVersionString;
+    return self.clientKey && self.clientSecret && self.scope && self.baseURLString && self.APIVersionString && self.keychainAccessGroup && self.keychainService;
 }
 
 @end

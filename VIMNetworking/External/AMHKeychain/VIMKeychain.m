@@ -5,32 +5,32 @@
 //
 //
 
-#import "KeychainUtility.h"
+#import "VIMKeychain.h"
 
-@interface KeychainUtility ()
+@interface VIMKeychain ()
 
 @property (nonatomic, strong) NSString *service;
 @property (nonatomic, strong) NSString *accessGroup;
 
 @end
 
-@implementation KeychainUtility
+@implementation VIMKeychain
 
 + (void)configureWithService:(NSString *)service accessGroup:(NSString *)accessGroup
 {
     NSAssert(service != nil, @"service cannot be nil");
     
-    KeychainUtility *keychainUtility = [KeychainUtility sharedInstance];
+    VIMKeychain *keychainUtility = [VIMKeychain sharedInstance];
     keychainUtility.service = service;
     keychainUtility.accessGroup = accessGroup;
 }
 
-+ (KeychainUtility *)sharedInstance
++ (VIMKeychain *)sharedInstance
 {
-    static KeychainUtility *_sharedInstance = nil;
+    static VIMKeychain *_sharedInstance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        _sharedInstance = [[KeychainUtility alloc] init];
+        _sharedInstance = [[VIMKeychain alloc] init];
     });
     
     return _sharedInstance;
