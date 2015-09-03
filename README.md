@@ -41,7 +41,7 @@ On app launch, configure `VIMSession` with your client key, secret, and scope st
     VIMSessionConfiguration *config = [[VIMSessionConfiguration alloc] init];
     config.clientKey = @"your_client_key";
     config.clientSecret = @"your_client_secret";
-    config.scope = @"your_scope";
+    config.scope = @"your_scope"; // E.g. "private public upload etc"
     config.keychainService = @"your_service"; 
     config.keychainAccessGroup = @"your_access_group"; // Optional
     
