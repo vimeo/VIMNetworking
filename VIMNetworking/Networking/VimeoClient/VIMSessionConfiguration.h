@@ -26,7 +26,8 @@
 
 #import <Foundation/Foundation.h>
 
-extern NSString *const __nonnull DefaultBaseURL;
+extern NSString *const __nonnull DefaultBaseURLString;
+extern NSString *const __nonnull DefaultAPIVersionString;
 
 @interface VIMSessionConfiguration : NSObject
 

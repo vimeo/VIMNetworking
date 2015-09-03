@@ -26,7 +26,6 @@
 
 #import <Foundation/Foundation.h>
 
-extern NSString *const __nonnull DefaultAPIVersionString;
 extern NSString *const __nonnull AcceptHeaderKey;
 extern NSString *const __nonnull UserAgentHeaderKey;
 extern NSString *const __nonnull AuthorizationHeaderKey;
