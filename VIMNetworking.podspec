@@ -35,7 +35,7 @@ Pod::Spec.new do |s|
   s.source_files  = "VIMNetworking", "VIMNetworking/**/*.{h,m}"
   s.exclude_files = "VIMNetworking/Exclude"
 
-  s.frameworks = "Foundation", "CommonCrypto", "UIKit", "Security", "CoreGraphics", "AVFoundation"
+  s.frameworks = "Foundation", "UIKit", "Security", "CoreGraphics", "AVFoundation"
   s.requires_arc = true
 
   # s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
