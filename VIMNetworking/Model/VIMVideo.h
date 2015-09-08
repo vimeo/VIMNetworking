@@ -25,6 +25,7 @@
 //
 
 #import "VIMModelObject.h"
+#import <CoreGraphics/CoreGraphics.h>
 
 @class VIMUser;
 @class VIMVideoFile;

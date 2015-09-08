@@ -23,7 +23,17 @@ Note that VIMNetworking has dependencies on `AFNetworking` and `VIMObjectMapper`
 
 ###Git Submodules
 
-To be documented...
+Add `VIMNetworking`, `VIMObjectMapper` and `AFNetworking` (Release 2.5.4) as submodules of your git repository. 
+
+```
+git submodule add git@github.com:vimeo/VIMNetworking.git
+git submodule add git@github.com:vimeo/VIMObjectMapper.git
+git submodule add git@github.com:AFNetworking/AFNetworking.git
+```
+
+Add each submodule's classes to your project / target. 
+
+If you're also including `VIMUpload` in your project / target, note that both `VIMUpload` and `VIMNetworking` include the `Certificate/digicert-sha2.cer` file (this file is used for cert pinning). You'll have to remove one of the `digicert-sha2.cer` files from your target to avoid a "Multiple build commands for output file..." warning.
 
 ## Initialization
 
@@ -41,7 +51,7 @@ On app launch, configure `VIMSession` with your client key, secret, and scope st
     VIMSessionConfiguration *config = [[VIMSessionConfiguration alloc] init];
     config.clientKey = @"your_client_key";
     config.clientSecret = @"your_client_secret";
-    config.scope = @"your_scope";
+    config.scope = @"your_scope"; // E.g. "private public upload etc"
     config.keychainService = @"your_service"; 
     config.keychainAccessGroup = @"your_access_group"; // Optional
     

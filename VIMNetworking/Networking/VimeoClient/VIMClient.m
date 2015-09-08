@@ -44,7 +44,7 @@ static NSString *const ModelKeyPathData = @"data";
 
 - (instancetype)initWithDefaultBaseURL
 {
-    return [self initWithBaseURL:[NSURL URLWithString:DefaultBaseURL]];
+    return [self initWithBaseURL:[NSURL URLWithString:DefaultBaseURLString]];
 }
 
 - (instancetype)initWithBaseURL:(NSURL *)url

@@ -25,8 +25,9 @@
 //
 
 #import "VIMHeaderProvider.h"
+#import "VIMSessionConfiguration.h"
+#import <UIKit/UIKit.h>
 
-NSString *const DefaultAPIVersionString = @"3.2";
 NSString *const AcceptHeaderKey = @"Accept";
 NSString *const UserAgentHeaderKey = @"User-Agent";
 NSString *const AuthorizationHeaderKey = @"Authorization";

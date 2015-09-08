@@ -27,8 +27,8 @@
 #import "VIMSessionConfiguration.h"
 #import <Foundation/Foundation.h>
 
-NSString * const DefaultBaseURL = @"https://api.vimeo.com/";
-static NSString * const DefaultAPIVersionString = @"3.2";
+NSString *const DefaultBaseURLString = @"https://api.vimeo.com/";
+NSString *const DefaultAPIVersionString = @"3.2";
 
 @implementation VIMSessionConfiguration
 
@@ -38,7 +38,7 @@ static NSString * const DefaultAPIVersionString = @"3.2";
     if (self)
     {
         _APIVersionString = DefaultAPIVersionString;
-        _baseURLString = DefaultBaseURL;
+        _baseURLString = DefaultBaseURLString;
     }
     
     return self;
