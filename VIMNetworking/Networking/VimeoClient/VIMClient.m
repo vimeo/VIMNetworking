@@ -122,14 +122,12 @@ static NSString *const ModelKeyPathData = @"data";
     return [self requestDescriptor:descriptor completionBlock:completionBlock];
 }
 
-- (id<VIMRequestToken>)updateUserWithURI:(NSString *)URI username:(NSString *)username location:(NSString *)location completionBlock:(VIMRequestCompletionBlock)completionBlock
+- (id<VIMRequestToken>)updateUserWithURI:(nonnull NSString *)URI name:(nullable NSString *)name location:(nullable NSString *)location bio:(nullable NSString *)bio completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 {
-    NSParameterAssert(username != nil && location != nil);
-    
     VIMRequestDescriptor *descriptor = [[VIMRequestDescriptor alloc] init];
     descriptor.urlPath = URI;
     descriptor.HTTPMethod = HTTPMethodPATCH;
-    descriptor.parameters = @{@"name" : username, @"location" : location};
+    descriptor.parameters = @{@"name" : name, @"location" : location, @"bio" : bio};
     descriptor.shouldRetryOnFailure = YES;
     
     return [self requestDescriptor:descriptor completionBlock:completionBlock];

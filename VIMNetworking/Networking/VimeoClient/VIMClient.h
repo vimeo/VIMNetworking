@@ -43,7 +43,7 @@
 
 - (nullable id<VIMRequestToken>)usersWithURI:(nonnull NSString *)URI completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 
-- (nullable id<VIMRequestToken>)updateUserWithURI:(nonnull NSString *)URI username:(nonnull NSString *)username location:(nonnull NSString *)location completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
+- (nullable id<VIMRequestToken>)updateUserWithURI:(nonnull NSString *)URI name:(nullable NSString *)name location:(nullable NSString *)location bio:(nullable NSString *)bio completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 
 - (nullable id<VIMRequestToken>)followUserWithURI:(nonnull NSString *)URI completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 
@@ -81,7 +81,7 @@
 
 - (nullable id<VIMRequestToken>)searchVideosWithQuery:(nonnull NSString *)query completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 
-- (nullable id<VIMRequestToken>)searchVideosWithQuery:(nonnull NSString *)query filter:(nullable nonnull NSString *)filter completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
+- (nullable id<VIMRequestToken>)searchVideosWithQuery:(nonnull NSString *)query filter:(nullable NSString *)filter completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 
 #pragma mark - Comments
 
