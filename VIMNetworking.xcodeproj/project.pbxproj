@@ -25,7 +25,6 @@
 		50E508E91B1E327E00DF1F7A /* VIMVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E508621B1E327D00DF1F7A /* VIMVideo.m */; };
 		50E508EA1B1E327E00DF1F7A /* VIMVideoFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E508641B1E327D00DF1F7A /* VIMVideoFile.m */; };
 		50E508EE1B1E327E00DF1F7A /* VIMAccountStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E5086E1B1E327D00DF1F7A /* VIMAccountStore.m */; };
-		50E508F01B1E327E00DF1F7A /* NSError+BaseError.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E508751B1E327D00DF1F7A /* NSError+BaseError.m */; };
 		50E508F11B1E327E00DF1F7A /* VIMReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E508781B1E327D00DF1F7A /* VIMReachability.m */; };
 		50E508F21B1E327E00DF1F7A /* AFHTTPSessionManager+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E5087C1B1E327D00DF1F7A /* AFHTTPSessionManager+Extensions.m */; };
 		50E508F31B1E327E00DF1F7A /* AVAsset+Filesize.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E5087E1B1E327D00DF1F7A /* AVAsset+Filesize.m */; };
@@ -139,8 +138,6 @@
 		50E508641B1E327D00DF1F7A /* VIMVideoFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMVideoFile.m; sourceTree = "<group>"; };
 		50E5086D1B1E327D00DF1F7A /* VIMAccountStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMAccountStore.h; sourceTree = "<group>"; };
 		50E5086E1B1E327D00DF1F7A /* VIMAccountStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMAccountStore.m; sourceTree = "<group>"; };
-		50E508741B1E327D00DF1F7A /* NSError+BaseError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+BaseError.h"; sourceTree = "<group>"; };
-		50E508751B1E327D00DF1F7A /* NSError+BaseError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+BaseError.m"; sourceTree = "<group>"; };
 		50E508771B1E327D00DF1F7A /* VIMReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMReachability.h; sourceTree = "<group>"; };
 		50E508781B1E327D00DF1F7A /* VIMReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMReachability.m; sourceTree = "<group>"; };
 		50E5087B1B1E327D00DF1F7A /* AFHTTPSessionManager+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AFHTTPSessionManager+Extensions.h"; sourceTree = "<group>"; };
@@ -431,8 +428,6 @@
 		50E508731B1E327D00DF1F7A /* ErrorReporting */ = {
 			isa = PBXGroup;
 			children = (
-				50E508741B1E327D00DF1F7A /* NSError+BaseError.h */,
-				50E508751B1E327D00DF1F7A /* NSError+BaseError.m */,
 				50FD88081B39C2A10064EC16 /* NSError+VIMNetworking.h */,
 				50FD88091B39C2A10064EC16 /* NSError+VIMNetworking.m */,
 			);
@@ -812,7 +807,6 @@
 				50E509141B1E327E00DF1F7A /* VIMAPIConfiguration.m in Sources */,
 				50E509061B1E327E00DF1F7A /* VIMTaskQueueDebugger.m in Sources */,
 				50E509091B1E327E00DF1F7A /* VIMRequestOperation.m in Sources */,
-				50E508F01B1E327E00DF1F7A /* NSError+BaseError.m in Sources */,
 				AFFA20411B34CA0F001211E2 /* VIMSession.m in Sources */,
 				50E508F11B1E327E00DF1F7A /* VIMReachability.m in Sources */,
 				50E5090A1B1E327E00DF1F7A /* VIMRequestOperationManager.m in Sources */,
