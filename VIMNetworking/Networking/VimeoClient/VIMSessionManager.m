@@ -25,7 +25,6 @@
 //
 
 #import "VIMSessionManager.h"
-#import "NSURLSessionConfiguration+Extensions.h"
 #import "VIMJSONResponseSerializer.h"
 #import "VIMJSONRequestSerializer.h"
 #import "VIMSession.h"
@@ -52,7 +51,7 @@
 
 - (instancetype)initWithBackgroundSessionID:(NSString *)sessionID sharedContainerID:(NSString *)sharedContainerID
 {
-    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration backgroundSessionConfigurationWithID:sessionID sharedContainerID:sharedContainerID];
+    NSURLSessionConfiguration *configuration = [VIMSessionManager backgroundSessionConfigurationWithID:sessionID sharedContainerID:sharedContainerID];
     
     return [self initWithSessionConfiguration:configuration];
 }
@@ -79,6 +78,36 @@
 {
     self.requestSerializer = [[VIMJSONRequestSerializer alloc] initWithAPIVersionString:[VIMSession sharedSession].configuration.APIVersionString];
     self.responseSerializer = [VIMJSONResponseSerializer serializer];
+}
+
++ (NSURLSessionConfiguration *)backgroundSessionConfigurationWithID:(NSString *)sessionID sharedContainerID:(NSString *)sharedContainerID
+{
+    NSAssert(sessionID, @"Invalid session ID");
+    
+    NSURLSessionConfiguration *sessionConfiguration = nil;
+#if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_7_1
+    if ([NSURLSessionConfiguration respondsToSelector:@selector(backgroundSessionConfigurationWithIdentifier:)])
+    {
+        sessionConfiguration = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:sessionID];
+    }
+    else
+    {
+        sessionConfiguration = [NSURLSessionConfiguration backgroundSessionConfiguration:sessionID];
+    }
+    
+    if (sharedContainerID)
+    {
+        if([sessionConfiguration respondsToSelector:@selector(setSharedContainerIdentifier:)])
+        {
+            [sessionConfiguration setSharedContainerIdentifier:sharedContainerID];
+        }
+    }
+    
+#else
+    sessionConfiguration = [NSURLSessionConfiguration backgroundSessionConfiguration:sessionID];
+#endif
+    
+    return sessionConfiguration;
 }
 
 #pragma mark - VIMRequestSerializerDelegate

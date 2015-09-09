@@ -29,7 +29,7 @@
 
 @interface VIMJSONRequestSerializer : AFJSONRequestSerializer
 
-@property (nonatomic, weak) id<VIMRequestSerializerDelegate> delegate;
+@property (nonatomic, weak, nullable) id<VIMRequestSerializerDelegate> delegate;
 
 - (nonnull instancetype)initWithAPIVersionString:(nonnull NSString *)APIVersionString;
 
