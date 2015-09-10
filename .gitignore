@@ -1,18 +1,48 @@
-# CocoaPods
-#
-# We recommend against adding the Pods directory to your .gitignore. However
-# you should judge for yourself, the pros and cons are mentioned at:
-# http://guides.cocoapods.org/using/using-cocoapods.html#should-i-ignore-the-pods-directory-in-source-control?
-#
+## Build generated
+build/
+DerivedData
 
-Pods/
+## Various settings
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata
+
+## Other
+*.xccheckout
+*.moved-aside
+*.xcuserstate
+*.xcscmblueprint
+
+## Obj-C/Swift specific
+*.hmap
+*.ipa
+
+*.xcuserstate
+
+xcuserdata/
+
+*.xccheckout
+
+
+# Xcode (below added 11/21/2013 ahanssen)
+
 .DS_Store
-VIMNetworking.xcodeproj/xcuserdata/
-VIMNetworking.xcodeproj/project.xcworkspace/xcuserdata/fredieus.xcuserdatad/UserInterfaceState.xcuserstate
-VIMNetworking.xcodeproj/project.xcworkspace/xcshareddata/VIMNetworking.xccheckout
-.LSOverride
+*.DS_Store
 
-*.xcuserstate
+*.xcworkspace
+!default.xcworkspace
+xcuserdata
+*.moved-aside
+.idea/
+*.LSOverride
 
-*.xcuserstate
+# Cocoapods
+
+Pods
 
