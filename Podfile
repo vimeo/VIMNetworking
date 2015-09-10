@@ -7,6 +7,7 @@ target 'VIMNetworking' do
 end
 
 target 'VIMNetworkingTests' do
-
+    pod 'VIMObjectMapper', '5.5.1'
+    pod 'AFNetworking', '2.5.4'
 end
 
