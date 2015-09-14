@@ -180,7 +180,7 @@ static NSString *const ModelKeyPathData = @"data";
             
             __strong typeof(self) strongSelf = weakSelf;
             
-            if (strongSelf == nil)
+            if (strongSelf == nil || !URL || !URI)
             {
                 return;
             }
