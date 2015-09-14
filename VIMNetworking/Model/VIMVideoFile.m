@@ -110,9 +110,14 @@ NSString *const VIMVideoFileQualityMobile = @"mobile";
 
 - (BOOL)isExpired
 {
+    if (!self.expirationDate) // This will yield NSOrderedSame (weird), so adding an explicit check here [AH] 9/14/2015
+    {
+        return NO;
+    }
+    
     NSComparisonResult result = [[NSDate date] compare:self.expirationDate];
     
-    return (result == NSOrderedDescending || result == NSOrderedSame);
+    return (result == NSOrderedDescending);
 }
 
 @end
