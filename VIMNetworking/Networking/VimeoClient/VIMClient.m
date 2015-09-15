@@ -241,12 +241,12 @@ static NSString *const ModelKeyPathData = @"data";
                       [strongSelf activatePictureWithURI:(NSString *) URI completionBlock:^(VIMServerResponse * _Nullable response, NSError * _Nullable error)
                        {
                            dispatch_async(dispatch_get_main_queue(), ^
-                                          {
-                                              if (completionBlock)
-                                              {
-                                                  completionBlock(response, error);
-                                              }
-                                          });
+                           {
+                               if (completionBlock)
+                               {
+                                   completionBlock(response, error);
+                               }
+                           });
                        }];
                   }
               }];
