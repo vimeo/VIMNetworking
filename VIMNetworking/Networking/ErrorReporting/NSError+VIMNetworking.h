@@ -60,7 +60,7 @@ typedef NS_ENUM(NSInteger, HTTPErrorCode)
 };
 
 extern NSString * const __nonnull VimeoErrorCodeHeaderKey;
-extern NSString * const __nonnull VimeoErrorCodeKey;
+extern NSString * const __nonnull VimeoErrorCodeKeyLegacy;
 
 @interface NSError (VIMNetworking)
 
@@ -79,10 +79,13 @@ extern NSString * const __nonnull VimeoErrorCodeKey;
 #pragma mark - Helpers
 
 - (NSInteger)statusCode;
-- (NSInteger)serverErrorCode;
-- (nonnull NSArray *)serverInvalidParametersErrorCodes;
-- (NSInteger)serverInvalidParametersFirstErrorCode;
-- (nullable NSString *)serverInvalidParametersErrorCodesString;
 - (nullable NSDictionary *)errorResponseBodyJSON;
+
+- (NSInteger)vimeoErrorCode;
+- (nonnull NSArray *)vimeoInvalidParametersErrorCodes;
+- (NSInteger)vimeoInvalidParametersFirstErrorCode;
+- (nullable NSString *)vimeoInvalidParametersErrorCodesString;
+- (nullable NSString *)vimeoUserMessage;
+- (nullable NSString *)vimeoDeveloperMessage;
 
 @end
