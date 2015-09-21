@@ -138,12 +138,12 @@ static NSString *const ModelKeyPathData = @"data";
     
     if (location && [location length])
     {
-        [parameters setObject:name forKey:@"location"];
+        [parameters setObject:location forKey:@"location"];
     }
     
     if (bio && [bio length])
     {
-        [parameters setObject:name forKey:@"bio"];
+        [parameters setObject:bio forKey:@"bio"];
     }
     
     descriptor.parameters = parameters;
