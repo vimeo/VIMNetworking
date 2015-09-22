@@ -122,12 +122,12 @@ static NSString *const ModelKeyPathData = @"data";
     return [self requestDescriptor:descriptor completionBlock:completionBlock];
 }
 
-- (id<VIMRequestToken>)updateUserWithURI:(nonnull NSString *)URI name:(nullable NSString *)name location:(nullable NSString *)location bio:(nullable NSString *)bio completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
+- (id<VIMRequestToken>)updateUserWithURI:(NSString *)URI name:(NSString *)name location:(NSString *)location bio:(NSString *)bio completionBlock:(VIMRequestCompletionBlock)completionBlock;
 {
     VIMRequestDescriptor *descriptor = [[VIMRequestDescriptor alloc] init];
     descriptor.urlPath = URI;
     descriptor.HTTPMethod = HTTPMethodPATCH;
-    descriptor.shouldRetryOnFailure = YES;
+    descriptor.shouldRetryOnFailure = NO;
     
     NSMutableDictionary *parameters = [NSMutableDictionary new];
     
@@ -176,132 +176,35 @@ static NSString *const ModelKeyPathData = @"data";
     return [self requestDescriptor:descriptor completionBlock:completionBlock];
 }
 
-#pragma mark - User Pictures
+#pragma mark - Pictures
 
-- (void)updateUserWithURI:(nonnull NSString *)URI picture:(nonnull UIImage *)picture completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock
-{
-    __weak typeof(self) weakSelf = self;
-    
-    [self createPictureResourceForUserWithURI:URI completionBlock:^(VIMServerResponse * _Nullable response, NSError * _Nullable error)
-     {
-         __strong typeof(self) strongSelf = weakSelf;
-         
-         if (strongSelf == nil)
-         {
-             return;
-         }
-         
-         if (error)
-         {
-             if (completionBlock)
-             {
-                 completionBlock(response, error);
-             }
-         }
-         else
-         {
-             NSDictionary *result = response.result && [response.result isKindOfClass:[NSDictionary class]] ? response.result : nil;
-             
-             NSObject *URLObject = [result objectForKey:@"link"];
-             NSObject *URIObject = [result objectForKey:@"uri"];
-             
-             NSString *URL = [URLObject isKindOfClass:[NSString class]] ? (NSString *) URLObject : nil;
-             NSString *URI = [URIObject isKindOfClass:[NSString class]] ? (NSString *) URIObject : nil;
-             
-             if (!URL || !URI)
-             {
-                 if (completionBlock)
-                 {
-                     NSError *error = [NSError errorWithDomain:kVimeoClientErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"Invalid parameters"}];
-                     
-                     completionBlock(response, error);
-                 }
-                 
-                 return;
-             }
-             
-             [strongSelf uploadImage:picture toRemoteURL:(NSString *) URL completionBlock:^(VIMServerResponse * _Nullable response, NSError * _Nullable error)
-              {
-                  __strong typeof(self) strongSelf = weakSelf;
-                  
-                  if (strongSelf == nil)
-                  {
-                      return;
-                  }
-                  
-                  if (error)
-                  {
-                      if (completionBlock)
-                      {
-                          completionBlock(response, error);
-                      }
-                  }
-                  else
-                  {
-                      [strongSelf activatePictureWithURI:(NSString *) URI completionBlock:^(VIMServerResponse * _Nullable response, NSError * _Nullable error)
-                       {
-                           dispatch_async(dispatch_get_main_queue(), ^{
-                               
-                               if (completionBlock)
-                               {
-                                   completionBlock(response, error);
-                               }
-                           });
-                       }];
-                  }
-              }];
-         }
-     }];
-}
-
-- (id<VIMRequestToken>)createPictureResourceForUserWithURI:(nonnull NSString *)URI completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock
+- (id<VIMRequestToken>)createPictureResourceForUserWithURI:(NSString *)URI completionBlock:(VIMRequestCompletionBlock)completionBlock
 {
     VIMRequestDescriptor *descriptor = [[VIMRequestDescriptor alloc] init];
     descriptor.urlPath = [URI stringByAppendingString:@"/pictures"];
     descriptor.HTTPMethod = HTTPMethodPOST;
+    descriptor.shouldRetryOnFailure = NO;
+    
+    return [self requestDescriptor:descriptor completionBlock:completionBlock];
+}
+
+- (id<VIMRequestToken>)deletePictureResourceWithURI:(NSString *)URI completionBlock:(VIMRequestCompletionBlock)completionBlock
+{
+    VIMRequestDescriptor *descriptor = [[VIMRequestDescriptor alloc] init];
+    descriptor.urlPath = URI;
+    descriptor.HTTPMethod = HTTPMethodDELETE;
     descriptor.shouldRetryOnFailure = YES;
     
     return [self requestDescriptor:descriptor completionBlock:completionBlock];
 }
 
-- (void)uploadImage:(UIImage *)image toRemoteURL:(NSString *)remoteURL completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock
-{
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSString* path = [documentsDirectory stringByAppendingPathComponent:[[NSProcessInfo processInfo] globallyUniqueString]];
-    NSData* data = UIImagePNGRepresentation(image);
-    [data writeToFile:path atomically:YES];
-    
-    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithSessionConfiguration:configuration];
-    manager.responseSerializer = [AFJSONResponseSerializer serializer];
-    
-    NSURL *URL = [NSURL URLWithString:remoteURL];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL];
-    [request setHTTPMethod:HTTPMethodPUT];
-    
-    [[manager uploadTaskWithRequest:request fromFile:[NSURL URLWithString:path] progress:nil completionHandler:^(NSURLResponse *response, id responseObject, NSError *error)
-      {
-          if (completionBlock)
-          {
-              dispatch_async(dispatch_get_main_queue(), ^{
-                  
-                  completionBlock(nil, error);
-              });
-          }
-          
-          [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
-          
-      }] resume];
-}
-
-- (id<VIMRequestToken>)activatePictureWithURI:(nonnull NSString *)URI completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock
+- (id<VIMRequestToken>)activatePictureResourceWithURI:(NSString *)URI completionBlock:(VIMRequestCompletionBlock)completionBlock
 {
     VIMRequestDescriptor *descriptor = [[VIMRequestDescriptor alloc] init];
     descriptor.urlPath = URI;
     descriptor.HTTPMethod = HTTPMethodPATCH;
     descriptor.parameters = @{@"active" : @"true"};
-    descriptor.shouldRetryOnFailure = YES;
+    descriptor.shouldRetryOnFailure = NO;
     
     return [self requestDescriptor:descriptor completionBlock:completionBlock];
 }

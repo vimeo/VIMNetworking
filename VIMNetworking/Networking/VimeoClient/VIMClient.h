@@ -53,9 +53,13 @@
 
 - (nullable id<VIMRequestToken>)toggleFollowURI:(nonnull NSString *)URI newValue:(BOOL)newValue completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 
-#pragma mark - User Avatars
+#pragma mark - Pictures
 
-- (void)updateUserWithURI:(nonnull NSString *)URI picture:(nonnull UIImage *)picture completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
+- (nullable id<VIMRequestToken>)createPictureResourceForUserWithURI:(nonnull NSString *)URI completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
+
+- (nullable id<VIMRequestToken>)deletePictureResourceWithURI:(nonnull NSString *)URI completionBlock:(nullable VIMRequestCompletionBlock)completionBlock;
+
+- (nullable id<VIMRequestToken>)activatePictureResourceWithURI:(nonnull NSString *)URI completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 
 #pragma mark - Videos
 
