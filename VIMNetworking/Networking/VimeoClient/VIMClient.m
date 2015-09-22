@@ -130,21 +130,10 @@ static NSString *const ModelKeyPathData = @"data";
     descriptor.shouldRetryOnFailure = NO;
     
     NSMutableDictionary *parameters = [NSMutableDictionary new];
-    
-    if (name && [name length])
-    {
-        [parameters setObject:name forKey:@"name"];
-    }
-    
-    if (location && [location length])
-    {
-        [parameters setObject:location forKey:@"location"];
-    }
-    
-    if (bio && [bio length])
-    {
-        [parameters setObject:bio forKey:@"bio"];
-    }
+
+    [parameters setObject:name ? name : [NSNull null]  forKey:@"name"];
+    [parameters setObject:location ? location : [NSNull null]  forKey:@"location"];
+    [parameters setObject:bio ? bio : [NSNull null] forKey:@"bio"];
     
     descriptor.parameters = parameters;
     
