@@ -70,7 +70,7 @@ static NSString *const ModelKeyPathData = @"data";
         {
             return;
         }
-        
+
         if (error && descriptor.shouldRetryOnFailure)
         {
             if ([strongSelf.retryManager scheduleRetryIfNecessaryForError:error requestDescriptor:descriptor])
@@ -370,7 +370,7 @@ static NSString *const ModelKeyPathData = @"data";
     VIMRequestDescriptor *descriptor = [[VIMRequestDescriptor alloc] init];
     descriptor.urlPath = @"/tokens";
     descriptor.HTTPMethod = HTTPMethodDELETE;
-    //    TODO: descriptor.shouldRetryOnFailure = YES;
+//    TODO: descriptor.shouldRetryOnFailure = YES;
     
     return [self requestDescriptor:descriptor completionBlock:completionBlock];
 }
