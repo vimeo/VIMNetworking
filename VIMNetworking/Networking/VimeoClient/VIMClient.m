@@ -180,6 +180,8 @@ static NSString *const ModelKeyPathData = @"data";
 
 - (id<VIMRequestToken>)createPictureResourceForUserWithURI:(NSString *)URI completionBlock:(VIMRequestCompletionBlock)completionBlock
 {
+    NSParameterAssert(URI != nil);
+
     VIMRequestDescriptor *descriptor = [[VIMRequestDescriptor alloc] init];
     descriptor.urlPath = [URI stringByAppendingString:@"/pictures"];
     descriptor.HTTPMethod = HTTPMethodPOST;
@@ -190,6 +192,8 @@ static NSString *const ModelKeyPathData = @"data";
 
 - (id<VIMRequestToken>)deletePictureResourceWithURI:(NSString *)URI completionBlock:(VIMRequestCompletionBlock)completionBlock
 {
+    NSParameterAssert(URI != nil);
+
     VIMRequestDescriptor *descriptor = [[VIMRequestDescriptor alloc] init];
     descriptor.urlPath = URI;
     descriptor.HTTPMethod = HTTPMethodDELETE;
@@ -200,6 +204,8 @@ static NSString *const ModelKeyPathData = @"data";
 
 - (id<VIMRequestToken>)activatePictureResourceWithURI:(NSString *)URI completionBlock:(VIMRequestCompletionBlock)completionBlock
 {
+    NSParameterAssert(URI != nil);
+
     VIMRequestDescriptor *descriptor = [[VIMRequestDescriptor alloc] init];
     descriptor.urlPath = URI;
     descriptor.HTTPMethod = HTTPMethodPATCH;
