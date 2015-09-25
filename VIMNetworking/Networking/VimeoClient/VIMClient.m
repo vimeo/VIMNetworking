@@ -122,15 +122,20 @@ static NSString *const ModelKeyPathData = @"data";
     return [self requestDescriptor:descriptor completionBlock:completionBlock];
 }
 
-- (id<VIMRequestToken>)updateUserWithURI:(NSString *)URI username:(NSString *)username location:(NSString *)location completionBlock:(VIMRequestCompletionBlock)completionBlock
+- (id<VIMRequestToken>)updateUserWithURI:(NSString *)URI name:(NSString *)name location:(NSString *)location bio:(NSString *)bio completionBlock:(VIMRequestCompletionBlock)completionBlock;
 {
-    NSParameterAssert(username != nil && location != nil);
-    
     VIMRequestDescriptor *descriptor = [[VIMRequestDescriptor alloc] init];
     descriptor.urlPath = URI;
     descriptor.HTTPMethod = HTTPMethodPATCH;
-    descriptor.parameters = @{@"name" : username, @"location" : location};
-    descriptor.shouldRetryOnFailure = YES;
+    descriptor.shouldRetryOnFailure = NO;
+    
+    NSMutableDictionary *parameters = [NSMutableDictionary new];
+
+    [parameters setObject:name ? name : [NSNull null]  forKey:@"name"];
+    [parameters setObject:location ? location : [NSNull null]  forKey:@"location"];
+    [parameters setObject:bio ? bio : [NSNull null] forKey:@"bio"];
+    
+    descriptor.parameters = parameters;
     
     return [self requestDescriptor:descriptor completionBlock:completionBlock];
 }
@@ -156,6 +161,45 @@ static NSString *const ModelKeyPathData = @"data";
     descriptor.urlPath = URI;
     descriptor.HTTPMethod = ( newValue ? HTTPMethodPUT : HTTPMethodDELETE );
     descriptor.shouldRetryOnFailure = YES;
+    
+    return [self requestDescriptor:descriptor completionBlock:completionBlock];
+}
+
+#pragma mark - Pictures
+
+- (id<VIMRequestToken>)createPictureResourceForUserWithURI:(NSString *)URI completionBlock:(VIMRequestCompletionBlock)completionBlock
+{
+    NSParameterAssert(URI != nil);
+
+    VIMRequestDescriptor *descriptor = [[VIMRequestDescriptor alloc] init];
+    descriptor.urlPath = [URI stringByAppendingString:@"/pictures"];
+    descriptor.HTTPMethod = HTTPMethodPOST;
+    descriptor.shouldRetryOnFailure = NO;
+    
+    return [self requestDescriptor:descriptor completionBlock:completionBlock];
+}
+
+- (id<VIMRequestToken>)deletePictureResourceWithURI:(NSString *)URI completionBlock:(VIMRequestCompletionBlock)completionBlock
+{
+    NSParameterAssert(URI != nil);
+
+    VIMRequestDescriptor *descriptor = [[VIMRequestDescriptor alloc] init];
+    descriptor.urlPath = URI;
+    descriptor.HTTPMethod = HTTPMethodDELETE;
+    descriptor.shouldRetryOnFailure = YES;
+    
+    return [self requestDescriptor:descriptor completionBlock:completionBlock];
+}
+
+- (id<VIMRequestToken>)activatePictureResourceWithURI:(NSString *)URI completionBlock:(VIMRequestCompletionBlock)completionBlock
+{
+    NSParameterAssert(URI != nil);
+
+    VIMRequestDescriptor *descriptor = [[VIMRequestDescriptor alloc] init];
+    descriptor.urlPath = URI;
+    descriptor.HTTPMethod = HTTPMethodPATCH;
+    descriptor.parameters = @{@"active" : @"true"};
+    descriptor.shouldRetryOnFailure = NO;
     
     return [self requestDescriptor:descriptor completionBlock:completionBlock];
 }

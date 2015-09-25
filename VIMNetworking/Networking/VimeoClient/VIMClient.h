@@ -43,7 +43,7 @@
 
 - (nullable id<VIMRequestToken>)usersWithURI:(nonnull NSString *)URI completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 
-- (nullable id<VIMRequestToken>)updateUserWithURI:(nonnull NSString *)URI username:(nonnull NSString *)username location:(nonnull NSString *)location completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
+- (nullable id<VIMRequestToken>)updateUserWithURI:(nonnull NSString *)URI name:(nullable NSString *)name location:(nullable NSString *)location bio:(nullable NSString *)bio completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 
 - (nullable id<VIMRequestToken>)followUserWithURI:(nonnull NSString *)URI completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 
@@ -52,6 +52,14 @@
 - (nullable id<VIMRequestToken>)toggleFollowUserWithURI:(nonnull NSString *)URI newValue:(BOOL)newValue completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 
 - (nullable id<VIMRequestToken>)toggleFollowURI:(nonnull NSString *)URI newValue:(BOOL)newValue completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
+
+#pragma mark - Pictures
+
+- (nullable id<VIMRequestToken>)createPictureResourceForUserWithURI:(nonnull NSString *)URI completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
+
+- (nullable id<VIMRequestToken>)deletePictureResourceWithURI:(nonnull NSString *)URI completionBlock:(nullable VIMRequestCompletionBlock)completionBlock;
+
+- (nullable id<VIMRequestToken>)activatePictureResourceWithURI:(nonnull NSString *)URI completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 
 #pragma mark - Videos
 
@@ -81,7 +89,7 @@
 
 - (nullable id<VIMRequestToken>)searchVideosWithQuery:(nonnull NSString *)query completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 
-- (nullable id<VIMRequestToken>)searchVideosWithQuery:(nonnull NSString *)query filter:(nullable nonnull NSString *)filter completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
+- (nullable id<VIMRequestToken>)searchVideosWithQuery:(nonnull NSString *)query filter:(nullable NSString *)filter completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 
 #pragma mark - Comments
 
