@@ -70,6 +70,18 @@ NSString * const VimeoUserMessageKey = @"error";
     return [self vimeoErrorCode] == VIMErrorCodeUploadStorageQuotaExceeded;
 }
 
+- (BOOL)isOfflineError
+{
+    return [[NSSet setWithObjects:
+            @(NSURLErrorTimedOut),
+            @(NSURLErrorCannotFindHost),
+            @(NSURLErrorCannotConnectToHost),
+            @(NSURLErrorDNSLookupFailed),
+            @(NSURLErrorNotConnectedToInternet),
+            @(NSURLErrorNetworkConnectionLost),
+            nil] containsObject:@(self.code)];
+}
+
 #pragma mark - Utilities
 
 - (NSInteger)statusCode

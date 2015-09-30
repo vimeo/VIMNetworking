@@ -31,6 +31,7 @@
 #import "VIMRequestDescriptor.h"
 #import "VIMSession.h"
 #import "VIMCache.h"
+#import "NSError+VIMNetworking.h"
 
 static const NSInteger DefaultNumberOfRetries = 1;
 static const NSInteger DefaultRetryDelayInSeconds = 5;
@@ -42,7 +43,6 @@ static NSString *DescriptorKey = @"descriptor";
 
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, weak) VIMRequestOperationManager *operationManager;
-@property (nonatomic, strong) NSSet *errorCodes;
 @property (nonatomic, assign) NSInteger numberOfRetriesPerRequest;
 
 @property (nonatomic, strong) NSMutableDictionary *descriptorDictionary;
@@ -74,7 +74,6 @@ static NSString *DescriptorKey = @"descriptor";
         
         _queue = dispatch_queue_create("VIMRequestRetryManage_ArchiveQueue", DISPATCH_QUEUE_SERIAL);
         
-        _errorCodes = [VIMRequestRetryManager _defaultErrorCodes];
         _numberOfRetriesPerRequest = DefaultNumberOfRetries;
         
         [self _loadWithCompletionBlock:^{
@@ -109,7 +108,7 @@ static NSString *DescriptorKey = @"descriptor";
     NSHTTPURLResponse *urlResponse = error.userInfo[AFNetworkingOperationFailingURLResponseErrorKey];
     BOOL retryBasedOnStatusCode = (urlResponse && [urlResponse statusCode] >= 500 && [urlResponse statusCode] <= 599);
 
-    if (retryBasedOnStatusCode == NO && ![self.errorCodes containsObject:@(error.code)])
+    if (retryBasedOnStatusCode == NO && ![error isOfflineError])
     {
         return NO;
     }
@@ -268,20 +267,6 @@ static NSString *DescriptorKey = @"descriptor";
         [[VIMSession sharedSession].client.cache setObject:welf.descriptorDictionary forKey:welf.name];
         
     });
-}
-
-#pragma mark - Utilities
-
-+ (NSSet *)_defaultErrorCodes
-{
-    return [NSSet setWithObjects:
-             @(NSURLErrorTimedOut),
-             @(NSURLErrorCannotFindHost),
-             @(NSURLErrorCannotConnectToHost),
-             @(NSURLErrorDNSLookupFailed),
-             @(NSURLErrorNotConnectedToInternet),
-             @(NSURLErrorNetworkConnectionLost),
-             nil];
 }
 
 @end
