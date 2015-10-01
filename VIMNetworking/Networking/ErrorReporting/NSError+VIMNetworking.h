@@ -75,6 +75,7 @@ extern NSString * const __nonnull VimeoErrorCodeKeyLegacy;
 - (BOOL)isUploadQuotaError;
 - (BOOL)isUploadQuotaDailyExceededError;
 - (BOOL)isUploadQuotaStorageExceededError;
+- (BOOL)isOfflineError;
 
 #pragma mark - Helpers
 
