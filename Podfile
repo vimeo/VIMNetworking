@@ -2,12 +2,12 @@
 platform :ios, '7.0'
 
 target 'VIMNetworking' do
-    pod 'VIMObjectMapper', '5.5.1'
-	pod 'AFNetworking', '2.5.4'
+    pod 'VIMObjectMapper', '5.6'
+    pod 'AFNetworking', '2.5.4'
 end
 
 target 'VIMNetworkingTests' do
-    pod 'VIMObjectMapper', '5.5.1'
+    pod 'VIMObjectMapper', '5.6'
     pod 'AFNetworking', '2.5.4'
 end
 
