@@ -41,7 +41,7 @@ Pod::Spec.new do |s|
   # s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
 
   s.subspec 'AFNetworking' do |ss|
-    ss.dependency	'AFNetworking', '~> 2.5.4'
+    ss.dependency	'AFNetworking', '~> 2.6.0'
   end
 
   s.subspec 'VIMObjectMapper' do |ss|

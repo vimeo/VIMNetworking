@@ -73,7 +73,6 @@ NSString *const kVimeoClient_InvalidTokenNotification = @"kVimeoClient_InvalidTo
 #if (defined(ADHOC) || defined(RELEASE))
         self.securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeCertificate];
         self.securityPolicy.allowInvalidCertificates = NO;
-        self.securityPolicy.validatesCertificateChain = NO;
         self.securityPolicy.validatesDomainName = YES;
 #endif
     }
