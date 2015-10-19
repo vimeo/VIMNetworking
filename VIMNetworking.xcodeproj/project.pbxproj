@@ -50,6 +50,7 @@
 		50FD87BC1B3097650064EC16 /* VIMPreference.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FD87BB1B3097650064EC16 /* VIMPreference.m */; };
 		50FD87BF1B3097E80064EC16 /* VIMVideoPreference.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FD87BE1B3097E80064EC16 /* VIMVideoPreference.m */; };
 		50FD880A1B39C2A10064EC16 /* NSError+VIMNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FD88091B39C2A10064EC16 /* NSError+VIMNetworking.m */; };
+		9372C815DAF11C266135F755 /* libPods-VIMNetworkingTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BA2F77C2C762EAAE4439256 /* libPods-VIMNetworkingTests.a */; };
 		AFFA203C1B34C157001211E2 /* VIMAccountNew.m in Sources */ = {isa = PBXBuildFile; fileRef = AFFA20391B34C157001211E2 /* VIMAccountNew.m */; };
 		AFFA20411B34CA0F001211E2 /* VIMSession.m in Sources */ = {isa = PBXBuildFile; fileRef = AFFA20401B34CA0F001211E2 /* VIMSession.m */; };
 		AFFA207A1B3756FF001211E2 /* VIMAuthenticator.m in Sources */ = {isa = PBXBuildFile; fileRef = AFFA20791B3756FF001211E2 /* VIMAuthenticator.m */; };
@@ -83,6 +84,7 @@
 
 /* Begin PBXFileReference section */
 		0C67472B87D151EA8CA452D3 /* libPods-VIMNetworking.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-VIMNetworking.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3F8C1306EC55FA8BA3F099E0 /* Pods-VIMNetworkingTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VIMNetworkingTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-VIMNetworkingTests/Pods-VIMNetworkingTests.release.xcconfig"; sourceTree = "<group>"; };
 		500F46251BA1FDED000EA6B4 /* VIMKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMKeychain.h; sourceTree = "<group>"; };
 		500F46261BA1FDED000EA6B4 /* VIMKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMKeychain.m; sourceTree = "<group>"; };
 		500F46281BA1FE16000EA6B4 /* VIMHeaderProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMHeaderProvider.h; sourceTree = "<group>"; };
@@ -173,6 +175,7 @@
 		50FD87BE1B3097E80064EC16 /* VIMVideoPreference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMVideoPreference.m; sourceTree = "<group>"; };
 		50FD88081B39C2A10064EC16 /* NSError+VIMNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+VIMNetworking.h"; sourceTree = "<group>"; };
 		50FD88091B39C2A10064EC16 /* NSError+VIMNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+VIMNetworking.m"; sourceTree = "<group>"; };
+		7BA2F77C2C762EAAE4439256 /* libPods-VIMNetworkingTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-VIMNetworkingTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		87F4839252229F85024E18ED /* Pods-VIMNetworking.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VIMNetworking.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VIMNetworking/Pods-VIMNetworking.debug.xcconfig"; sourceTree = "<group>"; };
 		9248A53C565F6AEB7FAE4A8D /* Pods-VIMNetworking.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VIMNetworking.release.xcconfig"; path = "Pods/Target Support Files/Pods-VIMNetworking/Pods-VIMNetworking.release.xcconfig"; sourceTree = "<group>"; };
 		AFFA20381B34C157001211E2 /* VIMAccountNew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMAccountNew.h; sourceTree = "<group>"; };
@@ -190,6 +193,7 @@
 		AFFA20931B38A1C8001211E2 /* VIMAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMAccount.m; sourceTree = "<group>"; };
 		AFFA20941B38A1C8001211E2 /* VIMAccountCredential.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMAccountCredential.h; sourceTree = "<group>"; };
 		AFFA20951B38A1C8001211E2 /* VIMAccountCredential.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMAccountCredential.m; sourceTree = "<group>"; };
+		B90DF3D8A1DF1F4C7AD34602 /* Pods-VIMNetworkingTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VIMNetworkingTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VIMNetworkingTests/Pods-VIMNetworkingTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -198,6 +202,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				500F463E1BA1FE61000EA6B4 /* libVIMNetworking.a in Frameworks */,
+				9372C815DAF11C266135F755 /* libPods-VIMNetworkingTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -216,6 +221,7 @@
 			isa = PBXGroup;
 			children = (
 				0C67472B87D151EA8CA452D3 /* libPods-VIMNetworking.a */,
+				7BA2F77C2C762EAAE4439256 /* libPods-VIMNetworkingTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -474,6 +480,8 @@
 			children = (
 				87F4839252229F85024E18ED /* Pods-VIMNetworking.debug.xcconfig */,
 				9248A53C565F6AEB7FAE4A8D /* Pods-VIMNetworking.release.xcconfig */,
+				B90DF3D8A1DF1F4C7AD34602 /* Pods-VIMNetworkingTests.debug.xcconfig */,
+				3F8C1306EC55FA8BA3F099E0 /* Pods-VIMNetworkingTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -485,9 +493,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 500F46411BA1FE61000EA6B4 /* Build configuration list for PBXNativeTarget "VIMNetworkingTests" */;
 			buildPhases = (
+				C7218ADE61B10EE104AFCBC9 /* Check Pods Manifest.lock */,
 				500F46351BA1FE61000EA6B4 /* Sources */,
 				500F46361BA1FE61000EA6B4 /* Frameworks */,
 				500F46371BA1FE61000EA6B4 /* Resources */,
+				29512812FEC0B6BAE4CD6A95 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -564,6 +574,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		29512812FEC0B6BAE4CD6A95 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VIMNetworkingTests/Pods-VIMNetworkingTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		53198DA07CAE4A25126AF4B7 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -592,6 +617,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VIMNetworking/Pods-VIMNetworking-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C7218ADE61B10EE104AFCBC9 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -672,6 +712,7 @@
 /* Begin XCBuildConfiguration section */
 		500F46421BA1FE61000EA6B4 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B90DF3D8A1DF1F4C7AD34602 /* Pods-VIMNetworkingTests.debug.xcconfig */;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_TESTABILITY = YES;
@@ -685,6 +726,7 @@
 		};
 		500F46431BA1FE61000EA6B4 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3F8C1306EC55FA8BA3F099E0 /* Pods-VIMNetworkingTests.release.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = VIMNetworkingTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -810,6 +852,7 @@
 				500F46431BA1FE61000EA6B4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		50E508221B1E325600DF1F7A /* Build configuration list for PBXProject "VIMNetworking" */ = {
 			isa = XCConfigurationList;
