@@ -1,13 +1,15 @@
-# Uncomment this line to define a global platform for your project
 platform :ios, '7.0'
 
-target 'VIMNetworking' do
+def shared_pods
     pod 'VIMObjectMapper', '5.6'
     pod 'AFNetworking', ‘2.6.1’
 end
 
+target 'VIMNetworking' do
+    shared_pods
+end
+
 target 'VIMNetworkingTests' do
-    pod 'VIMObjectMapper', '5.6'
-    pod 'AFNetworking', ‘2.6.1’
+    shared_pods
 end
 

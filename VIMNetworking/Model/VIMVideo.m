@@ -78,13 +78,6 @@ NSString *VIMContentRating_Safe = @"safe";
     return [self.interactions objectForKey:name];
 }
 
-- (NSDateFormatter *)dateFormatter
-{
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-	[dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZZ"];
-    return dateFormatter;
-}
-
 #pragma mark - VIMMappable
 
 - (NSDictionary *)getObjectMapping
