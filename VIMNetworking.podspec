@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
 
   s.homepage     = "https://github.com/vimeo/VIMNetworking"
   s.license      = "MIT"
-  #s.license      = { :type => "MIT", :file => "LICENSE.md" }
+  s.license      = { :type => "MIT", :file => "LICENSE.md" }
 
   s.authors            = { "Alfie Hanssen" => "alfiehanssen@gmail.com",
                             "Rob Huebner" => "robh@vimeo.com",
@@ -30,7 +30,7 @@ Pod::Spec.new do |s|
   s.requires_arc = true
 
   s.subspec 'AFNetworking' do |ss|
-    ss.dependency	'AFNetworking', '~> 2.6.1’
+    ss.dependency	'AFNetworking', '~> 2.6.1'
   end
 
   s.subspec 'VIMObjectMapper' do |ss|
