@@ -57,7 +57,6 @@
 		AFFA207D1B37570F001211E2 /* VIMClient.m in Sources */ = {isa = PBXBuildFile; fileRef = AFFA207C1B37570F001211E2 /* VIMClient.m */; };
 		AFFA20961B38A1C8001211E2 /* VIMAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = AFFA20931B38A1C8001211E2 /* VIMAccount.m */; };
 		AFFA20971B38A1C8001211E2 /* VIMAccountCredential.m in Sources */ = {isa = PBXBuildFile; fileRef = AFFA20951B38A1C8001211E2 /* VIMAccountCredential.m */; };
-		BED7FA6074BBB425AFD60825 /* libPods-VIMNetworkingTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F870DD8C61F2658DA54E3513 /* libPods-VIMNetworkingTests.a */; };
 		DC16850E4F6C78F94A55B118 /* libPods-VIMNetworking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C67472B87D151EA8CA452D3 /* libPods-VIMNetworking.a */; };
 /* End PBXBuildFile section */
 
@@ -179,7 +178,6 @@
 		7BA2F77C2C762EAAE4439256 /* libPods-VIMNetworkingTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-VIMNetworkingTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		87F4839252229F85024E18ED /* Pods-VIMNetworking.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VIMNetworking.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VIMNetworking/Pods-VIMNetworking.debug.xcconfig"; sourceTree = "<group>"; };
 		9248A53C565F6AEB7FAE4A8D /* Pods-VIMNetworking.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VIMNetworking.release.xcconfig"; path = "Pods/Target Support Files/Pods-VIMNetworking/Pods-VIMNetworking.release.xcconfig"; sourceTree = "<group>"; };
-		A303E178A1043F1E62F67EF7 /* Pods-VIMNetworkingTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VIMNetworkingTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-VIMNetworkingTests/Pods-VIMNetworkingTests.release.xcconfig"; sourceTree = "<group>"; };
 		AFFA20381B34C157001211E2 /* VIMAccountNew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMAccountNew.h; sourceTree = "<group>"; };
 		AFFA20391B34C157001211E2 /* VIMAccountNew.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMAccountNew.m; sourceTree = "<group>"; };
 		AFFA203F1B34CA0F001211E2 /* VIMSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMSession.h; sourceTree = "<group>"; };
@@ -500,6 +498,7 @@
 				500F46361BA1FE61000EA6B4 /* Frameworks */,
 				500F46371BA1FE61000EA6B4 /* Resources */,
 				29512812FEC0B6BAE4CD6A95 /* Copy Pods Resources */,
+				A2DE2CB7D05992FA9152B2DC /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -606,21 +605,6 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		6DD9C008809436278E35BC16 /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VIMNetworkingTests/Pods-VIMNetworkingTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		94CDBC169B9B49CD3D8EFE4E /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -634,6 +618,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VIMNetworking/Pods-VIMNetworking-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A2DE2CB7D05992FA9152B2DC /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VIMNetworkingTests/Pods-VIMNetworkingTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C7218ADE61B10EE104AFCBC9 /* Check Pods Manifest.lock */ = {
