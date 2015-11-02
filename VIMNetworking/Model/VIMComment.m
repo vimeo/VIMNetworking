@@ -63,9 +63,9 @@
 
 - (void)didFinishMapping
 {
-    if ([self.dateCreated isKindOfClass:[NSString class]])
+    if ([self.createdOn isKindOfClass:[NSString class]])
     {
-        self.dateCreated = [[VIMModelObject dateFormatter] dateFromString:(NSString *)self.dateCreated];
+        self.createdOn = [[VIMModelObject dateFormatter] dateFromString:(NSString *)self.createdOn];
     }
     
     [self parseReplies];
