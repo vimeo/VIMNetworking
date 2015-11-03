@@ -27,10 +27,12 @@
 #import "VIMComment.h"
 #import "VIMUser.h"
 #import "NSString+MD5.h"
+#import "VIMConnection.h"
 
 @interface VIMComment ()
 
 @property (nonatomic, strong) NSMutableDictionary *metadata;
+@property (nonatomic, strong) NSDictionary *connections;
 
 @end
 
@@ -44,12 +46,6 @@
 }
 
 #pragma mark - VIMMappable
-
-- (NSDictionary *)getObjectMapping
-{
-    return @{@"total" : @"totalReplies",
-             @"replies" : @"repliesURI"};
-}
 
 - (Class)getClassForObjectKey:(NSString *)key
 {
@@ -68,33 +64,39 @@
         self.createdOn = [[VIMModelObject dateFormatter] dateFromString:(NSString *)self.createdOn];
     }
     
-    [self parseReplies];
+    [self parseConnections];
 }
 
-- (void)parseReplies
+#pragma mark - Parsing Helpers
+
+- (void)parseConnections
 {
-    if (self.metadata)
+    NSMutableDictionary *connections = [NSMutableDictionary dictionary];
+    
+    NSDictionary *dict = [self.metadata valueForKey:@"connections"];
+    
+    if ([dict isKindOfClass:[NSDictionary class]])
     {
-        NSDictionary *connections = self.metadata[@"connections"];
-        if (connections && [connections isKindOfClass:[NSDictionary class]])
+        for (NSString *key in [dict allKeys])
         {
-            NSDictionary *replies = connections[@"replies"];
-            if (replies && [replies isKindOfClass:[NSDictionary class]])
+            id value = [dict valueForKey:key];
+            
+            if ([value isKindOfClass:[NSDictionary class]])
             {
-                self.totalReplies = replies[@"total"];
-                if (![self.totalReplies isKindOfClass:[NSNumber class]])
-                {
-                    self.totalReplies = @(0);
-                }
-                
-                self.repliesURI = replies[@"uri"];
-                if (![self.repliesURI isKindOfClass:[NSString class]])
-                {
-                    self.repliesURI = nil;
-                }
+                VIMConnection *connection = [[VIMConnection alloc] initWithKeyValueDictionary:value];
+                [connections setObject:connection forKey:key];
             }
         }
     }
+    
+    self.connections = connections;
+}
+
+#pragma mark - Public API
+
+- (VIMConnection *)connectionWithName:(NSString *)connectionName
+{
+    return [self.connections objectForKey:connectionName];
 }
 
 @end

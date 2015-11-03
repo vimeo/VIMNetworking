@@ -32,6 +32,7 @@ extern NSString *const __nonnull VIMConnectionNameActivities;
 extern NSString *const __nonnull VIMConnectionNameAlbums;
 extern NSString *const __nonnull VIMConnectionNameChannels;
 extern NSString *const __nonnull VIMConnectionNameComments;
+extern NSString *const __nonnull VIMConnectionNameReplies;
 extern NSString *const __nonnull VIMConnectionNameCovers;
 extern NSString *const __nonnull VIMConnectionNameCredits;
 extern NSString *const __nonnull VIMConnectionNameFeed;
