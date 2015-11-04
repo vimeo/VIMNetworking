@@ -350,6 +350,19 @@ static NSString *const ModelKeyPathData = @"data";
     return [self requestDescriptor:descriptor completionBlock:completionBlock];
 }
 
+- (id<VIMRequestToken>)postReplyWithURI:(NSString *)URI text:(NSString *)text completionBlock:(VIMRequestCompletionBlock)completionBlock
+{
+    NSParameterAssert(text != nil);
+    
+    VIMRequestDescriptor *descriptor = [[VIMRequestDescriptor alloc] init];
+    descriptor.urlPath = URI;
+    descriptor.HTTPMethod = HTTPMethodPOST;
+    descriptor.parameters = @{@"text" : text};
+    descriptor.shouldRetryOnFailure = YES;
+    
+    return [self requestDescriptor:descriptor completionBlock:completionBlock];
+}
+
 - (id<VIMRequestToken>)commentsWithURI:(NSString *)URI completionBlock:(VIMRequestCompletionBlock)completionBlock
 {
     VIMRequestDescriptor *descriptor = [[VIMRequestDescriptor alloc] init];
