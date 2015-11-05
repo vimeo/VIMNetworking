@@ -32,7 +32,7 @@ s.source_files = 'VIMNetworking/VIMNetworking.h', 'VIMNetworking/Networking/**/*
 
   s.subspec 'Cache' do |ss|
     ss.source_files = 'VIMNetworking/**/VIMCache.{h,m}'
-    ss.frameworks = 'Foundation', 'UIKit', 'CommonCrypto'
+    ss.frameworks = 'Foundation', 'UIKit'
   end
 
   s.subspec 'Keychain' do |ss|
