@@ -26,7 +26,6 @@
 
 #import "VIMComment.h"
 #import "VIMUser.h"
-#import "NSString+MD5.h"
 
 @interface VIMComment ()
 
@@ -35,13 +34,6 @@
 @end
 
 @implementation VIMComment
-
-- (NSString *)objectID
-{
-    NSAssert([self.uri length] > 0, @"Object does not have a uri, cannot generate objectID");
-    
-    return [self.uri MD5];
-}
 
 #pragma mark - VIMMappable
 

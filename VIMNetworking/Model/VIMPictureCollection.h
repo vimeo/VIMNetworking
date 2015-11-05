@@ -26,8 +26,6 @@
 
 #import "VIMModelObject.h"
 
-#import <CoreGraphics/CoreGraphics.h>
-
 @class VIMPicture;
 
 @interface VIMPictureCollection : VIMModelObject

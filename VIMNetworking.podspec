@@ -22,28 +22,26 @@ Pod::Spec.new do |s|
   s.social_media_url   = "http://twitter.com/vimeo"
 
   s.platform     = :ios, "7.0"
-
-  s.source       = { :git => "https://github.com/vimeo/VIMNetworking.git", :tag => s.version.to_s }
-  s.source_files  = "VIMNetworking", "VIMNetworking/**/*.{h,m}"
-
-  s.frameworks = "Foundation", "UIKit", "Security", "CoreGraphics", "AVFoundation"
   s.requires_arc = true
+  s.source = { :git => "https://github.com/vimeo/VIMNetworking.git", :tag => s.version.to_s }
+
+s.source_files = 'VIMNetworking/VIMNetworking.h', 'VIMNetworking/Certificate/*.{cer}', 'VIMNetworking/Networking/**/*.{h, m}', 'VIMNetworking/Private/**/*.{h, m}'
+
+#s.source_files  = "VIMNetworking", "VIMNetworking/**/*.{h,m}"
+#s.frameworks = "Foundation", "UIKit", "Security", "CoreGraphics", "AVFoundation"
 
   s.subspec 'Cache' do |ss|
     ss.source_files = 'VIMNetworking/**/VIMCache.{h,m}'
-    ss.public_header_files = 'VIMNetworking/**/VIMCache.h'
     ss.frameworks = 'Foundation', 'UIKit', 'CommonCrypto'
   end
 
   s.subspec 'Keychain' do |ss|
     ss.source_files = 'VIMNetworking/**/VIMKeychain.{h,m}'
-    ss.public_header_files = 'VIMNetworking/**/VIMKeychain.h'
     ss.frameworks = 'Foundation', 'Security'
   end
 
   s.subspec 'Model' do |ss|
     ss.source_files = 'VIMNetworking/Model/*.{h,m}'
-    ss.public_header_files = 'VIMNetworking/Model/*.h'
     ss.frameworks = 'Foundation', 'CoreGraphics'
     ss.dependency	'VIMObjectMapper', '~> 5.6'
   end

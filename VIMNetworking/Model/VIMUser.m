@@ -24,15 +24,15 @@
 //  THE SOFTWARE.
 //
 
+#import "VIMObjectMapper.h"
 #import "VIMUser.h"
 #import "VIMConnection.h"
 #import "VIMInteraction.h"
 #import "VIMPictureCollection.h"
 #import "VIMPicture.h"
-#import "VIMObjectMapper.h"
-#import "NSString+MD5.h"
-#import "VIMSession.h"
 #import "VIMPreference.h"
+
+#import "VIMSession.h"
 
 @interface VIMUser ()
 
@@ -46,13 +46,6 @@
 @end
 
 @implementation VIMUser
-
-- (NSString *)objectID
-{
-    NSAssert([self.uri length] > 0, @"Object does not have a uri, cannot generate objectID");
-    
-    return [self.uri MD5];
-}
 
 #pragma mark - Public API
 

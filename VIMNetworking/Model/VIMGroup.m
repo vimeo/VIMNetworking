@@ -31,7 +31,6 @@
 #import "VIMInteraction.h"
 #import "VIMPictureCollection.h"
 #import "VIMPicture.h"
-#import "NSString+MD5.h"
 #import "VIMPrivacy.h"
 
 @interface VIMGroup ()
@@ -45,13 +44,6 @@
 @implementation VIMGroup
 
 #pragma mark - Public API
-
-- (NSString *)objectID
-{
-    NSAssert([self.uri length] > 0, @"Object does not have a uri, cannot generate objectID");
-    
-    return [self.uri MD5];
-}
 
 - (VIMConnection *)connectionWithName:(NSString *)connectionName
 {

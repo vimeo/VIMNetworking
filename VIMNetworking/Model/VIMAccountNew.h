@@ -24,9 +24,9 @@
 //  THE SOFTWARE.
 //
 
-#import <Foundation/Foundation.h>
 #import "VIMModelObject.h"
-#import "VIMUser.h"
+
+@class VIMUser;
 
 @interface VIMAccountNew : VIMModelObject
 

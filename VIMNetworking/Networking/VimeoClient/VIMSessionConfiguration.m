@@ -27,7 +27,7 @@
 #import "VIMSessionConfiguration.h"
 #import <Foundation/Foundation.h>
 
-NSString *const DefaultBaseURLString = @"https://api.vimeo.com/";
+NSString *const DefaultBaseURLString = @"https://facebook-perms-refactor-api.ci.vimeows.com/";
 NSString *const DefaultAPIVersionString = @"3.2";
 
 @implementation VIMSessionConfiguration

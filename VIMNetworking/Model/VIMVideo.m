@@ -26,6 +26,7 @@
 
 #import "VIMVideo.h"
 
+#import "VIMObjectMapper.h"
 #import "VIMUser.h"
 #import "VIMPicture.h"
 #import "VIMVideoFile.h"
@@ -34,8 +35,6 @@
 #import "VIMPictureCollection.h"
 #import "VIMPrivacy.h"
 #import "VIMAppeal.h"
-#import "NSString+MD5.h"
-#import "VIMObjectMapper.h"
 #import "VIMTag.h"
 #import "VIMVideoLog.h"
 #import "VIMCategory.h"
@@ -58,13 +57,6 @@ NSString *VIMContentRating_Safe = @"safe";
 @implementation VIMVideo
 
 #pragma mark - Accessors
-
-- (NSString *)objectID
-{
-    NSAssert([self.uri length] > 0, @"Object does not have a uri, cannot generate objectID");
-    
-    return [self.uri MD5];
-}
 
 #pragma mark - Public API
 
