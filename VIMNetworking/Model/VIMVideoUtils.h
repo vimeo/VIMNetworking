@@ -1,9 +1,9 @@
 //
-//  VIMPictureCollection.h
+//  VIMVideoUtils.h
 //  VIMNetworking
 //
-//  Created by Whitcomb, Andrew on 9/4/14.
-//  Copyright (c) 2014-2015 Vimeo (https://vimeo.com)
+//  Created by Hanssen, Alfie on 11/5/15.
+//  Copyright © 2015 Vimeo. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,16 +24,16 @@
 //  THE SOFTWARE.
 //
 
-#import "VIMModelObject.h"
+#import <Foundation/Foundation.h>
+#import <CoreGraphics/CoreGraphics.h>
 
-@class VIMPicture;
+@class VIMVideoFile;
+@class VIMVideo;
 
-@interface VIMPictureCollection : VIMModelObject
+@interface VIMVideoUtils : NSObject
 
-@property (strong, nonatomic, nullable) NSString *uri;
-@property (strong, nonatomic, nullable) NSArray *pictures;
-
-- (nullable VIMPicture *)pictureForHeight:(float)height;
-- (nullable VIMPicture *)pictureForWidth:(float)width;
++ (nullable VIMVideoFile *)hlsFileForVideo:(nonnull VIMVideo *)video screenSize:(CGSize)size;
++ (nullable VIMVideoFile *)mp4FileForVideo:(nonnull VIMVideo *)video screenSize:(CGSize)size;
++ (nullable VIMVideoFile *)fallbackFileForVideo:(nonnull VIMVideo *)video file:(nonnull VIMVideoFile *)file screenSize:(CGSize)size;
 
 @end

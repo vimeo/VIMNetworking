@@ -32,8 +32,6 @@
 #import "VIMPicture.h"
 #import "VIMPreference.h"
 
-#import "VIMSession.h"
-
 @interface VIMUser ()
 
 @property (nonatomic, strong) NSDictionary *metadata;
