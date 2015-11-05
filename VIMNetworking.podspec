@@ -25,7 +25,7 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   s.source = { :git => "https://github.com/vimeo/VIMNetworking.git", :tag => s.version.to_s }
 
-s.source_files = 'VIMNetworking/VIMNetworking.h', 'VIMNetworking/Certificate/*.{cer}', 'VIMNetworking/Networking/**/*.{h, m}', 'VIMNetworking/Private/**/*.{h, m}'
+s.source_files = 'VIMNetworking/VIMNetworking.h', 'VIMNetworking/Networking/**/*.{h, m}', 'VIMNetworking/Private/**/*.{h, m}'
 
 #s.source_files  = "VIMNetworking", "VIMNetworking/**/*.{h,m}"
 #s.frameworks = "Foundation", "UIKit", "Security", "CoreGraphics", "AVFoundation"
