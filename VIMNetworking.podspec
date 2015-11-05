@@ -29,6 +29,25 @@ Pod::Spec.new do |s|
   s.frameworks = "Foundation", "UIKit", "Security", "CoreGraphics", "AVFoundation"
   s.requires_arc = true
 
+  s.subspec 'Cache' do |ss|
+    ss.source_files = 'VIMNetworking/**/VIMCache.{h,m}'
+    ss.public_header_files = 'VIMNetworking/**/VIMCache.h'
+    ss.frameworks = 'Foundation', 'UIKit', 'CommonCrypto'
+  end
+
+  s.subspec 'Keychain' do |ss|
+    ss.source_files = 'VIMNetworking/**/VIMKeychain.{h,m}'
+    ss.public_header_files = 'VIMNetworking/**/VIMKeychain.h'
+    ss.frameworks = 'Foundation', 'Security'
+  end
+
+  s.subspec 'Model' do |ss|
+    ss.source_files = 'VIMNetworking/Model/*.{h,m}'
+    ss.public_header_files = 'VIMNetworking/Model/*.h'
+    ss.frameworks = 'Foundation', 'CoreGraphics'
+    ss.dependency	'VIMObjectMapper', '~> 5.6'
+  end
+
   s.subspec 'AFNetworking' do |ss|
     ss.dependency	'AFNetworking', '~> 2.6.1'
   end
