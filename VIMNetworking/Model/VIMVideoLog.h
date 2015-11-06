@@ -24,8 +24,6 @@
 //  THE SOFTWARE.
 //
 
-#import <Foundation/Foundation.h>
-
 #import "VIMModelObject.h"
 
 @interface VIMVideoLog : VIMModelObject
