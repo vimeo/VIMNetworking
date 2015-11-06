@@ -28,11 +28,4 @@
 
 @implementation VIMQuota
 
-#pragma mark - VIMMappable
-
-- (void)didFinishMapping
-{
-    NSLog(@"");
-}
-
 @end

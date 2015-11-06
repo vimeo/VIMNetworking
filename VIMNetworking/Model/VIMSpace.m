@@ -28,11 +28,4 @@
 
 @implementation VIMSpace
 
-#pragma mark - VIMMappable
-
-- (void)didFinishMapping
-{
-    NSLog(@"");
-}
-
 @end

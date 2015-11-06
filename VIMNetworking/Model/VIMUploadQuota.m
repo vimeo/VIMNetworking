@@ -47,9 +47,4 @@
     return nil;
 }
 
-- (void)didFinishMapping
-{
-    NSLog(@"");
-}
-
 @end
