@@ -32,14 +32,14 @@
 
 + (nullable VIMVideoFile *)hlsFileForVideo:(nonnull VIMVideo *)video screenSize:(CGSize)size
 {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"video.quality == %@", VIMVideoFileQualityHLS];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"quality == %@", VIMVideoFileQualityHLS];
     
     return [VIMVideoUtils fileForVideo:video predicate:predicate screenSize:size];
 }
 
 + (nullable VIMVideoFile *)mp4FileForVideo:(nonnull VIMVideo *)video screenSize:(CGSize)size
 {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"video.quality != %@", VIMVideoFileQualityHLS];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"quality != %@", VIMVideoFileQualityHLS];
     
     return [VIMVideoUtils fileForVideo:video predicate:predicate screenSize:size];
 }
@@ -56,7 +56,7 @@
     if ([file.quality isEqualToString:VIMVideoFileQualityHLS])
     {
         // There will only ever be one HSL file so we choose !HLS [AH] 8/31/2015
-        predicate = [NSPredicate predicateWithFormat:@"video.quality != %@", VIMVideoFileQualityHLS];
+        predicate = [NSPredicate predicateWithFormat:@"quality != %@", VIMVideoFileQualityHLS];
     }
     else
     {
@@ -71,7 +71,7 @@
         }
         
         // And we want to exclude the file we're falling back from [AH] 8/31/2015
-        predicate = [NSPredicate predicateWithFormat:@"video.quality != %@ && video.width.integerValue < %i", VIMVideoFileQualityHLS, file.width.integerValue];
+        predicate = [NSPredicate predicateWithFormat:@"quality != %@ && width.integerValue < %i", VIMVideoFileQualityHLS, file.width.integerValue];
     }
     
     return [VIMVideoUtils fileForVideo:video predicate:predicate screenSize:size];
