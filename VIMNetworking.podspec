@@ -25,24 +25,22 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   s.source = { :git => "https://github.com/vimeo/VIMNetworking.git", :tag => s.version.to_s }
 
-s.source_files = 'VIMNetworking/VIMNetworking.h', 'VIMNetworking/Networking/**/*.{h, m}', 'VIMNetworking/Private/**/*.{h, m}'
-
-#s.source_files  = "VIMNetworking", "VIMNetworking/**/*.{h,m}"
-#s.frameworks = "Foundation", "UIKit", "Security", "CoreGraphics", "AVFoundation"
+  s.source_files = 'VIMNetworking/VIMNetworking.h', 'VIMNetworking/Networking/**/*.{h,m}', 'VIMNetworking/Private/**/*.{h,m}'
+  s.frameworks = "Foundation", "UIKit"
 
   s.subspec 'Cache' do |ss|
-    ss.source_files = 'VIMNetworking/**/VIMCache.{h,m}'
+    ss.source_files = 'VIMNetworking/Cache/VIMCache.{h,m}'
     ss.frameworks = 'Foundation', 'UIKit'
   end
 
   s.subspec 'Keychain' do |ss|
-    ss.source_files = 'VIMNetworking/**/VIMKeychain.{h,m}'
+    ss.source_files = 'VIMNetworking/Keychain/VIMKeychain.{h,m}'
     ss.frameworks = 'Foundation', 'Security'
   end
 
   s.subspec 'Model' do |ss|
     ss.source_files = 'VIMNetworking/Model/*.{h,m}'
-    ss.frameworks = 'Foundation', 'CoreGraphics'
+    ss.frameworks = 'Foundation', 'CoreGraphics', 'AVFoundation'
     ss.dependency	'VIMObjectMapper', '~> 5.6'
   end
 
