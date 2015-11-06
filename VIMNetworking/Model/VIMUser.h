@@ -30,6 +30,7 @@
 @class VIMInteraction;
 @class VIMPictureCollection;
 @class VIMPreference;
+@class VIMUploadQuota;
 
 typedef NS_ENUM(NSInteger, VIMUserAccountType)
 {
@@ -43,7 +44,7 @@ typedef NS_ENUM(NSInteger, VIMUserAccountType)
 
 @property (nonatomic, assign, readonly) VIMUserAccountType accountType;
 @property (nonatomic, copy, nullable) NSString *bio;
-@property (nonatomic, copy, nullable) NSString *contentFilter;
+@property (nonatomic, copy, nullable) NSArray *contentFilter; // TODO: why is this a string and not an array?
 @property (nonatomic, strong, nullable) NSDate *createdTime;
 @property (nonatomic, strong, nullable) NSDate *modifiedTime; // This doesn't exist on user objects...yet [AH]
 @property (nonatomic, copy, nullable) NSString *link;
@@ -55,6 +56,7 @@ typedef NS_ENUM(NSInteger, VIMUserAccountType)
 @property (nonatomic, strong, nullable) NSArray *websites;
 @property (nonatomic, strong, nullable) NSDictionary *uploadQuota;
 @property (nonatomic, strong, nullable) VIMPreference *preferences;
+@property (nonatomic, strong, nullable) VIMUploadQuota *uploadQuota;
 
 - (nullable VIMConnection *)connectionWithName:(nonnull NSString *)connectionName;
 - (nullable VIMInteraction *)interactionWithName:(nonnull NSString *)name;

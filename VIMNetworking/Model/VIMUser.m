@@ -31,6 +31,7 @@
 #import "VIMPictureCollection.h"
 #import "VIMPicture.h"
 #import "VIMPreference.h"
+#import "VIMUploadQuota.h"
 
 @interface VIMUser ()
 
@@ -74,6 +75,11 @@
     if ([key isEqualToString:@"preferences"])
     {
         return [VIMPreference class];
+    }
+
+    if ([key isEqualToString:@"upload_quota"])
+    {
+        return [VIMUploadQuota class];
     }
 
     return nil;
