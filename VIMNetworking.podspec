@@ -33,6 +33,7 @@ Pod::Spec.new do |s|
     ss.frameworks = 'Foundation', 'UIKit'
     ss.dependency 'VIMNetworking/Cache'
     ss.dependency 'VIMNetworking/Keychain'
+    ss.dependency 'VIMNetworking/Model'
     ss.dependency 'AFNetworking'
   end
 
@@ -55,7 +56,7 @@ Pod::Spec.new do |s|
   s.subspec 'Model' do |ss|
     ss.source_files = 'VIMNetworking/Model/*.{h,m}'
     ss.frameworks = 'Foundation', 'CoreGraphics', 'AVFoundation'
-    ss.dependency	'VIMObjectMapper', '~> 5.6'
+    ss.dependency	'VIMObjectMapper'
   end
 
   s.subspec 'AFNetworking' do |ss|
