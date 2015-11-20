@@ -345,6 +345,7 @@ static NSString *const ModelKeyPathData = @"data";
     descriptor.urlPath = URI;
     descriptor.HTTPMethod = HTTPMethodPOST;
     descriptor.parameters = @{@"text" : text};
+    descriptor.modelClass = [VIMComment class];
     descriptor.shouldRetryOnFailure = YES;
     
     return [self requestDescriptor:descriptor completionBlock:completionBlock];
@@ -358,6 +359,7 @@ static NSString *const ModelKeyPathData = @"data";
     descriptor.urlPath = URI;
     descriptor.HTTPMethod = HTTPMethodPOST;
     descriptor.parameters = @{@"text" : text};
+    descriptor.modelClass = [VIMComment class];
     descriptor.shouldRetryOnFailure = YES;
     
     return [self requestDescriptor:descriptor completionBlock:completionBlock];
