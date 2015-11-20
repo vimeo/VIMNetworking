@@ -95,6 +95,8 @@
 
 - (nullable id<VIMRequestToken>)postCommentWithURI:(nonnull NSString *)URI text:(nonnull NSString *)text completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 
+- (nullable id<VIMRequestToken>)postReplyWithURI:(nonnull NSString *)URI text:(nonnull NSString *)text completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
+
 - (nullable id<VIMRequestToken>)commentsWithURI:(nonnull NSString *)URI completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 
 #pragma mark - Logout
