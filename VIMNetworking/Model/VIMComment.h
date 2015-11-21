@@ -27,15 +27,15 @@
 #import "VIMModelObject.h"
 
 @class VIMUser;
+@class VIMConnection;
 
 @interface VIMComment : VIMModelObject
 
 @property (nonatomic, strong, nullable) VIMUser *user;
 @property (nonatomic, copy, nullable) NSString *text;
 @property (nonatomic, copy, nullable) NSString *uri;
-@property (nonatomic, strong, nullable) NSDate *dateCreated;
+@property (nonatomic, strong, nullable) NSDate *createdOn;
 
-@property (nonatomic, strong, nullable) NSNumber *totalReplies;
-@property (nonatomic, copy, nullable) NSString *repliesURI;
+- (nullable VIMConnection *)connectionWithName:(nonnull NSString *)connectionName;
 
 @end
