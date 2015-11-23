@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "VIMNetworking"
-  s.version      = "5.6.1.10"
+  s.version      = "5.6.1.11"
   s.summary      = "The Vimeo iOS SDK"
   s.description  = <<-DESC
                    VIMNetworking is an Objective-C library that enables interaction with the Vimeo API. It handles authentication, request submission and cancellation, and video upload. Advanced features include caching and powerful model object parsing.
@@ -62,11 +62,11 @@ Pod::Spec.new do |s|
   end
 
   s.subspec 'AFNetworking' do |ss|
-    ss.dependency	'AFNetworking', '~> 2.6.1'
+    ss.dependency	'AFNetworking', '2.6.3'
   end
 
   s.subspec 'VIMObjectMapper' do |ss|
-    ss.dependency	'VIMObjectMapper', '~> 5.6'
+    ss.dependency	'VIMObjectMapper', '5.6'
   end
 
 end

@@ -32,6 +32,11 @@
 
 #pragma mark - VIMMappable
 
+- (NSDictionary *)getObjectMapping
+{
+    return @{@"clip": @"video"};
+}
+
 - (Class)getClassForObjectKey:(NSString *)key
 {
     if ([key isEqualToString:@"clip"])
