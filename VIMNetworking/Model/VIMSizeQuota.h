@@ -1,5 +1,5 @@
 //
-//  VIMSpace.h
+//  VIMSizeQuota.h
 //  VIMNetworking
 //
 //  Created by Hanssen, Alfie on 11/6/15.
@@ -26,7 +26,7 @@
 
 #import "VIMModelObject.h"
 
-@interface VIMSpace : VIMModelObject
+@interface VIMSizeQuota : VIMModelObject
 
 @property (nonatomic, strong, nullable) NSNumber *free;
 @property (nonatomic, strong, nullable) NSNumber *max;

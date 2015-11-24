@@ -1,5 +1,5 @@
 //
-//  VIMSpace.m
+//  VIMQuantityQuota.h
 //  VIMNetworking
 //
 //  Created by Hanssen, Alfie on 11/6/15.
@@ -24,8 +24,11 @@
 //  THE SOFTWARE.
 //
 
-#import "VIMSpace.h"
+#import "VIMModelObject.h"
 
-@implementation VIMSpace
+@interface VIMQuantityQuota : VIMModelObject
+
+@property (nonatomic, assign) BOOL canUploadHd;
+@property (nonatomic, assign) BOOL canUploadSd;
 
 @end

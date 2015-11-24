@@ -26,12 +26,12 @@
 
 #import "VIMModelObject.h"
 
-@class VIMQuota;
-@class VIMSpace;
+@class VIMQuantityQuota;
+@class VIMSizeQuota;
 
 @interface VIMUploadQuota : VIMModelObject
 
-@property (nonatomic, strong, nullable) VIMQuota* quota;
-@property (nonatomic, strong, nullable) VIMSpace* space;
+@property (nonatomic, strong, nullable) VIMQuantityQuota *quantityQuota;
+@property (nonatomic, strong, nullable) VIMSizeQuota *sizeQuota;
 
 @end

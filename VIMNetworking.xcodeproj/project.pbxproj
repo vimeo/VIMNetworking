@@ -54,6 +54,10 @@
 		9372C815DAF11C266135F755 /* libPods-VIMNetworkingTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BA2F77C2C762EAAE4439256 /* libPods-VIMNetworkingTests.a */; };
 		AF1510831BEB9211008F9E77 /* VIMCache.m in Sources */ = {isa = PBXBuildFile; fileRef = AF15107F1BEB9211008F9E77 /* VIMCache.m */; };
 		AF1510841BEB9211008F9E77 /* VIMKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = AF1510821BEB9211008F9E77 /* VIMKeychain.m */; };
+		AF972A321C04C62D00A54B74 /* VIMQuantityQuota.m in Sources */ = {isa = PBXBuildFile; fileRef = AF972A2B1C04C62D00A54B74 /* VIMQuantityQuota.m */; };
+		AF972A331C04C62D00A54B74 /* VIMSizeQuota.m in Sources */ = {isa = PBXBuildFile; fileRef = AF972A2D1C04C62D00A54B74 /* VIMSizeQuota.m */; };
+		AF972A341C04C62D00A54B74 /* VIMUploadQuota.m in Sources */ = {isa = PBXBuildFile; fileRef = AF972A2F1C04C62D00A54B74 /* VIMUploadQuota.m */; };
+		AF972A351C04C62D00A54B74 /* VIMUploadTicket.m in Sources */ = {isa = PBXBuildFile; fileRef = AF972A311C04C62D00A54B74 /* VIMUploadTicket.m */; };
 		AFFA203C1B34C157001211E2 /* VIMAccountNew.m in Sources */ = {isa = PBXBuildFile; fileRef = AFFA20391B34C157001211E2 /* VIMAccountNew.m */; };
 		AFFA20411B34CA0F001211E2 /* VIMSession.m in Sources */ = {isa = PBXBuildFile; fileRef = AFFA20401B34CA0F001211E2 /* VIMSession.m */; };
 		AFFA207A1B3756FF001211E2 /* VIMAuthenticator.m in Sources */ = {isa = PBXBuildFile; fileRef = AFFA20791B3756FF001211E2 /* VIMAuthenticator.m */; };
@@ -185,6 +189,14 @@
 		AF15107F1BEB9211008F9E77 /* VIMCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMCache.m; sourceTree = "<group>"; };
 		AF1510811BEB9211008F9E77 /* VIMKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMKeychain.h; sourceTree = "<group>"; };
 		AF1510821BEB9211008F9E77 /* VIMKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMKeychain.m; sourceTree = "<group>"; };
+		AF972A2A1C04C62D00A54B74 /* VIMQuantityQuota.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMQuantityQuota.h; sourceTree = "<group>"; };
+		AF972A2B1C04C62D00A54B74 /* VIMQuantityQuota.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMQuantityQuota.m; sourceTree = "<group>"; };
+		AF972A2C1C04C62D00A54B74 /* VIMSizeQuota.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMSizeQuota.h; sourceTree = "<group>"; };
+		AF972A2D1C04C62D00A54B74 /* VIMSizeQuota.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMSizeQuota.m; sourceTree = "<group>"; };
+		AF972A2E1C04C62D00A54B74 /* VIMUploadQuota.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMUploadQuota.h; sourceTree = "<group>"; };
+		AF972A2F1C04C62D00A54B74 /* VIMUploadQuota.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMUploadQuota.m; sourceTree = "<group>"; };
+		AF972A301C04C62D00A54B74 /* VIMUploadTicket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMUploadTicket.h; sourceTree = "<group>"; };
+		AF972A311C04C62D00A54B74 /* VIMUploadTicket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMUploadTicket.m; sourceTree = "<group>"; };
 		AFFA20381B34C157001211E2 /* VIMAccountNew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMAccountNew.h; sourceTree = "<group>"; };
 		AFFA20391B34C157001211E2 /* VIMAccountNew.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMAccountNew.m; sourceTree = "<group>"; };
 		AFFA203F1B34CA0F001211E2 /* VIMSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMSession.h; sourceTree = "<group>"; };
@@ -320,6 +332,14 @@
 				AFFA20391B34C157001211E2 /* VIMAccountNew.m */,
 				50596EAA1BEBF1CC00D1F8EC /* VIMVideoUtils.h */,
 				50596EAB1BEBF1CC00D1F8EC /* VIMVideoUtils.m */,
+				AF972A2A1C04C62D00A54B74 /* VIMQuantityQuota.h */,
+				AF972A2B1C04C62D00A54B74 /* VIMQuantityQuota.m */,
+				AF972A2C1C04C62D00A54B74 /* VIMSizeQuota.h */,
+				AF972A2D1C04C62D00A54B74 /* VIMSizeQuota.m */,
+				AF972A2E1C04C62D00A54B74 /* VIMUploadQuota.h */,
+				AF972A2F1C04C62D00A54B74 /* VIMUploadQuota.m */,
+				AF972A301C04C62D00A54B74 /* VIMUploadTicket.h */,
+				AF972A311C04C62D00A54B74 /* VIMUploadTicket.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -663,10 +683,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				50E508E31B1E327E00DF1F7A /* VIMInteraction.m in Sources */,
+				AF972A351C04C62D00A54B74 /* VIMUploadTicket.m in Sources */,
 				50596ECB1BED38E200D1F8EC /* VIMAccountCredential.m in Sources */,
 				AF1510831BEB9211008F9E77 /* VIMCache.m in Sources */,
 				50E508E01B1E327E00DF1F7A /* VIMComment.m in Sources */,
 				500F46341BA1FE16000EA6B4 /* VIMJSONResponseSerializer.m in Sources */,
+				AF972A321C04C62D00A54B74 /* VIMQuantityQuota.m in Sources */,
 				50E508DF1B1E327E00DF1F7A /* VIMChannel.m in Sources */,
 				AF1510841BEB9211008F9E77 /* VIMKeychain.m in Sources */,
 				50E509171B1E327E00DF1F7A /* VIMFacebookConfiguration.m in Sources */,
@@ -676,6 +698,7 @@
 				50FD87BC1B3097650064EC16 /* VIMPreference.m in Sources */,
 				50E508E11B1E327E00DF1F7A /* VIMConnection.m in Sources */,
 				50E509121B1E327E00DF1F7A /* VIMSessionManager.m in Sources */,
+				AF972A341C04C62D00A54B74 /* VIMUploadQuota.m in Sources */,
 				50E508E71B1E327E00DF1F7A /* VIMTag.m in Sources */,
 				50E508DE1B1E327E00DF1F7A /* VIMCategory.m in Sources */,
 				50E5090E1B1E327E00DF1F7A /* VIMServerResponse.m in Sources */,
@@ -708,6 +731,7 @@
 				50FD87BF1B3097E80064EC16 /* VIMVideoPreference.m in Sources */,
 				50596ECD1BED38E200D1F8EC /* VIMTrigger.m in Sources */,
 				50596ECE1BED38E200D1F8EC /* VIMVideoLog.m in Sources */,
+				AF972A331C04C62D00A54B74 /* VIMSizeQuota.m in Sources */,
 				50596EAC1BEBF1CC00D1F8EC /* VIMVideoUtils.m in Sources */,
 				50E508E41B1E327E00DF1F7A /* VIMPicture.m in Sources */,
 			);

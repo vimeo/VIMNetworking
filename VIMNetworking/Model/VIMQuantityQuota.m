@@ -1,5 +1,5 @@
 //
-//  VIMQuota.h
+//  VIMQuantityQuota.m
 //  VIMNetworking
 //
 //  Created by Hanssen, Alfie on 11/6/15.
@@ -24,11 +24,23 @@
 //  THE SOFTWARE.
 //
 
-#import "VIMModelObject.h"
+#import "VIMQuantityQuota.h"
 
-@interface VIMQuota : VIMModelObject
+@interface VIMQuantityQuota ()
 
 @property (nonatomic, strong, nullable) NSNumber *hd;
 @property (nonatomic, strong, nullable) NSNumber *sd;
+
+@end
+
+@implementation VIMQuantityQuota
+
+#pragma mark - VIMMappable
+
+- (void)didFinishMapping
+{
+    self.canUploadHd = [self.hd boolValue];
+    self.canUploadSd = [self.sd boolValue];
+}
 
 @end

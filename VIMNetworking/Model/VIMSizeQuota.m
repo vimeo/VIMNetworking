@@ -1,5 +1,5 @@
 //
-//  VIMQuota.m
+//  VIMSizeQuota.m
 //  VIMNetworking
 //
 //  Created by Hanssen, Alfie on 11/6/15.
@@ -24,8 +24,8 @@
 //  THE SOFTWARE.
 //
 
-#import "VIMQuota.h"
+#import "VIMSizeQuota.h"
 
-@implementation VIMQuota
+@implementation VIMSizeQuota
 
 @end

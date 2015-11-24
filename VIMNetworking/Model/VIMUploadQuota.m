@@ -25,23 +25,29 @@
 //
 
 #import "VIMUploadQuota.h"
-#import "VIMQuota.h"
-#import "VIMSpace.h"
+#import "VIMQuantityQuota.h"
+#import "VIMSizeQuota.h"
 
 @implementation VIMUploadQuota
 
 #pragma mark - VIMMappable
 
+- (NSDictionary *)getObjectMapping
+{
+    return @{@"quota": @"quantityQuota",
+             @"space": @"sizeQuota"};
+}
+
 - (Class)getClassForObjectKey:(NSString *)key
 {
     if ([key isEqualToString:@"quota"])
     {
-        return [VIMQuota class];
+        return [VIMQuantityQuota class];
     }
 
     if ([key isEqualToString:@"space"])
     {
-        return [VIMSpace class];
+        return [VIMSizeQuota class];
     }
 
     return nil;
