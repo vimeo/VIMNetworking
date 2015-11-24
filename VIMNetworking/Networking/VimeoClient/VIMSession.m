@@ -35,6 +35,7 @@
 #import "VIMObjectMapper.h"
 #import "VIMHTTPRequestSerializer.h"
 #import "VIMKeychain.h"
+#import "VIMUser.h"
 
 static NSString *const ClientCredentialsAccountKey = @"ClientCredentialsAccountKey";
 static NSString *const UserAccountKey = @"UserAccountKey";

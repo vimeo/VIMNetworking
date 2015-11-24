@@ -26,8 +26,6 @@
 
 #import "VIMModelObject.h"
 
-#import <CoreGraphics/CoreGraphics.h>
-
 @class VIMPicture;
 
 @interface VIMPictureCollection : VIMModelObject
@@ -35,7 +33,7 @@
 @property (strong, nonatomic, nullable) NSString *uri;
 @property (strong, nonatomic, nullable) NSArray *pictures;
 
-- (nullable VIMPicture *)pictureForHeight:(CGFloat)height;
-- (nullable VIMPicture *)pictureForWidth:(CGFloat)width;
+- (nullable VIMPicture *)pictureForHeight:(float)height;
+- (nullable VIMPicture *)pictureForWidth:(float)width;
 
 @end

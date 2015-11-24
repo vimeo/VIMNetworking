@@ -31,7 +31,6 @@
 #import "VIMGroup.h"
 #import "VIMTag.h"
 #import "VIMCategory.h"
-#import "NSString+MD5.h"
 
 @implementation VIMActivity
 
@@ -40,13 +39,6 @@
 - (NSDate *)modifiedTime
 {
     return self.video.modifiedTime;
-}
-
-- (NSString *)objectID
-{
-    NSAssert([self.uri length] > 0, @"Object does not have a uri, cannot generate objectID");
-    
-    return [self.uri MD5];
 }
 
 #pragma mark - VIMMappable

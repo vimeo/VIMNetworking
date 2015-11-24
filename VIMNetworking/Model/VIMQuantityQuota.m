@@ -1,9 +1,9 @@
 //
-//  VIMVideoFile.h
+//  VIMQuantityQuota.m
 //  VIMNetworking
 //
-//  Created by Kashif Mohammad on 4/13/13.
-//  Copyright (c) 2014-2015 Vimeo (https://vimeo.com)
+//  Created by Hanssen, Alfie on 11/6/15.
+//  Copyright (c) 2015 Vimeo (https://vimeo.com)
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,29 +24,23 @@
 //  THE SOFTWARE.
 //
 
-#import "VIMModelObject.h"
+#import "VIMQuantityQuota.h"
 
-@class VIMVideoLog;
+@interface VIMQuantityQuota ()
 
-extern NSString *const __nonnull VIMVideoFileQualityHLS;
-extern NSString *const __nonnull VIMVideoFileQualityHD;
-extern NSString *const __nonnull VIMVideoFileQualitySD;
-extern NSString *const __nonnull VIMVideoFileQualityMobile;
+@property (nonatomic, strong, nullable) NSNumber *hd;
+@property (nonatomic, strong, nullable) NSNumber *sd;
 
-@interface VIMVideoFile : VIMModelObject
+@end
 
-@property (nonatomic, strong, nullable) NSDate *expirationDate;
-@property (nonatomic, strong, nullable) NSNumber *width;
-@property (nonatomic, strong, nullable) NSNumber *height;
-@property (nonatomic, strong, nullable) NSNumber *size;
-@property (nonatomic, copy, nullable) NSString *link;
-@property (nonatomic, copy, nullable) NSString *quality;
-@property (nonatomic, copy, nullable) NSString *type;
-@property (nonatomic, strong, nullable) VIMVideoLog *log;
+@implementation VIMQuantityQuota
 
-- (BOOL)isSupportedMimeType;
-- (BOOL)isDownloadable;
-- (BOOL)isStreamable;
-- (BOOL)isExpired;
+#pragma mark - VIMMappable
+
+- (void)didFinishMapping
+{
+    self.canUploadHd = [self.hd boolValue];
+    self.canUploadSd = [self.sd boolValue];
+}
 
 @end

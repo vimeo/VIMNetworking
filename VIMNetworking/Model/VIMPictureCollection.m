@@ -29,7 +29,7 @@
 
 @implementation VIMPictureCollection
 
-- (VIMPicture *)pictureForWidth:(CGFloat)width
+- (VIMPicture *)pictureForWidth:(float)width
 {
     if (self.pictures.count == 0)
         return nil;
@@ -52,7 +52,7 @@
     return selectedPicture;
 }
 
-- (VIMPicture *)pictureForHeight:(CGFloat)height
+- (VIMPicture *)pictureForHeight:(float)height
 {
     if (self.pictures.count == 0)
         return nil;
