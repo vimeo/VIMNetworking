@@ -50,9 +50,11 @@ NSString * const VimeoUserMessageKey = @"error";
     return NO;
 }
 
-- (BOOL)isForbiddenError
+- (BOOL)isPasswordIncorrectError
 {
-    return [self statusCode] == HTTPErrorCodeForbidden;
+    NSInteger parameterErrorCode = [self vimeoInvalidParametersFirstErrorCode];
+    
+    return parameterErrorCode == VIMErrorCodeNoVideoPasswordProvided || parameterErrorCode == VIMErrorCodeVideoPasswordIncorrect;
 }
 
 - (BOOL)isUploadQuotaError
