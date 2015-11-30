@@ -71,6 +71,8 @@ On app launch, configure `VIMSession` with your client key, secret, and scope st
 
 ```
 
+Note that you must specify a value for `keychainService` and can optionally provide a value for `keychainAccessGroup`. The role of the latter value is detailed [here](https://developer.apple.com/library/ios/documentation/IDEs/Conceptual/AppDistributionGuide/AddingCapabilities/AddingCapabilities.html) in the section on Keychain Access Groups.
+
 ## Authentication 
 
 All calls to the Vimeo API must be [authenticated](https://developer.vimeo.com/api/authentication). This means that before making requests to the API you must authenticate and obtain an access token. Two authentication methods are provided: 
