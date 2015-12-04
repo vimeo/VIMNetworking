@@ -13,6 +13,9 @@ typedef NS_ENUM(NSInteger, VIMErrorCode)
     VIMErrorCodeUploadStorageQuotaExceeded = 4101,
     VIMErrorCodeUploadDailyQuotaExceeded = 4102,
     
+    VIMErrorCodeNoVideoPasswordProvided = 2223,
+    VIMErrorCodeVideoPasswordIncorrect = 2222,
+    
     VIMErrorCodeInvalidRequestInput = 2204, // root error code for all invalid parameters errors below
     
     VIMErrorCodeEmailTooLong = 2216,
@@ -70,7 +73,7 @@ extern NSString * const __nonnull VimeoErrorCodeKeyLegacy;
 
 - (BOOL)isInvalidTokenError;
 
-- (BOOL)isForbiddenError;
+- (BOOL)isPasswordIncorrectError;
 
 - (BOOL)isUploadQuotaError;
 - (BOOL)isUploadQuotaDailyExceededError;
