@@ -32,6 +32,7 @@ NSString *VIMPrivacy_Public = @"anybody";
 NSString *VIMPrivacy_VOD = @"ptv";
 NSString *VIMPrivacy_Following = @"contacts";
 NSString *VIMPrivacy_Password = @"password";
+NSString *VIMPrivacy_Disabled = @"disable";
 
 @implementation VIMPrivacy
 
