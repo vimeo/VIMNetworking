@@ -32,6 +32,7 @@ extern NSString * __nonnull VIMPrivacy_Public;
 extern NSString * __nonnull VIMPrivacy_VOD;
 extern NSString * __nonnull VIMPrivacy_Following;
 extern NSString * __nonnull VIMPrivacy_Password;
+extern NSString * __nonnull VIMPrivacy_Disabled;
 
 @interface VIMPrivacy : VIMModelObject
 
