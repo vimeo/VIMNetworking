@@ -50,28 +50,6 @@ NSString * const VimeoUserMessageKey = @"error";
     return NO;
 }
 
-- (BOOL)isPasswordIncorrectError
-{
-    NSInteger parameterErrorCode = [self vimeoInvalidParametersFirstErrorCode];
-    
-    return parameterErrorCode == VIMErrorCodeNoVideoPasswordProvided || parameterErrorCode == VIMErrorCodeVideoPasswordIncorrect;
-}
-
-- (BOOL)isUploadQuotaError
-{
-    return [self isUploadQuotaDailyExceededError] || [self isUploadQuotaStorageExceededError];
-}
-
-- (BOOL)isUploadQuotaDailyExceededError
-{
-    return [self vimeoErrorCode] == VIMErrorCodeUploadDailyQuotaExceeded;
-}
-
-- (BOOL)isUploadQuotaStorageExceededError
-{
-    return [self vimeoErrorCode] == VIMErrorCodeUploadStorageQuotaExceeded;
-}
-
 - (BOOL)isOfflineError
 {
     return [[NSSet setWithObjects:
@@ -97,7 +75,7 @@ NSString * const VimeoUserMessageKey = @"error";
     return NSNotFound;
 }
 
-- (NSInteger)vimeoErrorCode
+- (NSInteger)vimeoServerErrorCode
 {
     NSNumber *errorCodeNumber = self.userInfo[VimeoErrorCodeKeyLegacy];
     if (errorCodeNumber)
