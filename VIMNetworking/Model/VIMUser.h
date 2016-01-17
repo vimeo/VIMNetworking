@@ -56,6 +56,7 @@ typedef NS_ENUM(NSInteger, VIMUserAccountType)
 @property (nonatomic, strong, nullable) NSArray *websites;
 @property (nonatomic, strong, nullable) VIMPreference *preferences;
 @property (nonatomic, strong, nullable) VIMUploadQuota *uploadQuota;
+@property (nonatomic, copy, nullable) NSString *account;
 
 - (nullable VIMConnection *)connectionWithName:(nonnull NSString *)connectionName;
 - (nullable VIMInteraction *)interactionWithName:(nonnull NSString *)name;

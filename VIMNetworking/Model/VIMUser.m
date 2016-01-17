@@ -39,7 +39,6 @@
 @property (nonatomic, strong) NSDictionary *connections;
 @property (nonatomic, strong) NSDictionary *interactions;
 
-@property (nonatomic, copy) NSString *account;
 @property (nonatomic, assign, readwrite) VIMUserAccountType accountType;
 
 @end

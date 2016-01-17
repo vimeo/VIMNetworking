@@ -253,9 +253,14 @@ NSString *VIMContentRating_Safe = @"safe";
                                       [NSNumber numberWithInt:VIMVideoProcessingStatusTranscoding], @"transcoding",
                                       [NSNumber numberWithInt:VIMVideoProcessingStatusUploadingError], @"uploading_error",
                                       [NSNumber numberWithInt:VIMVideoProcessingStatusTranscodingError], @"transcoding_error",
+                                      [NSNumber numberWithInt:VIMVideoProcessingStatusQuotaExceeded], @"quota_exceeded",
                                       nil];
     
-    self.videoStatus = [[statusDictionary objectForKey:self.status] intValue];
+    NSNumber *number = [statusDictionary objectForKey:self.status];
+    
+    NSAssert(number != nil, @"Video status not handled, unknown video status");
+    
+    self.videoStatus = [number intValue];
 }
 
 # pragma mark - Helpers

@@ -47,7 +47,8 @@ typedef NS_ENUM(NSUInteger, VIMVideoProcessingStatus) {
     VIMVideoProcessingStatusUploading,
     VIMVideoProcessingStatusTranscoding,
     VIMVideoProcessingStatusUploadingError,
-    VIMVideoProcessingStatusTranscodingError
+    VIMVideoProcessingStatusTranscodingError,
+    VIMVideoProcessingStatusQuotaExceeded
 };
 
 @interface VIMVideo : VIMModelObject
