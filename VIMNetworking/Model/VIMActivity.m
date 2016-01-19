@@ -32,6 +32,15 @@
 #import "VIMTag.h"
 #import "VIMCategory.h"
 
+NSString *VIMActivityType_Channel = @"channel";
+NSString *VIMActivityType_Group = @"group";
+NSString *VIMActivityType_Category = @"category";
+NSString *VIMActivityType_Tag = @"tag";
+NSString *VIMActivityType_Appearance = @"appearance";
+NSString *VIMActivityType_Like = @"like";
+NSString *VIMActivityType_Upload = @"upload";
+NSString *VIMActivityType_Share = @"share";
+
 @implementation VIMActivity
 
 #pragma mark - Accessors
