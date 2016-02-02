@@ -31,7 +31,4 @@
 - (nullable instancetype)initWithDefaultSession;
 - (nullable instancetype)initWithBackgroundSessionID:(nonnull NSString *)sessionID;
 
-- (nullable NSProgress *)downloadProgressForTaskIdentifier:(NSInteger)identifier;
-- (nullable NSURLSessionDownloadTask *)downloadTaskForIdentifier:(NSInteger)identifier;
-
 @end
