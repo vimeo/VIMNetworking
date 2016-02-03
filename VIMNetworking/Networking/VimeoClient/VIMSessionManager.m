@@ -51,32 +51,6 @@
     return [self initWithBackgroundSessionID:sessionID sharedContainerID:nil];
 }
 
-- (NSProgress *)downloadProgressForTaskIdentifier:(NSInteger)identifier
-{
-    NSURLSessionDownloadTask *task = [self downloadTaskForIdentifier:identifier];
-    if (task)
-    {
-        return [self downloadProgressForTask:task];
-    }
-    
-    return nil;
-}
-
-- (NSURLSessionDownloadTask *)downloadTaskForIdentifier:(NSInteger)identifier
-{
-    NSArray *downloadTasks = self.downloadTasks;
-    
-    for (NSURLSessionDownloadTask *task in downloadTasks)
-    {
-        if (task.taskIdentifier == identifier)
-        {
-            return task;
-        }
-    }
-    
-    return nil;
-}
-
 #pragma mark - Private API
 
 - (instancetype)initWithBackgroundSessionID:(NSString *)sessionID sharedContainerID:(NSString *)sharedContainerID
