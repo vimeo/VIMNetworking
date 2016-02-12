@@ -251,6 +251,7 @@ NSString *VIMContentRating_Safe = @"safe";
                                       [NSNumber numberWithInt:VIMVideoProcessingStatusAvailable], @"available",
                                       [NSNumber numberWithInt:VIMVideoProcessingStatusUploading], @"uploading",
                                       [NSNumber numberWithInt:VIMVideoProcessingStatusTranscoding], @"transcoding",
+                                      [NSNumber numberWithInt:VIMVideoProcessingStatusTranscodeStarting], @"transcode_starting",
                                       [NSNumber numberWithInt:VIMVideoProcessingStatusUploadingError], @"uploading_error",
                                       [NSNumber numberWithInt:VIMVideoProcessingStatusTranscodingError], @"transcoding_error",
                                       [NSNumber numberWithInt:VIMVideoProcessingStatusQuotaExceeded], @"quota_exceeded",
@@ -315,7 +316,7 @@ NSString *VIMContentRating_Safe = @"safe";
 
 - (BOOL)isTranscoding
 {
-    return self.videoStatus == VIMVideoProcessingStatusTranscoding;
+    return self.videoStatus == VIMVideoProcessingStatusTranscoding || self.videoStatus == VIMVideoProcessingStatusTranscodeStarting;
 }
 
 - (BOOL)isUploading
