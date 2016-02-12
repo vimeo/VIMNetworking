@@ -42,7 +42,7 @@
 @property (nonatomic, strong, nullable) VIMPictureCollection *pictureCollection;
 @property (nonatomic, strong, nullable) VIMPictureCollection *headerPictureCollection;
 @property (nonatomic, strong, nullable) VIMPrivacy *privacy;
-@property (nonatomic, copy, nonnull) NSString *uri;
+@property (nonatomic, copy, nullable) NSString *uri;
 @property (nonatomic, strong, nullable) VIMUser *user;
 
 - (nullable VIMConnection *)connectionWithName:(nonnull NSString *)connectionName;

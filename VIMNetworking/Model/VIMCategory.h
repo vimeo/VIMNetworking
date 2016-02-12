@@ -43,4 +43,6 @@
 - (nullable VIMConnection *)connectionWithName:(nonnull NSString *)connectionName;
 - (nullable VIMInteraction *)interactionWithName:(nonnull NSString *)name;
 
+- (BOOL)isFollowing;
+
 @end
