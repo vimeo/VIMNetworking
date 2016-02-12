@@ -37,6 +37,8 @@
 
 - (nullable id<VIMRequestToken>)resetPasswordWithEmail:(nonnull NSString *)email completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 
+- (nullable id<VIMRequestToken>)toggleFollowURI:(nonnull NSString *)URI newValue:(BOOL)newValue completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
+
 #pragma mark - Users
 
 - (nullable id<VIMRequestToken>)userWithURI:(nonnull NSString *)URI completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
@@ -51,7 +53,17 @@
 
 - (nullable id<VIMRequestToken>)toggleFollowUserWithURI:(nonnull NSString *)URI newValue:(BOOL)newValue completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 
-- (nullable id<VIMRequestToken>)toggleFollowURI:(nonnull NSString *)URI newValue:(BOOL)newValue completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
+#pragma mark - Categories
+
+- (nullable id<VIMRequestToken>)categoryWithURI:(nonnull NSString *)URI completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
+
+- (nullable id<VIMRequestToken>)toggleFollowCategoryWithURI:(nonnull NSString *)URI newValue:(BOOL)newValue completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
+
+#pragma mark - Channels
+
+- (nullable id<VIMRequestToken>)channelWithURI:(nonnull NSString *)URI completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
+
+- (nullable id<VIMRequestToken>)toggleFollowChannelWithURI:(nonnull NSString *)URI newValue:(BOOL)newValue completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 
 #pragma mark - Pictures
 
