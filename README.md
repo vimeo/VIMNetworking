@@ -10,7 +10,7 @@ Check out the [Pegasus](https://github.com/vimeo/Pegasus) sample project.
 
 ## Setup
 
-### Cocoapods
+### CocoaPods
 
 ```Ruby
 # Add this to your podfile
