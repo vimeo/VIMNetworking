@@ -103,18 +103,6 @@ static VIMSession *_sharedSession;
 
 - (void)applicationDidEnterForeground:(NSNotification *)notification
 {
-    VIMAccountNew *originalAccount = self.account;
-    
-    self.account = [self loadAccountIfPossible]; // Reload account in the event that an auth event occurred in the an app extension
-    self.client.cache = [self buildCache];
-
-    if (![originalAccount.accessToken isEqualToString:self.account.accessToken])
-    {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [[NSNotificationCenter defaultCenter] postNotificationName:VIMSession_AuthenticatedAccountDidChangeNotification object:nil];
-        });
-    }
-    
     if (self.currentUserRefreshRequest)
     {
         return;
