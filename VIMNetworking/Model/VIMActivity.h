@@ -33,6 +33,15 @@
 @class VIMTag;
 @class VIMCategory;
 
+extern NSString * __nonnull VIMActivityType_Channel;
+extern NSString * __nonnull VIMActivityType_Group;
+extern NSString * __nonnull VIMActivityType_Category;
+extern NSString * __nonnull VIMActivityType_Tag;
+extern NSString * __nonnull VIMActivityType_Appearance;
+extern NSString * __nonnull VIMActivityType_Like;
+extern NSString * __nonnull VIMActivityType_Upload;
+extern NSString * __nonnull VIMActivityType_Share;
+
 @interface VIMActivity : VIMModelObject
 
 @property (nonatomic, strong, nullable) VIMVideo *video;

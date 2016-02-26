@@ -1,9 +1,9 @@
 //
-//  VIMVideoFile.h
-//  VIMNetworking
+//  VIMUploadTicket.h
+//  Pods
 //
-//  Created by Kashif Mohammad on 4/13/13.
-//  Copyright (c) 2014-2015 Vimeo (https://vimeo.com)
+//  Created by Alfred Hanssen on 11/21/15.
+//  Copyright (c) 2015 Vimeo. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -26,27 +26,16 @@
 
 #import "VIMModelObject.h"
 
-@class VIMVideoLog;
+@class VIMUser;
+@class VIMVideo;
 
-extern NSString *const __nonnull VIMVideoFileQualityHLS;
-extern NSString *const __nonnull VIMVideoFileQualityHD;
-extern NSString *const __nonnull VIMVideoFileQualitySD;
-extern NSString *const __nonnull VIMVideoFileQualityMobile;
+@interface VIMUploadTicket : VIMModelObject
 
-@interface VIMVideoFile : VIMModelObject
-
-@property (nonatomic, strong, nullable) NSDate *expirationDate;
-@property (nonatomic, strong, nullable) NSNumber *width;
-@property (nonatomic, strong, nullable) NSNumber *height;
-@property (nonatomic, strong, nullable) NSNumber *size;
-@property (nonatomic, copy, nullable) NSString *link;
-@property (nonatomic, copy, nullable) NSString *quality;
-@property (nonatomic, copy, nullable) NSString *type;
-@property (nonatomic, strong, nullable) VIMVideoLog *log;
-
-- (BOOL)isSupportedMimeType;
-- (BOOL)isDownloadable;
-- (BOOL)isStreamable;
-- (BOOL)isExpired;
+@property (nonatomic, strong, nullable) NSString *uri;
+@property (nonatomic, strong, nullable) NSString *completeUri;
+@property (nonatomic, strong, nullable) NSString *ticketId;
+@property (nonatomic, strong, nullable) NSString *uploadLinkSecure;
+@property (nonatomic, strong, nullable) VIMUser *user;
+@property (nonatomic, strong, nullable) VIMVideo *video;
 
 @end

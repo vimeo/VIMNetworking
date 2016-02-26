@@ -31,7 +31,6 @@
 #import "VIMInteraction.h"
 #import "VIMPictureCollection.h"
 #import "VIMPicture.h"
-#import "NSString+MD5.h"
 #import "VIMPrivacy.h"
 
 @interface VIMChannel ()
@@ -43,13 +42,6 @@
 @end
 
 @implementation VIMChannel
-
-- (NSString *)objectID
-{
-    NSAssert([self.uri length] > 0, @"Object does not have a uri, cannot generate objectID");
-    
-    return [self.uri MD5];
-}
 
 #pragma mark - Public API
 

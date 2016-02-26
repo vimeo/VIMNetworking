@@ -85,6 +85,9 @@
 
     OSStatus status = SecItemAdd((__bridge CFDictionaryRef)query, NULL);
     
+    // Not sure why, but SecItemAdd sometimes returns -34018. This looks like an Apple issue. [ghking] 2/19/2016
+    // See this SO post: http://stackoverflow.com/questions/20344255/secitemadd-and-secitemcopymatching-returns-error-code-34018-errsecmissingentit/22305193#22305193
+    
     return (status == errSecSuccess);
 }
 

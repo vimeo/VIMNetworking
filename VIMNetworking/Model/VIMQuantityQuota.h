@@ -1,9 +1,9 @@
 //
-//  VIMVideoFile.h
+//  VIMQuantityQuota.h
 //  VIMNetworking
 //
-//  Created by Kashif Mohammad on 4/13/13.
-//  Copyright (c) 2014-2015 Vimeo (https://vimeo.com)
+//  Created by Hanssen, Alfie on 11/6/15.
+//  Copyright (c) 2015 Vimeo (https://vimeo.com)
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -26,27 +26,9 @@
 
 #import "VIMModelObject.h"
 
-@class VIMVideoLog;
+@interface VIMQuantityQuota : VIMModelObject
 
-extern NSString *const __nonnull VIMVideoFileQualityHLS;
-extern NSString *const __nonnull VIMVideoFileQualityHD;
-extern NSString *const __nonnull VIMVideoFileQualitySD;
-extern NSString *const __nonnull VIMVideoFileQualityMobile;
-
-@interface VIMVideoFile : VIMModelObject
-
-@property (nonatomic, strong, nullable) NSDate *expirationDate;
-@property (nonatomic, strong, nullable) NSNumber *width;
-@property (nonatomic, strong, nullable) NSNumber *height;
-@property (nonatomic, strong, nullable) NSNumber *size;
-@property (nonatomic, copy, nullable) NSString *link;
-@property (nonatomic, copy, nullable) NSString *quality;
-@property (nonatomic, copy, nullable) NSString *type;
-@property (nonatomic, strong, nullable) VIMVideoLog *log;
-
-- (BOOL)isSupportedMimeType;
-- (BOOL)isDownloadable;
-- (BOOL)isStreamable;
-- (BOOL)isExpired;
+@property (nonatomic, assign) BOOL canUploadHd;
+@property (nonatomic, assign) BOOL canUploadSd;
 
 @end

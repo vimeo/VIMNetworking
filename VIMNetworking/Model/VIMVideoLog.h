@@ -1,8 +1,8 @@
 //
-//  VIMVideoFile.h
+//  VIMVideoLog.h
 //  VIMNetworking
 //
-//  Created by Kashif Mohammad on 4/13/13.
+//  Created by Hanssen, Alfie on 11/19/14.
 //  Copyright (c) 2014-2015 Vimeo (https://vimeo.com)
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -26,27 +26,11 @@
 
 #import "VIMModelObject.h"
 
-@class VIMVideoLog;
+@interface VIMVideoLog : VIMModelObject
 
-extern NSString *const __nonnull VIMVideoFileQualityHLS;
-extern NSString *const __nonnull VIMVideoFileQualityHD;
-extern NSString *const __nonnull VIMVideoFileQualitySD;
-extern NSString *const __nonnull VIMVideoFileQualityMobile;
-
-@interface VIMVideoFile : VIMModelObject
-
-@property (nonatomic, strong, nullable) NSDate *expirationDate;
-@property (nonatomic, strong, nullable) NSNumber *width;
-@property (nonatomic, strong, nullable) NSNumber *height;
-@property (nonatomic, strong, nullable) NSNumber *size;
-@property (nonatomic, copy, nullable) NSString *link;
-@property (nonatomic, copy, nullable) NSString *quality;
-@property (nonatomic, copy, nullable) NSString *type;
-@property (nonatomic, strong, nullable) VIMVideoLog *log;
-
-- (BOOL)isSupportedMimeType;
-- (BOOL)isDownloadable;
-- (BOOL)isStreamable;
-- (BOOL)isExpired;
+@property (nonatomic, copy, readonly, nullable) NSString *playURLString;
+@property (nonatomic, copy, readonly, nullable) NSString *loadURLString;
+@property (nonatomic, copy, readonly, nullable) NSString *likeURLString;
+@property (nonatomic, copy, readonly, nullable) NSString *watchLaterURLString;
 
 @end

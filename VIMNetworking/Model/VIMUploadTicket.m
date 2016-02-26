@@ -1,9 +1,9 @@
 //
-//  VIMVideoFile.h
-//  VIMNetworking
+//  VIMUploadTicket.m
+//  Pods
 //
-//  Created by Kashif Mohammad on 4/13/13.
-//  Copyright (c) 2014-2015 Vimeo (https://vimeo.com)
+//  Created by Alfred Hanssen on 11/21/15.
+//  Copyright (c) 2015 Vimeo. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,29 +24,31 @@
 //  THE SOFTWARE.
 //
 
-#import "VIMModelObject.h"
+#import "VIMUploadTicket.h"
+#import "VIMVideo.h"
+#import "VIMUser.h"
 
-@class VIMVideoLog;
+@implementation VIMUploadTicket
 
-extern NSString *const __nonnull VIMVideoFileQualityHLS;
-extern NSString *const __nonnull VIMVideoFileQualityHD;
-extern NSString *const __nonnull VIMVideoFileQualitySD;
-extern NSString *const __nonnull VIMVideoFileQualityMobile;
+#pragma mark - VIMMappable
 
-@interface VIMVideoFile : VIMModelObject
+- (NSDictionary *)getObjectMapping
+{
+    return @{@"clip": @"video"};
+}
 
-@property (nonatomic, strong, nullable) NSDate *expirationDate;
-@property (nonatomic, strong, nullable) NSNumber *width;
-@property (nonatomic, strong, nullable) NSNumber *height;
-@property (nonatomic, strong, nullable) NSNumber *size;
-@property (nonatomic, copy, nullable) NSString *link;
-@property (nonatomic, copy, nullable) NSString *quality;
-@property (nonatomic, copy, nullable) NSString *type;
-@property (nonatomic, strong, nullable) VIMVideoLog *log;
-
-- (BOOL)isSupportedMimeType;
-- (BOOL)isDownloadable;
-- (BOOL)isStreamable;
-- (BOOL)isExpired;
+- (Class)getClassForObjectKey:(NSString *)key
+{
+    if ([key isEqualToString:@"clip"])
+    {
+        return [VIMVideo class];
+    }
+    else if ([key isEqualToString:@"user"])
+    {
+        return [VIMUser class];
+    }
+    
+    return nil;
+}
 
 @end

@@ -28,6 +28,8 @@
 #import "VIMUser.h"
 #import "VIMVideo.h"
 #import "VIMComment.h"
+#import "VIMCategory.h"
+#import "VIMChannel.h"
 #import "VIMTrigger.h"
 #import "VIMRequestRetryManager.h"
 #import "VIMSessionConfiguration.h"
@@ -100,6 +102,16 @@ static NSString *const ModelKeyPathData = @"data";
     return [self requestDescriptor:descriptor completionBlock:completionBlock];
 }
 
+- (id<VIMRequestToken>)toggleFollowURI:(NSString *)URI newValue:(BOOL)newValue completionBlock:(VIMRequestCompletionBlock)completionBlock
+{
+    VIMRequestDescriptor *descriptor = [[VIMRequestDescriptor alloc] init];
+    descriptor.urlPath = URI;
+    descriptor.HTTPMethod = ( newValue ? HTTPMethodPUT : HTTPMethodDELETE );
+    descriptor.shouldRetryOnFailure = YES;
+    
+    return [self requestDescriptor:descriptor completionBlock:completionBlock];
+}
+
 #pragma mark - Users
 
 - (id<VIMRequestToken>)userWithURI:(NSString *)URI completionBlock:(VIMRequestCompletionBlock)completionBlock
@@ -122,15 +134,20 @@ static NSString *const ModelKeyPathData = @"data";
     return [self requestDescriptor:descriptor completionBlock:completionBlock];
 }
 
-- (id<VIMRequestToken>)updateUserWithURI:(NSString *)URI username:(NSString *)username location:(NSString *)location completionBlock:(VIMRequestCompletionBlock)completionBlock
+- (id<VIMRequestToken>)updateUserWithURI:(NSString *)URI name:(NSString *)name location:(NSString *)location bio:(NSString *)bio completionBlock:(VIMRequestCompletionBlock)completionBlock;
 {
-    NSParameterAssert(username != nil && location != nil);
-    
     VIMRequestDescriptor *descriptor = [[VIMRequestDescriptor alloc] init];
     descriptor.urlPath = URI;
     descriptor.HTTPMethod = HTTPMethodPATCH;
-    descriptor.parameters = @{@"name" : username, @"location" : location};
-    descriptor.shouldRetryOnFailure = YES;
+    descriptor.shouldRetryOnFailure = NO;
+    
+    NSMutableDictionary *parameters = [NSMutableDictionary new];
+
+    [parameters setObject:name ? name : [NSNull null]  forKey:@"name"];
+    [parameters setObject:location ? location : [NSNull null]  forKey:@"location"];
+    [parameters setObject:bio ? bio : [NSNull null] forKey:@"bio"];
+    
+    descriptor.parameters = parameters;
     
     return [self requestDescriptor:descriptor completionBlock:completionBlock];
 }
@@ -150,12 +167,75 @@ static NSString *const ModelKeyPathData = @"data";
     return [self toggleFollowURI:URI newValue:newValue completionBlock:completionBlock];
 }
 
-- (id<VIMRequestToken>)toggleFollowURI:(NSString *)URI newValue:(BOOL)newValue completionBlock:(VIMRequestCompletionBlock)completionBlock
+#pragma mark - Categories
+
+- (nullable id<VIMRequestToken>)categoryWithURI:(nonnull NSString *)URI completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock
 {
     VIMRequestDescriptor *descriptor = [[VIMRequestDescriptor alloc] init];
     descriptor.urlPath = URI;
-    descriptor.HTTPMethod = ( newValue ? HTTPMethodPUT : HTTPMethodDELETE );
+    descriptor.modelClass = [VIMCategory class];
+    descriptor.modelKeyPath = @"";
+    
+    return [self requestDescriptor:descriptor completionBlock:completionBlock];
+}
+
+- (nullable id<VIMRequestToken>)toggleFollowCategoryWithURI:(nonnull NSString *)URI newValue:(BOOL)newValue completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock
+{
+    return [self toggleFollowURI:URI newValue:newValue completionBlock:completionBlock];
+}
+
+#pragma mark - Channels
+
+- (nullable id<VIMRequestToken>)channelWithURI:(nonnull NSString *)URI completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock
+{
+    VIMRequestDescriptor *descriptor = [[VIMRequestDescriptor alloc] init];
+    descriptor.urlPath = URI;
+    descriptor.modelClass = [VIMChannel class];
+    descriptor.modelKeyPath = @"";
+    
+    return [self requestDescriptor:descriptor completionBlock:completionBlock];
+}
+
+- (nullable id<VIMRequestToken>)toggleFollowChannelWithURI:(nonnull NSString *)URI newValue:(BOOL)newValue completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock
+{
+    return [self toggleFollowURI:URI newValue:newValue completionBlock:completionBlock];
+}
+
+#pragma mark - Pictures
+
+- (id<VIMRequestToken>)createPictureResourceForUserWithURI:(NSString *)URI completionBlock:(VIMRequestCompletionBlock)completionBlock
+{
+    NSParameterAssert(URI != nil);
+
+    VIMRequestDescriptor *descriptor = [[VIMRequestDescriptor alloc] init];
+    descriptor.urlPath = [URI stringByAppendingString:@"/pictures"];
+    descriptor.HTTPMethod = HTTPMethodPOST;
+    descriptor.shouldRetryOnFailure = NO;
+    
+    return [self requestDescriptor:descriptor completionBlock:completionBlock];
+}
+
+- (id<VIMRequestToken>)deletePictureResourceWithURI:(NSString *)URI completionBlock:(VIMRequestCompletionBlock)completionBlock
+{
+    NSParameterAssert(URI != nil);
+
+    VIMRequestDescriptor *descriptor = [[VIMRequestDescriptor alloc] init];
+    descriptor.urlPath = URI;
+    descriptor.HTTPMethod = HTTPMethodDELETE;
     descriptor.shouldRetryOnFailure = YES;
+    
+    return [self requestDescriptor:descriptor completionBlock:completionBlock];
+}
+
+- (id<VIMRequestToken>)activatePictureResourceWithURI:(NSString *)URI completionBlock:(VIMRequestCompletionBlock)completionBlock
+{
+    NSParameterAssert(URI != nil);
+
+    VIMRequestDescriptor *descriptor = [[VIMRequestDescriptor alloc] init];
+    descriptor.urlPath = URI;
+    descriptor.HTTPMethod = HTTPMethodPATCH;
+    descriptor.parameters = @{@"active" : @"true"};
+    descriptor.shouldRetryOnFailure = NO;
     
     return [self requestDescriptor:descriptor completionBlock:completionBlock];
 }
@@ -301,6 +381,21 @@ static NSString *const ModelKeyPathData = @"data";
     descriptor.urlPath = URI;
     descriptor.HTTPMethod = HTTPMethodPOST;
     descriptor.parameters = @{@"text" : text};
+    descriptor.modelClass = [VIMComment class];
+    descriptor.shouldRetryOnFailure = YES;
+    
+    return [self requestDescriptor:descriptor completionBlock:completionBlock];
+}
+
+- (id<VIMRequestToken>)postReplyWithURI:(NSString *)URI text:(NSString *)text completionBlock:(VIMRequestCompletionBlock)completionBlock
+{
+    NSParameterAssert(text != nil);
+    
+    VIMRequestDescriptor *descriptor = [[VIMRequestDescriptor alloc] init];
+    descriptor.urlPath = URI;
+    descriptor.HTTPMethod = HTTPMethodPOST;
+    descriptor.parameters = @{@"text" : text};
+    descriptor.modelClass = [VIMComment class];
     descriptor.shouldRetryOnFailure = YES;
     
     return [self requestDescriptor:descriptor completionBlock:completionBlock];

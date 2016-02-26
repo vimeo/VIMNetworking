@@ -26,7 +26,6 @@
 
 #import "VIMCategory.h"
 #import "VIMPictureCollection.h"
-#import "NSString+MD5.h"
 #import "VIMConnection.h"
 #import "VIMInteraction.h"
 
@@ -41,13 +40,6 @@
 @end
 
 @implementation VIMCategory
-
-- (NSString *)objectID
-{
-    NSAssert([self.uri length] > 0, @"Object does not have a uri, cannot generate objectID");
-    
-    return [self.uri MD5];
-}
 
 #pragma mark - Public API
 
@@ -155,6 +147,14 @@
     {
         self.modifiedTime = [[VIMModelObject dateFormatter] dateFromString:(NSString *)self.modifiedTime];
     }
+}
+
+#pragma mark - Helpers
+
+- (BOOL)isFollowing
+{
+    VIMInteraction *interaction = [self interactionWithName:VIMInteractionNameFollow];
+    return (interaction && interaction.added.boolValue);
 }
 
 @end

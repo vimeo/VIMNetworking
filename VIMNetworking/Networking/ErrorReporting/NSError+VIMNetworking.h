@@ -12,11 +12,11 @@ typedef NS_ENUM(NSInteger, VIMErrorCode)
 {
     VIMErrorCodeUploadStorageQuotaExceeded = 4101,
     VIMErrorCodeUploadDailyQuotaExceeded = 4102,
-    
-    VIMErrorCodeNoVideoPasswordProvided = 2223,
-    VIMErrorCodeVideoPasswordIncorrect = 2222,
-    
+        
     VIMErrorCodeInvalidRequestInput = 2204, // root error code for all invalid parameters errors below
+    
+    VIMErrorCodeVideoPasswordIncorrect = 2222,
+    VIMErrorCodeNoVideoPasswordProvided = 2223,
     
     VIMErrorCodeEmailTooLong = 2216,
     VIMErrorCodePasswordTooShort = 2210,
@@ -70,24 +70,16 @@ extern NSString * const __nonnull VimeoErrorCodeKeyLegacy;
 #pragma mark - Error Types
 
 - (BOOL)isServiceUnavailableError;
-
 - (BOOL)isInvalidTokenError;
-
-- (BOOL)isPasswordIncorrectError;
-
-- (BOOL)isUploadQuotaError;
-- (BOOL)isUploadQuotaDailyExceededError;
-- (BOOL)isUploadQuotaStorageExceededError;
 - (BOOL)isOfflineError;
 
 #pragma mark - Helpers
 
 - (NSInteger)statusCode;
-- (nullable NSDictionary *)errorResponseBodyJSON;
-
-- (NSInteger)vimeoErrorCode;
-- (nonnull NSArray *)vimeoInvalidParametersErrorCodes;
+- (NSInteger)vimeoServerErrorCode;
 - (NSInteger)vimeoInvalidParametersFirstErrorCode;
+- (nonnull NSArray *)vimeoInvalidParametersErrorCodes;
+- (nullable NSDictionary *)errorResponseBodyJSON;
 - (nullable NSString *)vimeoInvalidParametersErrorCodesString;
 - (nullable NSString *)vimeoUserMessage;
 - (nullable NSString *)vimeoDeveloperMessage;

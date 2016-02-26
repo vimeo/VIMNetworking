@@ -1,9 +1,9 @@
 //
-//  VIMVideoFile.h
+//  VIMVideoUtils.h
 //  VIMNetworking
 //
-//  Created by Kashif Mohammad on 4/13/13.
-//  Copyright (c) 2014-2015 Vimeo (https://vimeo.com)
+//  Created by Hanssen, Alfie on 11/5/15.
+//  Copyright © 2015 Vimeo. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,29 +24,16 @@
 //  THE SOFTWARE.
 //
 
-#import "VIMModelObject.h"
+#import <Foundation/Foundation.h>
+#import <CoreGraphics/CoreGraphics.h>
 
-@class VIMVideoLog;
+@class VIMVideoFile;
+@class VIMVideo;
 
-extern NSString *const __nonnull VIMVideoFileQualityHLS;
-extern NSString *const __nonnull VIMVideoFileQualityHD;
-extern NSString *const __nonnull VIMVideoFileQualitySD;
-extern NSString *const __nonnull VIMVideoFileQualityMobile;
+@interface VIMVideoUtils : NSObject
 
-@interface VIMVideoFile : VIMModelObject
-
-@property (nonatomic, strong, nullable) NSDate *expirationDate;
-@property (nonatomic, strong, nullable) NSNumber *width;
-@property (nonatomic, strong, nullable) NSNumber *height;
-@property (nonatomic, strong, nullable) NSNumber *size;
-@property (nonatomic, copy, nullable) NSString *link;
-@property (nonatomic, copy, nullable) NSString *quality;
-@property (nonatomic, copy, nullable) NSString *type;
-@property (nonatomic, strong, nullable) VIMVideoLog *log;
-
-- (BOOL)isSupportedMimeType;
-- (BOOL)isDownloadable;
-- (BOOL)isStreamable;
-- (BOOL)isExpired;
++ (nullable VIMVideoFile *)hlsFileForVideo:(nonnull VIMVideo *)video screenSize:(CGSize)size;
++ (nullable VIMVideoFile *)mp4FileForVideo:(nonnull VIMVideo *)video screenSize:(CGSize)size;
++ (nullable VIMVideoFile *)fallbackFileForVideo:(nonnull VIMVideo *)video file:(nonnull VIMVideoFile *)file screenSize:(CGSize)size;
 
 @end

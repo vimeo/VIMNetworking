@@ -35,6 +35,7 @@
 #import "VIMObjectMapper.h"
 #import "VIMHTTPRequestSerializer.h"
 #import "VIMKeychain.h"
+#import "VIMUser.h"
 
 static NSString *const ClientCredentialsAccountKey = @"ClientCredentialsAccountKey";
 static NSString *const UserAccountKey = @"UserAccountKey";
@@ -102,13 +103,6 @@ static VIMSession *_sharedSession;
 
 - (void)applicationDidEnterForeground:(NSNotification *)notification
 {
-    self.account = [self loadAccountIfPossible]; // Reload account in the event that an auth event occurred in the an app extension
-    self.client.cache = [self buildCache];
-
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [[NSNotificationCenter defaultCenter] postNotificationName:VIMSession_AuthenticatedAccountDidChangeNotification object:nil];
-    });
-
     if (self.currentUserRefreshRequest)
     {
         return;
@@ -269,12 +263,16 @@ static VIMSession *_sharedSession;
         NSLog(@"Unable to save account for key: %@", key);
     }
 
+    VIMAccountNew *originalAccount = self.account;
     self.account = account;
     self.client.cache = [self buildCache];
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [[NSNotificationCenter defaultCenter] postNotificationName:VIMSession_AuthenticatedAccountDidChangeNotification object:nil];
-    });
+    if (![originalAccount.accessToken isEqualToString:self.account.accessToken])
+    {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:VIMSession_AuthenticatedAccountDidChangeNotification object:nil];
+        });
+    }
     
     if (completionBlock)
     {
@@ -385,6 +383,7 @@ static VIMSession *_sharedSession;
         NSLog(@"Unable to delete account for key: %@", UserAccountKey);
     }
     
+    VIMAccountNew *originalAccount = self.account;
     self.account = account;
     
     [self.client.cache removeAllObjects];
@@ -400,9 +399,12 @@ static VIMSession *_sharedSession;
         return nil;
     }
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [[NSNotificationCenter defaultCenter] postNotificationName:VIMSession_AuthenticatedAccountDidChangeNotification object:nil];
-    });
+    if (![originalAccount.accessToken isEqualToString:self.account.accessToken])
+    {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:VIMSession_AuthenticatedAccountDidChangeNotification object:nil];
+        });
+    }
 
     return logoutRequest;
 }
@@ -434,12 +436,16 @@ static VIMSession *_sharedSession;
         NSLog(@"Unable to save account");
     }
     
+    VIMAccountNew *originalAccount = self.account;
     self.account = account;
     self.client.cache = [self buildCache];
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [[NSNotificationCenter defaultCenter] postNotificationName:VIMSession_AuthenticatedAccountDidChangeNotification object:nil];
-    });
+    if (![originalAccount.accessToken isEqualToString:self.account.accessToken])
+    {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:VIMSession_AuthenticatedAccountDidChangeNotification object:nil];
+        });
+    }
     
     return YES;
 }

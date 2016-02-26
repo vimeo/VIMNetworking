@@ -24,15 +24,14 @@
 //  THE SOFTWARE.
 //
 
+#import "VIMObjectMapper.h"
 #import "VIMUser.h"
 #import "VIMConnection.h"
 #import "VIMInteraction.h"
 #import "VIMPictureCollection.h"
 #import "VIMPicture.h"
-#import "VIMObjectMapper.h"
-#import "NSString+MD5.h"
-#import "VIMSession.h"
 #import "VIMPreference.h"
+#import "VIMUploadQuota.h"
 
 @interface VIMUser ()
 
@@ -40,19 +39,11 @@
 @property (nonatomic, strong) NSDictionary *connections;
 @property (nonatomic, strong) NSDictionary *interactions;
 
-@property (nonatomic, copy) NSString *account;
 @property (nonatomic, assign, readwrite) VIMUserAccountType accountType;
 
 @end
 
 @implementation VIMUser
-
-- (NSString *)objectID
-{
-    NSAssert([self.uri length] > 0, @"Object does not have a uri, cannot generate objectID");
-    
-    return [self.uri MD5];
-}
 
 #pragma mark - Public API
 
@@ -83,6 +74,11 @@
     if ([key isEqualToString:@"preferences"])
     {
         return [VIMPreference class];
+    }
+
+    if ([key isEqualToString:@"upload_quota"])
+    {
+        return [VIMUploadQuota class];
     }
 
     return nil;

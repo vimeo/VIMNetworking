@@ -26,6 +26,7 @@
 
 #import "VIMVideo.h"
 
+#import "VIMObjectMapper.h"
 #import "VIMUser.h"
 #import "VIMPicture.h"
 #import "VIMVideoFile.h"
@@ -34,8 +35,6 @@
 #import "VIMPictureCollection.h"
 #import "VIMPrivacy.h"
 #import "VIMAppeal.h"
-#import "NSString+MD5.h"
-#import "VIMObjectMapper.h"
 #import "VIMTag.h"
 #import "VIMVideoLog.h"
 #import "VIMCategory.h"
@@ -58,13 +57,6 @@ NSString *VIMContentRating_Safe = @"safe";
 @implementation VIMVideo
 
 #pragma mark - Accessors
-
-- (NSString *)objectID
-{
-    NSAssert([self.uri length] > 0, @"Object does not have a uri, cannot generate objectID");
-    
-    return [self.uri MD5];
-}
 
 #pragma mark - Public API
 
@@ -259,11 +251,17 @@ NSString *VIMContentRating_Safe = @"safe";
                                       [NSNumber numberWithInt:VIMVideoProcessingStatusAvailable], @"available",
                                       [NSNumber numberWithInt:VIMVideoProcessingStatusUploading], @"uploading",
                                       [NSNumber numberWithInt:VIMVideoProcessingStatusTranscoding], @"transcoding",
+                                      [NSNumber numberWithInt:VIMVideoProcessingStatusTranscodeStarting], @"transcode_starting",
                                       [NSNumber numberWithInt:VIMVideoProcessingStatusUploadingError], @"uploading_error",
                                       [NSNumber numberWithInt:VIMVideoProcessingStatusTranscodingError], @"transcoding_error",
+                                      [NSNumber numberWithInt:VIMVideoProcessingStatusQuotaExceeded], @"quota_exceeded",
                                       nil];
     
-    self.videoStatus = [[statusDictionary objectForKey:self.status] intValue];
+    NSNumber *number = [statusDictionary objectForKey:self.status];
+    
+    NSAssert(number != nil, @"Video status not handled, unknown video status");
+    
+    self.videoStatus = [number intValue];
 }
 
 # pragma mark - Helpers
@@ -318,7 +316,7 @@ NSString *VIMContentRating_Safe = @"safe";
 
 - (BOOL)isTranscoding
 {
-    return self.videoStatus == VIMVideoProcessingStatusTranscoding;
+    return self.videoStatus == VIMVideoProcessingStatusTranscoding || self.videoStatus == VIMVideoProcessingStatusTranscodeStarting;
 }
 
 - (BOOL)isUploading
@@ -413,112 +411,6 @@ NSString *VIMContentRating_Safe = @"safe";
     VIMConnection *commentsConnection = [self connectionWithName:VIMConnectionNameComments];
     
     return (self.canViewComments ? commentsConnection.total.intValue : 0);
-}
-
-#pragma mark - File Selection
-
-- (VIMVideoFile *)hlsFileForScreenSize:(CGSize)size
-{
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.quality == %@", VIMVideoFileQualityHLS];
-    
-    return [self fileForPredicate:predicate screenSize:size];
-}
-
-- (VIMVideoFile *)mp4FileForScreenSize:(CGSize)size
-{
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.quality != %@", VIMVideoFileQualityHLS];
-
-    return [self fileForPredicate:predicate screenSize:size];
-}
-
-- (nullable VIMVideoFile *)fallbackFileForFile:(VIMVideoFile *)file screenSize:(CGSize)size
-{
-    if (!file)
-    {
-        return nil;
-    }
-    
-    NSPredicate *predicate = nil;
-    
-    if ([file.quality isEqualToString:VIMVideoFileQualityHLS])
-    {
-        // There will only ever be one HSL file so we choose !HLS [AH] 8/31/2015
-        predicate = [NSPredicate predicateWithFormat:@"SELF.quality != %@", VIMVideoFileQualityHLS];
-    }
-    else
-    {
-        if (!file.width ||
-            !file.height ||
-            [file.width isEqual:[NSNull null]] ||
-            [file.height isEqual:[NSNull null]] ||
-            [file.width isEqual:@(0)] ||
-            [file.height isEqual:@(0)])
-        {
-            return nil;
-        }
-        
-        // And we want to exclude the file we're falling back from [AH] 8/31/2015
-        predicate = [NSPredicate predicateWithFormat:@"SELF.quality != %@ && SELF.width.integerValue < %i", VIMVideoFileQualityHLS, file.width.integerValue];
-    }
-    
-    return [self fileForPredicate:predicate screenSize:size];
-}
-
-- (VIMVideoFile *)fileForPredicate:(NSPredicate *)predicate screenSize:(CGSize)size
-{
-    if (CGSizeEqualToSize(size, CGSizeZero) || predicate == nil)
-    {
-        return nil;
-    }
-    
-    NSArray *filteredFiles = [self.files filteredArrayUsingPredicate:predicate];
-    
-    // Sort largest to smallest
-    NSArray *sortedFiles = [filteredFiles sortedArrayUsingComparator:^NSComparisonResult(VIMVideoFile *a, VIMVideoFile *b) {
-        
-        NSNumber *first = [a width];
-        NSNumber *second = [b width];
-        
-        return [second compare:first];
-    
-    }];
-    
-    VIMVideoFile *file = nil;
-    
-    // TODO: augment this to handle portrait videos [AH]
-    NSInteger targetScreenWidth = MAX(size.width, size.height);
-
-    for (VIMVideoFile *currentFile in sortedFiles)
-    {
-        if ([currentFile isSupportedMimeType] && currentFile.link)
-        {
-            // We dont yet have a file, grab the largest one (based on sort order above)
-            if (file == nil)
-            {
-                file = currentFile;
-                
-                continue;
-            }
-            
-            // We dont have the info with which to compare the files
-            // TODO: is this a problem? HLS files report width/height of 0,0 [AH] 8/31/2015
-            if ((file.width == nil || currentFile.width == nil ||
-                 [file.width isEqual:[NSNull null]] || [currentFile.width isEqual:[NSNull null]] ||
-                 [file.width isEqual:@(0)] || [currentFile.width isEqual:@(0)]))
-            {
-                continue;
-            }
-            
-            if (currentFile.width.intValue > targetScreenWidth && currentFile.width.intValue < file.width.intValue)
-            {
-                file = currentFile;
-            }
-        }
-    }
-    
-//    NSLog(@"selected (%@, %@) for screensize (%@) out of %lu choices with format %@", file.width, file.height, NSStringFromCGSize(size), (unsigned long)[sortedFiles count], predicate.predicateFormat);
-
-    return file;
 }
 
 @end

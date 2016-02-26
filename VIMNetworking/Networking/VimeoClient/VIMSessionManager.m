@@ -37,6 +37,8 @@
 
 @implementation VIMSessionManager
 
+#pragma mark - Public API
+
 - (instancetype)initWithDefaultSession
 {
     NSURL *baseURL = [NSURL URLWithString:[VIMSession sharedSession].configuration.baseURLString];
@@ -48,6 +50,8 @@
 {
     return [self initWithBackgroundSessionID:sessionID sharedContainerID:nil];
 }
+
+#pragma mark - Private API
 
 - (instancetype)initWithBackgroundSessionID:(NSString *)sessionID sharedContainerID:(NSString *)sharedContainerID
 {
