@@ -39,6 +39,10 @@
 
 - (nullable id<VIMRequestToken>)toggleFollowURI:(nonnull NSString *)URI newValue:(BOOL)newValue completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 
+#pragma mark - General
+
+- (nullable id<VIMRequestToken>)modelObjectWithURI:(nonnull NSString *)URI modelClass:(nonnull Class)modelClass completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
+
 #pragma mark - Users
 
 - (nullable id<VIMRequestToken>)userWithURI:(nonnull NSString *)URI completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;

@@ -112,6 +112,18 @@ static NSString *const ModelKeyPathData = @"data";
     return [self requestDescriptor:descriptor completionBlock:completionBlock];
 }
 
+#pragma mark - General
+
+- (nullable id<VIMRequestToken>)modelObjectWithURI:(nonnull NSString *)URI modelClass:(Class)modelClass completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock
+{
+    VIMRequestDescriptor *descriptor = [[VIMRequestDescriptor alloc] init];
+    descriptor.urlPath = URI;
+    descriptor.modelClass = modelClass;
+    descriptor.modelKeyPath = @"";
+    
+    return [self requestDescriptor:descriptor completionBlock:completionBlock];
+}
+
 #pragma mark - Users
 
 - (id<VIMRequestToken>)userWithURI:(NSString *)URI completionBlock:(VIMRequestCompletionBlock)completionBlock
