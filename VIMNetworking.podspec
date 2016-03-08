@@ -35,7 +35,7 @@ Pod::Spec.new do |s|
     ss.dependency 'VIMNetworking/Keychain'
     ss.dependency 'VIMNetworking/Model'
     ss.dependency 'VIMNetworking/Private'
-    ss.dependency 'AFNetworking'
+    ss.dependency 'AFNetworking', '2.6.3'
   end
 
   s.subspec 'Private' do |ss|
@@ -57,7 +57,7 @@ Pod::Spec.new do |s|
   s.subspec 'Model' do |ss|
     ss.source_files = 'VIMNetworking/Model/*.{h,m}'
     ss.frameworks = 'Foundation', 'CoreGraphics', 'AVFoundation'
-    ss.dependency	'VIMObjectMapper'
+    ss.dependency	'VIMObjectMapper', '6.0.0'
   end
 
   s.subspec 'AFNetworking' do |ss|
