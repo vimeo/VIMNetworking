@@ -75,8 +75,7 @@ NSString *VIMContentRating_Safe = @"safe";
 - (NSDictionary *)getObjectMapping
 {
     return @{@"description": @"videoDescription",
-             @"pictures": @"pictureCollection",
-             @"password": @"password"};
+             @"pictures": @"pictureCollection"};
 }
 
 - (Class)getClassForCollectionKey:(NSString *)key
