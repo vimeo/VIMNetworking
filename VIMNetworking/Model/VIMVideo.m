@@ -377,6 +377,7 @@ NSString *VIMContentRating_Safe = @"safe";
     return ![contentRating isEqualToString:VIMContentRating_Unrated] && ![contentRating isEqualToString:VIMContentRating_Safe];
 }
 
+
 - (NSString *)singleContentRatingIfAvailable
 {
     NSString *contentRating = nil;

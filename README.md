@@ -4,10 +4,6 @@
 
 If you'd like to upload videos check out [VIMUpload](https://github.com/vimeo/VIMUpload). 
 
-## Sample Project
-
-Check out the [Pegasus](https://github.com/vimeo/Pegasus) sample project.
-
 ## Setup
 
 ### CocoaPods
