@@ -20,14 +20,14 @@ PODS:
   - AFNetworking/UIKit (2.6.3):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
-  - VIMObjectMapper (6.0.0)
+  - VIMObjectMapper (6.0.1)
 
 DEPENDENCIES:
   - AFNetworking (= 2.6.3)
-  - VIMObjectMapper (= 6.0.0)
+  - VIMObjectMapper (= 6.0.1)
 
 SPEC CHECKSUMS:
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
-  VIMObjectMapper: 7dd7bb8aeb72f8a54711d1688c2a4d06b152f479
+  VIMObjectMapper: f4dcba63848dff29f40708926358294448b00abb
 
 COCOAPODS: 0.39.0
