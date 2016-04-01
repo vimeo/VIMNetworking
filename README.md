@@ -255,9 +255,17 @@ client.cache = VIMCache *cache = [VIMCache sharedCache];
 
 ```
 
+## Found an Issue?
+
+Please file it in the git [issue tracker](https://github.com/vimeo/VIMNetworking/issues).
+
+## Want to Contribute?
+
+If you'd like to contribute, please follow our guidelines found in [CONTRIBUTING.md](CONTRIBUTING.md).
+
 ## License
 
-`VIMNetworking` is available under the MIT license. See the [LICENSE] file for more info.
+`VIMNetworking` is available under the MIT license. See the [LICENSE](LICENSE.md) file for more info.
 
 ## Questions?
 
