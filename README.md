@@ -2,7 +2,7 @@
 
 `VIMNetworking` is an Objective-C library that enables interaction with the [Vimeo API](https://developers.vimeo.com).  It handles authentication, request submission, and request cancellation. Advanced features include caching and powerful model object parsing. 
 
-If you'd like to upload videos check out [VIMUpload](https://github.com/vimeo/VIMUpload). 
+If you'd like to upload videos check out [VimeoUpload](https://github.com/vimeo/VimeoUpload). 
 
 ## Setup
 
@@ -11,7 +11,7 @@ If you'd like to upload videos check out [VIMUpload](https://github.com/vimeo/VI
 ```Ruby
 # Add this to your podfile
 target 'YourTarget' do
-	pod 'VIMNetworking', '5.5.5' # Replace with the latest version
+    pod 'VIMNetworking', '{CURRENT_POD_VERSION}'
 end
 ```
 
@@ -257,12 +257,14 @@ client.cache = VIMCache *cache = [VIMCache sharedCache];
 
 ## License
 
-`VIMNetworking` is available under the MIT license. See the LICENSE file for more info.
+`VIMNetworking` is available under the MIT license. See the [LICENSE] file for more info.
 
 ## Questions?
 
-Tweet at us here: @vimeoapi
+Tweet at us here: [@vimeoapi](https://twitter.com/vimeoapi).
 
-Post on [Stackoverflow](http://stackoverflow.com/questions/tagged/vimeo-ios) with the tag `vimeo-ios`
+Post on [Stackoverflow](http://stackoverflow.com/questions/tagged/vimeo-ios) with the tag `vimeo-ios`.
 
-Get in touch [here](Vimeo.com/help/contact)
+Get in touch [here](https://vimeo.com/help/contact).
+
+Interested in working at Vimeo? We're [hiring](https://vimeo.com/jobs)!
