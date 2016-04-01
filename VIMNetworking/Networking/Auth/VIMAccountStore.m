@@ -28,7 +28,6 @@
 #import "VIMAccount.h"
 #import "VIMKeychain.h"
 #import "VIMAccount.h"
-#import "VIMAccountCredential.h"
 #import "VIMObjectMapper.h"
 #import "VIMUser.h"
 
