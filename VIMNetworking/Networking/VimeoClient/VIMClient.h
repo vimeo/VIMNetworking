@@ -37,7 +37,11 @@
 
 - (nullable id<VIMRequestToken>)resetPasswordWithEmail:(nonnull NSString *)email completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 
-- (nullable id<VIMRequestToken>)toggleFollowURI:(nonnull NSString *)URI newValue:(BOOL)newValue completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
+- (nullable id<VIMRequestToken>)toggleURI:(nonnull NSString *)URI newValue:(BOOL)newValue completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
+
+#pragma mark - General
+
+- (nullable id<VIMRequestToken>)modelObjectWithURI:(nonnull NSString *)URI modelClass:(nonnull Class)modelClass completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 
 #pragma mark - Users
 

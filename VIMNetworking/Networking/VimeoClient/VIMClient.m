@@ -102,12 +102,24 @@ static NSString *const ModelKeyPathData = @"data";
     return [self requestDescriptor:descriptor completionBlock:completionBlock];
 }
 
-- (id<VIMRequestToken>)toggleFollowURI:(NSString *)URI newValue:(BOOL)newValue completionBlock:(VIMRequestCompletionBlock)completionBlock
+- (id<VIMRequestToken>)toggleURI:(NSString *)URI newValue:(BOOL)newValue completionBlock:(VIMRequestCompletionBlock)completionBlock
 {
     VIMRequestDescriptor *descriptor = [[VIMRequestDescriptor alloc] init];
     descriptor.urlPath = URI;
     descriptor.HTTPMethod = ( newValue ? HTTPMethodPUT : HTTPMethodDELETE );
     descriptor.shouldRetryOnFailure = YES;
+    
+    return [self requestDescriptor:descriptor completionBlock:completionBlock];
+}
+
+#pragma mark - General
+
+- (nullable id<VIMRequestToken>)modelObjectWithURI:(nonnull NSString *)URI modelClass:(Class)modelClass completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock
+{
+    VIMRequestDescriptor *descriptor = [[VIMRequestDescriptor alloc] init];
+    descriptor.urlPath = URI;
+    descriptor.modelClass = modelClass;
+    descriptor.modelKeyPath = @"";
     
     return [self requestDescriptor:descriptor completionBlock:completionBlock];
 }
@@ -164,7 +176,7 @@ static NSString *const ModelKeyPathData = @"data";
 
 - (id<VIMRequestToken>)toggleFollowUserWithURI:(NSString *)URI newValue:(BOOL)newValue completionBlock:(VIMRequestCompletionBlock)completionBlock
 {
-    return [self toggleFollowURI:URI newValue:newValue completionBlock:completionBlock];
+    return [self toggleURI:URI newValue:newValue completionBlock:completionBlock];
 }
 
 #pragma mark - Categories
@@ -181,7 +193,7 @@ static NSString *const ModelKeyPathData = @"data";
 
 - (nullable id<VIMRequestToken>)toggleFollowCategoryWithURI:(nonnull NSString *)URI newValue:(BOOL)newValue completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock
 {
-    return [self toggleFollowURI:URI newValue:newValue completionBlock:completionBlock];
+    return [self toggleURI:URI newValue:newValue completionBlock:completionBlock];
 }
 
 #pragma mark - Channels
@@ -198,7 +210,7 @@ static NSString *const ModelKeyPathData = @"data";
 
 - (nullable id<VIMRequestToken>)toggleFollowChannelWithURI:(nonnull NSString *)URI newValue:(BOOL)newValue completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock
 {
-    return [self toggleFollowURI:URI newValue:newValue completionBlock:completionBlock];
+    return [self toggleURI:URI newValue:newValue completionBlock:completionBlock];
 }
 
 #pragma mark - Pictures
