@@ -1,7 +1,9 @@
-platform :ios, '7.0'
+
+platform :ios, '8.0'
 
 def shared_pods
-    pod 'VIMObjectMapper', '6.0.0'
+    use_frameworks!
+    pod 'VIMObjectMapper', '6.0.1'
     pod 'AFNetworking', '2.6.3'
 end
 
