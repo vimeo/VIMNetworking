@@ -26,33 +26,7 @@ Pod::Spec.new do |s|
   s.source = { :git => "https://github.com/vimeo/VIMNetworking.git", :tag => s.version.to_s }
 
   s.source_files = 'VIMNetworking/**/*.{h,m}'
-  s.frameworks = 'Foundation'
-
-  s.subspec 'Networking' do |ss|
-    ss.source_files = 'VIMNetworking/Networking/**/*.{h,m}'
-    ss.frameworks = 'Foundation', 'UIKit'
-    ss.dependency 'VIMNetworking/Private'
-    ss.dependency 'VIMNetworking/Cache'
-    ss.dependency 'VIMNetworking/Keychain'
-    ss.dependency 'VIMNetworking/Model'
-    ss.dependency 'AFNetworking', '2.6.3'
-  end
-
-  s.subspec 'Private' do |ss|
-    ss.source_files = 'VIMNetworking/Private/**/*.{h,m}'
-    ss.frameworks = 'Foundation', 'UIKit'
-    ss.dependency 'VIMNetworking/Model'
-  end
-
-  s.subspec 'Cache' do |ss|
-    ss.source_files = 'VIMNetworking/Cache/VIMCache.{h,m}'
-    ss.frameworks = 'Foundation', 'UIKit'
-  end
-
-  s.subspec 'Keychain' do |ss|
-    ss.source_files = 'VIMNetworking/Keychain/VIMKeychain.{h,m}'
-    ss.frameworks = 'Foundation', 'Security'
-  end
+  s.frameworks = "Foundation", "UIKit", "Security"
 
   s.subspec 'Model' do |ss|
     ss.source_files = 'VIMNetworking/Model/*.{h,m}'
