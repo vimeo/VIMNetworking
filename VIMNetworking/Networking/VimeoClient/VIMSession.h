@@ -27,7 +27,7 @@
 #import <Foundation/Foundation.h>
 #import "VIMAuthenticator.h"
 #import "VIMClient.h"
-#import "VIMAccountNew.h"
+#import "VIMAccount.h"
 #import "VIMSessionConfiguration.h"
 
 typedef void (^VIMErrorCompletionBlock)(NSError * __nullable error);
@@ -38,7 +38,7 @@ extern NSString *const __nonnull VIMSession_AuthenticatedUserDidRefreshNotificat
 @interface VIMSession : NSObject
 
 @property (nonatomic, strong, readonly, nonnull) VIMSessionConfiguration *configuration;
-@property (nonatomic, strong, readonly, nullable) VIMAccountNew *account;
+@property (nonatomic, strong, readonly, nullable) VIMAccount *account;
 @property (nonatomic, strong, readonly, nonnull) VIMAuthenticator *authenticator;
 @property (nonatomic, strong, readonly, nonnull) VIMClient *client;
 
@@ -56,7 +56,7 @@ extern NSString *const __nonnull VIMSession_AuthenticatedUserDidRefreshNotificat
 
 #pragma mark - Configuration
 
-- (BOOL)changeAccount:(nonnull VIMAccountNew *)account;
+- (BOOL)changeAccount:(nonnull VIMAccount *)account;
 
 - (BOOL)changeBaseURL:(nonnull NSString *)baseURLString;
 

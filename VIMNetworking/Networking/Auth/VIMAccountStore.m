@@ -25,9 +25,9 @@
 //
 
 #import "VIMAccountStore.h"
-#import "VIMAccountNew.h"
+#import "VIMAccount.h"
 #import "VIMKeychain.h"
-#import "VIMAccountNew.h"
+#import "VIMAccount.h"
 #import "VIMAccountCredential.h"
 #import "VIMObjectMapper.h"
 #import "VIMUser.h"
@@ -36,7 +36,7 @@
 
 #pragma mark - VIMAccountStoreProtocol
 
-+ (VIMAccountNew *)loadAccountForKey:(NSString *)key
++ (VIMAccount *)loadAccountForKey:(NSString *)key
 {
     NSParameterAssert(key);
     
@@ -45,7 +45,7 @@
         return nil;
     }
     
-    VIMAccountNew *account = nil;
+    VIMAccount *account = nil;
     
     NSData *data = [[VIMKeychain sharedInstance] dataForAccount:key];
     if (data)
@@ -84,7 +84,7 @@
 
 // TODO: should we not be saving the user object? [AH]
 
-+ (BOOL)saveAccount:(VIMAccountNew *)account forKey:(NSString *)key
++ (BOOL)saveAccount:(VIMAccount *)account forKey:(NSString *)key
 {
     NSParameterAssert(key);
     NSParameterAssert(account);

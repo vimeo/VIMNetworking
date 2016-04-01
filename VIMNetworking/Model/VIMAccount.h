@@ -28,7 +28,7 @@
 
 @class VIMUser;
 
-@interface VIMAccountNew : VIMModelObject
+@interface VIMAccount : VIMModelObject
 
 @property (nonatomic, copy, nullable) NSString *accessToken;
 @property (nonatomic, copy, nullable) NSString *tokenType;

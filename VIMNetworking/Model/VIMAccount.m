@@ -24,14 +24,14 @@
 //  THE SOFTWARE.
 //
 
-#import "VIMAccountNew.h"
+#import "VIMAccount.h"
 #import "VIMUser.h"
 
-@interface VIMAccountNew () <NSCoding, NSSecureCoding>
+@interface VIMAccount () <NSCoding, NSSecureCoding>
 
 @end
 
-@implementation VIMAccountNew
+@implementation VIMAccount
 
 #pragma mark - Public API
 

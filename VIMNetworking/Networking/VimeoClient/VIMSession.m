@@ -45,7 +45,7 @@ NSString *const VIMSession_AuthenticatedUserDidRefreshNotification = @"VIMSessio
 
 @interface VIMSession () <VIMRequestSerializerDelegate>
 
-@property (nonatomic, strong, readwrite) VIMAccountNew *account;
+@property (nonatomic, strong, readwrite) VIMAccount *account;
 @property (nonatomic, strong, readwrite) VIMAuthenticator *authenticator;
 @property (nonatomic, strong, readwrite) VIMClient *client;
 
@@ -154,9 +154,9 @@ static VIMSession *_sharedSession;
 
 #pragma mark - Private API
 
-- (VIMAccountNew *)loadAccountIfPossible
+- (VIMAccount *)loadAccountIfPossible
 {
-    VIMAccountNew *account = [VIMAccountStore loadAccountForKey:UserAccountKey];
+    VIMAccount *account = [VIMAccountStore loadAccountForKey:UserAccountKey];
     
     if (account == nil)
     {
@@ -207,7 +207,7 @@ static VIMSession *_sharedSession;
     return cache;
 }
 
-- (void)authenticationCompleteWithAccount:(VIMAccountNew *)account error:(NSError *)error key:(NSString *)key completionBlock:(VIMErrorCompletionBlock)completionBlock
+- (void)authenticationCompleteWithAccount:(VIMAccount *)account error:(NSError *)error key:(NSString *)key completionBlock:(VIMErrorCompletionBlock)completionBlock
 {
     NSParameterAssert(key);
     NSAssert((account || error) && !(account && error), @"account and error are mutually exclusive");
@@ -243,7 +243,7 @@ static VIMSession *_sharedSession;
         NSLog(@"Unable to save account for key: %@", key);
     }
 
-    VIMAccountNew *originalAccount = self.account;
+    VIMAccount *originalAccount = self.account;
     self.account = account;
     self.client.cache = [self buildCache];
     
@@ -277,7 +277,7 @@ static VIMSession *_sharedSession;
     }
     
     __weak typeof(self) weakSelf = self;
-    return [self.authenticator authenticateWithClientCredentialsGrant:^(VIMAccountNew *account, NSError *error) {
+    return [self.authenticator authenticateWithClientCredentialsGrant:^(VIMAccount *account, NSError *error) {
         
         [weakSelf authenticationCompleteWithAccount:account error:error key:ClientCredentialsAccountKey completionBlock:completionBlock];
 
@@ -289,7 +289,7 @@ static VIMSession *_sharedSession;
     NSAssert([self.account isAuthenticatedWithUser] == NO, @"Attempt to authenticate as user when already authenticated as user");
 
     __weak typeof(self) weakSelf = self;
-    return [self.authenticator authenticateWithCodeGrantResponseURL:responseURL completionBlock:^(VIMAccountNew *account, NSError *error) {
+    return [self.authenticator authenticateWithCodeGrantResponseURL:responseURL completionBlock:^(VIMAccount *account, NSError *error) {
         
         [weakSelf authenticationCompleteWithAccount:account error:error key:UserAccountKey completionBlock:completionBlock];
 
@@ -301,7 +301,7 @@ static VIMSession *_sharedSession;
     NSAssert([self.account isAuthenticatedWithUser] == NO, @"Attempt to authenticate as user when already authenticated as user");
 
     __weak typeof(self) weakSelf = self;
-    return [self.authenticator loginWithEmail:email password:password completionBlock:^(VIMAccountNew *account, NSError *error) {
+    return [self.authenticator loginWithEmail:email password:password completionBlock:^(VIMAccount *account, NSError *error) {
         
         [weakSelf authenticationCompleteWithAccount:account error:error key:UserAccountKey completionBlock:completionBlock];
 
@@ -313,7 +313,7 @@ static VIMSession *_sharedSession;
     NSAssert([self.account isAuthenticatedWithUser] == NO, @"Attempt to authenticate as user when already authenticated as user");
 
     __weak typeof(self) weakSelf = self;
-    return [self.authenticator joinWithName:name email:email password:password completionBlock:^(VIMAccountNew *account, NSError *error) {
+    return [self.authenticator joinWithName:name email:email password:password completionBlock:^(VIMAccount *account, NSError *error) {
         
         [weakSelf authenticationCompleteWithAccount:account error:error key:UserAccountKey completionBlock:completionBlock];
 
@@ -325,7 +325,7 @@ static VIMSession *_sharedSession;
     NSAssert([self.account isAuthenticatedWithUser] == NO, @"Attempt to authenticate as user when already authenticated as user");
 
     __weak typeof(self) weakSelf = self;
-    return [self.authenticator loginWithFacebookToken:facebookToken completionBlock:^(VIMAccountNew *account, NSError *error) {
+    return [self.authenticator loginWithFacebookToken:facebookToken completionBlock:^(VIMAccount *account, NSError *error) {
         
         [weakSelf authenticationCompleteWithAccount:account error:error key:UserAccountKey completionBlock:completionBlock];
 
@@ -337,7 +337,7 @@ static VIMSession *_sharedSession;
     NSAssert([self.account isAuthenticatedWithUser] == NO, @"Attempt to authenticate as user when already authenticated as user");
 
     __weak typeof(self) weakSelf = self;
-    return [self.authenticator joinWithFacebookToken:facebookToken completionBlock:^(VIMAccountNew *account, NSError *error) {
+    return [self.authenticator joinWithFacebookToken:facebookToken completionBlock:^(VIMAccount *account, NSError *error) {
         
         [weakSelf authenticationCompleteWithAccount:account error:error key:UserAccountKey completionBlock:completionBlock];
 
@@ -355,7 +355,7 @@ static VIMSession *_sharedSession;
     // Must call logout before account is changed [AH]
     id<VIMRequestToken> logoutRequest = [self.client logoutWithCompletionBlock:nil];
 
-    VIMAccountNew *account = [VIMAccountStore loadAccountForKey:ClientCredentialsAccountKey];
+    VIMAccount *account = [VIMAccountStore loadAccountForKey:ClientCredentialsAccountKey];
     
     BOOL success = [VIMAccountStore deleteAccountForKey:UserAccountKey];
     if (!success)
@@ -363,7 +363,7 @@ static VIMSession *_sharedSession;
         NSLog(@"Unable to delete account for key: %@", UserAccountKey);
     }
     
-    VIMAccountNew *originalAccount = self.account;
+    VIMAccount *originalAccount = self.account;
     self.account = account;
     
     [self.client.cache removeAllObjects];
@@ -391,7 +391,7 @@ static VIMSession *_sharedSession;
 
 #pragma mark Configuration
 
-- (BOOL)changeAccount:(VIMAccountNew *)account
+- (BOOL)changeAccount:(VIMAccount *)account
 {
     NSParameterAssert(account);
     if (account == nil || ![account isAuthenticated] || ([account isAuthenticatedWithUser] && (account.user == nil || account.userJSON == nil)))
@@ -416,7 +416,7 @@ static VIMSession *_sharedSession;
         NSLog(@"Unable to save account");
     }
     
-    VIMAccountNew *originalAccount = self.account;
+    VIMAccount *originalAccount = self.account;
     self.account = account;
     self.client.cache = [self buildCache];
     
