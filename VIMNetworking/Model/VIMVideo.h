@@ -69,6 +69,7 @@ typedef NS_ENUM(NSUInteger, VIMVideoProcessingStatus) {
 @property (nonatomic, strong, nullable) NSDictionary *stats;
 @property (nonatomic, strong, nullable) NSArray *tags;
 @property (nonatomic, copy, nullable) NSString *uri;
+@property (nonatomic, copy, nullable) NSString *resourceKey;
 @property (nonatomic, strong, nullable) VIMUser *user;
 @property (nonatomic, copy, nullable) NSString *status;
 @property (nonatomic, copy, nullable) NSString *type;
