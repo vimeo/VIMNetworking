@@ -39,7 +39,6 @@
 
 static NSString *const ClientCredentialsAccountKey = @"ClientCredentialsAccountKey";
 static NSString *const UserAccountKey = @"UserAccountKey";
-static NSString *const LegacyAccountKey = @"kVIMAccountStore_SaveKey"; // Added 6/22/2015 [AH]
 
 NSString *const VIMSession_AuthenticatedAccountDidChangeNotification = @"VIMSession_AuthenticatedAccountDidChangeNotification";
 NSString *const VIMSession_AuthenticatedUserDidRefreshNotification = @"VIMSession_AuthenticatedUserDidRefreshNotification";
@@ -162,25 +161,6 @@ static VIMSession *_sharedSession;
     if (account == nil)
     {
         account = [VIMAccountStore loadAccountForKey:ClientCredentialsAccountKey];
-    }
-    
-    // Migrate legacy account
-    if (account == nil)
-    {
-        account = [VIMAccountStore loadLegacyAccountForKey:LegacyAccountKey];
-        if (account)
-        {
-            NSString *key = [account isAuthenticatedWithUser] ? UserAccountKey : ClientCredentialsAccountKey;
-            
-            BOOL success = [VIMAccountStore saveAccount:account forKey:key];
-            
-            NSAssert(success, @"Unable to save account for key: %@", key);
-            
-            if (!success)
-            {
-                NSLog(@"Unable to save account for key: %@", key);
-            }
-        }
     }
 
     return account;

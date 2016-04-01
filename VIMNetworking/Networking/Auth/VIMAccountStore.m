@@ -27,68 +27,12 @@
 #import "VIMAccountStore.h"
 #import "VIMAccountNew.h"
 #import "VIMKeychain.h"
-#import "VIMAccount.h"
+#import "VIMAccountNew.h"
 #import "VIMAccountCredential.h"
 #import "VIMObjectMapper.h"
 #import "VIMUser.h"
 
 @implementation VIMAccountStore
-
-+ (VIMAccountNew *)loadLegacyAccountForKey:(NSString *)key
-{
-    // Load the legacy account data
-    NSData *data = [[VIMKeychain sharedInstance] dataForAccount:key];
-    
-    // Delete the saved legacy account object
-    BOOL success = [[VIMKeychain sharedInstance] deleteDataForAccount:key];
-    if (!success)
-    {
-        NSLog(@"Unable to delete data for account key: %@", key);
-    }
-
-    // Convert the legacy account data into an array of VIMAccountLegacy objects
-    NSArray *legacyAccounts = nil;
-    if (data)
-    {
-        NSKeyedUnarchiver *keyedUnarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
-        
-        @try
-        {
-            legacyAccounts = [keyedUnarchiver decodeObject];
-        }
-        @catch (NSException *exception)
-        {
-            NSLog(@"VIMAccountStore: An exception occured on load: %@", exception);
-        }
-        
-        [keyedUnarchiver finishDecoding];
-    }
-    
-    VIMAccountNew *account = nil;
-    
-    if (legacyAccounts && [legacyAccounts count]) // Convert the VIMAccountLegacy into a VIMAccount
-    {
-        VIMAccount *legacyAccount = legacyAccounts[0];
-        
-        account = [[VIMAccountNew alloc] init];
-        account.accessToken = legacyAccount.credential.accessToken;
-        account.tokenType = legacyAccount.credential.tokenType;
-        account.scope = nil; // Not present in legacy account object
-        
-        NSDictionary *userJSON = legacyAccount.serverResponse[@"user"];
-        if (userJSON)
-        {
-            VIMObjectMapper *mapper = [[VIMObjectMapper alloc] init];
-            [mapper addMappingClass:[VIMUser class] forKeypath:@""];
-            VIMUser *user = [mapper applyMappingToJSON:userJSON];
-            
-            account.user = user;
-            account.userJSON = userJSON;
-        }
-    }
-    
-    return account;
-}
 
 #pragma mark - VIMAccountStoreProtocol
 

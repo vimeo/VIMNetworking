@@ -40,6 +40,4 @@
 
 @interface VIMAccountStore : NSObject <VIMAccountStoreProtocol>
 
-+ (nullable VIMAccountNew *)loadLegacyAccountForKey:(nonnull NSString *)key;
-
 @end
