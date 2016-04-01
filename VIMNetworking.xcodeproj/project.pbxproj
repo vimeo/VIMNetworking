@@ -42,7 +42,6 @@
 		50E5090E1B1E327E00DF1F7A /* VIMServerResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E508BC1B1E327E00DF1F7A /* VIMServerResponse.m */; };
 		50E5090F1B1E327E00DF1F7A /* VIMServerResponseMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E508BE1B1E327E00DF1F7A /* VIMServerResponseMapper.m */; };
 		50E509111B1E327E00DF1F7A /* VIMSessionConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E508C21B1E327E00DF1F7A /* VIMSessionConfiguration.m */; };
-		50E509121B1E327E00DF1F7A /* VIMSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E508C41B1E327E00DF1F7A /* VIMSessionManager.m */; };
 		50E509131B1E327E00DF1F7A /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E508C81B1E327E00DF1F7A /* NSString+MD5.m */; };
 		50E509141B1E327E00DF1F7A /* VIMAPIConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E508CB1B1E327E00DF1F7A /* VIMAPIConfiguration.m */; };
 		50E509151B1E327E00DF1F7A /* VIMAppConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E508CD1B1E327E00DF1F7A /* VIMAppConfiguration.m */; };
@@ -161,8 +160,6 @@
 		50E508BE1B1E327E00DF1F7A /* VIMServerResponseMapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMServerResponseMapper.m; sourceTree = "<group>"; };
 		50E508C11B1E327E00DF1F7A /* VIMSessionConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMSessionConfiguration.h; sourceTree = "<group>"; };
 		50E508C21B1E327E00DF1F7A /* VIMSessionConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMSessionConfiguration.m; sourceTree = "<group>"; };
-		50E508C31B1E327E00DF1F7A /* VIMSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMSessionManager.h; sourceTree = "<group>"; };
-		50E508C41B1E327E00DF1F7A /* VIMSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMSessionManager.m; sourceTree = "<group>"; };
 		50E508C71B1E327E00DF1F7A /* NSString+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MD5.h"; sourceTree = "<group>"; };
 		50E508C81B1E327E00DF1F7A /* NSString+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5.m"; sourceTree = "<group>"; };
 		50E508CA1B1E327E00DF1F7A /* VIMAPIConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMAPIConfiguration.h; sourceTree = "<group>"; };
@@ -424,8 +421,6 @@
 				50E508BC1B1E327E00DF1F7A /* VIMServerResponse.m */,
 				50E508BD1B1E327E00DF1F7A /* VIMServerResponseMapper.h */,
 				50E508BE1B1E327E00DF1F7A /* VIMServerResponseMapper.m */,
-				50E508C31B1E327E00DF1F7A /* VIMSessionManager.h */,
-				50E508C41B1E327E00DF1F7A /* VIMSessionManager.m */,
 			);
 			path = VimeoClient;
 			sourceTree = "<group>";
@@ -697,7 +692,6 @@
 				50E508E51B1E327E00DF1F7A /* VIMPictureCollection.m in Sources */,
 				50FD87BC1B3097650064EC16 /* VIMPreference.m in Sources */,
 				50E508E11B1E327E00DF1F7A /* VIMConnection.m in Sources */,
-				50E509121B1E327E00DF1F7A /* VIMSessionManager.m in Sources */,
 				AF972A341C04C62D00A54B74 /* VIMUploadQuota.m in Sources */,
 				50E508E71B1E327E00DF1F7A /* VIMTag.m in Sources */,
 				50E508DE1B1E327E00DF1F7A /* VIMCategory.m in Sources */,
