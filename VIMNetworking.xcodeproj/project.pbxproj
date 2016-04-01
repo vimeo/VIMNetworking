@@ -170,7 +170,6 @@
 		50E508D11B1E327E00DF1F7A /* VIMFacebookConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMFacebookConfiguration.m; sourceTree = "<group>"; };
 		50E508D21B1E327E00DF1F7A /* VIMFeaturesConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMFeaturesConfiguration.h; sourceTree = "<group>"; };
 		50E508D31B1E327E00DF1F7A /* VIMFeaturesConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMFeaturesConfiguration.m; sourceTree = "<group>"; };
-		50E5091B1B1E329E00DF1F7A /* VIMNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMNetworking.h; sourceTree = "<group>"; };
 		50FD87AF1B3082350064EC16 /* digicert-sha2.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = "digicert-sha2.cer"; sourceTree = "<group>"; };
 		50FD87BA1B3097650064EC16 /* VIMPreference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMPreference.h; sourceTree = "<group>"; };
 		50FD87BB1B3097650064EC16 /* VIMPreference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMPreference.m; sourceTree = "<group>"; };
@@ -270,7 +269,6 @@
 		50E508291B1E325600DF1F7A /* VIMNetworking */ = {
 			isa = PBXGroup;
 			children = (
-				50E5091B1B1E329E00DF1F7A /* VIMNetworking.h */,
 				AF15107D1BEB9211008F9E77 /* Cache */,
 				AF1510801BEB9211008F9E77 /* Keychain */,
 				50E508481B1E327D00DF1F7A /* Model */,
