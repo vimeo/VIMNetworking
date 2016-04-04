@@ -1,6 +1,6 @@
 //
 //  VIMObjectMapper.m
-//  VIMObjectMapper
+//  VIMNetworking
 //
 //  Created by Kashif Mohammad on 3/25/13.
 //  Copyright (c) 2014-2016 Vimeo (https://vimeo.com)

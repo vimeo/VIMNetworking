@@ -57,6 +57,8 @@
 		AF972A331C04C62D00A54B74 /* VIMSizeQuota.m in Sources */ = {isa = PBXBuildFile; fileRef = AF972A2D1C04C62D00A54B74 /* VIMSizeQuota.m */; };
 		AF972A341C04C62D00A54B74 /* VIMUploadQuota.m in Sources */ = {isa = PBXBuildFile; fileRef = AF972A2F1C04C62D00A54B74 /* VIMUploadQuota.m */; };
 		AF972A351C04C62D00A54B74 /* VIMUploadTicket.m in Sources */ = {isa = PBXBuildFile; fileRef = AF972A311C04C62D00A54B74 /* VIMUploadTicket.m */; };
+		AFE335DF1CB31A1E003D71BC /* VIMModelObject.m in Sources */ = {isa = PBXBuildFile; fileRef = AFE335DC1CB31A1E003D71BC /* VIMModelObject.m */; };
+		AFE335E01CB31A1E003D71BC /* VIMObjectMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = AFE335DE1CB31A1E003D71BC /* VIMObjectMapper.m */; };
 		AFFA203C1B34C157001211E2 /* VIMAccountNew.m in Sources */ = {isa = PBXBuildFile; fileRef = AFFA20391B34C157001211E2 /* VIMAccountNew.m */; };
 		AFFA20411B34CA0F001211E2 /* VIMSession.m in Sources */ = {isa = PBXBuildFile; fileRef = AFFA20401B34CA0F001211E2 /* VIMSession.m */; };
 		AFFA207A1B3756FF001211E2 /* VIMAuthenticator.m in Sources */ = {isa = PBXBuildFile; fileRef = AFFA20791B3756FF001211E2 /* VIMAuthenticator.m */; };
@@ -192,6 +194,11 @@
 		AF972A2F1C04C62D00A54B74 /* VIMUploadQuota.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMUploadQuota.m; sourceTree = "<group>"; };
 		AF972A301C04C62D00A54B74 /* VIMUploadTicket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMUploadTicket.h; sourceTree = "<group>"; };
 		AF972A311C04C62D00A54B74 /* VIMUploadTicket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMUploadTicket.m; sourceTree = "<group>"; };
+		AFE335DA1CB31A1E003D71BC /* VIMMappable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMMappable.h; sourceTree = "<group>"; };
+		AFE335DB1CB31A1E003D71BC /* VIMModelObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMModelObject.h; sourceTree = "<group>"; };
+		AFE335DC1CB31A1E003D71BC /* VIMModelObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMModelObject.m; sourceTree = "<group>"; };
+		AFE335DD1CB31A1E003D71BC /* VIMObjectMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMObjectMapper.h; sourceTree = "<group>"; };
+		AFE335DE1CB31A1E003D71BC /* VIMObjectMapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMObjectMapper.m; sourceTree = "<group>"; };
 		AFFA20381B34C157001211E2 /* VIMAccountNew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMAccountNew.h; sourceTree = "<group>"; };
 		AFFA20391B34C157001211E2 /* VIMAccountNew.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMAccountNew.m; sourceTree = "<group>"; };
 		AFFA203F1B34CA0F001211E2 /* VIMSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMSession.h; sourceTree = "<group>"; };
@@ -269,6 +276,7 @@
 		50E508291B1E325600DF1F7A /* VIMNetworking */ = {
 			isa = PBXGroup;
 			children = (
+				AFE335D91CB31A1E003D71BC /* ObjectMapper */,
 				AF15107D1BEB9211008F9E77 /* Cache */,
 				AF1510801BEB9211008F9E77 /* Keychain */,
 				50E508481B1E327D00DF1F7A /* Model */,
@@ -475,6 +483,18 @@
 			path = Keychain;
 			sourceTree = "<group>";
 		};
+		AFE335D91CB31A1E003D71BC /* ObjectMapper */ = {
+			isa = PBXGroup;
+			children = (
+				AFE335DA1CB31A1E003D71BC /* VIMMappable.h */,
+				AFE335DB1CB31A1E003D71BC /* VIMModelObject.h */,
+				AFE335DC1CB31A1E003D71BC /* VIMModelObject.m */,
+				AFE335DD1CB31A1E003D71BC /* VIMObjectMapper.h */,
+				AFE335DE1CB31A1E003D71BC /* VIMObjectMapper.m */,
+			);
+			path = ObjectMapper;
+			sourceTree = "<group>";
+		};
 		AFFA20881B389173001211E2 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
@@ -678,6 +698,7 @@
 				50E508E31B1E327E00DF1F7A /* VIMInteraction.m in Sources */,
 				AF972A351C04C62D00A54B74 /* VIMUploadTicket.m in Sources */,
 				50596ECB1BED38E200D1F8EC /* VIMAccountCredential.m in Sources */,
+				AFE335DF1CB31A1E003D71BC /* VIMModelObject.m in Sources */,
 				AF1510831BEB9211008F9E77 /* VIMCache.m in Sources */,
 				50E508E01B1E327E00DF1F7A /* VIMComment.m in Sources */,
 				500F46341BA1FE16000EA6B4 /* VIMJSONResponseSerializer.m in Sources */,
@@ -698,6 +719,7 @@
 				50E509131B1E327E00DF1F7A /* NSString+MD5.m in Sources */,
 				50E508E21B1E327E00DF1F7A /* VIMGroup.m in Sources */,
 				50E508E61B1E327E00DF1F7A /* VIMPrivacy.m in Sources */,
+				AFE335E01CB31A1E003D71BC /* VIMObjectMapper.m in Sources */,
 				50E508E81B1E327E00DF1F7A /* VIMUser.m in Sources */,
 				AFFA203C1B34C157001211E2 /* VIMAccountNew.m in Sources */,
 				50E509111B1E327E00DF1F7A /* VIMSessionConfiguration.m in Sources */,
