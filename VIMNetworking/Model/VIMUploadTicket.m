@@ -1,6 +1,6 @@
 //
 //  VIMUploadTicket.m
-//  Pods
+//  VIMNetworking
 //
 //  Created by Alfred Hanssen on 11/21/15.
 //  Copyright (c) 2015 Vimeo. All rights reserved.
