@@ -1,7 +1,6 @@
 workspace 'VIMNetworking'
 xcodeproj 'VIMNetworkingFramework/VIMNetworkingFramework.xcodeproj'
 xcodeproj 'VIMNetworkingLibrary/VIMNetworkingLibrary.xcodeproj'
-xcodeproj 'VIMNetworking.xcodeproj'
 
 platform :ios, '8.0'
 
@@ -18,14 +17,5 @@ end
 target 'VIMNetworkingFramework' do
     shared_pods
     xcodeproj 'VIMNetworkingFramework/VIMNetworkingFramework.xcodeproj'
-end
-
-target 'VIMNetworking' do
-    shared_pods
-    xcodeproj 'VIMNetworking.xcodeproj'
-end
-
-target 'VIMNetworkingTests' do
-    shared_pods
 end
 
