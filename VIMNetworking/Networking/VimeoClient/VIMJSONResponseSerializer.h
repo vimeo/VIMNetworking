@@ -24,7 +24,11 @@
 //  THE SOFTWARE.
 //
 
-#import "AFURLResponseSerialization.h"
+#if __has_include(<AFNetworking/AFNetworking.h>)
+#import <AFNetworking/AFNetworking.h>
+#else
+#import "AFNetworking.h"
+#endif
 
 @interface VIMJSONResponseSerializer : AFJSONResponseSerializer
 

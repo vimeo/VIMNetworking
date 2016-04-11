@@ -1,6 +1,6 @@
 //
 //  VIMReachability.h
-//  VIMLibrary
+//  VIMNetworking
 //
 //  Created by Jason Hawkins on 3/25/13.
 //  Copyright (c) 2014-2015 Vimeo (https://vimeo.com)

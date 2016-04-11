@@ -1,7 +1,8 @@
 //
-//  KeychainUtility.h
+//  VIMObjectMapper.h
+//  VIMNetworking
 //
-//  Created by Alfie Hanssen on 3/1/13.
+//  Created by Kashif Mohammad on 3/25/13.
 //  Copyright (c) 2014-2016 Vimeo (https://vimeo.com)
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,17 +24,14 @@
 //  THE SOFTWARE.
 //
 
-#import <Security/Security.h>
-#import <Foundation/Foundation.h>
+@import Foundation;
 
-@interface VIMKeychain : NSObject
+@class VIMObjectMapping;
 
-+ (void)configureWithService:(nonnull NSString *)service accessGroup:(nullable NSString *)accessGroup; // Optional configuration
+@interface VIMObjectMapper : NSObject
 
-+ (nullable instancetype)sharedInstance;
+- (void)addMappingClass:(Class)mappingClass forKeypath:(NSString *)keypath;
 
-- (BOOL)setData:(nonnull NSData *)data forAccount:(nonnull NSString *)account;
-- (nullable NSData *)dataForAccount:(nonnull NSString *)account;
-- (BOOL)deleteDataForAccount:(nonnull NSString *)account;
+- (id)applyMappingToJSON:(id)JSON;
 
 @end

@@ -1,18 +1,18 @@
 //
-//  VIMNetworkingTests.m
-//  VIMNetworkingTests
+//  VIMNetworkingFrameworkTests.m
+//  VIMNetworkingFrameworkTests
 //
-//  Created by Hanssen, Alfie on 9/10/15.
-//  Copyright © 2015 Vimeo. All rights reserved.
+//  Created by Alfred Hanssen on 4/4/16.
+//  Copyright © 2016 Vimeo. All rights reserved.
 //
 
 #import <XCTest/XCTest.h>
 
-@interface VIMNetworkingTests : XCTestCase
+@interface VIMNetworkingFrameworkTests : XCTestCase
 
 @end
 
-@implementation VIMNetworkingTests
+@implementation VIMNetworkingFrameworkTests
 
 - (void)setUp {
     [super setUp];
@@ -27,8 +27,6 @@
 - (void)testExample {
     // This is an example of a functional test case.
     // Use XCTAssert and related functions to verify your tests produce the correct results.
-
-    XCTAssert(NO);
 }
 
 - (void)testPerformanceExample {

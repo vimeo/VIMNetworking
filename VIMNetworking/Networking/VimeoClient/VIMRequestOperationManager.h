@@ -24,9 +24,14 @@
 //  THE SOFTWARE.
 //
 
-#import "AFNetworking.h"
 #import "VIMRequestDescriptor.h"
 #import "VIMServerResponse.h"
+
+#if __has_include(<AFNetworking/AFNetworking.h>)
+#import <AFNetworking/AFNetworking.h>
+#else
+#import "AFNetworking.h"
+#endif
 
 @protocol VIMRequestToken;
 
