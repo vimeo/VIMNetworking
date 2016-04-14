@@ -1,6 +1,6 @@
 //
 //  VIMHeaderProvider.m
-//  VIMUpload
+//  VIMNetworking
 //
 //  Created by Hanssen, Alfie on 9/2/15.
 //  Copyright (c) 2015 Vimeo (https://vimeo.com)

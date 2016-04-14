@@ -24,8 +24,13 @@
 //  THE SOFTWARE.
 //
 
-#import "AFURLRequestSerialization.h"
 #import "VIMRequestSerializerDelegate.h"
+
+#if __has_include(<AFNetworking/AFNetworking.h>)
+#import <AFNetworking/AFNetworking.h>
+#else
+#import "AFNetworking.h"
+#endif
 
 @interface VIMJSONRequestSerializer : AFJSONRequestSerializer
 

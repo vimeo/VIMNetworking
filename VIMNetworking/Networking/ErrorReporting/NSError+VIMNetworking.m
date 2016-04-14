@@ -7,7 +7,12 @@
 //
 
 #import "NSError+VIMNetworking.h"
-#import "AFURLResponseSerialization.h"
+
+#if __has_include(<AFNetworking/AFNetworking.h>)
+#import <AFNetworking/AFNetworking.h>
+#else
+#import "AFNetworking.h"
+#endif
 
 // A numeric error code that provides direction as to why the error occurred,
 // We hope that in the future these can be sunset in favor of using only VimeoErrorCodeKey (see below)

@@ -1,6 +1,6 @@
 //
 //  VIMReachability.m
-//  VIMLibrary
+//  VIMNetworking
 //
 //  Created by Jason Hawkins on 3/25/13.
 //  Copyright (c) 2014-2015 Vimeo (https://vimeo.com)
@@ -26,7 +26,11 @@
 
 #import "VIMReachability.h"
 
-#import "AFNetworkReachabilityManager.h"
+#if __has_include(<AFNetworking/AFNetworking.h>)
+#import <AFNetworking/AFNetworking.h>
+#else
+#import "AFNetworking.h"
+#endif
 
 NSString * const VIMReachabilityStatusChangeOfflineNotification = @"VIMReachabilityStatusChangeOfflineNotification";
 NSString * const VIMReachabilityStatusChangeOnlineNotification = @"VIMReachabilityStatusChangeOnlineNotification";

@@ -1,7 +1,8 @@
 //
-//  KeychainUtility.h
+//  VIMModelObject.h
+//  VIMNetworking
 //
-//  Created by Alfie Hanssen on 3/1/13.
+//  Created by Kashif Mohammad on 6/5/13.
 //  Copyright (c) 2014-2016 Vimeo (https://vimeo.com)
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,17 +24,22 @@
 //  THE SOFTWARE.
 //
 
-#import <Security/Security.h>
-#import <Foundation/Foundation.h>
+@import Foundation;
 
-@interface VIMKeychain : NSObject
+#import "VIMMappable.h"
 
-+ (void)configureWithService:(nonnull NSString *)service accessGroup:(nullable NSString *)accessGroup; // Optional configuration
+@interface VIMModelObject : NSObject <NSCopying, NSSecureCoding, VIMMappable>
 
-+ (nullable instancetype)sharedInstance;
+@property (nonatomic, copy) NSString *objectID;
 
-- (BOOL)setData:(nonnull NSData *)data forAccount:(nonnull NSString *)account;
-- (nullable NSData *)dataForAccount:(nonnull NSString *)account;
-- (BOOL)deleteDataForAccount:(nonnull NSString *)account;
++ (NSUInteger)modelVersion;
++ (NSDateFormatter *)dateFormatter;
++ (NSSet *)propertyKeys;
+
+- (instancetype)initWithKeyValueDictionary:(NSDictionary *)dictionary;
+
+- (NSDictionary *)keyValueDictionary;
+
+- (void)upgradeFromModelVersion:(NSUInteger)fromVersion toModelVersion:(NSUInteger)toVersion;
 
 @end

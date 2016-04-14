@@ -1,6 +1,6 @@
 //
 //  VIMRequestSerializerProtocol.h
-//  VIMUpload
+//  VIMNetworking
 //
 //  Created by Hanssen, Alfie on 9/1/15.
 //  Copyright (c) 2014-2015 Vimeo (https://vimeo.com)
@@ -25,7 +25,12 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "AFURLRequestSerialization.h"
+
+#if __has_include(<AFNetworking/AFNetworking.h>)
+#import <AFNetworking/AFNetworking.h>
+#else
+#import "AFNetworking.h"
+#endif
 
 @protocol VIMRequestSerializerDelegate <NSObject>
 
