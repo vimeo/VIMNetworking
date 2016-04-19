@@ -71,6 +71,12 @@
 
 #pragma mark - NSCoding
 
++ (void)load
+{
+    // This allows migration of the formerly-named VIMAccountNew [RH] (4/19/16)
+    [NSKeyedUnarchiver setClass:self forClassName:@"VIMAccountNew"];
+}
+
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super init];
