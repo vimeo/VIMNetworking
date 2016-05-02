@@ -27,7 +27,7 @@
 // Legacy apple account id: com.apple.social.vimeo [AH]
 
 #import "VIMAuthenticator.h"
-#import "VIMAccountNew.h"
+#import "VIMAccount.h"
 #import "VIMObjectMapper.h"
 
 NSString * const kVimeoAuthenticatorErrorDomain = @"kVimeoAuthenticatorErrorDomain";
@@ -300,8 +300,8 @@ NSString * const kVIMOAuthGrantType_Facebook = @"facebook";
         }
         
         VIMObjectMapper *mapper = [[VIMObjectMapper alloc] init];
-        [mapper addMappingClass:[VIMAccountNew class] forKeypath:@""];
-        VIMAccountNew *account = [mapper applyMappingToJSON:response.result];
+        [mapper addMappingClass:[VIMAccount class] forKeypath:@""];
+        VIMAccount *account = [mapper applyMappingToJSON:response.result];
         account.userJSON = response.result[@"user"];
         
         if (account == nil)
