@@ -25,7 +25,6 @@
 //
 
 #import "VIMRequestOperationManager.h"
-#import "AFHTTPRequestOperation.h"
 #import "VIMMappable.h"
 #import "VIMObjectMapper.h"
 #import "VIMCache.h"
@@ -34,6 +33,12 @@
 #import "VIMServerResponseMapper.h"
 #import "NSError+VIMNetworking.h"
 #import "VIMJSONResponseSerializer.h"
+
+#if __has_include(<AFNetworking/AFNetworking.h>)
+#import <AFNetworking/AFNetworking.h>
+#else
+#import "AFNetworking.h"
+#endif
 
 CGFloat const kVimeoClientTimeoutInterval = 60;
 NSInteger const kVimeoClientErrorCodeCacheUnavailable = 666;

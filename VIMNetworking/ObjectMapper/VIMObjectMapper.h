@@ -1,9 +1,9 @@
 //
-//  VIMAccountCredential.h
+//  VIMObjectMapper.h
 //  VIMNetworking
 //
-//  Created by Kashif Muhammad on 10/29/13.
-//  Copyright (c) 2014-2015 Vimeo (https://vimeo.com)
+//  Created by Kashif Mohammad on 3/25/13.
+//  Copyright (c) 2014-2016 Vimeo (https://vimeo.com)
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,14 +24,14 @@
 //  THE SOFTWARE.
 //
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
-@interface VIMAccountCredential: NSObject
+@class VIMObjectMapping;
 
-@property (nonatomic, copy, nullable) NSString *accessToken;
-@property (nonatomic, copy, nullable) NSString *tokenType;
-@property (nonatomic, copy, nullable) NSString *refreshToken;
-@property (nonatomic, copy, nullable) NSDate *expirationDate;
-@property (nonatomic, copy, nullable) NSString *grantType;
+@interface VIMObjectMapper : NSObject
+
+- (void)addMappingClass:(Class)mappingClass forKeypath:(NSString *)keypath;
+
+- (id)applyMappingToJSON:(id)JSON;
 
 @end

@@ -1,6 +1,6 @@
 //
 //  NSString+MD5.h
-//  VIMCore
+//  VIMNetworking
 //
 //  Created by Kashif Muhammad on 12/17/13.
 //  Copyright (c) 2014-2015 Vimeo (https://vimeo.com)

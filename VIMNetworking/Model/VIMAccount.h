@@ -24,15 +24,23 @@
 //  THE SOFTWARE.
 //
 
-#import <Foundation/Foundation.h>
+#import "VIMModelObject.h"
 
-@class VIMAccountCredential;
+@class VIMUser;
 
-@interface VIMAccount : NSObject
+@interface VIMAccount : VIMModelObject
 
-@property (nonatomic, strong, nullable) VIMAccountCredential *credential;
-@property (nonatomic, copy, nullable) NSString *username;
-@property (nonatomic, strong, nullable) NSMutableDictionary *userData;
-@property (nonatomic, strong, nullable) id serverResponse;
+@property (nonatomic, copy, nullable) NSString *accessToken;
+@property (nonatomic, copy, nullable) NSString *tokenType;
+@property (nonatomic, copy, nullable) NSString *scope;
+@property (nonatomic, copy, nullable) NSDictionary *userJSON;
+
+// Not persisted
+@property (nonatomic, strong, nullable) VIMUser *user;
+@property (nonatomic, assign, getter=isInvalid) BOOL invalid;
+
+- (BOOL)isAuthenticated;
+- (BOOL)isAuthenticatedWithUser;
+- (BOOL)isAuthenticatedWithClientCredentials;
 
 @end

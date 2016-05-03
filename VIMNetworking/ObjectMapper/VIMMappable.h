@@ -1,9 +1,9 @@
 //
-//  VIMPrivacy.m
+//  VIMMappable.h
 //  VIMNetworking
 //
-//  Created by Kashif Muhammad on 9/24/14.
-//  Copyright (c) 2014-2015 Vimeo (https://vimeo.com)
+//  Created by Kashif Mohammad on 3/25/13.
+//  Copyright (c) 2014-2016 Vimeo (https://vimeo.com)
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,25 +24,15 @@
 //  THE SOFTWARE.
 //
 
-#import "VIMPrivacy.h"
+@import Foundation;
 
-NSString *VIMPrivacy_Private = @"nobody";
-NSString *VIMPrivacy_Select = @"users";
-NSString *VIMPrivacy_Public = @"anybody";
-NSString *VIMPrivacy_VOD = @"ptv";
-NSString *VIMPrivacy_Following = @"contacts";
-NSString *VIMPrivacy_Password = @"password";
-NSString *VIMPrivacy_Unlisted = @"unlisted";
-NSString *VIMPrivacy_Disabled = @"disable";
+@protocol VIMMappable <NSObject>
 
-@implementation VIMPrivacy
+@optional
 
-#pragma mark - VIMMappable
-
-- (NSDictionary *)getObjectMapping
-{
-    return @{@"add": @"canAdd",
-             @"download" : @"canDownload"};
-}
+- (id)getObjectMapping;
+- (Class)getClassForCollectionKey:(NSString *)key;
+- (Class)getClassForObjectKey:(NSString *)key;
+- (void)didFinishMapping;
 
 @end

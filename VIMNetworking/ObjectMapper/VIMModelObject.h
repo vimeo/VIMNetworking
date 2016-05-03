@@ -1,9 +1,9 @@
 //
-//  VIMAccount.h
+//  VIMModelObject.h
 //  VIMNetworking
 //
-//  Created by Kashif Muhammad on 10/28/13.
-//  Copyright (c) 2014-2015 Vimeo (https://vimeo.com)
+//  Created by Kashif Mohammad on 6/5/13.
+//  Copyright (c) 2014-2016 Vimeo (https://vimeo.com)
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,23 +24,22 @@
 //  THE SOFTWARE.
 //
 
-#import "VIMModelObject.h"
+@import Foundation;
 
-@class VIMUser;
+#import "VIMMappable.h"
 
-@interface VIMAccountNew : VIMModelObject
+@interface VIMModelObject : NSObject <NSCopying, NSSecureCoding, VIMMappable>
 
-@property (nonatomic, copy, nullable) NSString *accessToken;
-@property (nonatomic, copy, nullable) NSString *tokenType;
-@property (nonatomic, copy, nullable) NSString *scope;
-@property (nonatomic, copy, nullable) NSDictionary *userJSON;
+@property (nonatomic, copy) NSString *objectID;
 
-// Not persisted
-@property (nonatomic, strong, nullable) VIMUser *user;
-@property (nonatomic, assign, getter=isInvalid) BOOL invalid;
++ (NSUInteger)modelVersion;
++ (NSDateFormatter *)dateFormatter;
++ (NSSet *)propertyKeys;
 
-- (BOOL)isAuthenticated;
-- (BOOL)isAuthenticatedWithUser;
-- (BOOL)isAuthenticatedWithClientCredentials;
+- (instancetype)initWithKeyValueDictionary:(NSDictionary *)dictionary;
+
+- (NSDictionary *)keyValueDictionary;
+
+- (void)upgradeFromModelVersion:(NSUInteger)fromVersion toModelVersion:(NSUInteger)toVersion;
 
 @end

@@ -25,8 +25,13 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "AFHTTPRequestOperation.h"
 #import "VIMRequestToken.h"
+
+#if __has_include(<AFNetworking/AFNetworking.h>)
+#import <AFNetworking/AFNetworking.h>
+#else
+#import "AFNetworking.h"
+#endif
 
 @class VIMRequestDescriptor;
 
