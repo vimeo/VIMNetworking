@@ -44,6 +44,11 @@ NSString *const VIMVideoFileQualityMobile = @"mobile";
 
 #pragma mark - VIMMappable
 
+- (NSDictionary *)getObjectMapping
+{
+    return @{@"link_expiration_time": @"expires"}; 
+}
+
 - (Class)getClassForObjectKey:(NSString *)key
 {
     if ([key isEqualToString:@"log"])
