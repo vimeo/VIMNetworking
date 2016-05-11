@@ -38,6 +38,7 @@
 #import "VIMTag.h"
 #import "VIMVideoLog.h"
 #import "VIMCategory.h"
+#import "VIMVideoPlayRepresentation.h"
 
 NSString *VIMContentRating_Language = @"language";
 NSString *VIMContentRating_Drugs = @"drugs";
@@ -111,7 +112,10 @@ NSString *VIMContentRating_Safe = @"safe";
     
     if( [key isEqualToString:@"log"] )
         return [VIMVideoLog class];
-
+    
+    if([key isEqualToString:@"play"])
+        return [VIMVideoPlayRepresentation class];
+        
     return nil;
 }
 
