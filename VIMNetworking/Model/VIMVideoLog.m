@@ -41,10 +41,16 @@
 
 - (NSDictionary *)getObjectMapping
 {
+    // New play representation parameter naming differs for playURLString, loadURLString, likeURLString, watchLaterURLString [NL]
+    
     return @{@"play": @"playURLString",
              @"load": @"loadURLString",
              @"like_press" : @"likeURLString",
-             @"watchlater_press" : @"watchLaterURLString"};
+             @"watchlater_press" : @"watchLaterURLString",
+             @"play_link": @"playURLString",
+             @"load_link": @"loadURLString",
+             @"like_press_link" : @"likeURLString",
+             @"watchlater_press_link" : @"watchLaterURLString"};
 }
 
 @end
