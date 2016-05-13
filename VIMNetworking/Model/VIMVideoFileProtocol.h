@@ -18,4 +18,3 @@
 - (BOOL)isSupportedMimeType;
 
 @end
-
