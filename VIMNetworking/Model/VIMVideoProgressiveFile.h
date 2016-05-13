@@ -7,20 +7,13 @@
 //
 
 @import Foundation;
-#import "VIMVideoFileProtocol.h"
+#import "VIMVideoPlayFile.h"
 
-@interface VIMVideoProgressiveFile : VIMModelObject <VIMVideoFileProtocol>
-
-@property (nonatomic, copy, nullable) NSString *link;
-@property (nonatomic, strong, nullable) VIMVideoLog *log;
-@property (nonatomic, strong, nullable) NSDate *expirationDate;
+@interface VIMVideoProgressiveFile : VIMVideoPlayFile
 
 @property (nonatomic, copy, nullable) NSString *type;
 @property (nonatomic, strong, nullable) NSNumber *size;
 @property (nonatomic, strong, nullable) NSNumber *width;
 @property (nonatomic, strong, nullable) NSNumber *height;
-
-- (BOOL)isSupportedMimeType;
-- (BOOL)isExpired;
 
 @end

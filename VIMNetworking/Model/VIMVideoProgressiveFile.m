@@ -7,33 +7,15 @@
 //
 
 #import "VIMVideoProgressiveFile.h"
-#import "VIMVideoLog.h"
-
-@interface VIMVideoProgressiveFile ()
-@property (nonatomic, copy) NSString *expires;
-@end
 
 @implementation VIMVideoProgressiveFile
 
-#pragma mark - VIMMappable
-
-- (NSDictionary *)getObjectMapping
-{
-    return @{@"link_expiration_time": @"expires"};
-}
-
-- (Class)getClassForObjectKey:(NSString *)key
-{
-    if ([key isEqualToString:@"log"])
-    {
-        return [VIMVideoLog class];
-    }
-    
-    return nil;
-}
+#pragma mark - VIMMappable override
 
 - (void)didFinishMapping
 {
+    [super didFinishMapping];
+    
     if (![self.width isKindOfClass:[NSNumber class]])
     {
         self.width = @(0);
@@ -48,18 +30,9 @@
     {
         self.size = @(0);
     }
-    
-    if ([self.expires isKindOfClass:[NSString class]])
-    {
-        self.expirationDate = [[VIMModelObject dateFormatter] dateFromString:self.expires];
-    }
-    else
-    {
-        self.expirationDate = nil;
-    }
 }
 
-#pragma mark - VIMVideoFileProtocol
+#pragma mark - VIMVideoPlayFile override
 
 //    As of Oct 27, 2014:
 //    \VideoCodec::CODEC_H264 => 'video/mp4',
@@ -74,18 +47,6 @@
     }
     
     return [AVURLAsset isPlayableExtendedMIMEType:self.type];
-}
-
-- (BOOL)isExpired
-{
-    if (!self.expirationDate) // This will yield NSOrderedSame (weird), so adding an explicit check here [AH] 9/14/2015
-    {
-        return NO;
-    }
-    
-    NSComparisonResult result = [[NSDate date] compare:self.expirationDate];
-    
-    return (result == NSOrderedDescending);
 }
 
 @end
