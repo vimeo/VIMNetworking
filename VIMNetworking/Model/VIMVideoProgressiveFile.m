@@ -1,5 +1,5 @@
 //
-//  VIMVIdeoProgressiveFile.m
+//  VIMVideoProgressiveFile.m
 //  Vimeo
 //
 //  Created by Lehrer, Nicole on 5/12/16.
