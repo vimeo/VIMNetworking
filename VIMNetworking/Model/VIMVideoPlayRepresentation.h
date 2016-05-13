@@ -6,13 +6,14 @@
 //  Copyright © 2016 Vimeo. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "VIMModelObject.h"
 
-@interface VIMVideoPlayRepresentation : VIMModelObject // Verbose naming since VIMVideoPlay felt too similar to VIMVideoPlayer [NL]
+@class VIMVideoHLSFile;
 
-@property (nonatomic, strong, nullable) NSDictionary *hls;
-@property (nonatomic, strong, nullable) NSArray *progressive;
-@property (nonatomic, strong, nullable) NSNumber *progress;
+@interface VIMVideoPlayRepresentation : VIMModelObject
+
+@property (nonatomic, strong, nullable) VIMVideoHLSFile *hlsFile;
+@property (nonatomic, strong, nullable) NSArray *progressiveFiles; // array of VIMVideoProgressiveFile's
 @property (nonatomic, strong, nullable) NSString *status;
 
 @end

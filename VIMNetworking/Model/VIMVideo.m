@@ -76,7 +76,8 @@ NSString *VIMContentRating_Safe = @"safe";
 - (NSDictionary *)getObjectMapping
 {
     return @{@"description": @"videoDescription",
-             @"pictures": @"pictureCollection"};
+             @"pictures": @"pictureCollection",
+             @"play": @"playRepresentation"};
 }
 
 - (Class)getClassForCollectionKey:(NSString *)key
@@ -95,7 +96,7 @@ NSString *VIMContentRating_Safe = @"safe";
 
 - (Class)getClassForObjectKey:(NSString *)key
 {
-    if( [key isEqualToString:@"pictures"] )
+    if([key isEqualToString:@"pictures"])
         return [VIMPictureCollection class];
 
     if([key isEqualToString:@"user"])
@@ -110,7 +111,7 @@ NSString *VIMContentRating_Safe = @"safe";
     if([key isEqualToString:@"appeal"])
         return [VIMAppeal class];
     
-    if( [key isEqualToString:@"log"] )
+    if([key isEqualToString:@"log"])
         return [VIMVideoLog class];
     
     if([key isEqualToString:@"play"])

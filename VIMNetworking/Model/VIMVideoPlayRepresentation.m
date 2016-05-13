@@ -7,42 +7,26 @@
 //
 
 #import "VIMVideoPlayRepresentation.h"
-#import "VIMVideoFile.h"
+#import "VIMVideoHLSFile.h"
+#import "VIMVideoProgressiveFile.h"
 #import "VIMVideoLog.h"
 
 @implementation VIMVideoPlayRepresentation
 
-- (void) didFinishMapping
+#pragma mark - VIMMappable
+
+- (NSDictionary *)getObjectMapping
 {
-    //verify HLS worked
-    [self parseHLSRepresentation:self.hls];
-    
-    //verify status worked
-    NSLog(@"status is %@", self.status);
-    
-    /*
-    //verify files worked
-    for (VIMVideoFile *file in self.progressive)
-    {
-        NSLog(@"\n");
-        NSLog(@"new file: ");
-        NSLog(@"expirationDate is %@", file.expirationDate);
-        NSLog(@"width is %@", file.width);
-        NSLog(@"height is %@", file.height);
-        NSLog(@"size is %@", file.size);
-        NSLog(@"link is %@", file.link);
-        NSLog(@"quaity is %@", file.quality);
-        NSLog(@"type is %@", file.type);
-        NSLog(@"log.playURLString is %@", file.log.playURLString);
-        NSLog(@"log.playURLString is %@", file.log.loadURLString);
-        NSLog(@"log.playURLString is %@", file.log.likeURLString);
-        NSLog(@"log.playURLString is %@", file.log.watchLaterURLString);
-    }
-    */
+    return @{@"progressive": @"progressiveFiles"};
 }
 
 - (Class) getClassForObjectKey:(NSString *)key
 {
+    if([key isEqualToString:@"hls"])
+    {
+        return [VIMVideoHLSFile class];
+    }
+    
     return nil;
 }
 
@@ -50,18 +34,10 @@
 {
     if([key isEqualToString:@"progressive"])
     {
-        return [VIMVideoFile class];
+        return [VIMVideoProgressiveFile class];
     }
-    return nil;
-}
-
-- (void) parseHLSRepresentation:(NSDictionary *)representation
-{
-    NSString *link = [representation valueForKey:@"link"];
-    NSDictionary *log = [representation valueForKey:@"log"];
     
-    NSLog(@"HLS link is %@", link);
-    NSLog(@"HLS log is %@", log);
+    return nil;
 }
 
 @end
