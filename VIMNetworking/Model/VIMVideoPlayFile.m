@@ -69,4 +69,11 @@
     return (result == NSOrderedDescending);
 }
 
+- (NSString *)qualityString
+{
+    //Subclass must override
+    return nil;
+}
+
+
 @end

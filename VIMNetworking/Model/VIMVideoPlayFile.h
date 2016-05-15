@@ -8,6 +8,8 @@
 
 @import Foundation;
 
+#import "VIMModelObject.h"
+
 @class VIMVideoLog;
 
 @interface VIMVideoPlayFile : VIMModelObject
@@ -17,5 +19,6 @@
 @property (nonatomic, strong, nullable) NSDate *expirationDate;
 
 - (BOOL)isExpired;
+- (NSString * _Nullable)qualityString;
 
 @end
