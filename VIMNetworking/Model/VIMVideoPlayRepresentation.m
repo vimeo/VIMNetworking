@@ -20,7 +20,7 @@
     return @{@"progressive": @"progressiveFiles"};
 }
 
-- (Class) getClassForObjectKey:(NSString *)key
+- (Class)getClassForObjectKey:(NSString *)key
 {
     if([key isEqualToString:@"hls"])
     {
@@ -30,7 +30,7 @@
     return nil;
 }
 
-- (Class) getClassForCollectionKey:(NSString *)key
+- (Class)getClassForCollectionKey:(NSString *)key
 {
     if([key isEqualToString:@"progressive"])
     {

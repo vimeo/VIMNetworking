@@ -10,7 +10,9 @@
 #import "VIMVideoLog.h"
 
 @interface VIMVideoPlayFile()
+
 @property (nonatomic, copy) NSString *expires;
+
 @end
 
 @implementation VIMVideoPlayFile
@@ -34,7 +36,7 @@
     return @{@"link_expiration_time": @"expires"};
 }
 
-- (Class) getClassForObjectKey:(NSString *)key
+- (Class)getClassForObjectKey:(NSString *)key
 {
     if([key isEqualToString:@"log"])
     {
@@ -43,14 +45,7 @@
     return nil;
 }
 
-#pragma mark - 
-
-- (BOOL)isSupportedMimeType
-{
-    NSAssert(NO, @"Subclasses must override");
-    
-    return NO;
-}
+#pragma mark - Instance methods
 
 - (BOOL)isExpired
 {

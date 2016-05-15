@@ -10,13 +10,4 @@
 
 @implementation VIMVideoHLSFile
 
-#pragma mark - VIMVideoPlayFile override
-
-- (BOOL)isSupportedMimeType
-{
-    //no mimetype provided, what should be default for hls
-    //return [AVURLAsset isPlayableExtendedMIMEType:self.type];
-    return YES;
-}
-
 @end

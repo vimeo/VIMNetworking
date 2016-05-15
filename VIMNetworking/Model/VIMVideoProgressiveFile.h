@@ -16,4 +16,6 @@
 @property (nonatomic, strong, nullable) NSNumber *width;
 @property (nonatomic, strong, nullable) NSNumber *height;
 
+- (BOOL)isSupportedMimeType;
+
 @end

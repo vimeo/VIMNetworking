@@ -14,7 +14,6 @@
 @property (nonatomic, strong, nullable) VIMVideoLog *log;
 @property (nonatomic, strong, nullable) NSDate *expirationDate;
 
-- (BOOL)isSupportedMimeType;
 - (BOOL)isExpired;
 
 @end
