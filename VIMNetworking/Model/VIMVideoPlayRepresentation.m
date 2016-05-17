@@ -13,6 +13,12 @@
 #import "VIMVideoProgressiveFile.h"
 #import "VIMVideoLog.h"
 
+@interface VIMVideoPlayRepresentation()
+
+@property (nonatomic, copy, nullable) NSString *status;
+
+@end
+
 @implementation VIMVideoPlayRepresentation
 
 #pragma mark - VIMMappable

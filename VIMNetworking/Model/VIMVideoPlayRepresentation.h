@@ -24,7 +24,6 @@ typedef NS_ENUM(NSUInteger, VIMVideoPlayabilityStatus) {
 @property (nonatomic, strong, nullable) VIMVideoHLSFile *hlsFile;
 @property (nonatomic, strong, nullable) VIMVideoDASHFile *dashFile;
 @property (nonatomic, strong, nullable) NSArray<VIMVideoProgressiveFile *> *progressiveFiles;
-@property (nonatomic, copy, nullable) NSString *status;
 @property (nonatomic, assign) VIMVideoPlayabilityStatus playabilityStatus;
 
 @end
