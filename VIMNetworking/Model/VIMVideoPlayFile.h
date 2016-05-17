@@ -19,6 +19,5 @@
 @property (nonatomic, strong, nullable) NSDate *expirationDate;
 
 - (BOOL)isExpired;
-- (NSString * _Nullable)qualityString;
 
 @end

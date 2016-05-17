@@ -23,7 +23,8 @@
 {
     // This appeared to only be necessary for downloaded videos with archived VIMVideoFile's that persisted in a failed state. [NL] 05/15/16
     // E.g. a user has at least one failed download with our legacy VIMVideoFile model, then upgrades to this version.
-    // When the user launches the app, we must force unwrap the video file in NewDownloadDescriptor as a VIMVideoPlayFile to be in sync with our current model. The following allows us to do so by unarchiving VIMVideoFile as VIMVideoPlayFile.
+    // After launch, we must force unwrap the video file in NewDownloadDescriptor as a VIMVideoPlayFile to be in sync with our current model.
+    // The following allows us to do so by unarchiving VIMVideoFile as VIMVideoPlayFile.
     [NSKeyedUnarchiver setClass:self forClassName:@"VIMVideoFile"];
 }
 
@@ -34,10 +35,6 @@
     if ([self.expires isKindOfClass:[NSString class]])
     {
         self.expirationDate = [[VIMModelObject dateFormatter] dateFromString:self.expires];
-    }
-    else
-    {
-        self.expirationDate = nil;
     }
 }
 
@@ -68,12 +65,5 @@
     
     return (result == NSOrderedDescending);
 }
-
-- (NSString *)qualityString
-{
-    //Subclass must override
-    return nil;
-}
-
 
 @end

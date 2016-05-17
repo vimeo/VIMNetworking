@@ -10,11 +10,4 @@
 
 @implementation VIMVideoHLSFile
 
-#pragma mark - VIMVideoPlayFile override
-
-- (NSString *)qualityString
-{
-    return @"hls";
-}
-
 @end
