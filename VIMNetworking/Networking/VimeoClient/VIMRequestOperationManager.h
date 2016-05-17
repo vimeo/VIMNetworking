@@ -26,6 +26,7 @@
 
 #import "VIMRequestDescriptor.h"
 #import "VIMServerResponse.h"
+#import "VIMCache.h"
 
 #if __has_include(<AFNetworking/AFNetworking.h>)
 #import <AFNetworking/AFNetworking.h>
@@ -34,8 +35,6 @@
 #endif
 
 @protocol VIMRequestToken;
-
-@class VIMCache;
 
 typedef void (^VIMRequestCompletionBlock)(VIMServerResponse * __nullable response, NSError * __nullable error);
 
