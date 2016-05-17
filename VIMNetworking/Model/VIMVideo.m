@@ -96,27 +96,41 @@ NSString *VIMContentRating_Safe = @"safe";
 
 - (Class)getClassForObjectKey:(NSString *)key
 {
-    if([key isEqualToString:@"pictures"])
+    if ([key isEqualToString:@"pictures"])
+    {
         return [VIMPictureCollection class];
+    }
 
-    if([key isEqualToString:@"user"])
+    if ([key isEqualToString:@"user"])
+    {
         return [VIMUser class];
+    }
 
-	if([key isEqualToString:@"metadata"])
+	if ([key isEqualToString:@"metadata"])
+    {
         return [NSMutableDictionary class];
+    }
 
-    if([key isEqualToString:@"privacy"])
+    if ([key isEqualToString:@"privacy"])
+    {
         return [VIMPrivacy class];
+    }
     
-    if([key isEqualToString:@"appeal"])
+    if ([key isEqualToString:@"appeal"])
+    {
         return [VIMAppeal class];
+    }
     
-    if([key isEqualToString:@"log"])
+    if ([key isEqualToString:@"log"])
+    {
         return [VIMVideoLog class];
+    }
     
-    if([key isEqualToString:@"play"])
+    if ([key isEqualToString:@"play"])
+    {
         return [VIMVideoPlayRepresentation class];
-        
+    }
+    
     return nil;
 }
 
