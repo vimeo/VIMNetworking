@@ -38,12 +38,15 @@
 
 @implementation VIMVideoProgressiveFile
 
-#pragma mark - VIMMappable override
+#pragma mark - VIMVideoPlayFile override
 
 - (NSDictionary *)getObjectMapping
 {
-    return @{@"type": @"mimeType",
-             @"size": @"sizeInBytes"};
+    NSMutableDictionary *objectMappingDict = [[NSMutableDictionary alloc] initWithDictionary:[super getObjectMapping]];
+    
+    [objectMappingDict addEntriesFromDictionary:@{@"type": @"mimeType",
+                                                  @"size": @"sizeInBytes"}];
+    return objectMappingDict;
 }
 
 - (void)didFinishMapping
@@ -77,6 +80,8 @@
     
     [self setDimensions];
 }
+
+#pragma mark - Instance methods
 
 - (void)setDimensions
 {
