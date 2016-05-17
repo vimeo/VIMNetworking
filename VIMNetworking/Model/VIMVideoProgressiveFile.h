@@ -11,10 +11,12 @@
 
 @interface VIMVideoProgressiveFile : VIMVideoPlayFile
 
-@property (nonatomic, copy, nullable) NSString *type;
-@property (nonatomic, strong, nullable) NSNumber *size;
-@property (nonatomic, strong, nullable) NSNumber *width;
-@property (nonatomic, strong, nullable) NSNumber *height;
+@property (nonatomic, assign) CGSize dimensions;
+@property (nonatomic, strong, nullable) NSDate *creationDate;
+@property (nonatomic, copy, nullable) NSString *mimeType;
+@property (nonatomic, strong, nullable) NSNumber *fps;
+@property (nonatomic, copy, nullable) NSString *md5;
+@property (nonatomic, strong, nullable) NSNumber *sizeInBytes;
 
 - (BOOL)isSupportedMimeType;
 

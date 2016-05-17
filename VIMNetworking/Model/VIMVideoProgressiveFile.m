@@ -9,9 +9,24 @@
 #import "VIMVideoProgressiveFile.h"
 @import AVFoundation;
 
+@interface VIMVideoProgressiveFile()
+
+@property (nonatomic, copy, nullable) NSString *createdTime;
+@property (nonatomic, copy, nullable) NSString *type;
+@property (nonatomic, strong, nullable) NSNumber *width;
+@property (nonatomic, strong, nullable) NSNumber *height;
+
+@end
+
 @implementation VIMVideoProgressiveFile
 
 #pragma mark - VIMMappable override
+
+- (NSDictionary *)getObjectMapping
+{
+    return @{@"type": @"mimeType",
+             @"size": @"sizeInBytes"};
+}
 
 - (void)didFinishMapping
 {
@@ -27,13 +42,31 @@
         self.height = @(0);
     }
     
-    if (![self.size isKindOfClass:[NSNumber class]])
+    if (![self.sizeInBytes isKindOfClass:[NSNumber class]])
     {
-        self.size = @(0);
+        self.sizeInBytes = @(0);
     }
+    
+    if (![self.fps isKindOfClass:[NSNumber class]])
+    {
+        self.fps = @(0);
+    }
+    
+    if ([self.createdTime isKindOfClass:[NSString class]])
+    {
+        self.creationDate = [[VIMModelObject dateFormatter] dateFromString:self.createdTime];
+    }
+    
+    [self setDimensions];
 }
 
-#pragma mark - VIMVideoPlayFile override
+- (void)setDimensions
+{
+    NSInteger width = self.width.integerValue;
+    NSInteger height = self.height.integerValue;
+    
+    self.dimensions = CGSizeMake(width, height);
+}
 
 //    As of Oct 27, 2014:
 //    \VideoCodec::CODEC_H264 => 'video/mp4',
@@ -42,39 +75,12 @@
 
 - (BOOL)isSupportedMimeType
 {
-    if (self.type == nil)
+    if (self.mimeType == nil)
     {
         return NO;
     }
     
-    return [AVURLAsset isPlayableExtendedMIMEType:self.type];
-}
-
-- (NSString *)qualityString
-{
-    // TODO: We no longer receive quality from API, but have been logging quality of progressive files in analytics.
-    // The criteria below matches what we are seeing from API in legacy VIMVideoFile BUT not without error.
-    // Based on my testing, a low frequency of errors (e.g. 1-2 files per 4-6 pages of results) suggests this is incorrect, and/or API is using something other than size to determine quality, or those videos are not marked correctly.
-    // Need to determine if we should (1) ask API for this or (2) log our quality as simply "hls" or "progressive". For option (2), we would simply return "progressive" here. [NL] 05/15/16
-    
-    NSNumber *mobileMin = @(360);
-    NSNumber *mobileMax = @(640);
-    
-    NSNumber *standardDefMin = @(720);
-    NSNumber *standardDefMax = @(961);
-    
-    if (MIN(self.width, self.height) < mobileMin &&
-        MAX(self.width, self.height) < mobileMax)
-    {
-        return @"mobile";
-    }
-    else if (MIN(self.width, self.height) < standardDefMin &&
-             MAX(self.width, self.height) < standardDefMax)
-    {
-        return @"sd";
-    }
-    
-    return @"hd";
+    return [AVURLAsset isPlayableExtendedMIMEType:self.mimeType];
 }
 
 @end
