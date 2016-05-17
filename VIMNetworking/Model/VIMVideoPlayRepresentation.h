@@ -9,11 +9,22 @@
 #import "VIMModelObject.h"
 
 @class VIMVideoHLSFile;
+@class VIMVideoDASHFile;
+@class VIMVideoProgressiveFile;
+
+typedef NS_ENUM(NSUInteger, VIMVideoPlayabilityStatus) {
+    VIMVideoPlayabilityStatusUnavailable,   // Not finished transcoding
+    VIMVideoPlayabilityStatusPlayable,      // Can be played
+    VIMVideoPlayabilityPurchaseRequired,    // On demand video that is not purchased
+    VIMVideoPlayabilityRestricted           // User's region cannot play or purchase
+};
 
 @interface VIMVideoPlayRepresentation : VIMModelObject
 
 @property (nonatomic, strong, nullable) VIMVideoHLSFile *hlsFile;
-@property (nonatomic, strong, nullable) NSArray *progressiveFiles; // array of VIMVideoProgressiveFile's
-@property (nonatomic, strong, nullable) NSString *status;
+@property (nonatomic, strong, nullable) VIMVideoDASHFile *dashFile;
+@property (nonatomic, strong, nullable) NSArray<VIMVideoProgressiveFile *> *progressiveFiles;
+@property (nonatomic, copy, nullable) NSString *status;
+@property (nonatomic, assign) VIMVideoPlayabilityStatus playabilityStatus;
 
 @end
