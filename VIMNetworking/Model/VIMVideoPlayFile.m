@@ -63,7 +63,7 @@
 
 - (Class)getClassForObjectKey:(NSString *)key
 {
-    if([key isEqualToString:@"log"])
+    if ([key isEqualToString:@"log"])
     {
         return [VIMVideoLog class];
     }
