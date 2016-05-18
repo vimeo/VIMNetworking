@@ -1,9 +1,9 @@
 //
-//  VIMVideoLog.m
-//  VIMNetworking
+//  VIMVideoPlayRepresentation.h
+//  Vimeo
 //
-//  Created by Hanssen, Alfie on 11/19/14.
-//  Copyright (c) 2014-2015 Vimeo (https://vimeo.com)
+//  Created by Lehrer, Nicole on 5/11/16.
+//  Copyright © 2016 Vimeo. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,27 +24,24 @@
 //  THE SOFTWARE.
 //
 
-#import "VIMVideoLog.h"
+#import "VIMModelObject.h"
 
-@interface VIMVideoLog ()
+@class VIMVideoHLSFile;
+@class VIMVideoDASHFile;
+@class VIMVideoProgressiveFile;
 
-@property (nonatomic, copy, readwrite) NSString *playURLString;
-@property (nonatomic, copy, readwrite) NSString *loadURLString;
-@property (nonatomic, copy, readwrite) NSString *likeURLString;
-@property (nonatomic, copy, readwrite) NSString *watchLaterURLString;
+typedef NS_ENUM(NSUInteger, VIMVideoPlayabilityStatus) {
+    VIMVideoPlayabilityStatusUnavailable,   // Not finished transcoding
+    VIMVideoPlayabilityStatusPlayable,      // Can be played
+    VIMVideoPlayabilityPurchaseRequired,    // On demand video that is not purchased
+    VIMVideoPlayabilityRestricted           // User's region cannot play or purchase
+};
 
-@end
+@interface VIMVideoPlayRepresentation : VIMModelObject
 
-@implementation VIMVideoLog
-
-#pragma mark - VIMMappable
-
-- (NSDictionary *)getObjectMapping
-{
-    return @{@"play_link": @"playURLString",
-             @"load_link": @"loadURLString",
-             @"like_press_link" : @"likeURLString",
-             @"watchlater_press_link" : @"watchLaterURLString"};
-}
+@property (nonatomic, strong, nullable) VIMVideoHLSFile *hlsFile;
+@property (nonatomic, strong, nullable) VIMVideoDASHFile *dashFile;
+@property (nonatomic, strong, nullable) NSArray<VIMVideoProgressiveFile *> *progressiveFiles;
+@property (nonatomic, assign) VIMVideoPlayabilityStatus playabilityStatus;
 
 @end
