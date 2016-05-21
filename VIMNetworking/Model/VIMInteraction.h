@@ -31,11 +31,21 @@
 extern NSString * const __nonnull VIMInteractionNameWatchLater;
 extern NSString * const __nonnull VIMInteractionNameFollow;
 extern NSString * const __nonnull VIMInteractionNameLike;
+extern NSString * const __nonnull VIMInteractionNameBuy;
+extern NSString * const __nonnull VIMInteractionNameRent;
+extern NSString * const __nonnull VIMInteractionNameSubscribe;
 
 @interface VIMInteraction : VIMModelObject
 
 @property (nonatomic, copy, nullable) NSString *uri;
 @property (nonatomic, strong, nullable) NSNumber *added;
 @property (nonatomic, strong, nullable) NSDate *added_time;
+
+# pragma mark - VOD related only
+@property (nonatomic, copy, nullable) NSString *link;
+@property (nonatomic, copy, nullable) NSString *download;
+@property (nonatomic, copy, nullable) NSString *stream;
+@property (nonatomic, strong, nullable) NSDate *expirationDate;
+@property (nonatomic, strong, nullable) NSDate *purchaseDate;
 
 @end

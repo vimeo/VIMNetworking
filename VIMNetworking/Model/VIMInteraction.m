@@ -31,6 +31,14 @@
 NSString * const VIMInteractionNameWatchLater = @"watchlater";
 NSString * const VIMInteractionNameFollow = @"follow";
 NSString * const VIMInteractionNameLike = @"like";
+NSString * const VIMInteractionNameBuy = @"buy";
+NSString * const VIMInteractionNameRent = @"rent";
+NSString * const VIMInteractionNameSubscribe = @"subscribe";
+
+@interface VIMInteraction()
+@property (nonatomic, copy, nullable) NSString *expires_time;
+@property (nonatomic, copy, nullable) NSString *purchase_time;
+@end
 
 @implementation VIMInteraction
 
@@ -38,10 +46,33 @@ NSString * const VIMInteractionNameLike = @"like";
 
 - (void)didFinishMapping
 {
+    // TODO: Weird casting? This is an NSDate on our public interface
+    // but we're also getting a string from API with this name [NL] 05/21/16
     if ([self.added_time isKindOfClass:[NSString class]])
     {
         self.added_time = [[VIMModelObject dateFormatter] dateFromString:(NSString *)self.added_time];
     }
+    
+    if ([self.expires_time isKindOfClass:[NSString class]])
+    {
+        self.expirationDate = [[self dateFormatterVODHack] dateFromString:self.expires_time];
+    }
+    
+    if ([self.purchase_time isKindOfClass:[NSString class]])
+    {
+        self.purchaseDate = [[self dateFormatterVODHack] dateFromString:self.purchase_time];
+    }
+}
+
+// TODO: temporary helper until we confirm with API why this date format is different [NL] 05/21/2016
+
+- (NSDateFormatter *)dateFormatterVODHack
+{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.locale = [NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"];
+    dateFormatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
+    
+    return dateFormatter;
 }
 
 @end
