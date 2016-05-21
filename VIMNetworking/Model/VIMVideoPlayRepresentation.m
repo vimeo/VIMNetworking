@@ -83,8 +83,8 @@
     NSDictionary *statusDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
                                       [NSNumber numberWithInt:VIMVideoPlayabilityStatusUnavailable], @"unavailable",
                                       [NSNumber numberWithInt:VIMVideoPlayabilityStatusPlayable], @"playable",
-                                      [NSNumber numberWithInt:VIMVideoPlayabilityPurchaseRequired], @"purchase_required",
-                                      [NSNumber numberWithInt:VIMVideoPlayabilityRestricted], @"restricted",
+                                      [NSNumber numberWithInt:VIMVideoPlayabilityStatusPurchaseRequired], @"purchase_required",
+                                      [NSNumber numberWithInt:VIMVideoPlayabilityStatusRestricted], @"restricted",
                                       nil];
     
     NSNumber *number = [statusDictionary objectForKey:self.status];
