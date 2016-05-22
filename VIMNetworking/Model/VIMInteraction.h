@@ -35,6 +35,13 @@ extern NSString * const __nonnull VIMInteractionNameBuy;
 extern NSString * const __nonnull VIMInteractionNameRent;
 extern NSString * const __nonnull VIMInteractionNameSubscribe;
 
+typedef NS_ENUM(NSInteger, VIMInteractionStreamStatus) {
+    VIMInteractionStreamStatusPurchased = 0,
+    VIMInteractionStreamStatusRestricted,
+    VIMInteractionStreamStatusAvailable,
+    VIMInteractionStreamStatusUnavailable
+};
+
 @interface VIMInteraction : VIMModelObject
 
 @property (nonatomic, copy, nullable) NSString *uri;
@@ -44,8 +51,8 @@ extern NSString * const __nonnull VIMInteractionNameSubscribe;
 # pragma mark - VOD related only
 @property (nonatomic, copy, nullable) NSString *link;
 @property (nonatomic, copy, nullable) NSString *download;
-@property (nonatomic, copy, nullable) NSString *stream;
 @property (nonatomic, strong, nullable) NSDate *expirationDate;
 @property (nonatomic, strong, nullable) NSDate *purchaseDate;
+@property (nonatomic, assign) VIMInteractionStreamStatus streamStatus;
 
 @end

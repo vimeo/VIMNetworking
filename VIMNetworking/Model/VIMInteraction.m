@@ -38,6 +38,7 @@ NSString * const VIMInteractionNameSubscribe = @"subscribe";
 @interface VIMInteraction()
 @property (nonatomic, copy, nullable) NSString *expires_time;
 @property (nonatomic, copy, nullable) NSString *purchase_time;
+@property (nonatomic, copy, nullable) NSString *stream;
 @end
 
 @implementation VIMInteraction
@@ -62,6 +63,12 @@ NSString * const VIMInteractionNameSubscribe = @"subscribe";
     {
         self.purchaseDate = [[self dateFormatterVODHack] dateFromString:self.purchase_time];
     }
+    
+    // Not every interaction has a stream status [NL] 05/22/16
+    if (self.stream != nil)
+    {
+        [self setStreamStatus];
+    }
 }
 
 // TODO: temporary helper until we confirm with API why this date format is different [NL] 05/21/2016
@@ -73,6 +80,22 @@ NSString * const VIMInteractionNameSubscribe = @"subscribe";
     dateFormatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
     
     return dateFormatter;
+}
+
+- (void)setStreamStatus
+{
+    NSDictionary *statusDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
+                                      [NSNumber numberWithInt:VIMInteractionStreamStatusPurchased], @"purchased",
+                                      [NSNumber numberWithInt:VIMInteractionStreamStatusRestricted], @"restricted",
+                                      [NSNumber numberWithInt:VIMInteractionStreamStatusAvailable], @"available",
+                                      [NSNumber numberWithInt:VIMInteractionStreamStatusUnavailable], @"unavailable",
+                                      nil];
+    
+    NSNumber *number = [statusDictionary objectForKey:self.stream];
+    
+    NSAssert(number != nil, @"VOD video stream status not handled, unknown stream status");
+    
+    self.streamStatus = [number intValue];
 }
 
 @end
