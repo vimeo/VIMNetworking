@@ -49,6 +49,8 @@ NSString *const VIMConnectionNameShared = @"shared";
 NSString *const VIMConnectionNameVideos = @"videos";
 NSString *const VIMConnectionNameWatchlater = @"watchlater";
 NSString *const VIMConnectionNameViolations = @"violations";
+NSString *const VIMConnectionNameVODContainer = @"ondemand";
+NSString *const VIMConnectionNameVODTrailer = @"trailer";
 
 @interface VIMConnection()
 @property (nonatomic, strong, nullable) NSNumber *extra_total;

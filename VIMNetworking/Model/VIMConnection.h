@@ -49,6 +49,8 @@ extern NSString *const __nonnull VIMConnectionNameShared;
 extern NSString *const __nonnull VIMConnectionNameVideos;
 extern NSString *const __nonnull VIMConnectionNameWatchlater;
 extern NSString *const __nonnull VIMConnectionNameViolations;
+extern NSString *const __nonnull VIMConnectionNameVODContainer;
+extern NSString *const __nonnull VIMConnectionNameVODTrailer;
 
 @interface VIMConnection : VIMModelObject
 

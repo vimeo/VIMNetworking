@@ -318,8 +318,12 @@ NSString *VIMContentRating_Safe = @"safe";
 
 - (BOOL)isVOD
 {
-    NSString *privacy = self.privacy.view;
-    return [privacy isEqualToString:VIMPrivacy_VOD];
+    return [self vodContainerURI] != nil;
+}
+
+- (BOOL)isVODTrailer
+{
+    return [self vodTrailerURI] == nil; // If video lacks a trailer connection, it IS a trailer [NL] 05/22/16
 }
 
 - (BOOL)isPrivate
@@ -341,6 +345,20 @@ NSString *VIMContentRating_Safe = @"safe";
 - (BOOL)isUploading
 {
     return self.videoStatus == VIMVideoProcessingStatusUploading;
+}
+
+- (NSString *)vodTrailerURI
+{
+    VIMConnection *vodTrailer = [self connectionWithName:VIMConnectionNameVODTrailer];
+    
+    return vodTrailer.uri;
+}
+
+- (NSString *)vodContainerURI
+{
+    VIMConnection *vodContainer = [self connectionWithName:VIMConnectionNameVODContainer];
+    
+    return vodContainer.uri;
 }
 
 // New
