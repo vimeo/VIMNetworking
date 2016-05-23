@@ -10,6 +10,8 @@
 
 @implementation VIMVideo (VOD)
 
+#pragma mark - Public API
+
 - (BOOL)isVOD
 {
     return [self vodContainerURI] != nil;
@@ -34,7 +36,7 @@
     return vodContainer.uri;
 }
 
-- (VIMVideoVODAccess)vodAccess // Other way besides checking each interaction? 
+- (VIMVideoVODAccess)vodAccess  
 {
     VIMInteraction *buyInteraction = [self interactionWithName:VIMInteractionNameBuy];
     if (buyInteraction.streamStatus == VIMInteractionStreamStatusPurchased)
