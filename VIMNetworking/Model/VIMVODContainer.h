@@ -54,9 +54,8 @@ typedef NS_ENUM(NSUInteger, VIMVODContainerType) {
 @property (nonatomic, assign) VIMVODContainerType containerType;
 @property (nonatomic, strong, nullable) NSDate *publishDate;
 
-// MARK: Helpers
-- (nullable VIMConnection *)connectionWithName:(nonnull NSString *)connectionName;
-- (nullable VIMInteraction *)interactionWithName:(nonnull NSString *)name;
+- (VIMConnection * _Nullable)connectionWithName:(NSString * _Nullable)connectionName;
+- (VIMInteraction * _Nullable)interactionWithName:(NSString * _Nullable)name;
 - (NSNumber * _Nullable)videosTotal;
 - (NSNumber * _Nullable)viewableVideosTotal;
 - (NSNumber * _Nullable)mainVideosTotal;
