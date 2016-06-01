@@ -1,5 +1,5 @@
 //
-//  VIMVODContainer.m
+//  VIMVODItem.m
 //  Vimeo
 //
 //  Created by Lehrer, Nicole on 5/18/16.
@@ -24,7 +24,7 @@
 //  THE SOFTWARE.
 //
 
-#import "VIMVODContainer.h"
+#import "VIMVODItem.h"
 
 #import "VIMObjectMapper.h"
 #import "VIMUser.h"
@@ -34,7 +34,7 @@
 #import "VIMPictureCollection.h"
 #import "VIMVideo.h"
 
-@interface VIMVODContainer ()
+@interface VIMVODItem ()
 
 // MARK: Naming mirrors API (where names with underscores are mapped to camelCase)
 @property (nonatomic, strong) NSDictionary *metadata;
@@ -45,7 +45,7 @@
 
 @end
 
-@implementation VIMVODContainer
+@implementation VIMVODItem
 
 #pragma mark - Public API
 
@@ -160,7 +160,7 @@
     [self parseConnections];
     [self parseInteractions];
     [self formatPublishTime];
-    [self setVODContainerType];
+    [self setVODItemType];
 }
 
 #pragma mark - Model Versioning
@@ -270,18 +270,18 @@
     }
 }
 
-- (void)setVODContainerType
+- (void)setVODItemType
 {
     NSDictionary *vodTypeDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
-                                      [NSNumber numberWithInt:VIMVODContainerTypeSeries], @"series",
-                                      [NSNumber numberWithInt:VIMVODContainerTypeFilm], @"film",
+                                      [NSNumber numberWithInt:VIMVODItemTypeSeries], @"series",
+                                      [NSNumber numberWithInt:VIMVODItemTypeFilm], @"film",
                                       nil];
     
     NSNumber *number = [vodTypeDictionary objectForKey:self.type];
     
     NSAssert(number != nil, @"VOD type not handled, unknown VOD type");
     
-    self.containerType = [number intValue];
+    self.itemType = [number intValue];
 }
 
 #pragma mark - Helpers

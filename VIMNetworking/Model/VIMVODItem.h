@@ -1,5 +1,5 @@
 //
-//  VIMVODContainer.h
+//  VIMVODItem.h
 //  Vimeo
 //
 //  Created by Lehrer, Nicole on 5/18/16.
@@ -32,12 +32,12 @@
 @class VIMPictureCollection;
 @class VIMInteraction;
 
-typedef NS_ENUM(NSUInteger, VIMVODContainerType) {
-    VIMVODContainerTypeSeries,
-    VIMVODContainerTypeFilm
+typedef NS_ENUM(NSUInteger, VIMVODItemType) {
+    VIMVODItemTypeSeries,
+    VIMVODItemTypeFilm
 };
 
-@interface VIMVODContainer : VIMModelObject
+@interface VIMVODItem : VIMModelObject
 
 // MARK: Naming mirrors API (where names with underscores are mapped to camelCase)
 @property (nonatomic, copy, nullable) NSString *link;
@@ -51,7 +51,7 @@ typedef NS_ENUM(NSUInteger, VIMVODContainerType) {
 // MARK: Naming is different than API - see implementation file for mapping
 @property (nonatomic, copy, nullable) NSString *vodDescription;
 @property (nonatomic, strong, nullable) VIMPictureCollection *pictureCollection;
-@property (nonatomic, assign) VIMVODContainerType containerType;
+@property (nonatomic, assign) VIMVODItemType itemType;
 @property (nonatomic, strong, nullable) NSDate *publishDate;
 
 - (VIMConnection * _Nullable)connectionWithName:(NSString * _Nullable)connectionName;

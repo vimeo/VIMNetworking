@@ -14,7 +14,7 @@
 
 - (BOOL)isVOD
 {
-    return [self vodContainerURI] != nil;
+    return [self vodItemURI] != nil;
 }
 
 - (BOOL)isVODTrailer
@@ -29,11 +29,11 @@
     return vodTrailer.uri;
 }
 
-- (NSString *)vodContainerURI
+- (NSString *)vodItemURI
 {
-    VIMConnection *vodContainer = [self connectionWithName:VIMConnectionNameVODContainer];
+    VIMConnection *vodItem = [self connectionWithName:VIMConnectionNameVODItem];
     
-    return vodContainer.uri;
+    return vodItem.uri;
 }
 
 - (VIMVideoVODAccess)vodAccess  
