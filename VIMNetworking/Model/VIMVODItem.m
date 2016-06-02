@@ -37,9 +37,9 @@
 @interface VIMVODItem ()
 
 // MARK: Naming mirrors API (where names with underscores are mapped to camelCase)
-@property (nonatomic, strong) NSDictionary *metadata;
-@property (nonatomic, strong) NSDictionary *connections;
-@property (nonatomic, strong) NSDictionary *interactions;
+@property (nonatomic, strong, nullable) NSDictionary *metadata;
+@property (nonatomic, strong, nullable) NSDictionary *connections;
+@property (nonatomic, strong, nullable) NSDictionary *interactions;
 @property (nonatomic, strong, nullable) NSDictionary *publish;
 @property (nonatomic, copy, nullable) NSString *type;
 

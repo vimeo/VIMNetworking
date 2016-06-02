@@ -42,8 +42,8 @@ typedef NS_ENUM(NSUInteger, VIMVODItemType) {
 // MARK: Naming mirrors API (where names with underscores are mapped to camelCase)
 @property (nonatomic, copy, nullable) NSString *link;
 @property (nonatomic, copy, nullable) NSString *name;
-@property (nonatomic, copy, nullable) VIMVideo *trailer;
-@property (nonatomic, copy, nullable) VIMVideo *film;
+@property (nonatomic, strong, nullable) VIMVideo *trailer;
+@property (nonatomic, strong, nullable) VIMVideo *film;
 @property (nonatomic, copy, nullable) NSString *uri;
 @property (nonatomic, strong, nullable) VIMUser *user;
 @property (nonatomic, copy, nullable) NSString *resourceKey;
