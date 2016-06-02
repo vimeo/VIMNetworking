@@ -210,7 +210,6 @@
     NSMutableDictionary *connections = [NSMutableDictionary dictionary];
     
     NSDictionary *dict = [self.metadata valueForKey:@"connections"];
-    
     if([dict isKindOfClass:[NSDictionary class]])
     {
         for(NSString *key in [dict allKeys])
@@ -219,7 +218,6 @@
             if([value isKindOfClass:[NSDictionary class]])
             {
                 VIMConnection *connection = [[VIMConnection alloc] initWithKeyValueDictionary:value];
-                
                 if([connection respondsToSelector:@selector(didFinishMapping)])
                     [connection didFinishMapping];
                 
@@ -248,11 +246,6 @@
                     [interaction didFinishMapping];
                 
                 [interactions setObject:interaction forKey:key];
-                
-                if ([key isEqualToString:@"connections"])
-                {
-                    NSLog(@"value is %@", value);
-                }
             }
         }
     }

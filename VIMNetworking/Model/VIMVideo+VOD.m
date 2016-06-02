@@ -38,8 +38,11 @@
 
 - (VIMVideoVODAccess)vodAccess  
 {
-    // We need to check buy interaction first, given rent and subscribe may also return true for the conditional
-    // on the value of streamStatus below, desipte the item being "bought" (aka "owned")
+    // For each type of purchase interaction (buy, rent, subscribe) check the value of streamStatus
+    // to see if item was bought, rented, or subscribed to
+    
+    // We need to check buy interaction first, because when an item is considered "bought" or "owned",
+    // rent and subscribe interactions may still also return "purchased" state for streamStatus
     
     VIMInteraction *buyInteraction = [self interactionWithName:VIMInteractionNameBuy];
     if (buyInteraction.streamStatus == VIMInteractionStreamStatusPurchased)
@@ -68,6 +71,8 @@
         
         return VIMVideoVODAccessRented;
     }
+    
+    // Otherwise check for cases where item is rented or subscribed to [NL] 06/02/2016
     
     if (rentInteraction.streamStatus == VIMInteractionStreamStatusPurchased)
     {
