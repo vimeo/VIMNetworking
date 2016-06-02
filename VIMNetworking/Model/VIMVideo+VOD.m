@@ -38,19 +38,42 @@
 
 - (VIMVideoVODAccess)vodAccess  
 {
+    // We need to check buy interaction first, given rent and subscribe may also return true for the conditional
+    // on the value of streamStatus below, desipte the item being "bought" (aka "owned")
+    
     VIMInteraction *buyInteraction = [self interactionWithName:VIMInteractionNameBuy];
     if (buyInteraction.streamStatus == VIMInteractionStreamStatusPurchased)
     {
         return VIMVideoVODAccessBought;
     }
     
+    // If buy interaction does not evaluate to true for conditional above
+    // Then we check the case where item has been both rented and subscribed
+    // In this case we return the interaction type with the later date
+    
     VIMInteraction *rentInteraction = [self interactionWithName:VIMInteractionNameRent];
+    VIMInteraction *subscribeInteraction = [self interactionWithName:VIMInteractionNameSubscribe];
+
+    if (rentInteraction.streamStatus == VIMInteractionStreamStatusPurchased &&
+        subscribeInteraction.streamStatus == VIMInteractionStreamStatusPurchased)
+    {
+        NSDate *rentalExpirationDate = [self expirationDateForAccess:VIMVideoVODAccessRented];
+        NSDate *subscriptionExpirationDate = [self expirationDateForAccess:VIMVideoVODAccessSubscribed];
+        
+        NSDate *laterDate = [rentalExpirationDate laterDate:subscriptionExpirationDate];
+        if ([laterDate isEqualToDate:subscriptionExpirationDate])
+        {
+            return VIMVideoVODAccessSubscribed;
+        }
+        
+        return VIMVideoVODAccessRented;
+    }
+    
     if (rentInteraction.streamStatus == VIMInteractionStreamStatusPurchased)
     {
         return VIMVideoVODAccessRented;
     }
     
-    VIMInteraction *subscribeInteraction = [self interactionWithName:VIMInteractionNameSubscribe];
     if (subscribeInteraction.streamStatus == VIMInteractionStreamStatusPurchased)
     {
         return VIMVideoVODAccessSubscribed;
