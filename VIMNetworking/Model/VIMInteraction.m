@@ -77,6 +77,8 @@ NSString * const VIMInteractionNameSubscribe = @"subscribe";
 // This covers parsing of all date string cases except expires_time and purchase_time, which are received in
 // in the format below. Intentionally placed helper here while we confirm this with API [NL] 05/21/2016
 
+// Follow up - API will update date format to match the supported format. Update here when ready [NL] 06/02/2016
+
 - (NSDateFormatter *)dateFormatter
 {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
