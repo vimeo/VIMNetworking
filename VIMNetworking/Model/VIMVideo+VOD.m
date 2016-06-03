@@ -50,7 +50,6 @@
         return VIMVideoVODAccessBought;
     }
     
-    // If buy interaction does not evaluate to true for conditional above
     // Then we check the case where item has been both rented and subscribed
     // In this case we return the interaction type with the later date
     
