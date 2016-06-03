@@ -33,6 +33,7 @@
 @class VIMInteraction;
 
 typedef NS_ENUM(NSUInteger, VIMVODItemType) {
+    VIMVODItemTypeUnknown,
     VIMVODItemTypeSeries,
     VIMVODItemTypeFilm
 };
