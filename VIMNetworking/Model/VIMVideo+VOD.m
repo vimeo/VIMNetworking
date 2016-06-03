@@ -38,14 +38,19 @@
 
 - (VIMVideoVODAccess)vodAccess  
 {
-    // For each type of purchase interaction (buy, rent, subscribe) check the value of streamStatus
-    // to see if item was bought, rented, or subscribed to
+    // TODO: As of 5/03/2016 purchase interactions from API are in flux
+    // This logic follows anticipated behavior once work is complete
+    // but will require testing [NL] 05/03/2016
     
-    // We need to check buy interaction first, because when an item is considered "bought" or "owned",
-    // rent and subscribe interactions may still also return "purchased" state for streamStatus
+    // For each type of purchase interaction (buy, rent, subscribe) check the value of streamStatus
+    // to see if item was bought, rented, or subscribed
+    
+    // We need to check buy interaction first, because when an item is considered "bought",
+    // the rent and subscribe interactions may still also return the "purchased" state for streamStatus
     
     VIMInteraction *buyInteraction = [self interactionWithName:VIMInteractionNameBuy];
-    if (buyInteraction.streamStatus == VIMInteractionStreamStatusPurchased)
+    
+    if (buyInteraction && buyInteraction.streamStatus == VIMInteractionStreamStatusPurchased)
     {
         return VIMVideoVODAccessBought;
     }
@@ -56,8 +61,8 @@
     VIMInteraction *rentInteraction = [self interactionWithName:VIMInteractionNameRent];
     VIMInteraction *subscribeInteraction = [self interactionWithName:VIMInteractionNameSubscribe];
 
-    if (rentInteraction.streamStatus == VIMInteractionStreamStatusPurchased &&
-        subscribeInteraction.streamStatus == VIMInteractionStreamStatusPurchased)
+    if (rentInteraction && rentInteraction.streamStatus == VIMInteractionStreamStatusPurchased &&
+        subscribeInteraction && subscribeInteraction.streamStatus == VIMInteractionStreamStatusPurchased)
     {
         NSDate *rentalExpirationDate = [self expirationDateForAccess:VIMVideoVODAccessRented];
         NSDate *subscriptionExpirationDate = [self expirationDateForAccess:VIMVideoVODAccessSubscribed];
@@ -73,12 +78,12 @@
     
     // Otherwise check for cases where item is rented or subscribed to [NL] 06/02/2016
     
-    if (rentInteraction.streamStatus == VIMInteractionStreamStatusPurchased)
+    if (rentInteraction && rentInteraction.streamStatus == VIMInteractionStreamStatusPurchased)
     {
         return VIMVideoVODAccessRented;
     }
     
-    if (subscribeInteraction.streamStatus == VIMInteractionStreamStatusPurchased)
+    if (subscribeInteraction && subscribeInteraction.streamStatus == VIMInteractionStreamStatusPurchased)
     {
         return VIMVideoVODAccessSubscribed;
     }
