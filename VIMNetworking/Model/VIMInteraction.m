@@ -36,6 +36,7 @@ NSString * const VIMInteractionNameRent = @"rent";
 NSString * const VIMInteractionNameSubscribe = @"subscribe";
 
 @interface VIMInteraction()
+@property (nonatomic, copy, nullable) NSString *added_time;
 @property (nonatomic, copy, nullable) NSString *expires_time;
 @property (nonatomic, copy, nullable) NSString *purchase_time;
 @property (nonatomic, copy, nullable) NSString *stream;
@@ -47,11 +48,9 @@ NSString * const VIMInteractionNameSubscribe = @"subscribe";
 
 - (void)didFinishMapping
 {
-    // TODO: Weird casting? This is an NSDate on our public interface
-    // but we're also getting a string from API with this name [NL] 05/21/16
     if ([self.added_time isKindOfClass:[NSString class]])
     {
-        self.added_time = [[VIMModelObject dateFormatter] dateFromString:(NSString *)self.added_time];
+        self.addedTime = [[VIMModelObject dateFormatter] dateFromString:self.added_time];
     }
     
     if ([self.expires_time isKindOfClass:[NSString class]])

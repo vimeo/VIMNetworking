@@ -46,7 +46,7 @@ typedef NS_ENUM(NSInteger, VIMInteractionStreamStatus) {
 
 @property (nonatomic, copy, nullable) NSString *uri;
 @property (nonatomic, strong, nullable) NSNumber *added;
-@property (nonatomic, strong, nullable) NSDate *added_time;
+@property (nonatomic, strong, nullable) NSDate *addedTime;
 
 # pragma mark - VOD related only
 @property (nonatomic, copy, nullable) NSString *link;
