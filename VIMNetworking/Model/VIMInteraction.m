@@ -55,12 +55,12 @@ NSString * const VIMInteractionNameSubscribe = @"subscribe";
     
     if ([self.expires_time isKindOfClass:[NSString class]])
     {
-        self.expirationDate = [[self dateFormatter] dateFromString:self.expires_time];
+        self.expirationDate = [[VIMModelObject dateFormatter] dateFromString:self.expires_time];
     }
     
     if ([self.purchase_time isKindOfClass:[NSString class]])
     {
-        self.purchaseDate = [[self dateFormatter] dateFromString:self.purchase_time];
+        self.purchaseDate = [[VIMModelObject dateFormatter] dateFromString:self.purchase_time];
     }
     
     // Not every interaction has a stream status, only buy, rent, subscribe [NL] 05/22/16
@@ -71,21 +71,6 @@ NSString * const VIMInteractionNameSubscribe = @"subscribe";
 }
 
 #pragma mark - Parsing Helpers
-
-// TODO: VIMModelObject supports date string parsing in this format: @"yyyy-MM-dd'T'HH:mm:ssZZZZZ"
-// This covers parsing of all date string cases except expires_time and purchase_time, which are received in
-// in the format below. Intentionally placed helper here while we confirm this with API [NL] 05/21/2016
-
-// Follow up - API will update date format to match the supported format. Update here when ready [NL] 06/02/2016
-
-- (NSDateFormatter *)dateFormatter
-{
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    dateFormatter.locale = [NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"];
-    dateFormatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
-    
-    return dateFormatter;
-}
 
 - (void)setStreamStatus
 {
