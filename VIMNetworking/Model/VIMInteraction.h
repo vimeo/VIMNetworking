@@ -36,10 +36,10 @@ extern NSString * const __nonnull VIMInteractionNameRent;
 extern NSString * const __nonnull VIMInteractionNameSubscribe;
 
 typedef NS_ENUM(NSInteger, VIMInteractionStreamStatus) {
-    VIMInteractionStreamStatusPurchased = 0,    // user has purchased
-    VIMInteractionStreamStatusRestricted,       // user cannot purchase in this geographic region
-    VIMInteractionStreamStatusAvailable,        // user can purchase but has not yet
-    VIMInteractionStreamStatusUnavailable       // user cannot purchase
+    VIMInteractionStreamStatusUnavailable = 0,      // user cannot purchase
+    VIMInteractionStreamStatusPurchased,            // user has purchased
+    VIMInteractionStreamStatusRestricted,           // user cannot purchase in this geographic region
+    VIMInteractionStreamStatusAvailable             // user can purchase but has not yet
 };
 
 @interface VIMInteraction : VIMModelObject
