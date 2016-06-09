@@ -316,12 +316,6 @@ NSString *VIMContentRating_Safe = @"safe";
     return [self connectionWithName:VIMConnectionNameComments].uri != nil;
 }
 
-- (BOOL)isVOD
-{
-    NSString *privacy = self.privacy.view;
-    return [privacy isEqualToString:VIMPrivacy_VOD];
-}
-
 - (BOOL)isPrivate
 {
     NSString *privacy = self.privacy.view;

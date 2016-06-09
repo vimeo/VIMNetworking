@@ -31,11 +31,28 @@
 extern NSString * const __nonnull VIMInteractionNameWatchLater;
 extern NSString * const __nonnull VIMInteractionNameFollow;
 extern NSString * const __nonnull VIMInteractionNameLike;
+extern NSString * const __nonnull VIMInteractionNameBuy;
+extern NSString * const __nonnull VIMInteractionNameRent;
+extern NSString * const __nonnull VIMInteractionNameSubscribe;
+
+typedef NS_ENUM(NSInteger, VIMInteractionStreamStatus) {
+    VIMInteractionStreamStatusUnavailable = 0,      // user cannot purchase
+    VIMInteractionStreamStatusPurchased,            // user has purchased
+    VIMInteractionStreamStatusRestricted,           // user cannot purchase in this geographic region
+    VIMInteractionStreamStatusAvailable             // user can purchase but has not yet
+};
 
 @interface VIMInteraction : VIMModelObject
 
 @property (nonatomic, copy, nullable) NSString *uri;
 @property (nonatomic, strong, nullable) NSNumber *added;
-@property (nonatomic, strong, nullable) NSDate *added_time;
+@property (nonatomic, strong, nullable) NSDate *addedTime;
+
+# pragma mark - VOD related only
+@property (nonatomic, copy, nullable) NSString *link;
+@property (nonatomic, copy, nullable) NSString *download;
+@property (nonatomic, strong, nullable) NSDate *expirationDate;
+@property (nonatomic, strong, nullable) NSDate *purchaseDate;
+@property (nonatomic, assign) VIMInteractionStreamStatus streamStatus;
 
 @end

@@ -55,6 +55,7 @@
                                  @"application/vnd.vimeo.trigger+json",
                                  @"application/vnd.vimeo.category+json",
                                  @"application/vnd.vimeo.channel+json",
+                                 @"application/vnd.vimeo.ondemand.page+json",
                                  nil];
 }
 

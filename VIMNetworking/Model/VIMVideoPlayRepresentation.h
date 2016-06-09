@@ -31,10 +31,10 @@
 @class VIMVideoProgressiveFile;
 
 typedef NS_ENUM(NSUInteger, VIMVideoPlayabilityStatus) {
-    VIMVideoPlayabilityStatusUnavailable,   // Not finished transcoding
-    VIMVideoPlayabilityStatusPlayable,      // Can be played
-    VIMVideoPlayabilityPurchaseRequired,    // On demand video that is not purchased
-    VIMVideoPlayabilityRestricted           // User's region cannot play or purchase
+    VIMVideoPlayabilityStatusUnavailable,           // Not finished transcoding
+    VIMVideoPlayabilityStatusPlayable,              // Can be played
+    VIMVideoPlayabilityStatusPurchaseRequired,      // On demand video that is not purchased
+    VIMVideoPlayabilityStatusRestricted             // User's region cannot play or purchase
 };
 
 @interface VIMVideoPlayRepresentation : VIMModelObject

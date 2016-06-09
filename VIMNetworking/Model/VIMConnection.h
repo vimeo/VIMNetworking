@@ -49,12 +49,19 @@ extern NSString *const __nonnull VIMConnectionNameShared;
 extern NSString *const __nonnull VIMConnectionNameVideos;
 extern NSString *const __nonnull VIMConnectionNameWatchlater;
 extern NSString *const __nonnull VIMConnectionNameViolations;
+extern NSString *const __nonnull VIMConnectionNameVODItem;
+extern NSString *const __nonnull VIMConnectionNameVODTrailer;
 
 @interface VIMConnection : VIMModelObject
 
 @property (nonatomic, copy, nullable) NSString *uri;
 @property (nonatomic, strong, nullable) NSNumber *total;
 @property (nonatomic, strong, nullable) NSArray *options;
+
+#pragma mark - VOD related only
+@property (nonatomic, strong, nullable) NSNumber *extraVideosCount;
+@property (nonatomic, strong, nullable) NSNumber *mainVideosCount;
+@property (nonatomic, strong, nullable) NSNumber *viewableVideosCount;
 
 - (BOOL)canGet;
 - (BOOL)canPost;
