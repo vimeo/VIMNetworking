@@ -147,6 +147,7 @@ NSString *VIMContentRating_Safe = @"safe";
     [self parseConnections];
     [self parseInteractions];
     [self formatCreatedTime];
+    [self formatReleaseTime];
     [self formatModifiedTime];
     
     id ob = [self.stats valueForKey:@"plays"];
@@ -246,6 +247,14 @@ NSString *VIMContentRating_Safe = @"safe";
     }
     
     self.interactions = interactions;
+}
+
+- (void)formatReleaseTime
+{
+    if ([self.releaseTime isKindOfClass:[NSString class]])
+    {
+        self.releaseTime = [[VIMModelObject dateFormatter] dateFromString:(NSString *)self.releaseTime];
+    }
 }
 
 - (void)formatCreatedTime
