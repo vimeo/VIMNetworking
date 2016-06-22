@@ -57,6 +57,7 @@ typedef NS_ENUM(NSUInteger, VIMVideoProcessingStatus) {
 
 @property (nonatomic, copy, nullable) NSArray *contentRating;
 @property (nonatomic, strong, nullable) NSDate *createdTime;
+@property (nonatomic, strong, nullable) NSDate *releaseTime;
 @property (nonatomic, strong, nullable) NSDate *modifiedTime;
 @property (nonatomic, copy, nullable) NSString *videoDescription;
 @property (nonatomic, strong, nullable) NSNumber *duration;
