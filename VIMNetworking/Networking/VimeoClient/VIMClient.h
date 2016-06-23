@@ -81,6 +81,8 @@
 
 - (nullable id<VIMRequestToken>)videoWithURI:(nonnull NSString *)URI completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 
+- (nullable id<VIMRequestToken>)vodVideoWithURI:(nonnull NSString *)URI completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
+
 - (nullable id<VIMRequestToken>)videosWithURI:(nonnull NSString *)URI completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 
 - (nullable id<VIMRequestToken>)updateVideoWithURI:(nonnull NSString *)URI title:(nullable NSString *)title description:(nullable NSString *)description privacy:(nullable NSString *)privacy completionHandler:(nonnull VIMRequestCompletionBlock)completionBlock;

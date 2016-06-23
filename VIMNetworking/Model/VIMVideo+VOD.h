@@ -21,5 +21,6 @@ typedef NS_ENUM(NSUInteger, VIMVideoVODAccess) {
 - (BOOL)isVODTrailer;
 - (VIMVideoVODAccess)vodAccess;
 - (NSDate * _Nullable)expirationDateForAccess:(VIMVideoVODAccess)access;
+- (NSString * _Nullable)vodTrailerURI;
 
 @end
