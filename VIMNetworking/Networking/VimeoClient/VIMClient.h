@@ -79,9 +79,9 @@
 
 #pragma mark - VOD
 
-- (nullable id<VIMRequestToken>)vodItemWithURI:(nonnull NSString *)URI completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
+- (nullable id<VIMRequestToken>)VODItemWithURI:(nonnull NSString *)URI completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 
-- (nullable id<VIMRequestToken>)vodVideoWithURI:(nonnull NSString *)URI completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
+- (nullable id<VIMRequestToken>)VODVideoWithURI:(nonnull NSString *)URI completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 
 #pragma mark - Videos
 
