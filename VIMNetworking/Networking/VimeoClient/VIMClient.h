@@ -77,11 +77,15 @@
 
 - (nullable id<VIMRequestToken>)activatePictureResourceWithURI:(nonnull NSString *)URI completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 
+#pragma mark - VOD
+
+- (nullable id<VIMRequestToken>)VODItemWithURI:(nonnull NSString *)URI completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
+
+- (nullable id<VIMRequestToken>)VODVideoWithURI:(nonnull NSString *)URI completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
+
 #pragma mark - Videos
 
 - (nullable id<VIMRequestToken>)videoWithURI:(nonnull NSString *)URI completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
-
-- (nullable id<VIMRequestToken>)vodVideoWithURI:(nonnull NSString *)URI completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 
 - (nullable id<VIMRequestToken>)videosWithURI:(nonnull NSString *)URI completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
 
