@@ -254,7 +254,7 @@ static NSString *const ModelKeyPathData = @"data";
 
 #pragma mark - VOD
 
-- (id<VIMRequestToken>)VODItemWithURIItemWithURI:(NSString *)URI completionBlock:(VIMRequestCompletionBlock)completionBlock
+- (id<VIMRequestToken>)VODItemWithURI:(NSString *)URI completionBlock:(VIMRequestCompletionBlock)completionBlock
 {
     VIMRequestDescriptor *descriptor = [[VIMRequestDescriptor alloc] init];
     descriptor.urlPath = URI;
@@ -264,7 +264,7 @@ static NSString *const ModelKeyPathData = @"data";
     return [self requestDescriptor:descriptor completionBlock:completionBlock];
 }
 
-- (id<VIMRequestToken>)VODItemWithURIVideoWithURI:(NSString *)URI completionBlock:(VIMRequestCompletionBlock)completionBlock
+- (id<VIMRequestToken>)VODVideoWithURI:(NSString *)URI completionBlock:(VIMRequestCompletionBlock)completionBlock
 {
     VIMRequestDescriptor *descriptor = [[VIMRequestDescriptor alloc] init];
     descriptor.urlPath = URI;
