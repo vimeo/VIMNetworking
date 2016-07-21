@@ -28,6 +28,7 @@
 #import "VIMVideoPlayRepresentation.h"
 #import "VIMVideoHLSFile.h"
 #import "VIMVideoDASHFile.h"
+#import "VIMVideoDRMFiles.h"
 #import "VIMVideoProgressiveFile.h"
 #import "VIMVideoLog.h"
 
@@ -48,9 +49,10 @@
 
 - (NSDictionary *)getObjectMapping
 {
-    return @{@"progressive": @"progressiveFiles",
-             @"hls": @"hlsFile",
-             @"dash": @"dashFile"};
+    return @{@"hls": @"hlsFile",
+             @"dash": @"dashFile",
+             @"drm": @"drmFiles",
+             @"progressive": @"progressiveFiles"};
 }
 
 - (Class)getClassForObjectKey:(NSString *)key
@@ -63,6 +65,11 @@
     if( [key isEqualToString:@"dash"] )
     {
         return [VIMVideoDASHFile class];
+    }
+    
+    if( [key isEqualToString:@"drm"] )
+    {
+        return [VIMVideoDRMFiles class];
     }
     
     return nil;
