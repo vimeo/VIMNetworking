@@ -162,6 +162,10 @@
     {
         self.accountType = VIMUserAccountTypeBasic;
     }
+    else if ([self.account isEqualToString:@"business"])
+    {
+        self.accountType = VIMUserAccountTypeBusiness;
+    }
 }
 
 - (void)formatCreatedTime
@@ -210,6 +214,9 @@
             break;
         case VIMUserAccountTypeStaff:
             return @"staff";
+            break;
+        case VIMUserAccountTypeBusiness:
+            return @"business";
             break;
     }
 }
