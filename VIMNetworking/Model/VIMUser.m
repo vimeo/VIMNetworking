@@ -180,7 +180,7 @@
         }
     }
     
-    self.userEmails = [NSArray arrayWithArray:parsedEmails];
+    self.userEmails = parsedEmails; 
 }
 
 - (void)formatCreatedTime
