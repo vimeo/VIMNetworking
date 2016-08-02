@@ -20,7 +20,7 @@
 
 - (Class)getClassForObjectKey:(NSString *)key
 {
-    if( [key isEqualToString:@"fairplay"] )
+    if ([key isEqualToString:@"fairplay"])
     {
         return [VIMVideoFairPlayFile class];
     }

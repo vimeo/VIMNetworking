@@ -57,17 +57,17 @@
 
 - (Class)getClassForObjectKey:(NSString *)key
 {
-    if( [key isEqualToString:@"hls"] )
+    if ([key isEqualToString:@"hls"])
     {
         return [VIMVideoHLSFile class];
     }
     
-    if( [key isEqualToString:@"dash"] )
+    if ([key isEqualToString:@"dash"])
     {
         return [VIMVideoDASHFile class];
     }
     
-    if( [key isEqualToString:@"drm"] )
+    if ([key isEqualToString:@"drm"])
     {
         return [VIMVideoDRMFiles class];
     }
@@ -77,7 +77,7 @@
 
 - (Class)getClassForCollectionKey:(NSString *)key
 {
-    if([key isEqualToString:@"progressive"])
+    if ([key isEqualToString:@"progressive"])
     {
         return [VIMVideoProgressiveFile class];
     }
