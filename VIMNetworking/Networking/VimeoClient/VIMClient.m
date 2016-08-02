@@ -252,9 +252,31 @@ static NSString *const ModelKeyPathData = @"data";
     return [self requestDescriptor:descriptor completionBlock:completionBlock];
 }
 
+#pragma mark - VOD
+
+- (id<VIMRequestToken>)VODItemWithURI:(NSString *)URI completionBlock:(VIMRequestCompletionBlock)completionBlock
+{
+    VIMRequestDescriptor *descriptor = [[VIMRequestDescriptor alloc] init];
+    descriptor.urlPath = URI;
+    descriptor.modelClass = [VIMVODItem class];
+    descriptor.parameters = @{@"_video_override" : @"true"};
+    
+    return [self requestDescriptor:descriptor completionBlock:completionBlock];
+}
+
+- (id<VIMRequestToken>)VODVideoWithURI:(NSString *)URI completionBlock:(VIMRequestCompletionBlock)completionBlock
+{
+    VIMRequestDescriptor *descriptor = [[VIMRequestDescriptor alloc] init];
+    descriptor.urlPath = URI;
+    descriptor.modelClass = [VIMVideo class];
+    descriptor.parameters = @{@"_video_override" : @"true"};
+    
+    return [self requestDescriptor:descriptor completionBlock:completionBlock];
+}
+
 #pragma mark - Videos
 
-- (id<VIMRequestToken>)videoWithURI:(NSString *)URI completionBlock:(VIMRequestCompletionBlock)completionBlock;
+- (id<VIMRequestToken>)videoWithURI:(NSString *)URI completionBlock:(VIMRequestCompletionBlock)completionBlock
 {
     VIMRequestDescriptor *descriptor = [[VIMRequestDescriptor alloc] init];
     descriptor.urlPath = URI;

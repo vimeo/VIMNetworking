@@ -31,6 +31,16 @@
 NSString * const VIMInteractionNameWatchLater = @"watchlater";
 NSString * const VIMInteractionNameFollow = @"follow";
 NSString * const VIMInteractionNameLike = @"like";
+NSString * const VIMInteractionNameBuy = @"buy";
+NSString * const VIMInteractionNameRent = @"rent";
+NSString * const VIMInteractionNameSubscribe = @"subscribe";
+
+@interface VIMInteraction()
+@property (nonatomic, copy, nullable) NSString *added_time;
+@property (nonatomic, copy, nullable) NSString *expires_time;
+@property (nonatomic, copy, nullable) NSString *purchase_time;
+@property (nonatomic, copy, nullable) NSString *stream;
+@end
 
 @implementation VIMInteraction
 
@@ -40,8 +50,42 @@ NSString * const VIMInteractionNameLike = @"like";
 {
     if ([self.added_time isKindOfClass:[NSString class]])
     {
-        self.added_time = [[VIMModelObject dateFormatter] dateFromString:(NSString *)self.added_time];
+        self.addedTime = [[VIMModelObject dateFormatter] dateFromString:self.added_time];
     }
+    
+    if ([self.expires_time isKindOfClass:[NSString class]])
+    {
+        self.expirationDate = [[VIMModelObject dateFormatter] dateFromString:self.expires_time];
+    }
+    
+    if ([self.purchase_time isKindOfClass:[NSString class]])
+    {
+        self.purchaseDate = [[VIMModelObject dateFormatter] dateFromString:self.purchase_time];
+    }
+    
+    // Not every interaction has a stream status, only buy, rent, subscribe [NL] 05/22/16
+    if (self.stream != nil)
+    {
+        [self setStreamStatus];
+    }
+}
+
+#pragma mark - Parsing Helpers
+
+- (void)setStreamStatus
+{
+    NSDictionary *statusDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
+                                      [NSNumber numberWithInt:VIMInteractionStreamStatusPurchased], @"purchased",
+                                      [NSNumber numberWithInt:VIMInteractionStreamStatusRestricted], @"restricted",
+                                      [NSNumber numberWithInt:VIMInteractionStreamStatusAvailable], @"available",
+                                      [NSNumber numberWithInt:VIMInteractionStreamStatusUnavailable], @"unavailable",
+                                      nil];
+    
+    NSNumber *number = [statusDictionary objectForKey:self.stream];
+    
+    NSAssert(number != nil, @"VOD video stream status not handled, unknown stream status");
+    
+    self.streamStatus = [number intValue];
 }
 
 @end

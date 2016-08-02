@@ -1,9 +1,9 @@
 //
-//  VIMVideoLog.m
-//  VIMNetworking
+//  VIMVideoProgressiveFile.h
+//  Vimeo
 //
-//  Created by Hanssen, Alfie on 11/19/14.
-//  Copyright (c) 2014-2015 Vimeo (https://vimeo.com)
+//  Created by Lehrer, Nicole on 5/12/16.
+//  Copyright © 2016 Vimeo. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,27 +24,18 @@
 //  THE SOFTWARE.
 //
 
-#import "VIMVideoLog.h"
+@import Foundation;
+#import "VIMVideoPlayFile.h"
 
-@interface VIMVideoLog ()
+@interface VIMVideoProgressiveFile : VIMVideoPlayFile
 
-@property (nonatomic, copy, readwrite) NSString *playURLString;
-@property (nonatomic, copy, readwrite) NSString *loadURLString;
-@property (nonatomic, copy, readwrite) NSString *likeURLString;
-@property (nonatomic, copy, readwrite) NSString *watchLaterURLString;
+@property (nonatomic, assign) CGSize dimensions;
+@property (nonatomic, strong, nullable) NSDate *creationDate;
+@property (nonatomic, copy, nullable) NSString *mimeType;
+@property (nonatomic, strong, nullable) NSNumber *fps;
+@property (nonatomic, copy, nullable) NSString *md5;
+@property (nonatomic, strong, nullable) NSNumber *sizeInBytes;
 
-@end
-
-@implementation VIMVideoLog
-
-#pragma mark - VIMMappable
-
-- (NSDictionary *)getObjectMapping
-{
-    return @{@"play_link": @"playURLString",
-             @"load_link": @"loadURLString",
-             @"like_press_link" : @"likeURLString",
-             @"watchlater_press_link" : @"watchLaterURLString"};
-}
+- (BOOL)isSupportedMimeType;
 
 @end

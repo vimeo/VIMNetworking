@@ -34,6 +34,7 @@
 @class VIMPrivacy;
 @class VIMAppeal;
 @class VIMVideoLog;
+@class VIMVideoPlayRepresentation;
 
 extern NSString * __nonnull VIMContentRating_Language;
 extern NSString * __nonnull VIMContentRating_Drugs;
@@ -56,10 +57,12 @@ typedef NS_ENUM(NSUInteger, VIMVideoProcessingStatus) {
 
 @property (nonatomic, copy, nullable) NSArray *contentRating;
 @property (nonatomic, strong, nullable) NSDate *createdTime;
+@property (nonatomic, strong, nullable) NSDate *releaseTime;
 @property (nonatomic, strong, nullable) NSDate *modifiedTime;
 @property (nonatomic, copy, nullable) NSString *videoDescription;
 @property (nonatomic, strong, nullable) NSNumber *duration;
 @property (nonatomic, strong, nullable) NSArray *files;
+@property (nonatomic, strong, nullable) VIMVideoPlayRepresentation *playRepresentation;
 @property (nonatomic, strong, nullable) NSNumber *width;
 @property (nonatomic, strong, nullable) NSNumber *height;
 @property (nonatomic, copy, nullable) NSString *license;
@@ -90,7 +93,6 @@ typedef NS_ENUM(NSUInteger, VIMVideoProcessingStatus) {
 - (BOOL)canComment;
 - (BOOL)canLike;
 - (BOOL)canViewComments;
-- (BOOL)isVOD;
 - (BOOL)isPrivate;
 - (BOOL)isAvailable;
 - (BOOL)isTranscoding;

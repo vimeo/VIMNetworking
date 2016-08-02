@@ -1,9 +1,9 @@
 //
-//  VIMVideoLog.m
-//  VIMNetworking
+//  VIMVideoHLSFile.h
+//  Vimeo
 //
-//  Created by Hanssen, Alfie on 11/19/14.
-//  Copyright (c) 2014-2015 Vimeo (https://vimeo.com)
+//  Created by Lehrer, Nicole on 5/12/16.
+//  Copyright © 2016 Vimeo. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,27 +24,10 @@
 //  THE SOFTWARE.
 //
 
-#import "VIMVideoLog.h"
+@import Foundation;
 
-@interface VIMVideoLog ()
+#import "VIMVideoPlayFile.h"
 
-@property (nonatomic, copy, readwrite) NSString *playURLString;
-@property (nonatomic, copy, readwrite) NSString *loadURLString;
-@property (nonatomic, copy, readwrite) NSString *likeURLString;
-@property (nonatomic, copy, readwrite) NSString *watchLaterURLString;
-
-@end
-
-@implementation VIMVideoLog
-
-#pragma mark - VIMMappable
-
-- (NSDictionary *)getObjectMapping
-{
-    return @{@"play_link": @"playURLString",
-             @"load_link": @"loadURLString",
-             @"like_press_link" : @"likeURLString",
-             @"watchlater_press_link" : @"watchLaterURLString"};
-}
+@interface VIMVideoHLSFile : VIMVideoPlayFile
 
 @end
