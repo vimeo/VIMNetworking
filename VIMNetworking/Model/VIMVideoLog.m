@@ -30,6 +30,7 @@
 
 @property (nonatomic, copy, readwrite) NSString *playURLString;
 @property (nonatomic, copy, readwrite) NSString *loadURLString;
+@property (nonatomic, copy, readwrite) NSString *exitURLString;
 @property (nonatomic, copy, readwrite) NSString *likeURLString;
 @property (nonatomic, copy, readwrite) NSString *watchLaterURLString;
 
@@ -43,6 +44,7 @@
 {
     return @{@"play_link": @"playURLString",
              @"load_link": @"loadURLString",
+             @"exit_link": @"exitURLString",
              @"like_press_link" : @"likeURLString",
              @"watchlater_press_link" : @"watchLaterURLString"};
 }
