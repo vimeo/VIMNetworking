@@ -32,6 +32,7 @@
 #import "VIMPicture.h"
 #import "VIMPreference.h"
 #import "VIMUploadQuota.h"
+#import "VIMUserBadge.h"
 
 @interface VIMUser ()
 
@@ -66,6 +67,11 @@
 
 - (Class)getClassForObjectKey:(NSString *)key
 {
+    if ([key isEqualToString:@"badge"])
+    {
+        return [VIMUserBadge class];
+    }
+    
     if ([key isEqualToString:@"pictures"])
     {
         return [VIMPictureCollection class];
@@ -205,19 +211,12 @@
         default:
         case VIMUserAccountTypeBasic:
             return @"basic";
-            break;
         case VIMUserAccountTypePlus:
             return @"plus";
-            break;
         case VIMUserAccountTypePro:
             return @"pro";
-            break;
-        case VIMUserAccountTypeStaff:
-            return @"staff";
-            break;
         case VIMUserAccountTypeBusiness:
             return @"business";
-            break;
     }
 }
 
