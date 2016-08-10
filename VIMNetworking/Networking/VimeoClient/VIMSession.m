@@ -236,7 +236,7 @@ static VIMSession *_sharedSession;
     
     BOOL success = [VIMAccountStore saveAccount:account forKey:key];
     
-    // NSAssert(success, @"Unable to save account for key: %@", key);
+    NSAssert(success, @"Unable to save account for key: %@", key);
     
     if (!success)
     {
@@ -502,7 +502,7 @@ static VIMSession *_sharedSession;
         strongSelf.account.userJSON = response.result;
         
         BOOL success = [VIMAccountStore saveAccount:strongSelf.account forKey:UserAccountKey];
-        // NSAssert(success, @"Unable to save account for key: %@", UserAccountKey);
+        NSAssert(success, @"Unable to save account for key: %@", UserAccountKey);
         
         if (!success)
         {
