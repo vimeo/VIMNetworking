@@ -39,6 +39,7 @@
 #import "VIMVideoLog.h"
 #import "VIMCategory.h"
 #import "VIMVideoPlayRepresentation.h"
+#import "VIMVideoDRMFiles.h"
 
 NSString *VIMContentRating_Language = @"language";
 NSString *VIMContentRating_Drugs = @"drugs";
@@ -399,6 +400,10 @@ NSString *VIMContentRating_Safe = @"safe";
     return ![contentRating isEqualToString:VIMContentRating_Unrated] && ![contentRating isEqualToString:VIMContentRating_Safe];
 }
 
+- (BOOL)isDRMProtected
+{
+    return self.playRepresentation.drmFiles.fairPlayFile != nil;
+}
 
 - (NSString *)singleContentRatingIfAvailable
 {

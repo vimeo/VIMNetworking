@@ -103,6 +103,7 @@ typedef NS_ENUM(NSUInteger, VIMVideoProcessingStatus) {
 - (BOOL)isRatedAllAudiences;
 - (BOOL)isNotYetRated;
 - (BOOL)isRatedMature;
+- (BOOL)isDRMProtected;
 - (NSInteger)likesCount;
 - (NSInteger)commentsCount;
 

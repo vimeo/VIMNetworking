@@ -39,6 +39,7 @@
 @property (nonatomic, strong) NSDictionary *metadata;
 @property (nonatomic, strong) NSDictionary *connections;
 @property (nonatomic, strong) NSDictionary *interactions;
+@property (nonatomic, strong, nullable) NSArray *emails;
 
 @property (nonatomic, assign, readwrite) VIMUserAccountType accountType;
 
@@ -103,6 +104,7 @@
     [self parseConnections];
     [self parseInteractions];
     [self parseAccountType];
+    [self parseEmails];
     [self formatCreatedTime];
     [self formatModifiedTime];
 }
@@ -172,6 +174,23 @@
     {
         self.accountType = VIMUserAccountTypeBusiness;
     }
+}
+
+- (void)parseEmails
+{
+    NSMutableArray *parsedEmails = [[NSMutableArray alloc] init];
+    
+    for (NSDictionary *email in self.emails)
+    {
+        NSString *emailString = email[@"email"];
+        
+        if (emailString)
+        {
+            [parsedEmails addObject:emailString];
+        }
+    }
+    
+    self.userEmails = parsedEmails; 
 }
 
 - (void)formatCreatedTime
