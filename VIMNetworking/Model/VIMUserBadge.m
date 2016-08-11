@@ -28,6 +28,14 @@
 
 @implementation VIMUserBadge
 
+static const NSString *Plus = @"plus";
+static const NSString *Pro = @"pro";
+static const NSString *Business = @"business";
+static const NSString *Staff = @"staff";
+static const NSString *Curation = @"curation";
+static const NSString *Support = @"support";
+static const NSString *Alum = @"alum";
+
 - (void)didFinishMapping
 {
     [self parseBadge];
@@ -35,31 +43,31 @@
 
 - (void)parseBadge
 {
-    if ([self.type isEqualToString:@"plus"])
+    if ([self.type isEqualToString:Plus])
     {
         self.badgeType = VIMUserBadgeTypePlus;
     }
-    else if ([self.type isEqualToString:@"pro"])
+    else if ([self.type isEqualToString:Pro])
     {
         self.badgeType = VIMUserBadgeTypePro;
     }
-    else if ([self.type isEqualToString:@"business"])
+    else if ([self.type isEqualToString:Business])
     {
         self.badgeType = VIMUserBadgeTypeBusiness;
     }
-    else if ([self.type isEqualToString:@"staff"])
+    else if ([self.type isEqualToString:Staff])
     {
         self.badgeType = VIMUserBadgeTypeStaff;
     }
-    else if ([self.type isEqualToString:@"curation"])
+    else if ([self.type isEqualToString:Curation])
     {
         self.badgeType = VIMUserBadgeTypeCuration;
     }
-    else if ([self.type isEqualToString:@"support"])
+    else if ([self.type isEqualToString:Support])
     {
         self.badgeType = VIMUserBadgeTypeSupport;
     }
-    else if ([self.type isEqualToString:@"alum"])
+    else if ([self.type isEqualToString:Alum])
     {
         self.badgeType = VIMUserBadgeTypeAlum;
     }
