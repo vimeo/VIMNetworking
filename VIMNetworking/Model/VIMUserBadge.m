@@ -28,13 +28,13 @@
 
 @implementation VIMUserBadge
 
-static const NSString *Plus = @"plus";
-static const NSString *Pro = @"pro";
-static const NSString *Business = @"business";
-static const NSString *Staff = @"staff";
-static const NSString *Curation = @"curation";
-static const NSString *Support = @"support";
-static const NSString *Alum = @"alum";
+static NSString *const Plus = @"plus";
+static NSString *const Pro = @"pro";
+static NSString *const Business = @"business";
+static NSString *const Staff = @"staff";
+static NSString *const Curation = @"curation";
+static NSString *const Support = @"support";
+static NSString *const Alum = @"alum";
 
 - (void)didFinishMapping
 {
