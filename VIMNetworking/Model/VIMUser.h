@@ -44,7 +44,7 @@ typedef NS_ENUM(NSInteger, VIMUserAccountType)
 @interface VIMUser : VIMModelObject
 
 @property (nonatomic, assign, readonly) VIMUserAccountType accountType;
-@property (nonatomic, copy, nullable) VIMUserBadge *badge;
+@property (nonatomic, strong, nullable) VIMUserBadge *badge;
 @property (nonatomic, copy, nullable) NSString *bio;
 @property (nonatomic, copy, nullable) NSArray *contentFilter;
 @property (nonatomic, strong, nullable) NSDate *createdTime;
