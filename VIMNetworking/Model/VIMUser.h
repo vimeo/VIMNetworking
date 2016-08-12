@@ -31,18 +31,20 @@
 @class VIMPictureCollection;
 @class VIMPreference;
 @class VIMUploadQuota;
+@class VIMUserBadge;
 
 typedef NS_ENUM(NSInteger, VIMUserAccountType)
 {
     VIMUserAccountTypeBasic = 0,
     VIMUserAccountTypePro,
     VIMUserAccountTypePlus,
-    VIMUserAccountTypeStaff
+    VIMUserAccountTypeBusiness
 };
 
 @interface VIMUser : VIMModelObject
 
 @property (nonatomic, assign, readonly) VIMUserAccountType accountType;
+@property (nonatomic, strong, nullable) VIMUserBadge *badge;
 @property (nonatomic, copy, nullable) NSString *bio;
 @property (nonatomic, copy, nullable) NSArray *contentFilter;
 @property (nonatomic, strong, nullable) NSDate *createdTime;
