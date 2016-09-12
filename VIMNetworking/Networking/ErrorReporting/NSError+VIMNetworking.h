@@ -51,6 +51,7 @@ typedef NS_ENUM(NSInteger, VIMErrorCode)
     VIMErrorCodeEmailSpammer = 2402,
     VIMErrorCodeEmailPurgatory = 2403,
     VIMErrorCodeURLUnavailable = 2404,
+    VIMErrorCodeUnallowedToCommentEmailUnverified = 3411,
     VIMErrorCodeDRMStreamLimitHit = 3420,
     VIMErrorCodeDRMDeviceLimitHit = 3421,
     VIMErrorCodeTimeout = 5000,
