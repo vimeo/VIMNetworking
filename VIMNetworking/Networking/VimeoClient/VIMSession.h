@@ -27,8 +27,8 @@
 #import <Foundation/Foundation.h>
 #import "VIMAuthenticator.h"
 #import "VIMClient.h"
-#import "VIMAccount.h"
 #import "VIMSessionConfiguration.h"
+@import VimeoNetworking;
 
 typedef void (^VIMErrorCompletionBlock)(NSError * __nullable error);
 
