@@ -24,8 +24,6 @@
 //  THE SOFTWARE.
 //
 
-#import "VIMModelObject.h"
-
 @interface VIMFacebookConfiguration : VIMModelObject
 
 @property (nonatomic, strong, nullable) NSArray *requiredScopes;

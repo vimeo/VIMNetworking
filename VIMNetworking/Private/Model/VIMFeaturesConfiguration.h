@@ -24,8 +24,6 @@
 //  THE SOFTWARE.
 //
 
-#import "VIMModelObject.h"
-
 @interface VIMFeaturesConfiguration : VIMModelObject
 
 @property (nonatomic, assign, readonly) BOOL autouploadEnabled;

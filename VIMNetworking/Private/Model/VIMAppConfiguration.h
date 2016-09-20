@@ -24,8 +24,6 @@
 //  THE SOFTWARE.
 //
 
-#import "VIMModelObject.h"
-
 @class VIMFacebookConfiguration;
 @class VIMFeaturesConfiguration;
 @class VIMAPIConfiguration;

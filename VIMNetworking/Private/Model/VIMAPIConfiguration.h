@@ -24,8 +24,6 @@
 //  THE SOFTWARE.
 //
 
-#import "VIMModelObject.h"
-
 @interface VIMAPIConfiguration : VIMModelObject
 
 @property (nonatomic, strong, nullable) NSString *host;
