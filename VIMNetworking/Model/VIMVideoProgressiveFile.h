@@ -25,6 +25,7 @@
 //
 
 @import Foundation;
+@import CoreGraphics;
 #import "VIMVideoPlayFile.h"
 
 @interface VIMVideoProgressiveFile : VIMVideoPlayFile

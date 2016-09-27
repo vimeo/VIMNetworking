@@ -1,2774 +1,782 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-	<key>archiveVersion</key>
-	<string>1</string>
-	<key>classes</key>
-	<dict/>
-	<key>objectVersion</key>
-	<string>46</string>
-	<key>objects</key>
-	<dict>
-		<key>181DA12FBFCB004FAA9EC438</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>4252C2BEC0D8B76BE6306459</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Frameworks</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>1E344855F6E5A76B069BB7EC</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.xcconfig</string>
-			<key>name</key>
-			<string>Pods-VIMNetworkingLibrary.release.xcconfig</string>
-			<key>path</key>
-			<string>../Pods/Target Support Files/Pods-VIMNetworkingLibrary/Pods-VIMNetworkingLibrary.release.xcconfig</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>32BD98D158A215147B8B03E5</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>3B7D6BE5E44475C5E5A378F8</string>
-				<string>1E344855F6E5A76B069BB7EC</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Pods</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>3B7D6BE5E44475C5E5A378F8</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.xcconfig</string>
-			<key>name</key>
-			<string>Pods-VIMNetworkingLibrary.debug.xcconfig</string>
-			<key>path</key>
-			<string>../Pods/Target Support Files/Pods-VIMNetworkingLibrary/Pods-VIMNetworkingLibrary.debug.xcconfig</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>4252C2BEC0D8B76BE6306459</key>
-		<dict>
-			<key>explicitFileType</key>
-			<string>wrapper.framework</string>
-			<key>includeInIndex</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>path</key>
-			<string>Pods_VIMNetworkingLibrary.framework</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
-		</dict>
-		<key>4ED31F2C16C49D8DD3902E23</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>inputPaths</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXShellScriptBuildPhase</string>
-			<key>name</key>
-			<string>Check Pods Manifest.lock</string>
-			<key>outputPaths</key>
-			<array/>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-			<key>shellPath</key>
-			<string>/bin/sh</string>
-			<key>shellScript</key>
-			<string>diff "${PODS_ROOT}/../Podfile.lock" "${PODS_ROOT}/Manifest.lock" &gt; /dev/null
-if [[ $? != 0 ]] ; then
-    cat &lt;&lt; EOM
-error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.
-EOM
-    exit 1
-fi
-</string>
-			<key>showEnvVarsInLog</key>
-			<string>0</string>
-		</dict>
-		<key>5DC3D763A953F8EE8C98705E</key>
-		<dict>
-			<key>fileRef</key>
-			<string>4252C2BEC0D8B76BE6306459</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>70688B90766FBB37791E6710</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>inputPaths</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXShellScriptBuildPhase</string>
-			<key>name</key>
-			<string>Copy Pods Resources</string>
-			<key>outputPaths</key>
-			<array/>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-			<key>shellPath</key>
-			<string>/bin/sh</string>
-			<key>shellScript</key>
-			<string>"${SRCROOT}/../Pods/Target Support Files/Pods-VIMNetworkingLibrary/Pods-VIMNetworkingLibrary-resources.sh"
-</string>
-			<key>showEnvVarsInLog</key>
-			<string>0</string>
-		</dict>
-		<key>AF8BB6DE1CB3474500144A79</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>AF8BB6E91CB3474500144A79</string>
-				<string>AF8BB6E81CB3474500144A79</string>
-				<string>32BD98D158A215147B8B03E5</string>
-				<string>181DA12FBFCB004FAA9EC438</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB6DF1CB3474500144A79</key>
-		<dict>
-			<key>attributes</key>
-			<dict>
-				<key>LastUpgradeCheck</key>
-				<string>0730</string>
-				<key>ORGANIZATIONNAME</key>
-				<string>Vimeo</string>
-				<key>TargetAttributes</key>
-				<dict>
-					<key>AF8BB6E61CB3474500144A79</key>
-					<dict>
-						<key>CreatedOnToolsVersion</key>
-						<string>7.3</string>
-					</dict>
-				</dict>
-			</dict>
-			<key>buildConfigurationList</key>
-			<string>AF8BB6E21CB3474500144A79</string>
-			<key>compatibilityVersion</key>
-			<string>Xcode 3.2</string>
-			<key>developmentRegion</key>
-			<string>English</string>
-			<key>hasScannedForEncodings</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXProject</string>
-			<key>knownRegions</key>
-			<array>
-				<string>en</string>
-			</array>
-			<key>mainGroup</key>
-			<string>AF8BB6DE1CB3474500144A79</string>
-			<key>productRefGroup</key>
-			<string>AF8BB6E81CB3474500144A79</string>
-			<key>projectDirPath</key>
-			<string></string>
-			<key>projectReferences</key>
-			<array/>
-			<key>projectRoot</key>
-			<string></string>
-			<key>targets</key>
-			<array>
-				<string>AF8BB6E61CB3474500144A79</string>
-			</array>
-		</dict>
-		<key>AF8BB6E21CB3474500144A79</key>
-		<dict>
-			<key>buildConfigurations</key>
-			<array>
-				<string>AF8BB6EE1CB3474500144A79</string>
-				<string>AF8BB6EF1CB3474500144A79</string>
-			</array>
-			<key>defaultConfigurationIsVisible</key>
-			<string>0</string>
-			<key>defaultConfigurationName</key>
-			<string>Release</string>
-			<key>isa</key>
-			<string>XCConfigurationList</string>
-		</dict>
-		<key>AF8BB6E31CB3474500144A79</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>AF8BB7931CB3476000144A79</string>
-				<string>AF8BB77C1CB3476000144A79</string>
-				<string>AF8BB7A31CB3476000144A79</string>
-				<string>AF8BB7961CB3476000144A79</string>
-				<string>AF8BB7941CB3476000144A79</string>
-				<string>AF8BB79A1CB3476000144A79</string>
-				<string>AF8BB7841CB3476000144A79</string>
-				<string>AF8BB77B1CB3476000144A79</string>
-				<string>AF8BB7821CB3476000144A79</string>
-				<string>AF8BB7A01CB3476000144A79</string>
-				<string>AF8BB78B1CB3476000144A79</string>
-				<string>AF8BB7881CB3476000144A79</string>
-				<string>AF8BB79B1CB3476000144A79</string>
-				<string>AF8BB77E1CB3476000144A79</string>
-				<string>AF8BB7751CB3476000144A79</string>
-				<string>AF8BB79F1CB3476000144A79</string>
-				<string>AF8BB77A1CB3476000144A79</string>
-				<string>AF8BB7A21CB3476000144A79</string>
-				<string>AF8BB7811CB3476000144A79</string>
-				<string>AF8BB7761CB3476000144A79</string>
-				<string>AF8BB7741CB3476000144A79</string>
-				<string>AF8BB78A1CB3476000144A79</string>
-				<string>AF8BB7901CB3476000144A79</string>
-				<string>AF8BB7831CB3476000144A79</string>
-				<string>AF8BB7871CB3476000144A79</string>
-				<string>AF8BB78C1CB3476000144A79</string>
-				<string>AF8BB78F1CB3476000144A79</string>
-				<string>AF8BB7991CB3476000144A79</string>
-				<string>AF8BB77D1CB3476000144A79</string>
-				<string>AF8BB78D1CB3476000144A79</string>
-				<string>AF8BB7951CB3476000144A79</string>
-				<string>AF8BB7771CB3476000144A79</string>
-				<string>AF8BB79C1CB3476000144A79</string>
-				<string>AF8BB7921CB3476000144A79</string>
-				<string>AF8BB77F1CB3476000144A79</string>
-				<string>AF8BB6ED1CB3474500144A79</string>
-				<string>AF8BB79D1CB3476000144A79</string>
-				<string>AF8BB7891CB3476000144A79</string>
-				<string>AF8BB7791CB3476000144A79</string>
-				<string>AF8BB7981CB3476000144A79</string>
-				<string>AF8BB7731CB3476000144A79</string>
-				<string>AF8BB7A41CB3476000144A79</string>
-				<string>AF8BB7A61CB3476000144A79</string>
-				<string>AF8BB78E1CB3476000144A79</string>
-				<string>AF8BB7861CB3476000144A79</string>
-				<string>AF8BB7911CB3476000144A79</string>
-				<string>AF8BB7971CB3476000144A79</string>
-				<string>AF8BB79E1CB3476000144A79</string>
-				<string>AF8BB7781CB3476000144A79</string>
-				<string>AF8BB7851CB3476000144A79</string>
-				<string>AF8BB7A71CB3476000144A79</string>
-				<string>AF8BB7A51CB3476000144A79</string>
-				<string>AF8BB7801CB3476000144A79</string>
-				<string>AF8BB7A11CB3476000144A79</string>
-			</array>
-			<key>isa</key>
-			<string>PBXSourcesBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>AF8BB6E41CB3474500144A79</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>5DC3D763A953F8EE8C98705E</string>
-			</array>
-			<key>isa</key>
-			<string>PBXFrameworksBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>AF8BB6E51CB3474500144A79</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>dstPath</key>
-			<string>include/$(PRODUCT_NAME)</string>
-			<key>dstSubfolderSpec</key>
-			<string>16</string>
-			<key>files</key>
-			<array>
-				<string>AF8BB6EB1CB3474500144A79</string>
-			</array>
-			<key>isa</key>
-			<string>PBXCopyFilesBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>AF8BB6E61CB3474500144A79</key>
-		<dict>
-			<key>buildConfigurationList</key>
-			<string>AF8BB6F01CB3474500144A79</string>
-			<key>buildPhases</key>
-			<array>
-				<string>4ED31F2C16C49D8DD3902E23</string>
-				<string>AF8BB6E31CB3474500144A79</string>
-				<string>AF8BB6E41CB3474500144A79</string>
-				<string>AF8BB6E51CB3474500144A79</string>
-				<string>70688B90766FBB37791E6710</string>
-			</array>
-			<key>buildRules</key>
-			<array/>
-			<key>dependencies</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXNativeTarget</string>
-			<key>name</key>
-			<string>VIMNetworkingLibrary</string>
-			<key>productName</key>
-			<string>VIMNetworkingLibrary</string>
-			<key>productReference</key>
-			<string>AF8BB6E71CB3474500144A79</string>
-			<key>productType</key>
-			<string>com.apple.product-type.library.static</string>
-		</dict>
-		<key>AF8BB6E71CB3474500144A79</key>
-		<dict>
-			<key>explicitFileType</key>
-			<string>archive.ar</string>
-			<key>includeInIndex</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>path</key>
-			<string>libVIMNetworkingLibrary.a</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
-		</dict>
-		<key>AF8BB6E81CB3474500144A79</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>AF8BB6E71CB3474500144A79</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Products</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB6E91CB3474500144A79</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>AF8BB6EA1CB3474500144A79</string>
-				<string>AF8BB6EC1CB3474500144A79</string>
-				<string>AF8BB6F31CB3476000144A79</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>path</key>
-			<string>VIMNetworkingLibrary</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB6EA1CB3474500144A79</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>VIMNetworkingLibrary.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB6EB1CB3474500144A79</key>
-		<dict>
-			<key>fileRef</key>
-			<string>AF8BB6EA1CB3474500144A79</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>AF8BB6EC1CB3474500144A79</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>VIMNetworkingLibrary.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB6ED1CB3474500144A79</key>
-		<dict>
-			<key>fileRef</key>
-			<string>AF8BB6EC1CB3474500144A79</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>AF8BB6EE1CB3474500144A79</key>
-		<dict>
-			<key>buildSettings</key>
-			<dict>
-				<key>ALWAYS_SEARCH_USER_PATHS</key>
-				<string>NO</string>
-				<key>CLANG_ANALYZER_NONNULL</key>
-				<string>YES</string>
-				<key>CLANG_CXX_LANGUAGE_STANDARD</key>
-				<string>gnu++0x</string>
-				<key>CLANG_CXX_LIBRARY</key>
-				<string>libc++</string>
-				<key>CLANG_ENABLE_MODULES</key>
-				<string>YES</string>
-				<key>CLANG_ENABLE_OBJC_ARC</key>
-				<string>YES</string>
-				<key>CLANG_WARN_BOOL_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_CONSTANT_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_DIRECT_OBJC_ISA_USAGE</key>
-				<string>YES_ERROR</string>
-				<key>CLANG_WARN_EMPTY_BODY</key>
-				<string>YES</string>
-				<key>CLANG_WARN_ENUM_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_INT_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_OBJC_ROOT_CLASS</key>
-				<string>YES_ERROR</string>
-				<key>CLANG_WARN_UNREACHABLE_CODE</key>
-				<string>YES</string>
-				<key>CLANG_WARN__DUPLICATE_METHOD_MATCH</key>
-				<string>YES</string>
-				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
-				<string>iPhone Developer</string>
-				<key>COPY_PHASE_STRIP</key>
-				<string>NO</string>
-				<key>DEBUG_INFORMATION_FORMAT</key>
-				<string>dwarf</string>
-				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
-				<string>YES</string>
-				<key>ENABLE_TESTABILITY</key>
-				<string>YES</string>
-				<key>GCC_C_LANGUAGE_STANDARD</key>
-				<string>gnu99</string>
-				<key>GCC_DYNAMIC_NO_PIC</key>
-				<string>NO</string>
-				<key>GCC_NO_COMMON_BLOCKS</key>
-				<string>YES</string>
-				<key>GCC_OPTIMIZATION_LEVEL</key>
-				<string>0</string>
-				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
-				<array>
-					<string>DEBUG=1</string>
-					<string>$(inherited)</string>
-				</array>
-				<key>GCC_WARN_64_TO_32_BIT_CONVERSION</key>
-				<string>YES</string>
-				<key>GCC_WARN_ABOUT_RETURN_TYPE</key>
-				<string>YES_ERROR</string>
-				<key>GCC_WARN_UNDECLARED_SELECTOR</key>
-				<string>YES</string>
-				<key>GCC_WARN_UNINITIALIZED_AUTOS</key>
-				<string>YES_AGGRESSIVE</string>
-				<key>GCC_WARN_UNUSED_FUNCTION</key>
-				<string>YES</string>
-				<key>GCC_WARN_UNUSED_VARIABLE</key>
-				<string>YES</string>
-				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
-				<string>9.3</string>
-				<key>MTL_ENABLE_DEBUG_INFO</key>
-				<string>YES</string>
-				<key>ONLY_ACTIVE_ARCH</key>
-				<string>YES</string>
-				<key>SDKROOT</key>
-				<string>iphoneos</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Debug</string>
-		</dict>
-		<key>AF8BB6EF1CB3474500144A79</key>
-		<dict>
-			<key>buildSettings</key>
-			<dict>
-				<key>ALWAYS_SEARCH_USER_PATHS</key>
-				<string>NO</string>
-				<key>CLANG_ANALYZER_NONNULL</key>
-				<string>YES</string>
-				<key>CLANG_CXX_LANGUAGE_STANDARD</key>
-				<string>gnu++0x</string>
-				<key>CLANG_CXX_LIBRARY</key>
-				<string>libc++</string>
-				<key>CLANG_ENABLE_MODULES</key>
-				<string>YES</string>
-				<key>CLANG_ENABLE_OBJC_ARC</key>
-				<string>YES</string>
-				<key>CLANG_WARN_BOOL_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_CONSTANT_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_DIRECT_OBJC_ISA_USAGE</key>
-				<string>YES_ERROR</string>
-				<key>CLANG_WARN_EMPTY_BODY</key>
-				<string>YES</string>
-				<key>CLANG_WARN_ENUM_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_INT_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_OBJC_ROOT_CLASS</key>
-				<string>YES_ERROR</string>
-				<key>CLANG_WARN_UNREACHABLE_CODE</key>
-				<string>YES</string>
-				<key>CLANG_WARN__DUPLICATE_METHOD_MATCH</key>
-				<string>YES</string>
-				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
-				<string>iPhone Developer</string>
-				<key>COPY_PHASE_STRIP</key>
-				<string>NO</string>
-				<key>DEBUG_INFORMATION_FORMAT</key>
-				<string>dwarf-with-dsym</string>
-				<key>ENABLE_NS_ASSERTIONS</key>
-				<string>NO</string>
-				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
-				<string>YES</string>
-				<key>GCC_C_LANGUAGE_STANDARD</key>
-				<string>gnu99</string>
-				<key>GCC_NO_COMMON_BLOCKS</key>
-				<string>YES</string>
-				<key>GCC_WARN_64_TO_32_BIT_CONVERSION</key>
-				<string>YES</string>
-				<key>GCC_WARN_ABOUT_RETURN_TYPE</key>
-				<string>YES_ERROR</string>
-				<key>GCC_WARN_UNDECLARED_SELECTOR</key>
-				<string>YES</string>
-				<key>GCC_WARN_UNINITIALIZED_AUTOS</key>
-				<string>YES_AGGRESSIVE</string>
-				<key>GCC_WARN_UNUSED_FUNCTION</key>
-				<string>YES</string>
-				<key>GCC_WARN_UNUSED_VARIABLE</key>
-				<string>YES</string>
-				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
-				<string>9.3</string>
-				<key>MTL_ENABLE_DEBUG_INFO</key>
-				<string>NO</string>
-				<key>SDKROOT</key>
-				<string>iphoneos</string>
-				<key>VALIDATE_PRODUCT</key>
-				<string>YES</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Release</string>
-		</dict>
-		<key>AF8BB6F01CB3474500144A79</key>
-		<dict>
-			<key>buildConfigurations</key>
-			<array>
-				<string>AF8BB6F11CB3474500144A79</string>
-				<string>AF8BB6F21CB3474500144A79</string>
-			</array>
-			<key>defaultConfigurationIsVisible</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>XCConfigurationList</string>
-		</dict>
-		<key>AF8BB6F11CB3474500144A79</key>
-		<dict>
-			<key>baseConfigurationReference</key>
-			<string>3B7D6BE5E44475C5E5A378F8</string>
-			<key>buildSettings</key>
-			<dict>
-				<key>OTHER_LDFLAGS</key>
-				<string>-ObjC</string>
-				<key>PRODUCT_NAME</key>
-				<string>$(TARGET_NAME)</string>
-				<key>SKIP_INSTALL</key>
-				<string>YES</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Debug</string>
-		</dict>
-		<key>AF8BB6F21CB3474500144A79</key>
-		<dict>
-			<key>baseConfigurationReference</key>
-			<string>1E344855F6E5A76B069BB7EC</string>
-			<key>buildSettings</key>
-			<dict>
-				<key>OTHER_LDFLAGS</key>
-				<string>-ObjC</string>
-				<key>PRODUCT_NAME</key>
-				<string>$(TARGET_NAME)</string>
-				<key>SKIP_INSTALL</key>
-				<string>YES</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Release</string>
-		</dict>
-		<key>AF8BB6F31CB3476000144A79</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>AF8BB6F41CB3476000144A79</string>
-				<string>AF8BB6F71CB3476000144A79</string>
-				<string>AF8BB6F91CB3476000144A79</string>
-				<string>AF8BB6FC1CB3476000144A79</string>
-				<string>AF8BB7331CB3476000144A79</string>
-				<string>AF8BB75C1CB3476000144A79</string>
-				<string>AF8BB7621CB3476000144A79</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>VIMNetworking</string>
-			<key>path</key>
-			<string>../../VIMNetworking</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB6F41CB3476000144A79</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>AF8BB6F51CB3476000144A79</string>
-				<string>AF8BB6F61CB3476000144A79</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>path</key>
-			<string>Cache</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB6F51CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>VIMCache.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB6F61CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>VIMCache.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB6F71CB3476000144A79</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>AF8BB6F81CB3476000144A79</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>path</key>
-			<string>Certificate</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB6F81CB3476000144A79</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>file</string>
-			<key>path</key>
-			<string>digicert-sha2.cer</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB6F91CB3476000144A79</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>AF8BB6FA1CB3476000144A79</string>
-				<string>AF8BB6FB1CB3476000144A79</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>path</key>
-			<string>Keychain</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB6FA1CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>VIMKeychain.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB6FB1CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>VIMKeychain.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB6FC1CB3476000144A79</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>AF8BB6FD1CB3476000144A79</string>
-				<string>AF8BB6FE1CB3476000144A79</string>
-				<string>AF8BB6FF1CB3476000144A79</string>
-				<string>AF8BB7001CB3476000144A79</string>
-				<string>AF8BB7011CB3476000144A79</string>
-				<string>AF8BB7021CB3476000144A79</string>
-				<string>AF8BB7031CB3476000144A79</string>
-				<string>AF8BB7041CB3476000144A79</string>
-				<string>AF8BB7051CB3476000144A79</string>
-				<string>AF8BB7061CB3476000144A79</string>
-				<string>AF8BB7071CB3476000144A79</string>
-				<string>AF8BB7081CB3476000144A79</string>
-				<string>AF8BB7091CB3476000144A79</string>
-				<string>AF8BB70A1CB3476000144A79</string>
-				<string>AF8BB70B1CB3476000144A79</string>
-				<string>AF8BB70C1CB3476000144A79</string>
-				<string>AF8BB70D1CB3476000144A79</string>
-				<string>AF8BB70E1CB3476000144A79</string>
-				<string>AF8BB70F1CB3476000144A79</string>
-				<string>AF8BB7101CB3476000144A79</string>
-				<string>AF8BB7111CB3476000144A79</string>
-				<string>AF8BB7121CB3476000144A79</string>
-				<string>AF8BB7131CB3476000144A79</string>
-				<string>AF8BB7141CB3476000144A79</string>
-				<string>AF8BB7151CB3476000144A79</string>
-				<string>AF8BB7161CB3476000144A79</string>
-				<string>AF8BB7171CB3476000144A79</string>
-				<string>AF8BB7181CB3476000144A79</string>
-				<string>AF8BB7191CB3476000144A79</string>
-				<string>AF8BB71A1CB3476000144A79</string>
-				<string>AF8BB71B1CB3476000144A79</string>
-				<string>AF8BB71C1CB3476000144A79</string>
-				<string>AF8BB71D1CB3476000144A79</string>
-				<string>AF8BB71E1CB3476000144A79</string>
-				<string>AF8BB71F1CB3476000144A79</string>
-				<string>AF8BB7201CB3476000144A79</string>
-				<string>AF8BB7211CB3476000144A79</string>
-				<string>AF8BB7221CB3476000144A79</string>
-				<string>AF8BB7231CB3476000144A79</string>
-				<string>AF8BB7241CB3476000144A79</string>
-				<string>AF8BB7251CB3476000144A79</string>
-				<string>AF8BB7261CB3476000144A79</string>
-				<string>AF8BB7271CB3476000144A79</string>
-				<string>AF8BB7281CB3476000144A79</string>
-				<string>AF8BB7291CB3476000144A79</string>
-				<string>AF8BB72A1CB3476000144A79</string>
-				<string>AF8BB72B1CB3476000144A79</string>
-				<string>AF8BB72C1CB3476000144A79</string>
-				<string>AF8BB72D1CB3476000144A79</string>
-				<string>AF8BB72E1CB3476000144A79</string>
-				<string>AF8BB72F1CB3476000144A79</string>
-				<string>AF8BB7301CB3476000144A79</string>
-				<string>AF8BB7311CB3476000144A79</string>
-				<string>AF8BB7321CB3476000144A79</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>path</key>
-			<string>Model</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB6FD1CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>VIMAccount.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB6FE1CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>VIMAccount.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB6FF1CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>VIMAccountCredential.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7001CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>VIMAccountCredential.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7011CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>VIMAccountNew.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7021CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>VIMAccountNew.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7031CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>VIMActivity.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7041CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>VIMActivity.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7051CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>VIMAppeal.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7061CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>VIMAppeal.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7071CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>VIMCategory.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7081CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>VIMCategory.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7091CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>VIMChannel.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB70A1CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>VIMChannel.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB70B1CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>VIMComment.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB70C1CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>VIMComment.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB70D1CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>VIMConnection.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB70E1CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>VIMConnection.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB70F1CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>VIMGroup.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7101CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>VIMGroup.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7111CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>VIMInteraction.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7121CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>VIMInteraction.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7131CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>VIMPicture.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7141CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>VIMPicture.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7151CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>VIMPictureCollection.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7161CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>VIMPictureCollection.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7171CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>VIMPreference.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7181CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>VIMPreference.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7191CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>VIMPrivacy.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB71A1CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>VIMPrivacy.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB71B1CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>VIMQuantityQuota.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB71C1CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>VIMQuantityQuota.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB71D1CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>VIMSizeQuota.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB71E1CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>VIMSizeQuota.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB71F1CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>VIMTag.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7201CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>VIMTag.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7211CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>VIMTrigger.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7221CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>VIMTrigger.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7231CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>VIMUploadQuota.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7241CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>VIMUploadQuota.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7251CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>VIMUploadTicket.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7261CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>VIMUploadTicket.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7271CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>VIMUser.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7281CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>VIMUser.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7291CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>VIMVideo.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB72A1CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>VIMVideo.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB72B1CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>VIMVideoFile.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB72C1CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>VIMVideoFile.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB72D1CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>VIMVideoLog.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB72E1CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>VIMVideoLog.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB72F1CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>VIMVideoPreference.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7301CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>VIMVideoPreference.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7311CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>VIMVideoUtils.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7321CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>VIMVideoUtils.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7331CB3476000144A79</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>AF8BB7341CB3476000144A79</string>
-				<string>AF8BB7371CB3476000144A79</string>
-				<string>AF8BB73A1CB3476000144A79</string>
-				<string>AF8BB73D1CB3476000144A79</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>path</key>
-			<string>Networking</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7341CB3476000144A79</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>AF8BB7351CB3476000144A79</string>
-				<string>AF8BB7361CB3476000144A79</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>path</key>
-			<string>Auth</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7351CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>VIMAccountStore.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7361CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>VIMAccountStore.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7371CB3476000144A79</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>AF8BB7381CB3476000144A79</string>
-				<string>AF8BB7391CB3476000144A79</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>path</key>
-			<string>ErrorReporting</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7381CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>NSError+VIMNetworking.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7391CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>NSError+VIMNetworking.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB73A1CB3476000144A79</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>AF8BB73B1CB3476000144A79</string>
-				<string>AF8BB73C1CB3476000144A79</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>path</key>
-			<string>Reachability</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB73B1CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>VIMReachability.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB73C1CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>VIMReachability.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB73D1CB3476000144A79</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>AF8BB73E1CB3476000144A79</string>
-				<string>AF8BB73F1CB3476000144A79</string>
-				<string>AF8BB7401CB3476000144A79</string>
-				<string>AF8BB7411CB3476000144A79</string>
-				<string>AF8BB7421CB3476000144A79</string>
-				<string>AF8BB7431CB3476000144A79</string>
-				<string>AF8BB7441CB3476000144A79</string>
-				<string>AF8BB7451CB3476000144A79</string>
-				<string>AF8BB7461CB3476000144A79</string>
-				<string>AF8BB7471CB3476000144A79</string>
-				<string>AF8BB7481CB3476000144A79</string>
-				<string>AF8BB7491CB3476000144A79</string>
-				<string>AF8BB74A1CB3476000144A79</string>
-				<string>AF8BB74B1CB3476000144A79</string>
-				<string>AF8BB74C1CB3476000144A79</string>
-				<string>AF8BB74D1CB3476000144A79</string>
-				<string>AF8BB74E1CB3476000144A79</string>
-				<string>AF8BB74F1CB3476000144A79</string>
-				<string>AF8BB7501CB3476000144A79</string>
-				<string>AF8BB7511CB3476000144A79</string>
-				<string>AF8BB7521CB3476000144A79</string>
-				<string>AF8BB7531CB3476000144A79</string>
-				<string>AF8BB7541CB3476000144A79</string>
-				<string>AF8BB7551CB3476000144A79</string>
-				<string>AF8BB7561CB3476000144A79</string>
-				<string>AF8BB7571CB3476000144A79</string>
-				<string>AF8BB7581CB3476000144A79</string>
-				<string>AF8BB7591CB3476000144A79</string>
-				<string>AF8BB75A1CB3476000144A79</string>
-				<string>AF8BB75B1CB3476000144A79</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>path</key>
-			<string>VimeoClient</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB73E1CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>VIMAuthenticator.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB73F1CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>VIMAuthenticator.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7401CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>VIMClient.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7411CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>VIMClient.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7421CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>VIMHeaderProvider.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7431CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>VIMHeaderProvider.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7441CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>VIMHTTPRequestSerializer.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7451CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>VIMHTTPRequestSerializer.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7461CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>VIMJSONRequestSerializer.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7471CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>VIMJSONRequestSerializer.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7481CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>VIMJSONResponseSerializer.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7491CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>VIMJSONResponseSerializer.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB74A1CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>VIMRequestDescriptor.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB74B1CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>VIMRequestDescriptor.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB74C1CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>VIMRequestOperation.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB74D1CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>VIMRequestOperation.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB74E1CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>VIMRequestOperationManager.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB74F1CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>VIMRequestOperationManager.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7501CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>VIMRequestRetryManager.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7511CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>VIMRequestRetryManager.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7521CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>VIMRequestSerializerDelegate.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7531CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>VIMRequestToken.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7541CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>VIMServerResponse.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7551CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>VIMServerResponse.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7561CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>VIMServerResponseMapper.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7571CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>VIMServerResponseMapper.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7581CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>VIMSession.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7591CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>VIMSession.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB75A1CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>VIMSessionConfiguration.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB75B1CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>VIMSessionConfiguration.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB75C1CB3476000144A79</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>AF8BB75D1CB3476000144A79</string>
-				<string>AF8BB75E1CB3476000144A79</string>
-				<string>AF8BB75F1CB3476000144A79</string>
-				<string>AF8BB7601CB3476000144A79</string>
-				<string>AF8BB7611CB3476000144A79</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>path</key>
-			<string>ObjectMapper</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB75D1CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>VIMMappable.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB75E1CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>VIMModelObject.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB75F1CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>VIMModelObject.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7601CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>VIMObjectMapper.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7611CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>VIMObjectMapper.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7621CB3476000144A79</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>AF8BB7631CB3476000144A79</string>
-				<string>AF8BB7661CB3476000144A79</string>
-				<string>AF8BB76F1CB3476000144A79</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>path</key>
-			<string>Private</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7631CB3476000144A79</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>AF8BB7641CB3476000144A79</string>
-				<string>AF8BB7651CB3476000144A79</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>path</key>
-			<string>Categories</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7641CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>NSString+MD5.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7651CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>NSString+MD5.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7661CB3476000144A79</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>AF8BB7671CB3476000144A79</string>
-				<string>AF8BB7681CB3476000144A79</string>
-				<string>AF8BB7691CB3476000144A79</string>
-				<string>AF8BB76A1CB3476000144A79</string>
-				<string>AF8BB76B1CB3476000144A79</string>
-				<string>AF8BB76C1CB3476000144A79</string>
-				<string>AF8BB76D1CB3476000144A79</string>
-				<string>AF8BB76E1CB3476000144A79</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>path</key>
-			<string>Model</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7671CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>VIMAPIConfiguration.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7681CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>VIMAPIConfiguration.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7691CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>VIMAppConfiguration.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB76A1CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>VIMAppConfiguration.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB76B1CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>VIMFacebookConfiguration.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB76C1CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>VIMFacebookConfiguration.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB76D1CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>VIMFeaturesConfiguration.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB76E1CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>VIMFeaturesConfiguration.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB76F1CB3476000144A79</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>AF8BB7701CB3476000144A79</string>
-				<string>AF8BB7711CB3476000144A79</string>
-				<string>AF8BB7721CB3476000144A79</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>path</key>
-			<string>Networking</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7701CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>VIMAuthenticator+Private.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7711CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>VIMClient+Private.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7721CB3476000144A79</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>VIMSession+Private.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AF8BB7731CB3476000144A79</key>
-		<dict>
-			<key>fileRef</key>
-			<string>AF8BB6F61CB3476000144A79</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>AF8BB7741CB3476000144A79</key>
-		<dict>
-			<key>fileRef</key>
-			<string>AF8BB6FB1CB3476000144A79</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>AF8BB7751CB3476000144A79</key>
-		<dict>
-			<key>fileRef</key>
-			<string>AF8BB6FE1CB3476000144A79</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>AF8BB7761CB3476000144A79</key>
-		<dict>
-			<key>fileRef</key>
-			<string>AF8BB7001CB3476000144A79</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>AF8BB7771CB3476000144A79</key>
-		<dict>
-			<key>fileRef</key>
-			<string>AF8BB7021CB3476000144A79</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>AF8BB7781CB3476000144A79</key>
-		<dict>
-			<key>fileRef</key>
-			<string>AF8BB7041CB3476000144A79</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>AF8BB7791CB3476000144A79</key>
-		<dict>
-			<key>fileRef</key>
-			<string>AF8BB7061CB3476000144A79</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>AF8BB77A1CB3476000144A79</key>
-		<dict>
-			<key>fileRef</key>
-			<string>AF8BB7081CB3476000144A79</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>AF8BB77B1CB3476000144A79</key>
-		<dict>
-			<key>fileRef</key>
-			<string>AF8BB70A1CB3476000144A79</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>AF8BB77C1CB3476000144A79</key>
-		<dict>
-			<key>fileRef</key>
-			<string>AF8BB70C1CB3476000144A79</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>AF8BB77D1CB3476000144A79</key>
-		<dict>
-			<key>fileRef</key>
-			<string>AF8BB70E1CB3476000144A79</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>AF8BB77E1CB3476000144A79</key>
-		<dict>
-			<key>fileRef</key>
-			<string>AF8BB7101CB3476000144A79</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>AF8BB77F1CB3476000144A79</key>
-		<dict>
-			<key>fileRef</key>
-			<string>AF8BB7121CB3476000144A79</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>AF8BB7801CB3476000144A79</key>
-		<dict>
-			<key>fileRef</key>
-			<string>AF8BB7141CB3476000144A79</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>AF8BB7811CB3476000144A79</key>
-		<dict>
-			<key>fileRef</key>
-			<string>AF8BB7161CB3476000144A79</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>AF8BB7821CB3476000144A79</key>
-		<dict>
-			<key>fileRef</key>
-			<string>AF8BB7181CB3476000144A79</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>AF8BB7831CB3476000144A79</key>
-		<dict>
-			<key>fileRef</key>
-			<string>AF8BB71A1CB3476000144A79</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>AF8BB7841CB3476000144A79</key>
-		<dict>
-			<key>fileRef</key>
-			<string>AF8BB71C1CB3476000144A79</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>AF8BB7851CB3476000144A79</key>
-		<dict>
-			<key>fileRef</key>
-			<string>AF8BB71E1CB3476000144A79</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>AF8BB7861CB3476000144A79</key>
-		<dict>
-			<key>fileRef</key>
-			<string>AF8BB7201CB3476000144A79</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>AF8BB7871CB3476000144A79</key>
-		<dict>
-			<key>fileRef</key>
-			<string>AF8BB7221CB3476000144A79</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>AF8BB7881CB3476000144A79</key>
-		<dict>
-			<key>fileRef</key>
-			<string>AF8BB7241CB3476000144A79</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>AF8BB7891CB3476000144A79</key>
-		<dict>
-			<key>fileRef</key>
-			<string>AF8BB7261CB3476000144A79</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>AF8BB78A1CB3476000144A79</key>
-		<dict>
-			<key>fileRef</key>
-			<string>AF8BB7281CB3476000144A79</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>AF8BB78B1CB3476000144A79</key>
-		<dict>
-			<key>fileRef</key>
-			<string>AF8BB72A1CB3476000144A79</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>AF8BB78C1CB3476000144A79</key>
-		<dict>
-			<key>fileRef</key>
-			<string>AF8BB72C1CB3476000144A79</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>AF8BB78D1CB3476000144A79</key>
-		<dict>
-			<key>fileRef</key>
-			<string>AF8BB72E1CB3476000144A79</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>AF8BB78E1CB3476000144A79</key>
-		<dict>
-			<key>fileRef</key>
-			<string>AF8BB7301CB3476000144A79</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>AF8BB78F1CB3476000144A79</key>
-		<dict>
-			<key>fileRef</key>
-			<string>AF8BB7321CB3476000144A79</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>AF8BB7901CB3476000144A79</key>
-		<dict>
-			<key>fileRef</key>
-			<string>AF8BB7361CB3476000144A79</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>AF8BB7911CB3476000144A79</key>
-		<dict>
-			<key>fileRef</key>
-			<string>AF8BB7391CB3476000144A79</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>AF8BB7921CB3476000144A79</key>
-		<dict>
-			<key>fileRef</key>
-			<string>AF8BB73C1CB3476000144A79</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>AF8BB7931CB3476000144A79</key>
-		<dict>
-			<key>fileRef</key>
-			<string>AF8BB73F1CB3476000144A79</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>AF8BB7941CB3476000144A79</key>
-		<dict>
-			<key>fileRef</key>
-			<string>AF8BB7411CB3476000144A79</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>AF8BB7951CB3476000144A79</key>
-		<dict>
-			<key>fileRef</key>
-			<string>AF8BB7431CB3476000144A79</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>AF8BB7961CB3476000144A79</key>
-		<dict>
-			<key>fileRef</key>
-			<string>AF8BB7451CB3476000144A79</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>AF8BB7971CB3476000144A79</key>
-		<dict>
-			<key>fileRef</key>
-			<string>AF8BB7471CB3476000144A79</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>AF8BB7981CB3476000144A79</key>
-		<dict>
-			<key>fileRef</key>
-			<string>AF8BB7491CB3476000144A79</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>AF8BB7991CB3476000144A79</key>
-		<dict>
-			<key>fileRef</key>
-			<string>AF8BB74B1CB3476000144A79</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>AF8BB79A1CB3476000144A79</key>
-		<dict>
-			<key>fileRef</key>
-			<string>AF8BB74D1CB3476000144A79</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>AF8BB79B1CB3476000144A79</key>
-		<dict>
-			<key>fileRef</key>
-			<string>AF8BB74F1CB3476000144A79</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>AF8BB79C1CB3476000144A79</key>
-		<dict>
-			<key>fileRef</key>
-			<string>AF8BB7511CB3476000144A79</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>AF8BB79D1CB3476000144A79</key>
-		<dict>
-			<key>fileRef</key>
-			<string>AF8BB7551CB3476000144A79</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>AF8BB79E1CB3476000144A79</key>
-		<dict>
-			<key>fileRef</key>
-			<string>AF8BB7571CB3476000144A79</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>AF8BB79F1CB3476000144A79</key>
-		<dict>
-			<key>fileRef</key>
-			<string>AF8BB7591CB3476000144A79</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>AF8BB7A01CB3476000144A79</key>
-		<dict>
-			<key>fileRef</key>
-			<string>AF8BB75B1CB3476000144A79</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>AF8BB7A11CB3476000144A79</key>
-		<dict>
-			<key>fileRef</key>
-			<string>AF8BB75F1CB3476000144A79</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>AF8BB7A21CB3476000144A79</key>
-		<dict>
-			<key>fileRef</key>
-			<string>AF8BB7611CB3476000144A79</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>AF8BB7A31CB3476000144A79</key>
-		<dict>
-			<key>fileRef</key>
-			<string>AF8BB7651CB3476000144A79</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>AF8BB7A41CB3476000144A79</key>
-		<dict>
-			<key>fileRef</key>
-			<string>AF8BB7681CB3476000144A79</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>AF8BB7A51CB3476000144A79</key>
-		<dict>
-			<key>fileRef</key>
-			<string>AF8BB76A1CB3476000144A79</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>AF8BB7A61CB3476000144A79</key>
-		<dict>
-			<key>fileRef</key>
-			<string>AF8BB76C1CB3476000144A79</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>AF8BB7A71CB3476000144A79</key>
-		<dict>
-			<key>fileRef</key>
-			<string>AF8BB76E1CB3476000144A79</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-	</dict>
-	<key>rootObject</key>
-	<string>AF8BB6DF1CB3474500144A79</string>
-</dict>
-</plist>
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0CC654821D9B0A1D003A6618 /* VIMVODItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CC654811D9B0A1D003A6618 /* VIMVODItem.m */; };
+		0CC6548F1D9B0B6C003A6618 /* VIMUserBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CC6548E1D9B0B6C003A6618 /* VIMUserBadge.m */; };
+		0CC654921D9B0B8A003A6618 /* VIMVideoPlayRepresentation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CC654911D9B0B8A003A6618 /* VIMVideoPlayRepresentation.m */; };
+		0CC654BE1D9B1952003A6618 /* VIMVideo+VOD.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CC654BD1D9B1952003A6618 /* VIMVideo+VOD.m */; };
+		5DC3D763A953F8EE8C98705E /* Pods_VIMNetworkingLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4252C2BEC0D8B76BE6306459 /* Pods_VIMNetworkingLibrary.framework */; };
+		AF8BB6EB1CB3474500144A79 /* VIMNetworkingLibrary.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = AF8BB6EA1CB3474500144A79 /* VIMNetworkingLibrary.h */; };
+		AF8BB6ED1CB3474500144A79 /* VIMNetworkingLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = AF8BB6EC1CB3474500144A79 /* VIMNetworkingLibrary.m */; };
+		AF8BB7731CB3476000144A79 /* VIMCache.m in Sources */ = {isa = PBXBuildFile; fileRef = AF8BB6F61CB3476000144A79 /* VIMCache.m */; };
+		AF8BB7741CB3476000144A79 /* VIMKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = AF8BB6FB1CB3476000144A79 /* VIMKeychain.m */; };
+		AF8BB7751CB3476000144A79 /* VIMAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = AF8BB6FE1CB3476000144A79 /* VIMAccount.m */; };
+		AF8BB7781CB3476000144A79 /* VIMActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = AF8BB7041CB3476000144A79 /* VIMActivity.m */; };
+		AF8BB7791CB3476000144A79 /* VIMAppeal.m in Sources */ = {isa = PBXBuildFile; fileRef = AF8BB7061CB3476000144A79 /* VIMAppeal.m */; };
+		AF8BB77A1CB3476000144A79 /* VIMCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = AF8BB7081CB3476000144A79 /* VIMCategory.m */; };
+		AF8BB77B1CB3476000144A79 /* VIMChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = AF8BB70A1CB3476000144A79 /* VIMChannel.m */; };
+		AF8BB77C1CB3476000144A79 /* VIMComment.m in Sources */ = {isa = PBXBuildFile; fileRef = AF8BB70C1CB3476000144A79 /* VIMComment.m */; };
+		AF8BB77D1CB3476000144A79 /* VIMConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = AF8BB70E1CB3476000144A79 /* VIMConnection.m */; };
+		AF8BB77E1CB3476000144A79 /* VIMGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = AF8BB7101CB3476000144A79 /* VIMGroup.m */; };
+		AF8BB77F1CB3476000144A79 /* VIMInteraction.m in Sources */ = {isa = PBXBuildFile; fileRef = AF8BB7121CB3476000144A79 /* VIMInteraction.m */; };
+		AF8BB7801CB3476000144A79 /* VIMPicture.m in Sources */ = {isa = PBXBuildFile; fileRef = AF8BB7141CB3476000144A79 /* VIMPicture.m */; };
+		AF8BB7811CB3476000144A79 /* VIMPictureCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = AF8BB7161CB3476000144A79 /* VIMPictureCollection.m */; };
+		AF8BB7821CB3476000144A79 /* VIMPreference.m in Sources */ = {isa = PBXBuildFile; fileRef = AF8BB7181CB3476000144A79 /* VIMPreference.m */; };
+		AF8BB7831CB3476000144A79 /* VIMPrivacy.m in Sources */ = {isa = PBXBuildFile; fileRef = AF8BB71A1CB3476000144A79 /* VIMPrivacy.m */; };
+		AF8BB7841CB3476000144A79 /* VIMQuantityQuota.m in Sources */ = {isa = PBXBuildFile; fileRef = AF8BB71C1CB3476000144A79 /* VIMQuantityQuota.m */; };
+		AF8BB7851CB3476000144A79 /* VIMSizeQuota.m in Sources */ = {isa = PBXBuildFile; fileRef = AF8BB71E1CB3476000144A79 /* VIMSizeQuota.m */; };
+		AF8BB7861CB3476000144A79 /* VIMTag.m in Sources */ = {isa = PBXBuildFile; fileRef = AF8BB7201CB3476000144A79 /* VIMTag.m */; };
+		AF8BB7871CB3476000144A79 /* VIMTrigger.m in Sources */ = {isa = PBXBuildFile; fileRef = AF8BB7221CB3476000144A79 /* VIMTrigger.m */; };
+		AF8BB7881CB3476000144A79 /* VIMUploadQuota.m in Sources */ = {isa = PBXBuildFile; fileRef = AF8BB7241CB3476000144A79 /* VIMUploadQuota.m */; };
+		AF8BB7891CB3476000144A79 /* VIMUploadTicket.m in Sources */ = {isa = PBXBuildFile; fileRef = AF8BB7261CB3476000144A79 /* VIMUploadTicket.m */; };
+		AF8BB78A1CB3476000144A79 /* VIMUser.m in Sources */ = {isa = PBXBuildFile; fileRef = AF8BB7281CB3476000144A79 /* VIMUser.m */; };
+		AF8BB78B1CB3476000144A79 /* VIMVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = AF8BB72A1CB3476000144A79 /* VIMVideo.m */; };
+		AF8BB78C1CB3476000144A79 /* VIMVideoFile.m in Sources */ = {isa = PBXBuildFile; fileRef = AF8BB72C1CB3476000144A79 /* VIMVideoFile.m */; };
+		AF8BB78D1CB3476000144A79 /* VIMVideoLog.m in Sources */ = {isa = PBXBuildFile; fileRef = AF8BB72E1CB3476000144A79 /* VIMVideoLog.m */; };
+		AF8BB78E1CB3476000144A79 /* VIMVideoPreference.m in Sources */ = {isa = PBXBuildFile; fileRef = AF8BB7301CB3476000144A79 /* VIMVideoPreference.m */; };
+		AF8BB78F1CB3476000144A79 /* VIMVideoUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = AF8BB7321CB3476000144A79 /* VIMVideoUtils.m */; };
+		AF8BB7901CB3476000144A79 /* VIMAccountStore.m in Sources */ = {isa = PBXBuildFile; fileRef = AF8BB7361CB3476000144A79 /* VIMAccountStore.m */; };
+		AF8BB7911CB3476000144A79 /* NSError+VIMNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = AF8BB7391CB3476000144A79 /* NSError+VIMNetworking.m */; };
+		AF8BB7921CB3476000144A79 /* VIMReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = AF8BB73C1CB3476000144A79 /* VIMReachability.m */; };
+		AF8BB7931CB3476000144A79 /* VIMAuthenticator.m in Sources */ = {isa = PBXBuildFile; fileRef = AF8BB73F1CB3476000144A79 /* VIMAuthenticator.m */; };
+		AF8BB7941CB3476000144A79 /* VIMClient.m in Sources */ = {isa = PBXBuildFile; fileRef = AF8BB7411CB3476000144A79 /* VIMClient.m */; };
+		AF8BB7951CB3476000144A79 /* VIMHeaderProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = AF8BB7431CB3476000144A79 /* VIMHeaderProvider.m */; };
+		AF8BB7961CB3476000144A79 /* VIMHTTPRequestSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = AF8BB7451CB3476000144A79 /* VIMHTTPRequestSerializer.m */; };
+		AF8BB7971CB3476000144A79 /* VIMJSONRequestSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = AF8BB7471CB3476000144A79 /* VIMJSONRequestSerializer.m */; };
+		AF8BB7981CB3476000144A79 /* VIMJSONResponseSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = AF8BB7491CB3476000144A79 /* VIMJSONResponseSerializer.m */; };
+		AF8BB7991CB3476000144A79 /* VIMRequestDescriptor.m in Sources */ = {isa = PBXBuildFile; fileRef = AF8BB74B1CB3476000144A79 /* VIMRequestDescriptor.m */; };
+		AF8BB79A1CB3476000144A79 /* VIMRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = AF8BB74D1CB3476000144A79 /* VIMRequestOperation.m */; };
+		AF8BB79B1CB3476000144A79 /* VIMRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AF8BB74F1CB3476000144A79 /* VIMRequestOperationManager.m */; };
+		AF8BB79C1CB3476000144A79 /* VIMRequestRetryManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AF8BB7511CB3476000144A79 /* VIMRequestRetryManager.m */; };
+		AF8BB79D1CB3476000144A79 /* VIMServerResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = AF8BB7551CB3476000144A79 /* VIMServerResponse.m */; };
+		AF8BB79E1CB3476000144A79 /* VIMServerResponseMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = AF8BB7571CB3476000144A79 /* VIMServerResponseMapper.m */; };
+		AF8BB79F1CB3476000144A79 /* VIMSession.m in Sources */ = {isa = PBXBuildFile; fileRef = AF8BB7591CB3476000144A79 /* VIMSession.m */; };
+		AF8BB7A01CB3476000144A79 /* VIMSessionConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = AF8BB75B1CB3476000144A79 /* VIMSessionConfiguration.m */; };
+		AF8BB7A11CB3476000144A79 /* VIMModelObject.m in Sources */ = {isa = PBXBuildFile; fileRef = AF8BB75F1CB3476000144A79 /* VIMModelObject.m */; };
+		AF8BB7A21CB3476000144A79 /* VIMObjectMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = AF8BB7611CB3476000144A79 /* VIMObjectMapper.m */; };
+		AF8BB7A31CB3476000144A79 /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = AF8BB7651CB3476000144A79 /* NSString+MD5.m */; };
+		AF8BB7A41CB3476000144A79 /* VIMAPIConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = AF8BB7681CB3476000144A79 /* VIMAPIConfiguration.m */; };
+		AF8BB7A51CB3476000144A79 /* VIMAppConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = AF8BB76A1CB3476000144A79 /* VIMAppConfiguration.m */; };
+		AF8BB7A61CB3476000144A79 /* VIMFacebookConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = AF8BB76C1CB3476000144A79 /* VIMFacebookConfiguration.m */; };
+		AF8BB7A71CB3476000144A79 /* VIMFeaturesConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = AF8BB76E1CB3476000144A79 /* VIMFeaturesConfiguration.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		AF8BB6E51CB3474500144A79 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+				AF8BB6EB1CB3474500144A79 /* VIMNetworkingLibrary.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		0CC654801D9B0A1D003A6618 /* VIMVODItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMVODItem.h; sourceTree = "<group>"; };
+		0CC654811D9B0A1D003A6618 /* VIMVODItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMVODItem.m; sourceTree = "<group>"; };
+		0CC6548D1D9B0B6C003A6618 /* VIMUserBadge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMUserBadge.h; sourceTree = "<group>"; };
+		0CC6548E1D9B0B6C003A6618 /* VIMUserBadge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMUserBadge.m; sourceTree = "<group>"; };
+		0CC654901D9B0B8A003A6618 /* VIMVideoPlayRepresentation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMVideoPlayRepresentation.h; sourceTree = "<group>"; };
+		0CC654911D9B0B8A003A6618 /* VIMVideoPlayRepresentation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMVideoPlayRepresentation.m; sourceTree = "<group>"; };
+		0CC654BC1D9B1952003A6618 /* VIMVideo+VOD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "VIMVideo+VOD.h"; sourceTree = "<group>"; };
+		0CC654BD1D9B1952003A6618 /* VIMVideo+VOD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "VIMVideo+VOD.m"; sourceTree = "<group>"; };
+		1E344855F6E5A76B069BB7EC /* Pods-VIMNetworkingLibrary.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VIMNetworkingLibrary.release.xcconfig"; path = "../Pods/Target Support Files/Pods-VIMNetworkingLibrary/Pods-VIMNetworkingLibrary.release.xcconfig"; sourceTree = "<group>"; };
+		3B7D6BE5E44475C5E5A378F8 /* Pods-VIMNetworkingLibrary.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VIMNetworkingLibrary.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-VIMNetworkingLibrary/Pods-VIMNetworkingLibrary.debug.xcconfig"; sourceTree = "<group>"; };
+		4252C2BEC0D8B76BE6306459 /* Pods_VIMNetworkingLibrary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VIMNetworkingLibrary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AF8BB6E71CB3474500144A79 /* libVIMNetworkingLibrary.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libVIMNetworkingLibrary.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		AF8BB6EA1CB3474500144A79 /* VIMNetworkingLibrary.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VIMNetworkingLibrary.h; sourceTree = "<group>"; };
+		AF8BB6EC1CB3474500144A79 /* VIMNetworkingLibrary.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VIMNetworkingLibrary.m; sourceTree = "<group>"; };
+		AF8BB6F51CB3476000144A79 /* VIMCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMCache.h; sourceTree = "<group>"; };
+		AF8BB6F61CB3476000144A79 /* VIMCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMCache.m; sourceTree = "<group>"; };
+		AF8BB6F81CB3476000144A79 /* digicert-sha2.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = "digicert-sha2.cer"; sourceTree = "<group>"; };
+		AF8BB6FA1CB3476000144A79 /* VIMKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMKeychain.h; sourceTree = "<group>"; };
+		AF8BB6FB1CB3476000144A79 /* VIMKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMKeychain.m; sourceTree = "<group>"; };
+		AF8BB6FD1CB3476000144A79 /* VIMAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMAccount.h; sourceTree = "<group>"; };
+		AF8BB6FE1CB3476000144A79 /* VIMAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMAccount.m; sourceTree = "<group>"; };
+		AF8BB7031CB3476000144A79 /* VIMActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMActivity.h; sourceTree = "<group>"; };
+		AF8BB7041CB3476000144A79 /* VIMActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMActivity.m; sourceTree = "<group>"; };
+		AF8BB7051CB3476000144A79 /* VIMAppeal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMAppeal.h; sourceTree = "<group>"; };
+		AF8BB7061CB3476000144A79 /* VIMAppeal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMAppeal.m; sourceTree = "<group>"; };
+		AF8BB7071CB3476000144A79 /* VIMCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMCategory.h; sourceTree = "<group>"; };
+		AF8BB7081CB3476000144A79 /* VIMCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMCategory.m; sourceTree = "<group>"; };
+		AF8BB7091CB3476000144A79 /* VIMChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMChannel.h; sourceTree = "<group>"; };
+		AF8BB70A1CB3476000144A79 /* VIMChannel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMChannel.m; sourceTree = "<group>"; };
+		AF8BB70B1CB3476000144A79 /* VIMComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMComment.h; sourceTree = "<group>"; };
+		AF8BB70C1CB3476000144A79 /* VIMComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMComment.m; sourceTree = "<group>"; };
+		AF8BB70D1CB3476000144A79 /* VIMConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMConnection.h; sourceTree = "<group>"; };
+		AF8BB70E1CB3476000144A79 /* VIMConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMConnection.m; sourceTree = "<group>"; };
+		AF8BB70F1CB3476000144A79 /* VIMGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMGroup.h; sourceTree = "<group>"; };
+		AF8BB7101CB3476000144A79 /* VIMGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMGroup.m; sourceTree = "<group>"; };
+		AF8BB7111CB3476000144A79 /* VIMInteraction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMInteraction.h; sourceTree = "<group>"; };
+		AF8BB7121CB3476000144A79 /* VIMInteraction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMInteraction.m; sourceTree = "<group>"; };
+		AF8BB7131CB3476000144A79 /* VIMPicture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMPicture.h; sourceTree = "<group>"; };
+		AF8BB7141CB3476000144A79 /* VIMPicture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMPicture.m; sourceTree = "<group>"; };
+		AF8BB7151CB3476000144A79 /* VIMPictureCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMPictureCollection.h; sourceTree = "<group>"; };
+		AF8BB7161CB3476000144A79 /* VIMPictureCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMPictureCollection.m; sourceTree = "<group>"; };
+		AF8BB7171CB3476000144A79 /* VIMPreference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMPreference.h; sourceTree = "<group>"; };
+		AF8BB7181CB3476000144A79 /* VIMPreference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMPreference.m; sourceTree = "<group>"; };
+		AF8BB7191CB3476000144A79 /* VIMPrivacy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMPrivacy.h; sourceTree = "<group>"; };
+		AF8BB71A1CB3476000144A79 /* VIMPrivacy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMPrivacy.m; sourceTree = "<group>"; };
+		AF8BB71B1CB3476000144A79 /* VIMQuantityQuota.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMQuantityQuota.h; sourceTree = "<group>"; };
+		AF8BB71C1CB3476000144A79 /* VIMQuantityQuota.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMQuantityQuota.m; sourceTree = "<group>"; };
+		AF8BB71D1CB3476000144A79 /* VIMSizeQuota.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMSizeQuota.h; sourceTree = "<group>"; };
+		AF8BB71E1CB3476000144A79 /* VIMSizeQuota.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMSizeQuota.m; sourceTree = "<group>"; };
+		AF8BB71F1CB3476000144A79 /* VIMTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMTag.h; sourceTree = "<group>"; };
+		AF8BB7201CB3476000144A79 /* VIMTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMTag.m; sourceTree = "<group>"; };
+		AF8BB7211CB3476000144A79 /* VIMTrigger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMTrigger.h; sourceTree = "<group>"; };
+		AF8BB7221CB3476000144A79 /* VIMTrigger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMTrigger.m; sourceTree = "<group>"; };
+		AF8BB7231CB3476000144A79 /* VIMUploadQuota.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMUploadQuota.h; sourceTree = "<group>"; };
+		AF8BB7241CB3476000144A79 /* VIMUploadQuota.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMUploadQuota.m; sourceTree = "<group>"; };
+		AF8BB7251CB3476000144A79 /* VIMUploadTicket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMUploadTicket.h; sourceTree = "<group>"; };
+		AF8BB7261CB3476000144A79 /* VIMUploadTicket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMUploadTicket.m; sourceTree = "<group>"; };
+		AF8BB7271CB3476000144A79 /* VIMUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMUser.h; sourceTree = "<group>"; };
+		AF8BB7281CB3476000144A79 /* VIMUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMUser.m; sourceTree = "<group>"; };
+		AF8BB7291CB3476000144A79 /* VIMVideo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMVideo.h; sourceTree = "<group>"; };
+		AF8BB72A1CB3476000144A79 /* VIMVideo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMVideo.m; sourceTree = "<group>"; };
+		AF8BB72B1CB3476000144A79 /* VIMVideoFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMVideoFile.h; sourceTree = "<group>"; };
+		AF8BB72C1CB3476000144A79 /* VIMVideoFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMVideoFile.m; sourceTree = "<group>"; };
+		AF8BB72D1CB3476000144A79 /* VIMVideoLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMVideoLog.h; sourceTree = "<group>"; };
+		AF8BB72E1CB3476000144A79 /* VIMVideoLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMVideoLog.m; sourceTree = "<group>"; };
+		AF8BB72F1CB3476000144A79 /* VIMVideoPreference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMVideoPreference.h; sourceTree = "<group>"; };
+		AF8BB7301CB3476000144A79 /* VIMVideoPreference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMVideoPreference.m; sourceTree = "<group>"; };
+		AF8BB7311CB3476000144A79 /* VIMVideoUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMVideoUtils.h; sourceTree = "<group>"; };
+		AF8BB7321CB3476000144A79 /* VIMVideoUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMVideoUtils.m; sourceTree = "<group>"; };
+		AF8BB7351CB3476000144A79 /* VIMAccountStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMAccountStore.h; sourceTree = "<group>"; };
+		AF8BB7361CB3476000144A79 /* VIMAccountStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMAccountStore.m; sourceTree = "<group>"; };
+		AF8BB7381CB3476000144A79 /* NSError+VIMNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+VIMNetworking.h"; sourceTree = "<group>"; };
+		AF8BB7391CB3476000144A79 /* NSError+VIMNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+VIMNetworking.m"; sourceTree = "<group>"; };
+		AF8BB73B1CB3476000144A79 /* VIMReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMReachability.h; sourceTree = "<group>"; };
+		AF8BB73C1CB3476000144A79 /* VIMReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMReachability.m; sourceTree = "<group>"; };
+		AF8BB73E1CB3476000144A79 /* VIMAuthenticator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMAuthenticator.h; sourceTree = "<group>"; };
+		AF8BB73F1CB3476000144A79 /* VIMAuthenticator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMAuthenticator.m; sourceTree = "<group>"; };
+		AF8BB7401CB3476000144A79 /* VIMClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMClient.h; sourceTree = "<group>"; };
+		AF8BB7411CB3476000144A79 /* VIMClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMClient.m; sourceTree = "<group>"; };
+		AF8BB7421CB3476000144A79 /* VIMHeaderProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMHeaderProvider.h; sourceTree = "<group>"; };
+		AF8BB7431CB3476000144A79 /* VIMHeaderProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMHeaderProvider.m; sourceTree = "<group>"; };
+		AF8BB7441CB3476000144A79 /* VIMHTTPRequestSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMHTTPRequestSerializer.h; sourceTree = "<group>"; };
+		AF8BB7451CB3476000144A79 /* VIMHTTPRequestSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMHTTPRequestSerializer.m; sourceTree = "<group>"; };
+		AF8BB7461CB3476000144A79 /* VIMJSONRequestSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMJSONRequestSerializer.h; sourceTree = "<group>"; };
+		AF8BB7471CB3476000144A79 /* VIMJSONRequestSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMJSONRequestSerializer.m; sourceTree = "<group>"; };
+		AF8BB7481CB3476000144A79 /* VIMJSONResponseSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMJSONResponseSerializer.h; sourceTree = "<group>"; };
+		AF8BB7491CB3476000144A79 /* VIMJSONResponseSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMJSONResponseSerializer.m; sourceTree = "<group>"; };
+		AF8BB74A1CB3476000144A79 /* VIMRequestDescriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMRequestDescriptor.h; sourceTree = "<group>"; };
+		AF8BB74B1CB3476000144A79 /* VIMRequestDescriptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMRequestDescriptor.m; sourceTree = "<group>"; };
+		AF8BB74C1CB3476000144A79 /* VIMRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMRequestOperation.h; sourceTree = "<group>"; };
+		AF8BB74D1CB3476000144A79 /* VIMRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMRequestOperation.m; sourceTree = "<group>"; };
+		AF8BB74E1CB3476000144A79 /* VIMRequestOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMRequestOperationManager.h; sourceTree = "<group>"; };
+		AF8BB74F1CB3476000144A79 /* VIMRequestOperationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMRequestOperationManager.m; sourceTree = "<group>"; };
+		AF8BB7501CB3476000144A79 /* VIMRequestRetryManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMRequestRetryManager.h; sourceTree = "<group>"; };
+		AF8BB7511CB3476000144A79 /* VIMRequestRetryManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMRequestRetryManager.m; sourceTree = "<group>"; };
+		AF8BB7521CB3476000144A79 /* VIMRequestSerializerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMRequestSerializerDelegate.h; sourceTree = "<group>"; };
+		AF8BB7531CB3476000144A79 /* VIMRequestToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMRequestToken.h; sourceTree = "<group>"; };
+		AF8BB7541CB3476000144A79 /* VIMServerResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMServerResponse.h; sourceTree = "<group>"; };
+		AF8BB7551CB3476000144A79 /* VIMServerResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMServerResponse.m; sourceTree = "<group>"; };
+		AF8BB7561CB3476000144A79 /* VIMServerResponseMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMServerResponseMapper.h; sourceTree = "<group>"; };
+		AF8BB7571CB3476000144A79 /* VIMServerResponseMapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMServerResponseMapper.m; sourceTree = "<group>"; };
+		AF8BB7581CB3476000144A79 /* VIMSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMSession.h; sourceTree = "<group>"; };
+		AF8BB7591CB3476000144A79 /* VIMSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMSession.m; sourceTree = "<group>"; };
+		AF8BB75A1CB3476000144A79 /* VIMSessionConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMSessionConfiguration.h; sourceTree = "<group>"; };
+		AF8BB75B1CB3476000144A79 /* VIMSessionConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMSessionConfiguration.m; sourceTree = "<group>"; };
+		AF8BB75D1CB3476000144A79 /* VIMMappable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMMappable.h; sourceTree = "<group>"; };
+		AF8BB75E1CB3476000144A79 /* VIMModelObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMModelObject.h; sourceTree = "<group>"; };
+		AF8BB75F1CB3476000144A79 /* VIMModelObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMModelObject.m; sourceTree = "<group>"; };
+		AF8BB7601CB3476000144A79 /* VIMObjectMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMObjectMapper.h; sourceTree = "<group>"; };
+		AF8BB7611CB3476000144A79 /* VIMObjectMapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMObjectMapper.m; sourceTree = "<group>"; };
+		AF8BB7641CB3476000144A79 /* NSString+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MD5.h"; sourceTree = "<group>"; };
+		AF8BB7651CB3476000144A79 /* NSString+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5.m"; sourceTree = "<group>"; };
+		AF8BB7671CB3476000144A79 /* VIMAPIConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMAPIConfiguration.h; sourceTree = "<group>"; };
+		AF8BB7681CB3476000144A79 /* VIMAPIConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMAPIConfiguration.m; sourceTree = "<group>"; };
+		AF8BB7691CB3476000144A79 /* VIMAppConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMAppConfiguration.h; sourceTree = "<group>"; };
+		AF8BB76A1CB3476000144A79 /* VIMAppConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMAppConfiguration.m; sourceTree = "<group>"; };
+		AF8BB76B1CB3476000144A79 /* VIMFacebookConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMFacebookConfiguration.h; sourceTree = "<group>"; };
+		AF8BB76C1CB3476000144A79 /* VIMFacebookConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMFacebookConfiguration.m; sourceTree = "<group>"; };
+		AF8BB76D1CB3476000144A79 /* VIMFeaturesConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMFeaturesConfiguration.h; sourceTree = "<group>"; };
+		AF8BB76E1CB3476000144A79 /* VIMFeaturesConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMFeaturesConfiguration.m; sourceTree = "<group>"; };
+		AF8BB7701CB3476000144A79 /* VIMAuthenticator+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "VIMAuthenticator+Private.h"; sourceTree = "<group>"; };
+		AF8BB7711CB3476000144A79 /* VIMClient+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "VIMClient+Private.h"; sourceTree = "<group>"; };
+		AF8BB7721CB3476000144A79 /* VIMSession+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "VIMSession+Private.h"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AF8BB6E41CB3474500144A79 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5DC3D763A953F8EE8C98705E /* Pods_VIMNetworkingLibrary.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		181DA12FBFCB004FAA9EC438 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4252C2BEC0D8B76BE6306459 /* Pods_VIMNetworkingLibrary.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		32BD98D158A215147B8B03E5 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				3B7D6BE5E44475C5E5A378F8 /* Pods-VIMNetworkingLibrary.debug.xcconfig */,
+				1E344855F6E5A76B069BB7EC /* Pods-VIMNetworkingLibrary.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		AF8BB6DE1CB3474500144A79 = {
+			isa = PBXGroup;
+			children = (
+				AF8BB6E91CB3474500144A79 /* VIMNetworkingLibrary */,
+				AF8BB6E81CB3474500144A79 /* Products */,
+				32BD98D158A215147B8B03E5 /* Pods */,
+				181DA12FBFCB004FAA9EC438 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		AF8BB6E81CB3474500144A79 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AF8BB6E71CB3474500144A79 /* libVIMNetworkingLibrary.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AF8BB6E91CB3474500144A79 /* VIMNetworkingLibrary */ = {
+			isa = PBXGroup;
+			children = (
+				AF8BB6EA1CB3474500144A79 /* VIMNetworkingLibrary.h */,
+				AF8BB6EC1CB3474500144A79 /* VIMNetworkingLibrary.m */,
+				AF8BB6F31CB3476000144A79 /* VIMNetworking */,
+			);
+			path = VIMNetworkingLibrary;
+			sourceTree = "<group>";
+		};
+		AF8BB6F31CB3476000144A79 /* VIMNetworking */ = {
+			isa = PBXGroup;
+			children = (
+				AF8BB6F41CB3476000144A79 /* Cache */,
+				AF8BB6F71CB3476000144A79 /* Certificate */,
+				AF8BB6F91CB3476000144A79 /* Keychain */,
+				AF8BB6FC1CB3476000144A79 /* Model */,
+				AF8BB7331CB3476000144A79 /* Networking */,
+				AF8BB75C1CB3476000144A79 /* ObjectMapper */,
+				AF8BB7621CB3476000144A79 /* Private */,
+			);
+			name = VIMNetworking;
+			path = ../../VIMNetworking;
+			sourceTree = "<group>";
+		};
+		AF8BB6F41CB3476000144A79 /* Cache */ = {
+			isa = PBXGroup;
+			children = (
+				AF8BB6F51CB3476000144A79 /* VIMCache.h */,
+				AF8BB6F61CB3476000144A79 /* VIMCache.m */,
+			);
+			path = Cache;
+			sourceTree = "<group>";
+		};
+		AF8BB6F71CB3476000144A79 /* Certificate */ = {
+			isa = PBXGroup;
+			children = (
+				AF8BB6F81CB3476000144A79 /* digicert-sha2.cer */,
+			);
+			path = Certificate;
+			sourceTree = "<group>";
+		};
+		AF8BB6F91CB3476000144A79 /* Keychain */ = {
+			isa = PBXGroup;
+			children = (
+				AF8BB6FA1CB3476000144A79 /* VIMKeychain.h */,
+				AF8BB6FB1CB3476000144A79 /* VIMKeychain.m */,
+			);
+			path = Keychain;
+			sourceTree = "<group>";
+		};
+		AF8BB6FC1CB3476000144A79 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				0CC654BC1D9B1952003A6618 /* VIMVideo+VOD.h */,
+				0CC654BD1D9B1952003A6618 /* VIMVideo+VOD.m */,
+				0CC654901D9B0B8A003A6618 /* VIMVideoPlayRepresentation.h */,
+				0CC654911D9B0B8A003A6618 /* VIMVideoPlayRepresentation.m */,
+				0CC6548D1D9B0B6C003A6618 /* VIMUserBadge.h */,
+				0CC6548E1D9B0B6C003A6618 /* VIMUserBadge.m */,
+				AF8BB6FD1CB3476000144A79 /* VIMAccount.h */,
+				AF8BB6FE1CB3476000144A79 /* VIMAccount.m */,
+				AF8BB7031CB3476000144A79 /* VIMActivity.h */,
+				AF8BB7041CB3476000144A79 /* VIMActivity.m */,
+				AF8BB7051CB3476000144A79 /* VIMAppeal.h */,
+				AF8BB7061CB3476000144A79 /* VIMAppeal.m */,
+				AF8BB7071CB3476000144A79 /* VIMCategory.h */,
+				AF8BB7081CB3476000144A79 /* VIMCategory.m */,
+				AF8BB7091CB3476000144A79 /* VIMChannel.h */,
+				AF8BB70A1CB3476000144A79 /* VIMChannel.m */,
+				AF8BB70B1CB3476000144A79 /* VIMComment.h */,
+				AF8BB70C1CB3476000144A79 /* VIMComment.m */,
+				AF8BB70D1CB3476000144A79 /* VIMConnection.h */,
+				AF8BB70E1CB3476000144A79 /* VIMConnection.m */,
+				AF8BB70F1CB3476000144A79 /* VIMGroup.h */,
+				AF8BB7101CB3476000144A79 /* VIMGroup.m */,
+				AF8BB7111CB3476000144A79 /* VIMInteraction.h */,
+				AF8BB7121CB3476000144A79 /* VIMInteraction.m */,
+				AF8BB7131CB3476000144A79 /* VIMPicture.h */,
+				AF8BB7141CB3476000144A79 /* VIMPicture.m */,
+				AF8BB7151CB3476000144A79 /* VIMPictureCollection.h */,
+				AF8BB7161CB3476000144A79 /* VIMPictureCollection.m */,
+				AF8BB7171CB3476000144A79 /* VIMPreference.h */,
+				AF8BB7181CB3476000144A79 /* VIMPreference.m */,
+				AF8BB7191CB3476000144A79 /* VIMPrivacy.h */,
+				AF8BB71A1CB3476000144A79 /* VIMPrivacy.m */,
+				AF8BB71B1CB3476000144A79 /* VIMQuantityQuota.h */,
+				AF8BB71C1CB3476000144A79 /* VIMQuantityQuota.m */,
+				AF8BB71D1CB3476000144A79 /* VIMSizeQuota.h */,
+				AF8BB71E1CB3476000144A79 /* VIMSizeQuota.m */,
+				AF8BB71F1CB3476000144A79 /* VIMTag.h */,
+				AF8BB7201CB3476000144A79 /* VIMTag.m */,
+				AF8BB7211CB3476000144A79 /* VIMTrigger.h */,
+				AF8BB7221CB3476000144A79 /* VIMTrigger.m */,
+				AF8BB7231CB3476000144A79 /* VIMUploadQuota.h */,
+				AF8BB7241CB3476000144A79 /* VIMUploadQuota.m */,
+				AF8BB7251CB3476000144A79 /* VIMUploadTicket.h */,
+				AF8BB7261CB3476000144A79 /* VIMUploadTicket.m */,
+				AF8BB7271CB3476000144A79 /* VIMUser.h */,
+				AF8BB7281CB3476000144A79 /* VIMUser.m */,
+				AF8BB7291CB3476000144A79 /* VIMVideo.h */,
+				AF8BB72A1CB3476000144A79 /* VIMVideo.m */,
+				AF8BB72B1CB3476000144A79 /* VIMVideoFile.h */,
+				AF8BB72C1CB3476000144A79 /* VIMVideoFile.m */,
+				AF8BB72D1CB3476000144A79 /* VIMVideoLog.h */,
+				AF8BB72E1CB3476000144A79 /* VIMVideoLog.m */,
+				AF8BB72F1CB3476000144A79 /* VIMVideoPreference.h */,
+				AF8BB7301CB3476000144A79 /* VIMVideoPreference.m */,
+				AF8BB7311CB3476000144A79 /* VIMVideoUtils.h */,
+				AF8BB7321CB3476000144A79 /* VIMVideoUtils.m */,
+				0CC654801D9B0A1D003A6618 /* VIMVODItem.h */,
+				0CC654811D9B0A1D003A6618 /* VIMVODItem.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		AF8BB7331CB3476000144A79 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				AF8BB7341CB3476000144A79 /* Auth */,
+				AF8BB7371CB3476000144A79 /* ErrorReporting */,
+				AF8BB73A1CB3476000144A79 /* Reachability */,
+				AF8BB73D1CB3476000144A79 /* VimeoClient */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		AF8BB7341CB3476000144A79 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				AF8BB7351CB3476000144A79 /* VIMAccountStore.h */,
+				AF8BB7361CB3476000144A79 /* VIMAccountStore.m */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		AF8BB7371CB3476000144A79 /* ErrorReporting */ = {
+			isa = PBXGroup;
+			children = (
+				AF8BB7381CB3476000144A79 /* NSError+VIMNetworking.h */,
+				AF8BB7391CB3476000144A79 /* NSError+VIMNetworking.m */,
+			);
+			path = ErrorReporting;
+			sourceTree = "<group>";
+		};
+		AF8BB73A1CB3476000144A79 /* Reachability */ = {
+			isa = PBXGroup;
+			children = (
+				AF8BB73B1CB3476000144A79 /* VIMReachability.h */,
+				AF8BB73C1CB3476000144A79 /* VIMReachability.m */,
+			);
+			path = Reachability;
+			sourceTree = "<group>";
+		};
+		AF8BB73D1CB3476000144A79 /* VimeoClient */ = {
+			isa = PBXGroup;
+			children = (
+				AF8BB73E1CB3476000144A79 /* VIMAuthenticator.h */,
+				AF8BB73F1CB3476000144A79 /* VIMAuthenticator.m */,
+				AF8BB7401CB3476000144A79 /* VIMClient.h */,
+				AF8BB7411CB3476000144A79 /* VIMClient.m */,
+				AF8BB7421CB3476000144A79 /* VIMHeaderProvider.h */,
+				AF8BB7431CB3476000144A79 /* VIMHeaderProvider.m */,
+				AF8BB7441CB3476000144A79 /* VIMHTTPRequestSerializer.h */,
+				AF8BB7451CB3476000144A79 /* VIMHTTPRequestSerializer.m */,
+				AF8BB7461CB3476000144A79 /* VIMJSONRequestSerializer.h */,
+				AF8BB7471CB3476000144A79 /* VIMJSONRequestSerializer.m */,
+				AF8BB7481CB3476000144A79 /* VIMJSONResponseSerializer.h */,
+				AF8BB7491CB3476000144A79 /* VIMJSONResponseSerializer.m */,
+				AF8BB74A1CB3476000144A79 /* VIMRequestDescriptor.h */,
+				AF8BB74B1CB3476000144A79 /* VIMRequestDescriptor.m */,
+				AF8BB74C1CB3476000144A79 /* VIMRequestOperation.h */,
+				AF8BB74D1CB3476000144A79 /* VIMRequestOperation.m */,
+				AF8BB74E1CB3476000144A79 /* VIMRequestOperationManager.h */,
+				AF8BB74F1CB3476000144A79 /* VIMRequestOperationManager.m */,
+				AF8BB7501CB3476000144A79 /* VIMRequestRetryManager.h */,
+				AF8BB7511CB3476000144A79 /* VIMRequestRetryManager.m */,
+				AF8BB7521CB3476000144A79 /* VIMRequestSerializerDelegate.h */,
+				AF8BB7531CB3476000144A79 /* VIMRequestToken.h */,
+				AF8BB7541CB3476000144A79 /* VIMServerResponse.h */,
+				AF8BB7551CB3476000144A79 /* VIMServerResponse.m */,
+				AF8BB7561CB3476000144A79 /* VIMServerResponseMapper.h */,
+				AF8BB7571CB3476000144A79 /* VIMServerResponseMapper.m */,
+				AF8BB7581CB3476000144A79 /* VIMSession.h */,
+				AF8BB7591CB3476000144A79 /* VIMSession.m */,
+				AF8BB75A1CB3476000144A79 /* VIMSessionConfiguration.h */,
+				AF8BB75B1CB3476000144A79 /* VIMSessionConfiguration.m */,
+			);
+			path = VimeoClient;
+			sourceTree = "<group>";
+		};
+		AF8BB75C1CB3476000144A79 /* ObjectMapper */ = {
+			isa = PBXGroup;
+			children = (
+				AF8BB75D1CB3476000144A79 /* VIMMappable.h */,
+				AF8BB75E1CB3476000144A79 /* VIMModelObject.h */,
+				AF8BB75F1CB3476000144A79 /* VIMModelObject.m */,
+				AF8BB7601CB3476000144A79 /* VIMObjectMapper.h */,
+				AF8BB7611CB3476000144A79 /* VIMObjectMapper.m */,
+			);
+			path = ObjectMapper;
+			sourceTree = "<group>";
+		};
+		AF8BB7621CB3476000144A79 /* Private */ = {
+			isa = PBXGroup;
+			children = (
+				AF8BB7631CB3476000144A79 /* Categories */,
+				AF8BB7661CB3476000144A79 /* Model */,
+				AF8BB76F1CB3476000144A79 /* Networking */,
+			);
+			path = Private;
+			sourceTree = "<group>";
+		};
+		AF8BB7631CB3476000144A79 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				AF8BB7641CB3476000144A79 /* NSString+MD5.h */,
+				AF8BB7651CB3476000144A79 /* NSString+MD5.m */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		AF8BB7661CB3476000144A79 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				AF8BB7671CB3476000144A79 /* VIMAPIConfiguration.h */,
+				AF8BB7681CB3476000144A79 /* VIMAPIConfiguration.m */,
+				AF8BB7691CB3476000144A79 /* VIMAppConfiguration.h */,
+				AF8BB76A1CB3476000144A79 /* VIMAppConfiguration.m */,
+				AF8BB76B1CB3476000144A79 /* VIMFacebookConfiguration.h */,
+				AF8BB76C1CB3476000144A79 /* VIMFacebookConfiguration.m */,
+				AF8BB76D1CB3476000144A79 /* VIMFeaturesConfiguration.h */,
+				AF8BB76E1CB3476000144A79 /* VIMFeaturesConfiguration.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		AF8BB76F1CB3476000144A79 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				AF8BB7701CB3476000144A79 /* VIMAuthenticator+Private.h */,
+				AF8BB7711CB3476000144A79 /* VIMClient+Private.h */,
+				AF8BB7721CB3476000144A79 /* VIMSession+Private.h */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		AF8BB6E61CB3474500144A79 /* VIMNetworkingLibrary */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AF8BB6F01CB3474500144A79 /* Build configuration list for PBXNativeTarget "VIMNetworkingLibrary" */;
+			buildPhases = (
+				4ED31F2C16C49D8DD3902E23 /* [CP] Check Pods Manifest.lock */,
+				AF8BB6E31CB3474500144A79 /* Sources */,
+				AF8BB6E41CB3474500144A79 /* Frameworks */,
+				AF8BB6E51CB3474500144A79 /* CopyFiles */,
+				70688B90766FBB37791E6710 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = VIMNetworkingLibrary;
+			productName = VIMNetworkingLibrary;
+			productReference = AF8BB6E71CB3474500144A79 /* libVIMNetworkingLibrary.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AF8BB6DF1CB3474500144A79 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = Vimeo;
+				TargetAttributes = {
+					AF8BB6E61CB3474500144A79 = {
+						CreatedOnToolsVersion = 7.3;
+					};
+				};
+			};
+			buildConfigurationList = AF8BB6E21CB3474500144A79 /* Build configuration list for PBXProject "VIMNetworkingLibrary" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = AF8BB6DE1CB3474500144A79;
+			productRefGroup = AF8BB6E81CB3474500144A79 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AF8BB6E61CB3474500144A79 /* VIMNetworkingLibrary */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		4ED31F2C16C49D8DD3902E23 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		70688B90766FBB37791E6710 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-VIMNetworkingLibrary/Pods-VIMNetworkingLibrary-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AF8BB6E31CB3474500144A79 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AF8BB7931CB3476000144A79 /* VIMAuthenticator.m in Sources */,
+				AF8BB77C1CB3476000144A79 /* VIMComment.m in Sources */,
+				AF8BB7A31CB3476000144A79 /* NSString+MD5.m in Sources */,
+				AF8BB7961CB3476000144A79 /* VIMHTTPRequestSerializer.m in Sources */,
+				AF8BB7941CB3476000144A79 /* VIMClient.m in Sources */,
+				AF8BB79A1CB3476000144A79 /* VIMRequestOperation.m in Sources */,
+				AF8BB7841CB3476000144A79 /* VIMQuantityQuota.m in Sources */,
+				AF8BB77B1CB3476000144A79 /* VIMChannel.m in Sources */,
+				AF8BB7821CB3476000144A79 /* VIMPreference.m in Sources */,
+				AF8BB7A01CB3476000144A79 /* VIMSessionConfiguration.m in Sources */,
+				AF8BB78B1CB3476000144A79 /* VIMVideo.m in Sources */,
+				AF8BB7881CB3476000144A79 /* VIMUploadQuota.m in Sources */,
+				AF8BB79B1CB3476000144A79 /* VIMRequestOperationManager.m in Sources */,
+				0CC6548F1D9B0B6C003A6618 /* VIMUserBadge.m in Sources */,
+				AF8BB77E1CB3476000144A79 /* VIMGroup.m in Sources */,
+				AF8BB7751CB3476000144A79 /* VIMAccount.m in Sources */,
+				0CC654BE1D9B1952003A6618 /* VIMVideo+VOD.m in Sources */,
+				AF8BB79F1CB3476000144A79 /* VIMSession.m in Sources */,
+				AF8BB77A1CB3476000144A79 /* VIMCategory.m in Sources */,
+				AF8BB7A21CB3476000144A79 /* VIMObjectMapper.m in Sources */,
+				AF8BB7811CB3476000144A79 /* VIMPictureCollection.m in Sources */,
+				AF8BB7741CB3476000144A79 /* VIMKeychain.m in Sources */,
+				AF8BB78A1CB3476000144A79 /* VIMUser.m in Sources */,
+				AF8BB7901CB3476000144A79 /* VIMAccountStore.m in Sources */,
+				AF8BB7831CB3476000144A79 /* VIMPrivacy.m in Sources */,
+				AF8BB7871CB3476000144A79 /* VIMTrigger.m in Sources */,
+				AF8BB78C1CB3476000144A79 /* VIMVideoFile.m in Sources */,
+				AF8BB78F1CB3476000144A79 /* VIMVideoUtils.m in Sources */,
+				AF8BB7991CB3476000144A79 /* VIMRequestDescriptor.m in Sources */,
+				AF8BB77D1CB3476000144A79 /* VIMConnection.m in Sources */,
+				AF8BB78D1CB3476000144A79 /* VIMVideoLog.m in Sources */,
+				AF8BB7951CB3476000144A79 /* VIMHeaderProvider.m in Sources */,
+				AF8BB79C1CB3476000144A79 /* VIMRequestRetryManager.m in Sources */,
+				AF8BB7921CB3476000144A79 /* VIMReachability.m in Sources */,
+				AF8BB77F1CB3476000144A79 /* VIMInteraction.m in Sources */,
+				AF8BB6ED1CB3474500144A79 /* VIMNetworkingLibrary.m in Sources */,
+				AF8BB79D1CB3476000144A79 /* VIMServerResponse.m in Sources */,
+				0CC654921D9B0B8A003A6618 /* VIMVideoPlayRepresentation.m in Sources */,
+				AF8BB7891CB3476000144A79 /* VIMUploadTicket.m in Sources */,
+				AF8BB7791CB3476000144A79 /* VIMAppeal.m in Sources */,
+				AF8BB7981CB3476000144A79 /* VIMJSONResponseSerializer.m in Sources */,
+				0CC654821D9B0A1D003A6618 /* VIMVODItem.m in Sources */,
+				AF8BB7731CB3476000144A79 /* VIMCache.m in Sources */,
+				AF8BB7A41CB3476000144A79 /* VIMAPIConfiguration.m in Sources */,
+				AF8BB7A61CB3476000144A79 /* VIMFacebookConfiguration.m in Sources */,
+				AF8BB78E1CB3476000144A79 /* VIMVideoPreference.m in Sources */,
+				AF8BB7861CB3476000144A79 /* VIMTag.m in Sources */,
+				AF8BB7911CB3476000144A79 /* NSError+VIMNetworking.m in Sources */,
+				AF8BB7971CB3476000144A79 /* VIMJSONRequestSerializer.m in Sources */,
+				AF8BB79E1CB3476000144A79 /* VIMServerResponseMapper.m in Sources */,
+				AF8BB7781CB3476000144A79 /* VIMActivity.m in Sources */,
+				AF8BB7851CB3476000144A79 /* VIMSizeQuota.m in Sources */,
+				AF8BB7A71CB3476000144A79 /* VIMFeaturesConfiguration.m in Sources */,
+				AF8BB7A51CB3476000144A79 /* VIMAppConfiguration.m in Sources */,
+				AF8BB7801CB3476000144A79 /* VIMPicture.m in Sources */,
+				AF8BB7A11CB3476000144A79 /* VIMModelObject.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		AF8BB6EE1CB3474500144A79 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		AF8BB6EF1CB3474500144A79 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		AF8BB6F11CB3474500144A79 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3B7D6BE5E44475C5E5A378F8 /* Pods-VIMNetworkingLibrary.debug.xcconfig */;
+			buildSettings = {
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		AF8BB6F21CB3474500144A79 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1E344855F6E5A76B069BB7EC /* Pods-VIMNetworkingLibrary.release.xcconfig */;
+			buildSettings = {
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AF8BB6E21CB3474500144A79 /* Build configuration list for PBXProject "VIMNetworkingLibrary" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AF8BB6EE1CB3474500144A79 /* Debug */,
+				AF8BB6EF1CB3474500144A79 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AF8BB6F01CB3474500144A79 /* Build configuration list for PBXNativeTarget "VIMNetworkingLibrary" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AF8BB6F11CB3474500144A79 /* Debug */,
+				AF8BB6F21CB3474500144A79 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = AF8BB6DF1CB3474500144A79 /* Project object */;
+}
