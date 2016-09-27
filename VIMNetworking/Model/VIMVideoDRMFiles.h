@@ -25,6 +25,7 @@
 //
 
 @class VIMVideoFairPlayFile;
+#import "VIMModelObject.h"
 
 @interface VIMVideoDRMFiles : VIMModelObject
 

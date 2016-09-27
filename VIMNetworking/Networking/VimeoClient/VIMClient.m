@@ -33,6 +33,7 @@
 #import "VIMTrigger.h"
 #import "VIMRequestRetryManager.h"
 #import "VIMSessionConfiguration.h"
+#import "VIMVODItem.h"
 
 static NSString *const ModelKeyPathData = @"data";
 

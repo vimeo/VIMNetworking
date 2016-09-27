@@ -25,6 +25,7 @@
 //
 
 #import "VIMVideoPlayFile.h"
+#import "VIMVideoHLSFile.h"
 
 @interface VIMVideoFairPlayFile : VIMVideoHLSFile
 
