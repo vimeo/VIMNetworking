@@ -1,9 +1,9 @@
 //
-//  VIMVideoLog.h
-//  VIMNetworking
+//  VIMUserBadge.h
+//  Vimeo
 //
-//  Created by Hanssen, Alfie on 11/19/14.
-//  Copyright (c) 2014-2015 Vimeo (https://vimeo.com)
+//  Created by Jake Oliver on 8/8/16.
+//  Copyright © 2016 Vimeo. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -26,12 +26,24 @@
 
 #import "VIMModelObject.h"
 
-@interface VIMVideoLog : VIMModelObject
+typedef NS_ENUM(NSInteger, VIMUserBadgeType)
+{
+    VIMUserBadgeTypeDefault = 0,
+    VIMUserBadgeTypePlus,
+    VIMUserBadgeTypePro,
+    VIMUserBadgeTypeBusiness,
+    VIMUserBadgeTypeAlum,
+    VIMUserBadgeTypeStaff,
+    VIMUserBadgeTypeSupport,
+    VIMUserBadgeTypeCuration
+};
 
-@property (nonatomic, copy, readonly, nullable) NSString *playURLString;
-@property (nonatomic, copy, readonly, nullable) NSString *loadURLString;
-@property (nonatomic, copy, readonly, nullable) NSString *exitURLString;
-@property (nonatomic, copy, readonly, nullable) NSString *likeURLString;
-@property (nonatomic, copy, readonly, nullable) NSString *watchLaterURLString;
+@interface VIMUserBadge : VIMModelObject
+
+@property (nonatomic, copy, nullable) NSString *alt_text;
+@property (nonatomic, copy, nullable) NSString *type;
+@property (nonatomic, assign) VIMUserBadgeType badgeType;
+@property (nonatomic, copy, nullable) NSString *text;
+@property (nonatomic, copy, nullable) NSString *url;
 
 @end

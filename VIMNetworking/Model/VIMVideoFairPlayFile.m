@@ -1,9 +1,9 @@
 //
-//  VIMVideoLog.h
-//  VIMNetworking
+//  VIMVideoFairPlayFile.m
+//  Vimeo
 //
-//  Created by Hanssen, Alfie on 11/19/14.
-//  Copyright (c) 2014-2015 Vimeo (https://vimeo.com)
+//  Created by King, Gavin on 7/13/16.
+//  Copyright © 2016 Vimeo. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,14 +24,8 @@
 //  THE SOFTWARE.
 //
 
-#import "VIMModelObject.h"
+#import "VIMVideoFairPlayFile.h"
 
-@interface VIMVideoLog : VIMModelObject
-
-@property (nonatomic, copy, readonly, nullable) NSString *playURLString;
-@property (nonatomic, copy, readonly, nullable) NSString *loadURLString;
-@property (nonatomic, copy, readonly, nullable) NSString *exitURLString;
-@property (nonatomic, copy, readonly, nullable) NSString *likeURLString;
-@property (nonatomic, copy, readonly, nullable) NSString *watchLaterURLString;
+@implementation VIMVideoFairPlayFile
 
 @end
