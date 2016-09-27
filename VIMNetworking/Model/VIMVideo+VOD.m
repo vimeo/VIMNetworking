@@ -7,6 +7,8 @@
 //
 
 #import "VIMVideo+VOD.h"
+#import "VIMConnection.h"
+#import "VIMInteraction.h"
 
 @implementation VIMVideo (VOD)
 

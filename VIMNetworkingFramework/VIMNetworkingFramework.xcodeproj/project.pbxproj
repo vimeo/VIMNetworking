@@ -34,6 +34,8 @@
 		0CC654B81D9B15A2003A6618 /* VIMVideoProgressiveFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CC654B61D9B15A2003A6618 /* VIMVideoProgressiveFile.h */; };
 		0CC654B91D9B15A2003A6618 /* VIMVideoProgressiveFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CC654B71D9B15A2003A6618 /* VIMVideoProgressiveFile.m */; };
 		0CC654BA1D9B15A2003A6618 /* VIMVideoProgressiveFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CC654B71D9B15A2003A6618 /* VIMVideoProgressiveFile.m */; };
+		0CC654C11D9B1977003A6618 /* VIMVideo+VOD.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CC654BF1D9B1977003A6618 /* VIMVideo+VOD.h */; };
+		0CC654C21D9B1977003A6618 /* VIMVideo+VOD.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CC654C01D9B1977003A6618 /* VIMVideo+VOD.m */; };
 		51F93FA7F00241F20D5E1FB6 /* Pods_VIMNetworkingFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D4796197EA63B5A1F7B8B6 /* Pods_VIMNetworkingFramework.framework */; };
 		AF8BB5D61CB3449C00144A79 /* VIMNetworkingFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = AF8BB5D51CB3449C00144A79 /* VIMNetworkingFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AF8BB5DD1CB3449C00144A79 /* VIMNetworkingFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF8BB5D21CB3449C00144A79 /* VIMNetworkingFramework.framework */; };
@@ -178,6 +180,8 @@
 		0CC654B21D9B1580003A6618 /* VIMVideoPlayFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMVideoPlayFile.m; sourceTree = "<group>"; };
 		0CC654B61D9B15A2003A6618 /* VIMVideoProgressiveFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIMVideoProgressiveFile.h; sourceTree = "<group>"; };
 		0CC654B71D9B15A2003A6618 /* VIMVideoProgressiveFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIMVideoProgressiveFile.m; sourceTree = "<group>"; };
+		0CC654BF1D9B1977003A6618 /* VIMVideo+VOD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "VIMVideo+VOD.h"; sourceTree = "<group>"; };
+		0CC654C01D9B1977003A6618 /* VIMVideo+VOD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "VIMVideo+VOD.m"; sourceTree = "<group>"; };
 		87D4796197EA63B5A1F7B8B6 /* Pods_VIMNetworkingFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VIMNetworkingFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6A36237D8CCC2AF98A361DA /* Pods-VIMNetworkingFramework.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VIMNetworkingFramework.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-VIMNetworkingFramework/Pods-VIMNetworkingFramework.debug.xcconfig"; sourceTree = "<group>"; };
 		AF8BB5D21CB3449C00144A79 /* VIMNetworkingFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VIMNetworkingFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -417,6 +421,8 @@
 		AF8BB5F51CB344C400144A79 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				0CC654BF1D9B1977003A6618 /* VIMVideo+VOD.h */,
+				0CC654C01D9B1977003A6618 /* VIMVideo+VOD.m */,
 				AF8BB5F61CB344C400144A79 /* VIMAccount.h */,
 				AF8BB5F71CB344C400144A79 /* VIMAccount.m */,
 				AF8BB5FC1CB344C400144A79 /* VIMActivity.h */,
@@ -686,6 +692,7 @@
 				AF8BB6A91CB344C400144A79 /* NSError+VIMNetworking.h in Headers */,
 				AF8BB6851CB344C400144A79 /* VIMInteraction.h in Headers */,
 				AF8BB67F1CB344C400144A79 /* VIMComment.h in Headers */,
+				0CC654C11D9B1977003A6618 /* VIMVideo+VOD.h in Headers */,
 				AF8BB6CB1CB344C400144A79 /* VIMMappable.h in Headers */,
 				AF8BB6811CB344C400144A79 /* VIMConnection.h in Headers */,
 				AF8BB6991CB344C400144A79 /* VIMUploadTicket.h in Headers */,
@@ -884,6 +891,7 @@
 				AF8BB6B41CB344C400144A79 /* VIMHTTPRequestSerializer.m in Sources */,
 				AF8BB6A41CB344C400144A79 /* VIMVideoPreference.m in Sources */,
 				AF8BB6D71CB344C400144A79 /* VIMFacebookConfiguration.m in Sources */,
+				0CC654C21D9B1977003A6618 /* VIMVideo+VOD.m in Sources */,
 				AF8BB6D51CB344C400144A79 /* VIMAppConfiguration.m in Sources */,
 				AF8BB6921CB344C400144A79 /* VIMSizeQuota.m in Sources */,
 				AF8BB6BC1CB344C400144A79 /* VIMRequestOperation.m in Sources */,
