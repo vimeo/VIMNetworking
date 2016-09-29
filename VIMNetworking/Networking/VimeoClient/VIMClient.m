@@ -124,6 +124,16 @@ static NSString *const ModelKeyPathData = @"data";
     return [self requestDescriptor:descriptor completionBlock:completionBlock];
 }
 
+- (id<VIMRequestToken>)checkExistence:(NSString *)URI completionBlock:(VIMRequestCompletionBlock)completionBlock
+{
+    VIMRequestDescriptor *descriptor = [[VIMRequestDescriptor alloc] init];
+    descriptor.urlPath = URI;
+    descriptor.HTTPMethod = HTTPMethodGET;
+    descriptor.shouldRetryOnFailure = YES;
+    
+    return [self requestDescriptor:descriptor completionBlock:completionBlock];
+}
+
 #pragma mark - Users
 
 - (id<VIMRequestToken>)userWithURI:(NSString *)URI completionBlock:(VIMRequestCompletionBlock)completionBlock

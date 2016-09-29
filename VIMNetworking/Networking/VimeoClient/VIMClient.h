@@ -125,4 +125,8 @@
 
 - (nullable id<VIMRequestToken>)logoutWithCompletionBlock:(nullable VIMRequestCompletionBlock)completionBlock;
 
+#pragma mark -  
+
+- (nullable id<VIMRequestToken>)checkExistence:(nonnull NSString *)URI completionBlock:(nonnull VIMRequestCompletionBlock)completionBlock;
+
 @end
