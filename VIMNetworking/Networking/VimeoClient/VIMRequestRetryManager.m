@@ -80,7 +80,7 @@ static NSString *DescriptorKey = @"descriptor";
 
             [self _retryAllDescriptors];
             
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_reachabilityOnline:) name:VIMReachabilityStatusChangeOnlineNotification object:nil];
+//            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_reachabilityOnline:) name:VIMReachabilityStatusChangeOnlineNotification object:nil];
         }];
     }
     
@@ -108,7 +108,7 @@ static NSString *DescriptorKey = @"descriptor";
     NSHTTPURLResponse *urlResponse = error.userInfo[AFNetworkingOperationFailingURLResponseErrorKey];
     BOOL retryBasedOnStatusCode = (urlResponse && [urlResponse statusCode] >= 500 && [urlResponse statusCode] <= 599);
 
-    if (retryBasedOnStatusCode == NO && ![error isOfflineError])
+    if (retryBasedOnStatusCode == NO && ![error isConnectionError])
     {
         return NO;
     }
@@ -143,70 +143,70 @@ static NSString *DescriptorKey = @"descriptor";
 
 - (void)_retryAllDescriptors
 {
-    NSArray *dictionaries = [self.descriptorDictionary allValues];
-
-    if (![VIMReachability sharedInstance].isNetworkReachable || [dictionaries count] == 0)
-    {
-        return;
-    }
-
-    NSLog(@"RETRYING ALL");
-
-    for (NSDictionary *dictionary in dictionaries)
-    {
-        VIMRequestDescriptor *descriptor = dictionary[DescriptorKey];
-        [self _retryDescriptor:descriptor];
-    }
+//    NSArray *dictionaries = [self.descriptorDictionary allValues];
+//
+//    if (![VIMReachability sharedInstance].isNetworkReachable || [dictionaries count] == 0)
+//    {
+//        return;
+//    }
+//
+//    NSLog(@"RETRYING ALL");
+//
+//    for (NSDictionary *dictionary in dictionaries)
+//    {
+//        VIMRequestDescriptor *descriptor = dictionary[DescriptorKey];
+//        [self _retryDescriptor:descriptor];
+//    }
 }
 
 - (void)_retryDescriptor:(VIMRequestDescriptor *)descriptor
 {
-    if (![VIMReachability sharedInstance].isNetworkReachable)
-    {
-        NSLog(@"OFFLINE NOT RETRYING %@", descriptor.descriptorID);
-
-        return;
-    }
-    
-    NSLog(@"RETRYING %@", descriptor.descriptorID);
-
-    __weak typeof(self) welf = self;
-    [self.operationManager requestDescriptor:descriptor handler:self completionBlock:^(VIMServerResponse *response, NSError *error) {
-        
-        if (error)
-        {
-            NSLog(@"Error retrying request: %@", error);
-        }
-        
-        dispatch_async(_queue, ^{
-            
-            NSDictionary *dictionary = welf.descriptorDictionary[descriptor.descriptorID];
-            NSNumber *number = dictionary[CountKey];
-            if (number)
-            {
-                NSInteger count = number.integerValue + 1;
-                if (count >= DefaultNumberOfRetries)
-                {
-                    NSLog(@"RETRIED %lu TIMES, REMOVING", (long)count);
-                    [welf.descriptorDictionary removeObjectForKey:descriptor.descriptorID];
-                }
-                else
-                {
-                    NSLog(@"RETRIED %lu TIMES", (long)count);
-                    NSMutableDictionary *updated = [NSMutableDictionary dictionary];
-                    updated[DescriptorKey] = descriptor;
-                    updated[CountKey] = @(count);
-                    [welf.descriptorDictionary setObject:updated forKey:descriptor.descriptorID];
-                    
-                    [welf scheduleRetryForDescriptor:descriptor];
-                }
-            }
-
-            [welf _save];
-            
-        });
-        
-    }];
+//    if (![VIMReachability sharedInstance].isNetworkReachable)
+//    {
+//        NSLog(@"OFFLINE NOT RETRYING %@", descriptor.descriptorID);
+//
+//        return;
+//    }
+//    
+//    NSLog(@"RETRYING %@", descriptor.descriptorID);
+//
+//    __weak typeof(self) welf = self;
+//    [self.operationManager requestDescriptor:descriptor handler:self completionBlock:^(VIMServerResponse *response, NSError *error) {
+//        
+//        if (error)
+//        {
+//            NSLog(@"Error retrying request: %@", error);
+//        }
+//        
+//        dispatch_async(_queue, ^{
+//            
+//            NSDictionary *dictionary = welf.descriptorDictionary[descriptor.descriptorID];
+//            NSNumber *number = dictionary[CountKey];
+//            if (number)
+//            {
+//                NSInteger count = number.integerValue + 1;
+//                if (count >= DefaultNumberOfRetries)
+//                {
+//                    NSLog(@"RETRIED %lu TIMES, REMOVING", (long)count);
+//                    [welf.descriptorDictionary removeObjectForKey:descriptor.descriptorID];
+//                }
+//                else
+//                {
+//                    NSLog(@"RETRIED %lu TIMES", (long)count);
+//                    NSMutableDictionary *updated = [NSMutableDictionary dictionary];
+//                    updated[DescriptorKey] = descriptor;
+//                    updated[CountKey] = @(count);
+//                    [welf.descriptorDictionary setObject:updated forKey:descriptor.descriptorID];
+//                    
+//                    [welf scheduleRetryForDescriptor:descriptor];
+//                }
+//            }
+//
+//            [welf _save];
+//            
+//        });
+//        
+//    }];
 }
 
 #pragma mark - Notifications

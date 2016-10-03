@@ -26,16 +26,16 @@
 
 #import <Foundation/Foundation.h>
 
-extern NSString * const __nonnull VIMReachabilityStatusChangeOfflineNotification;
-extern NSString * const __nonnull VIMReachabilityStatusChangeOnlineNotification;
-extern NSString * const __nonnull VIMReachabilityStatusChangeWasOfflineInfoKey;
+//extern NSString * const __nonnull VIMReachabilityStatusChangeOfflineNotification;
+//extern NSString * const __nonnull VIMReachabilityStatusChangeOnlineNotification;
+//extern NSString * const __nonnull VIMReachabilityStatusChangeWasOfflineInfoKey;
 
 @interface VIMReachability : NSObject
 
-+ (nullable instancetype)sharedInstance;
-
-@property (nonatomic, assign, readonly) BOOL isNetworkReachable;
-@property (nonatomic, assign, readonly) BOOL isOn3G;
-@property (nonatomic, assign, readonly) BOOL isOnWiFi;
+//+ (nullable instancetype)sharedInstance;
+//
+//@property (nonatomic, assign, readonly) BOOL isNetworkReachable;
+//@property (nonatomic, assign, readonly) BOOL isOn3G;
+//@property (nonatomic, assign, readonly) BOOL isOnWiFi;
 
 @end

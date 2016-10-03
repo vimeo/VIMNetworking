@@ -32,78 +32,78 @@
 #import "AFNetworking.h"
 #endif
 
-NSString * const VIMReachabilityStatusChangeOfflineNotification = @"VIMReachabilityStatusChangeOfflineNotification";
-NSString * const VIMReachabilityStatusChangeOnlineNotification = @"VIMReachabilityStatusChangeOnlineNotification";
-NSString * const VIMReachabilityStatusChangeWasOfflineInfoKey = @"VIMReachabilityStatusChangeWasOfflineInfoKey";
+//NSString * const VIMReachabilityStatusChangeOfflineNotification = @"VIMReachabilityStatusChangeOfflineNotification";
+//NSString * const VIMReachabilityStatusChangeOnlineNotification = @"VIMReachabilityStatusChangeOnlineNotification";
+//NSString * const VIMReachabilityStatusChangeWasOfflineInfoKey = @"VIMReachabilityStatusChangeWasOfflineInfoKey";
 
 @interface VIMReachability ()
 
-@property (nonatomic, assign) BOOL wasOffline;
+//@property (nonatomic, assign) BOOL wasOffline;
 
 @end
 
 @implementation VIMReachability
 
-+ (VIMReachability *)sharedInstance
-{
-    static dispatch_once_t pred;
-    static VIMReachability *sharedInstance = nil;
-    
-    dispatch_once(&pred, ^{
-        sharedInstance = [[VIMReachability alloc] init];
-    });
-    
-    return sharedInstance;
-}
-
-- (instancetype)init
-{
-    self = [super init];
-    if (self)
-    {
-        _wasOffline = NO;
-        
-        [[AFNetworkReachabilityManager sharedManager] startMonitoring];
-        
-        __weak typeof(self) weakSelf = self;
-        [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
-            if (status != AFNetworkReachabilityStatusNotReachable)
-            {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [[NSNotificationCenter defaultCenter] postNotificationName:VIMReachabilityStatusChangeOnlineNotification object:nil userInfo:@{ VIMReachabilityStatusChangeWasOfflineInfoKey: @(weakSelf.wasOffline) }];
-                });
-                
-                weakSelf.wasOffline = NO;
-            }
-            else
-            {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [[NSNotificationCenter defaultCenter] postNotificationName:VIMReachabilityStatusChangeOfflineNotification object:nil userInfo:@{ VIMReachabilityStatusChangeWasOfflineInfoKey: @(weakSelf.wasOffline) }];
-                });
-                
-                weakSelf.wasOffline = YES;
-            }
-        }];
-    }
-    
-    return self;
-}
-
-#pragma mark - Public API
-
-- (BOOL)isNetworkReachable
-{
-    return [[AFNetworkReachabilityManager sharedManager] isReachable];
-}
-
-- (BOOL)isOn3G
-{
-    return [[AFNetworkReachabilityManager sharedManager] isReachableViaWWAN];
-}
-
-- (BOOL)isOnWiFi
-{
-    return [[AFNetworkReachabilityManager sharedManager] isReachableViaWiFi];
-}
+//+ (VIMReachability *)sharedInstance
+//{
+//    static dispatch_once_t pred;
+//    static VIMReachability *sharedInstance = nil;
+//    
+//    dispatch_once(&pred, ^{
+//        sharedInstance = [[VIMReachability alloc] init];
+//    });
+//    
+//    return sharedInstance;
+//}
+//
+//- (instancetype)init
+//{
+//    self = [super init];
+//    if (self)
+//    {
+//        _wasOffline = NO;
+//        
+//        [[AFNetworkReachabilityManager sharedManager] startMonitoring];
+//        
+//        __weak typeof(self) weakSelf = self;
+//        [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+//            if (status != AFNetworkReachabilityStatusNotReachable)
+//            {
+//                dispatch_async(dispatch_get_main_queue(), ^{
+//                    [[NSNotificationCenter defaultCenter] postNotificationName:VIMReachabilityStatusChangeOnlineNotification object:nil userInfo:@{ VIMReachabilityStatusChangeWasOfflineInfoKey: @(weakSelf.wasOffline) }];
+//                });
+//                
+//                weakSelf.wasOffline = NO;
+//            }
+//            else
+//            {
+//                dispatch_async(dispatch_get_main_queue(), ^{
+//                    [[NSNotificationCenter defaultCenter] postNotificationName:VIMReachabilityStatusChangeOfflineNotification object:nil userInfo:@{ VIMReachabilityStatusChangeWasOfflineInfoKey: @(weakSelf.wasOffline) }];
+//                });
+//                
+//                weakSelf.wasOffline = YES;
+//            }
+//        }];
+//    }
+//    
+//    return self;
+//}
+//
+//#pragma mark - Public API
+//
+//- (BOOL)isNetworkReachable
+//{
+//    return [[AFNetworkReachabilityManager sharedManager] isReachable];
+//}
+//
+//- (BOOL)isOn3G
+//{
+//    return [[AFNetworkReachabilityManager sharedManager] isReachableViaWWAN];
+//}
+//
+//- (BOOL)isOnWiFi
+//{
+//    return [[AFNetworkReachabilityManager sharedManager] isReachableViaWiFi];
+//}
 
 @end

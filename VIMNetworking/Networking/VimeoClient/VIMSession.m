@@ -90,7 +90,7 @@ static VIMSession *_sharedSession;
         _authenticator = [self buildAuthenticator];
         _client = [self buildClient];
         
-        [VIMReachability sharedInstance];
+//        [VIMReachability sharedInstance];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
     }

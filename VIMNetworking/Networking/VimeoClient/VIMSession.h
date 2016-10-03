@@ -32,13 +32,13 @@
 
 typedef void (^VIMErrorCompletionBlock)(NSError * __nullable error);
 
-extern NSString *const __nonnull VIMSession_AuthenticatedAccountDidChangeNotification; // Posted when the account changes (log in or log out)
-extern NSString *const __nonnull VIMSession_AuthenticatedUserDidRefreshNotification; // Posted when the authenticated user object refreshes (user refresh)
+//extern NSString *const __nonnull VIMSession_AuthenticatedAccountDidChangeNotification; // Posted when the account changes (log in or log out)
+//extern NSString *const __nonnull VIMSession_AuthenticatedUserDidRefreshNotification; // Posted when the authenticated user object refreshes (user refresh)
 
 @interface VIMSession : NSObject
 
 @property (nonatomic, strong, readonly, nonnull) VIMSessionConfiguration *configuration;
-@property (nonatomic, strong, readonly, nullable) VIMAccount *account;
+//@property (nonatomic, strong, readonly, nullable) VIMAccount *account;
 @property (nonatomic, strong, readonly, nonnull) VIMAuthenticator *authenticator;
 @property (nonatomic, strong, readonly, nonnull) VIMClient *client;
 
@@ -60,6 +60,6 @@ extern NSString *const __nonnull VIMSession_AuthenticatedUserDidRefreshNotificat
 
 - (BOOL)changeBaseURL:(nonnull NSString *)baseURLString;
 
-- (nullable id<VIMRequestToken>)refreshAuthenticatedUserWithCompletionBlock:(nullable VIMErrorCompletionBlock)completionBlock;
+//- (nullable id<VIMRequestToken>)refreshAuthenticatedUserWithCompletionBlock:(nullable VIMErrorCompletionBlock)completionBlock;
 
 @end
