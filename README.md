@@ -1,5 +1,9 @@
 # VIMNetworking
 
+:warning::warning::warning:  
+This library has been deprecated and will be removed from Github on March 1, 2017. Use [VimeoNetworking](https://github.com/vimeo/VimeoNetworking/) instead.  
+:warning::warning::warning:
+
 `VIMNetworking` is an Objective-C library that enables interaction with the [Vimeo API](https://developers.vimeo.com).  It handles authentication, request submission, and request cancellation. Advanced features include caching and powerful model object parsing. 
 
 If you'd like to upload videos check out [VimeoUpload](https://github.com/vimeo/VimeoUpload). 
